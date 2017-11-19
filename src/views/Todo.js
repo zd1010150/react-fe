@@ -7,18 +7,18 @@ export default class Todolist extends React.Component {
     this.handleAdd = this.handleAdd.bind(this)
   }
   handleAdd(text){
-    this.setState = ((preState,props)=>{
+    this.setState((preState,props)=>{
       return {
-        todo: preState.todo.push({
+        todo: preState.todo.concat([{
           text: text,
           id:preState.SEED_ID
-        }),
+        }]),
         SEED_ID: preState.SEED_ID+1
       }
     })
   }
   handleDelete(id){
-    this.setState=((preState,props)=>{
+    this.setState((preState,props)=>{
       return {
         todo: preState.todo.filter((item)=>{
           return item.id !== id
@@ -33,7 +33,7 @@ export default class Todolist extends React.Component {
       const handleDelete = ()=>{
         this.handleDelete(item.id)
       }
-      return (<ItemTodo handleDelete={handleDelete} key={item.id}></ItemTodo>)
+      return (<ItemTodo handleDelete={handleDelete} key={item.id} text={item.text}></ItemTodo>)
     })
     return (
       <div>
