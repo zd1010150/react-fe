@@ -1,18 +1,20 @@
 import React from 'react'
 import Message from './message'
 import { Link,Route } from 'react-router-dom'
-const Inbox = ()=>{
+const Inbox = ({location})=>{
+
     return (
         <div>
             <ul>
                 <li>
-                    <Link to="/message/1">message1</Link>
+
+                    <Link to="/inbox/message/1">message1</Link>
                 </li>
                 <li>
-                    <Link to="/message/2">message2</Link>
+                    <Link to="/inbox/message/2">message2</Link>
                 </li>
             </ul>
-            <Route path="/message/:id" component={Message}></Route>
+            <Route path="/inbox/message/:id" component={Message}></Route>
         </div>
 
     )
