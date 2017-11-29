@@ -1,6 +1,6 @@
 
 import React from 'react'
-import Board from './board'
+import Board from '../components/Game/board'
 export default class Game extends React.Component {
   constructor() {
     super();

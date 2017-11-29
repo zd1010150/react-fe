@@ -4,17 +4,18 @@ class TodoItem extends React.Component{
           render(){
             return (
               <li style={{
-                textDecoration: this.props.completed ? 'line-through' : 'none'
-              }}>
+                    textDecoration: this.props.completed ? 'line-through' : 'none'
+                }}
+                  onClick={()=>{this.props.handleClick(this.props.id)}}
+              >
                 {this.props.text}
-                <button onClick={()=>{this.props.handleDelete(this.props.id)}}>X</button>
               </li>)
           }
         }
 TodoItem.propTypes = {
   completed: PropTypes.bool,
   text: PropTypes.string,
-  handleDelete: PropTypes.func,
-  id: PropTypes.string.isRequired
+  handleClick: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired
 }
 export default TodoItem

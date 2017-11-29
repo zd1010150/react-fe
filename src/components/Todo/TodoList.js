@@ -2,27 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Item from "./Item"
 class TodoList extends React.Component{
-          render(){
-            const lists = this.props.todos.map((item)=>{
-              const handleDelete = ()=>{
-                this.handleDelete(item.id)
-              }
-              return (<ItemTodo handleDelete={handleDelete} key={item.id} text={item.text}></ItemTodo>)
-            })
+  render(){
+    return (
+      <ul>
+        {
+          this.props.todos.map((item)=>{
             return (
-              <ul>
-                {
-                  this.props.todos.map((item)=>{
-                    return (
-                      <Item {...item} key={item.id} handleClick={()=>{ this.props.onTodoClick(item.id)}} ></Item>
-                    )
-                  })
-                }
-              </ul>)
-          }
+              <Item {...item} key={item.id} handleClick={()=>{ this.props.onTodoClick(item.id)}} ></Item>
+            )
+          })
         }
+      </ul>)
+  }
+}
 TodoList.propTypes = {
-  todos: todos: PropTypes.arrayOf(PropTypes.shape({
+  todos: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     completed: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired

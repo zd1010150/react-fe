@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 class Link extends React.Component{
-  constructor(){
+  constructor(props){
+    super(props)
     this.handleClick = this.props.handleClick.bind(this)
   }
   render(){
