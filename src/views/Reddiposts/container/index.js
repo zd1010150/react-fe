@@ -1,4 +1,4 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { selectSubreddit, fetchPostsIfNeeded, invalidateSubreddit } from '../flow/action'
@@ -6,33 +6,35 @@ import Picker from '../component/picker'
 import Posts from '../component/post'
 import Error from '../component/error'
 
-class ReddipostsView extends Component{
-  constructor(props){
+class ReddipostsView extends Component {
+  constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleRefreshClick = this.handleRefreshClick.bind(this)
   }
-  componentDidMount(){
+  componentDidMount() {
     const { dispatch, selectedSubreddit } = this.props
     dispatch(fetchPostsIfNeeded(selectedSubreddit))
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.selectedSubreddit !== this.props.selectedSubreddit){
-      let { dispatch, selectedSubreddit } = nextProps
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedSubreddit !== this.props.selectedSubreddit) {
+      const { dispatch, selectedSubreddit } = nextProps
       dispatch(fetchPostsIfNeeded(selectedSubreddit))
     }
   }
-  handleChange(nextSubreddit){
+  handleChange(nextSubreddit) {
     this.props.dispatch(selectSubreddit(nextSubreddit))
   }
   handleRefreshClick(e){
     e.preventDefault()
-    let { dispatch, selectedSubreddit } = this.props
+    const { dispatch, selectedSubreddit } = this.props
     dispatch(invalidateSubreddit(selectedSubreddit))
     dispatch(fetchPostsIfNeeded(selectedSubreddit))
   }
-  render(){
-    const { httpErrors,selectedSubreddit, posts, isFetching, lastUpdated } = this.props
+  render() {
+    const {
+      httpErrors, selectedSubreddit, posts, isFetching, lastUpdated 
+    } = this.props
     return (
       <div>
         <Error errors={httpErrors}/>
@@ -90,7 +92,5 @@ function mapStateToProps( { reddiPosts } ){
     httpErrors
   }
 }
-function mapDispatchToProps(dispatch){
-  
-}
+
 export default connect(mapStateToProps)(ReddipostsView)
