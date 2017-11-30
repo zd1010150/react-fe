@@ -16,6 +16,9 @@ const Header = () =>{
             <li>
                 <Link to="/inbox">Inbox</Link>
             </li>
+            <li>
+                <Link to="/reddiposts">reddiposts</Link>
+            </li>
 
         </ul>
     )

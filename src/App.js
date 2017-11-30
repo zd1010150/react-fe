@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Header } from './components/page/index'
-import { About, Inbox, Todo,Game } from './views/index'
+import { About, Inbox, Todo,Game,Reddiposts } from './views/index'
 
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import reducers from "../reducers"
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 
+const store = createStore(reducers)
+store.subscribe(()=>{
+    console.log("===",store.getState())
+})
 
 class App extends Component {
   render() {
@@ -19,21 +27,22 @@ class App extends Component {
                   </div>
                 )
     return (
-      <div className="App">
-        { other }
-        < Header />
-
-      <div>
-          <Switch>
-           <Route path="/about" component={About}/>
-              <Route path="/inbox" component={Inbox}/>
-              <Route path="/todo" component={Todo}/>
-              <Route path="/game" component={Game}/>
-          </Switch>
-
-      </div>
-
-      </div>
+        <Provider store={store}>
+            <BrowserRouter>
+                <div className="App">
+                    { other }
+                    < Header />
+                    <div>
+                        <Switch><Route path="/about" component={About}/>
+                            <Route path="/inbox" component={Inbox}/>
+                            <Route path="/todo" component={Todo}/>
+                            <Route path="/game" component={Game}/>
+                            <Route path="/reddiposts" component={Reddiposts}/>
+                        </Switch>
+                    </div>
+                </div>
+            </BrowserRouter>
+        </Provider>
     )
   }
 }
