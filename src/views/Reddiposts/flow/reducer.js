@@ -61,9 +61,9 @@ const httpRequest = (state = [],action) => {
     }
 
 }
-const rootReducer = combineReducers({
+const rootReducer = {
     selectedSubreddit,
     postsBySubreddit,
     httpRequest
-})
+}
 export default rootReducer
