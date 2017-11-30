@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 //import loadingReducer from '../flow/loading/loadingReducer';
 //import globalsReducer from '../flow/globals/globalsReducer';
 
-export const makeRootReducer = (asyncReducers) => (
+export const makeRootReducer = (asyncReducers = {}) => (
   combineReducers({
 
    // loading: loadingReducer,

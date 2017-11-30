@@ -57,7 +57,7 @@ const shouldFetchPosts = (state,subreddit) =>{
     }
 
 }
-export function fetchPostsIfNeed(subreddit){
+export function fetchPostsIfNeeded(subreddit){
     return (dispatch, getState) => {
         if(shouldFetchPosts(getState(),subreddit)){
             return dispatch(fetchPosts(subreddit))

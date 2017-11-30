@@ -1,5 +1,5 @@
 import React from 'react'
-import { addTodo } from '../../../action'
+import { addTodo } from '../flow/action'
 import { connect } from 'react-redux'
 class Add extends React.Component{
   constructor(props){

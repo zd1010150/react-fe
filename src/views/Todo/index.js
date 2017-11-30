@@ -1,15 +1,13 @@
-import React from 'react';
-import {AddTodo, VisibleTodoList, Footer } from "./components/index"
 
-class Todolist extends React.Component {
-    render() {
-        return (
+import { injectReducers } from '../../store/reducers'
 
-            <div>
-                <AddTodo/>
-                <VisibleTodoList/>
-                <Footer/>
-            </div>
-        )
-    }
+import TodoView from './container/index'
+import TodoReducers from './flow/reducers/index'
+
+const Todo = (store) =>{
+  injectReducers(store,{
+    todo: TodoReducers
+  })
+  return TodoView
 }
+export default Todo

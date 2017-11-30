@@ -1,6 +1,6 @@
-import TodoList from '../TodoList'
+import TodoList from '../component/TodoList'
 import { connect } from 'react-redux'
-import { toggleTodo } from '../../../action'
+import { toggleTodo } from '../flow/action'
 const getVisibleTodos = (todos, filter) =>{
     switch (filter) {
         case 'SHOW_ALL':
@@ -15,9 +15,9 @@ const getVisibleTodos = (todos, filter) =>{
             })
     }
 }
-const mapStateToProps = (state, ownProps) =>{
+const mapStateToProps = ({ todo }, ownProps) =>{
     return {
-        todos : getVisibleTodos(state.todos, state.visibilityFilter)
+        todos : getVisibleTodos(todo.todos, todo.visibilityFilter)
     }
 }
 const mapDispatchToProps = {

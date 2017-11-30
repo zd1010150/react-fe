@@ -6,7 +6,7 @@ export default class Errors extends React.Component{
         return (
             <ul>
                 {this.props.errors.map((err)=>{
-                    return <li> msg : {err.toString()} | url : {err.url} | date: {erro.date}</li>
+                    return (<li> msg : {err.toString()} | url : {err.url} | date: {err.date}</li>)
                 })}
             </ul>
         )

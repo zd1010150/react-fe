@@ -1,9 +1,9 @@
 
 import React from 'react'
-import Board from '../components/Game/board'
+import Board from './board'
 export default class Game extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props)
     this.state = {
       history: [
         {
@@ -12,7 +12,7 @@ export default class Game extends React.Component {
       ],
       stepNumber: 0,
       xIsNext: true
-    };
+    }
   }
 
   handleClick(i,col,row) {

@@ -34,7 +34,7 @@ const posts = (state = {
            return state
    }
 }
-const postsBySubreddit = (state,action) =>{
+const postsBySubreddit = (state = [],action) =>{
     switch(action.type){
         case INVALIDATE_SUBREDDIT:
         case REQUEST_POSTS:
@@ -46,16 +46,18 @@ const postsBySubreddit = (state,action) =>{
             return state
     }
 }
-const httpRequest = (state,action) => {
+const httpRequest = (state = [],action) => {
     switch (action.type){
         case HTTP_ERROR:
             return Object.assign({},state,{
-                httpErrors : state.httpErrors.concat([{
+                httpErrors : state.concat([{
                     error:action.error,
                     url:action.url,
                     date:action.date
                 }])
             })
+        default:
+          return state
     }
 
 }
