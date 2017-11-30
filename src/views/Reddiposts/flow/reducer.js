@@ -34,7 +34,7 @@ const posts = (state = {
            return state
    }
 }
-const postsBySubreddit = (state = [],action) =>{
+const postsBySubreddit = (state = {},action) =>{
     switch(action.type){
         case INVALIDATE_SUBREDDIT:
         case REQUEST_POSTS:
@@ -46,24 +46,22 @@ const postsBySubreddit = (state = [],action) =>{
             return state
     }
 }
-const httpRequest = (state = [],action) => {
+const httpErrors = (state = [],action) => {
     switch (action.type){
         case HTTP_ERROR:
-            return Object.assign({},state,{
-                httpErrors : state.concat([{
-                    error:action.error,
-                    url:action.url,
-                    date:action.date
-                }])
-            })
+          return state.concat({
+                  error:action.error,
+                  url:action.url,
+                  date:action.date
+              })
         default:
           return state
     }
 
 }
-const rootReducer = {
+const rootReducer = combineReducers({
     selectedSubreddit,
     postsBySubreddit,
-    httpRequest
-}
+    httpErrors
+})
 export default rootReducer

@@ -4,7 +4,7 @@ import makeRootReducer from './reducers';
 
 export default function configureStore( initialState = {} ) {
   const store = createStore(
-    makeRootReducer(),
+    state => state,
     initialState,
     applyMiddleware(thunk) // routerMiddleware redux 方式的回退
   )

@@ -8,7 +8,7 @@ import  configureStore  from "./store/configureStore"
 import logo from './logo.svg';
 import './App.css';
 import { Header } from './components/page/index'
-import { About, Inbox, Todo,Game,Reddiposts } from './views/index'
+import { About, Inbox,Game,Reddiposts } from './views/index'
 
 const store = configureStore()
 store.subscribe(()=>{
@@ -35,7 +35,7 @@ class App extends Component {
                     <div>
                         <Switch><Route path="/about" component={About}/>
                             <Route path="/inbox" component={Inbox}/>
-                            <Route path="/todo" component={Todo(store)}/>
+                            {/*<Route path="/todo" component={Todo(store)}/>*/}
                             <Route path="/game" component={Game}/>
                             <Route path="/reddiposts" component={Reddiposts(store)}/>
                         </Switch>
