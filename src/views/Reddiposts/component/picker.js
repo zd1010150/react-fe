@@ -10,9 +10,11 @@ export default class Picker extends React.Component{
         <select onChange = {e => onChange(e.target.value)}
         value={value}>
           { options.map(option => {
-              <option value={option} key={option}>
-                { option }
-              </option>
+              return (
+                <option value={option} key={option}>
+                  { option }
+                </option>
+            )
           })}
         </select>
       </span>

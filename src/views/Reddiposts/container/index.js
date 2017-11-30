@@ -23,7 +23,7 @@ class ReddipostsView extends Component{
     }
   }
   handleChange(nextSubreddit){
-    this.props.dispatch(fetchPostsIfNeeded(nextSubreddit))
+    this.props.dispatch(selectSubreddit(nextSubreddit))
   }
   handleRefreshClick(e){
     e.preventDefault()
@@ -89,5 +89,8 @@ function mapStateToProps( { reddiPosts } ){
     lastUpdated,
     httpErrors
   }
+}
+function mapDispatchToProps(dispatch){
+  
 }
 export default connect(mapStateToProps)(ReddipostsView)
