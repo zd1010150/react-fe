@@ -1,5 +1,4 @@
-**/dist/**
-**/node_modules/**
-**/server.js
-**/webpack.config*.js
-**/flow-typed/**
+node_modules/*
+config/*
+public/*
+scripts/*

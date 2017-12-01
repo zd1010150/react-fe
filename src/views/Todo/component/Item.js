@@ -1,21 +1,14 @@
-import React from 'react'
+/* eslint-disable jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions,max-len */
+import React from 'react';
 import PropTypes from 'prop-types';
-class TodoItem extends React.Component{
-          render(){
-            return (
-              <li style={{
-                    textDecoration: this.props.completed ? 'line-through' : 'none'
-                }}
-                  onClick={()=>{this.props.handleClick(this.props.id)}}
-              >
-                {this.props.text}
-              </li>)
-          }
-        }
+
+const TodoItem = ({
+  completed, handleClick, text, id,
+}) => (<li style={{ textDecoration: completed ? 'line-through' : 'none' }} onClick={() => { handleClick(id); }}> { text } </li>);
 TodoItem.propTypes = {
-  completed: PropTypes.bool,
-  text: PropTypes.string,
+  completed: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired
-}
-export default TodoItem
+  id: PropTypes.number.isRequired,
+};
+export default TodoItem;
