@@ -13,8 +13,8 @@
    },
    "globals": {
      "window": true,
-     "navigator": true
-
+     "navigator": true,
+     "__API_URL__": true
    },
    "settings": {
      "import/resolver": {

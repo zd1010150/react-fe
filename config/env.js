@@ -3,7 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
-
+const apiUrl = require('../env.js').API_URL
+console.log("apiUrl",apiUrl)
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
 
@@ -24,7 +25,7 @@ var dotenvFiles = [
   NODE_ENV !== 'test' && `${paths.dotenv}.local`,
   paths.dotenv,
 ].filter(Boolean);
-
+console.log(dotenvFiles,"******")
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
@@ -74,6 +75,7 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        __API_URL__ : "'" + apiUrl + "'"
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

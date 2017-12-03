@@ -6,14 +6,15 @@ import configureStore from './store/configureStore';
 
 import logo from './logo.svg';
 import './App.css';
+import I18n from './i18n/index';
+import { Header } from './components/page/index';
+import { About, Inbox, Game, Todo } from './views/index';
+import { baseUrl } from './config/env.config.js';
 
-import { Header } from './components/page/index'
-import { About, Inbox,Game,Reddiposts,Todo } from './views/index'
-import { baseUrl } from './config/env.config.js'
-const store = configureStore()
-store.subscribe(()=>{
-    console.log("===",store.getState())
-})
+const store = configureStore();
+store.subscribe(() => {
+  console.log('===', store.getState());
+});
 
 
 const App = () => {
@@ -30,24 +31,25 @@ const App = () => {
     </div>
   );
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <div className="App">
-          { other }
-          <Header />
-          <div>
-            <Switch><Route path="/about" component={About} />
-              <Route path="/inbox" component={Inbox} />
-              <Route path="/todo" component={Todo(store)} />
-              <Route path="/game" component={Game} />
-            </Switch>
+    <I18n>
+      <Provider store={store}>
+        <BrowserRouter>
+          <div className="App">
+            { other }
+            <Header />
+            <div>
+              <Switch><Route path="/about" component={About} />
+                <Route path="/inbox" component={Inbox} />
+                <Route path="/todo" component={Todo(store)} />
+                <Route path="/game" component={Game} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
-    </Provider>
+        </BrowserRouter>
+      </Provider>
+    </I18n>
   );
 };
-
 
 
 export default App;
