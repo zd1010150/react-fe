@@ -8,8 +8,8 @@ import  configureStore  from "./store/configureStore"
 import logo from './logo.svg';
 import './App.css';
 import { Header } from './components/page/index'
-import { About, Inbox,Game,Todo } from './views/index'
-
+import { About, Inbox,Game,Reddiposts,Todo } from './views/index'
+import { baseUrl } from './config/env.config.js'
 const store = configureStore()
 store.subscribe(()=>{
     console.log("===",store.getState())
@@ -35,8 +35,11 @@ class App extends Component {
                     <div>
                         <Switch><Route path="/about" component={About}/>
                             <Route path="/inbox" component={Inbox}/>
-                            <Route path="/todo" component={Todo(store)}/>
+                            <Route path="/todo" component={Todo(store)}>
+                              <Route path="/todo/reddiposts" component={Reddiposts(store)}/>
+                            </Route>
                             <Route path="/game" component={Game}/>
+
                         </Switch>
                     </div>
                 </div>
