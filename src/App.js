@@ -7,9 +7,10 @@ import configureStore from './store/configureStore';
 import logo from './logo.svg';
 import './App.css';
 import I18n from './i18n/index';
-import { Header } from './components/page/index';
-import { About, Inbox, Game, Todo } from './views/index';
-import { baseUrl } from './config/env.config.js';
+import { Nav } from './components/page/index';
+import { About, Inbox, Game, Todo, Header } from './views/index';
+// import { baseUrl } from './config/env.config.js';
+
 
 const store = configureStore();
 store.subscribe(() => {
@@ -18,11 +19,12 @@ store.subscribe(() => {
 
 
 const App = () => {
+
   const other = (
     <div>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">Welcome to React</h1>
+        <h1 className="App-title">Welcome to React </h1>
       </header>
       <p className="App-intro">
                     To get started, edit <code>src/App.js</code> and save to reload.
@@ -31,12 +33,18 @@ const App = () => {
     </div>
   );
   return (
-    <I18n>
-      <Provider store={store}>
+
+    <Provider store={store}>
+      <I18n>
         <BrowserRouter>
           <div className="App">
             { other }
-            <Header />
+            {}
+            <div className="top-header">
+              <Nav />
+              <Route path="/" component={Header(store)} />
+            </div>
+
             <div>
               <Switch><Route path="/about" component={About} />
                 <Route path="/inbox" component={Inbox} />
@@ -46,8 +54,9 @@ const App = () => {
             </div>
           </div>
         </BrowserRouter>
-      </Provider>
-    </I18n>
+      </I18n>
+    </Provider>
+
   );
 };
 

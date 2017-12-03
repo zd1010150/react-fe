@@ -1,4 +1,5 @@
-import Header from './header'
+import Nav from './nav';
+console.log(Nav,"Nav...")
 export {
-    Header
-}
+  Nav,
+};

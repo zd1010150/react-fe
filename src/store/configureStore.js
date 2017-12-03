@@ -1,14 +1,17 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import makeRootReducer from './reducers';
+import { getStore } from '../utils/localStorage';
 
-export default function configureStore( initialState = {} ) {
+// const language = getStore('language') || navigator.language;
+const language = 'zh';
+export default function configureStore(initialState = { global: { language } }) {
   const store = createStore(
     state => state,
     initialState,
-    applyMiddleware(thunk) // routerMiddleware redux 方式的回退
-  )
-  store.asyncReducers = {}
+    applyMiddleware(thunk), // routerMiddleware redux 方式的回退
+  );
+  store.asyncReducers = {};
 
   // if (module.hot) {
   //   module.hot.accept('./reducers', () => {
@@ -17,5 +20,5 @@ export default function configureStore( initialState = {} ) {
   //   });
   // }
 
-  return store
+  return store;
 }
