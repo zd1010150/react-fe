@@ -3,7 +3,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import FilterLink from '../../container/Filterlink';
-import styles from './footer.css';
+import styles from './footer.less';
 
 const cx = classNames.bind(styles);
 

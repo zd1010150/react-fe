@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const themer = lessToJs(fs.readFileSync(paths.themeLess + '/theme.less','utf8'));
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -151,7 +152,6 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-
               compact: true,
             },
           },
@@ -168,7 +168,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.(css|less)$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -209,6 +209,13 @@ module.exports = {
                         ],
                       },
                     },
+
+                    {
+                      loader: require.resolve('less-loader'),
+                      options:{
+                        modifyVars: themer
+                      } // compiles Less to CSS
+                    }
                   ],
                 },
                 extractTextPluginOptions

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
-
+import { Button } from 'antd';
 
 import AddTodo from './Add';
 import VisibleTodoList from './VisibleTodoList';
@@ -11,6 +11,7 @@ import ReddipostsView from '../../Reddiposts';
 
 const Todolist = () => (
   <div>
+    <Button type="primary">Button</Button>
     <AddTodo />
     <VisibleTodoList />
     <Footer />
