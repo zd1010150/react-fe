@@ -4,7 +4,7 @@ import { Link, Route } from 'react-router-dom';
 
 import AddTodo from './Add';
 import VisibleTodoList from './VisibleTodoList';
-import Footer from '../component/Footer';
+import Footer from '../component/Footer/index';
 
 import ReddipostsView from '../../Reddiposts';
 
