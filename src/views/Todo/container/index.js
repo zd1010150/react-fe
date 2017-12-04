@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
+
+
 import AddTodo from './Add';
 import VisibleTodoList from './VisibleTodoList';
 import Footer from '../component/Footer';
 
-import ReddipostsView from '../../Reddiposts/container';
+import ReddipostsView from '../../Reddiposts';
+
 
 const Todolist = () => (
   <div>
@@ -15,4 +18,5 @@ const Todolist = () => (
     <Route path="/todo/reddiposts" component={ReddipostsView} />
   </div>
 );
+
 export default Todolist;

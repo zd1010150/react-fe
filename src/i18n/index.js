@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import zhLocaleData from 'react-intl/locale-data/zh';
-import  message from './message/index';
+import message from './message';
 
 addLocaleData(zhLocaleData);
-
-
-const i18n = ({ children, locale }) => {
-  debugger;
-  return <IntlProvider locale={locale} key={locale} messages={message[locale]}>{ children }</IntlProvider>;
-};
+const i18n = ({ children, locale }) => <IntlProvider locale={locale} key={locale} messages={message[locale]}>{ children }</IntlProvider>;
 
 
 i18n.propTypes = {

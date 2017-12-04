@@ -5,7 +5,7 @@ import { intlShape, injectIntl } from 'react-intl';
 
 const Nav = ({ intl }) => {
   const { formatMessage } = intl;
-  const hello =   formatMessage({ id: 'ui.button.cancel' })
+  const hello =   formatMessage({ id: 'global.ui.button.cancel' })
   return (<ul>
     <li>
       <Link to="/about">About{ hello }</Link>

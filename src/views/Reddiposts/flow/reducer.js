@@ -13,6 +13,7 @@ const selectedSubreddit = (state = 'reactjs', action) => {
 const posts = (state = {
   isFetching: false,
   didInvalidate: false,
+  lastUpdated: 0,
   items: [],
 }, action) => {
   switch (action.type) {

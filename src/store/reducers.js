@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux';
-//import loadingReducer from '../flow/loading/loadingReducer';
-//import globalsReducer from '../flow/globals/globalsReducer';
+import globalsReducer from './global/reducer';
+import pageReducer from './pageReducer';
+
+console.log(pageReducer, 'Page Reducers ====');
 
 export const makeRootReducer = (asyncReducers = {}) => (
   combineReducers({
-
-   // loading: loadingReducer,
-    //globals: globalsReducer,
-    ...asyncReducers,
+    global: globalsReducer, // 注入全局reducer
+    ...asyncReducers, // hook 以后用来注入异步reducer
+    ...pageReducer, // 注入页面级reducer
   })
 );
 

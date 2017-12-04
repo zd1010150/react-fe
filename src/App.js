@@ -14,7 +14,7 @@ import { About, Inbox, Game, Todo, Header } from './views/index';
 
 const store = configureStore();
 store.subscribe(() => {
-  console.log('===', store.getState());
+  console.log('redux store ===', store.getState()); // 打印redux中的state
 });
 
 
@@ -42,13 +42,13 @@ const App = () => {
             {}
             <div className="top-header">
               <Nav />
-              <Route path="/" component={Header(store)} />
+              <Route path="/" component={Header} />
             </div>
 
             <div>
               <Switch><Route path="/about" component={About} />
                 <Route path="/inbox" component={Inbox} />
-                <Route path="/todo" component={Todo(store)} />
+                <Route path="/todo" component={Todo} />
                 <Route path="/game" component={Game} />
               </Switch>
             </div>

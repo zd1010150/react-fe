@@ -87,7 +87,9 @@ function mapStateToProps({ reddiPosts }) {
   const { isFetching, lastUpdated, items: posts } = postsBySubreddit[selectedSubreddit] || {
     isFetching: true,
     items: [],
+    lastUpdated: 0,
   };
+  console.log("mapStateToProps ==== ",arguments[0])
   return {
     selectedSubreddit,
     posts,

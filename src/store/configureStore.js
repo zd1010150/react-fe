@@ -1,13 +1,10 @@
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import makeRootReducer from './reducers';
-import { getStore } from '../utils/localStorage';
+import { makeRootReducer } from './reducers';
 
-// const language = getStore('language') || navigator.language;
-const language = 'zh';
-export default function configureStore(initialState = { global: { language } }) {
+export default function configureStore(initialState = {}) {
   const store = createStore(
-    state => state,
+    makeRootReducer(),
     initialState,
     applyMiddleware(thunk), // routerMiddleware redux 方式的回退
   );

@@ -9,7 +9,7 @@ const Language = ({ language, onChange }) =>
   );
 Language.propTypes = {
   language: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
-}
+  onChange: PropTypes.func.isRequired,
+};
 
 export default Language;

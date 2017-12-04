@@ -1,22 +1,28 @@
+/* eslint-disable react/jsx-closing-tag-location */
 import React from 'react';
+import { intlShape, injectIntl } from 'react-intl';
 import FilterLink from '../container/Filterlink';
 
-const Footer = () => (
-  <p>
-        Show:
-        {' '}
+
+const Footer = ({ intl }) => {
+  const { formatMessage } = intl;
+  return (<p>
+    Show:
+    {' '}
     <FilterLink filter="SHOW_ALL">
-            All
+      { formatMessage({ id: 'page.Todo.all' }) }
     </FilterLink>
     {', '}
     <FilterLink filter="SHOW_ACTIVE">
-            Active
+      { formatMessage({ id: 'page.Todo.active' }) }
     </FilterLink>
     {', '}
     <FilterLink filter="SHOW_COMPLETED">
-            Completed
+      { formatMessage({ id: 'page.Todo.completed' }) }
     </FilterLink>
-  </p>
-);
-
-export default Footer;
+  </p>);
+};
+Footer.propTypes = {
+  intl: intlShape.isRequired,
+};
+export default injectIntl(Footer);
