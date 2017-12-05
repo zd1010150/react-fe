@@ -4,12 +4,11 @@ import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
 
-import logo from './logo.svg';
 import './App.css';
 import I18n from './i18n/index';
-import { Nav } from './components/page/index';
 import Layout from './components/layout';
-import { About, Inbox, Game, Todo, Header } from './views/index';
+import { About, Inbox, Game, Todo, Header, Nav } from './views/index';
+
 // import { baseUrl } from './config/env.config.js';
 
 

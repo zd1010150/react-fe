@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { LocaleProvider } from 'antd';
+import en from 'antd/lib/locale-provider/en_US';
+import zh from 'antd/lib/locale-provider/zh_CN';
+
 import { addLocaleData, IntlProvider } from 'react-intl';
 import zhLocaleData from 'react-intl/locale-data/zh';
 import message from './message';
 
 addLocaleData(zhLocaleData);
-const i18n = ({ children, locale }) => <IntlProvider locale={locale} key={locale} messages={message[locale]}>{ children }</IntlProvider>;
+const i18n = ({ children, locale }) => <LocaleProvider locale={locale === 'zh' ? zh : en}><IntlProvider locale={locale} key={locale} messages={message[locale]}>{ children }</IntlProvider></LocaleProvider>;
 
 
 i18n.propTypes = {

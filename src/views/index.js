@@ -4,6 +4,7 @@ import Todo from './Todo';
 import Game from './Game/index';
 import Reddiposts from './Reddiposts/index';
 import Header from './Header/index';
+import Nav from './Nav/index';
 
 export {
   About,
@@ -12,4 +13,5 @@ export {
   Game,
   Reddiposts,
   Header,
+  Nav,
 };
