@@ -1,17 +1,20 @@
-import About from './about';
-import Inbox from './inbox';
-import Todo from './Todo';
-import Game from './Game/index';
-import Reddiposts from './Reddiposts/index';
-import Header from './Header/index';
-import Nav from './Nav/index';
+import TopPanel from './TopPanel';
+import HeaderContent from './HeaderContent';
+import HeaderNav from './HeaderNav';
+import LeftSideNav from './LeftSideNav';
+import MainContent from './MainContent';
+import Footer from './Footer';
+import CopyRight from './CopyRight';
+import Notification from './Notification';
 
 export {
-  About,
-  Inbox,
-  Todo,
-  Game,
-  Reddiposts,
-  Header,
-  Nav,
+  TopPanel,
+  HeaderContent,
+  HeaderNav,
+  LeftSideNav,
+  MainContent,
+  Footer,
+  CopyRight,
+  Notification,
 };
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
@@ -7,7 +7,14 @@ import configureStore from './store/configureStore';
 import './App.css';
 import I18n from './i18n/index';
 import Layout from './components/layout';
-import { About, Inbox, Game, Todo, Header, Nav } from './views/index';
+import { TopPanel,
+  HeaderContent,
+  HeaderNav,
+  LeftSideNav,
+  MainContent,
+  Footer,
+  CopyRight,
+  Notification } from './views/index';
 
 // import { baseUrl } from './config/env.config.js';
 
@@ -16,31 +23,27 @@ const store = configureStore();
 store.subscribe(() => {
   console.log('redux store ===', store.getState()); // 打印redux中的state
 });
-
-
-const App = () => {
-  const sider = <Nav />,
-    header = <Route path="/" component={Header} />,
-    content = (<div>
-      <Switch><Route path="/about" component={About} />
-        <Route path="/inbox" component={Inbox} />
-        <Route path="/todo" component={Todo} />
-        <Route path="/game" component={Game} />
-      </Switch>
-               </div>),
-    footer = <div>this is footer</div>;
-  return (
-    <Provider store={store}>
-      <I18n>
-        <BrowserRouter>
-          <div className="App">
-            <Layout sider={sider} header={header} content={content} footer={footer} />
-          </div>
-        </BrowserRouter>
-      </I18n>
-    </Provider>
-  );
-};
+// topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification,
+const App = () => (
+  <Provider store={store}>
+    <I18n>
+      <BrowserRouter>
+        <div className="App">
+          <Layout
+            topPanel={<TopPanel />}
+            headerContent={<HeaderContent />}
+            notification={<Notification />}
+            headerNav={<HeaderNav />}
+            leftSiderNav={<LeftSideNav />}
+            mainContent={<MainContent />}
+            footer={<Footer />}
+            copyRight={<CopyRight />}
+          />
+        </div>
+      </BrowserRouter>
+    </I18n>
+  </Provider>
+);
 
 
 export default App;

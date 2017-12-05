@@ -5,7 +5,7 @@ import { intlShape, injectIntl } from 'react-intl';
 
 const { SubMenu } = Menu;
 
-class Nav extends React.Component {
+class LeftSideNav extends React.Component {
   handleClick = (e) => {
     console.log('click ', e);
   }
@@ -36,7 +36,7 @@ class Nav extends React.Component {
   }
 }
 
-Nav.propTypes = {
+LeftSideNav.propTypes = {
   intl: intlShape.isRequired,
 };
-export default injectIntl(Nav);
+export default injectIntl(LeftSideNav);

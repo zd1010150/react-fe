@@ -1,26 +1,55 @@
 import React from 'react';
-import { Layout } from 'antd';
 import PropTypes from 'prop-types';
 
-const {
-  Header, Footer, Sider, Content,
-} = Layout;
 const layout = ({
-  sider, header, content, footer,
+  topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification, copyRight,
 }) => (
-  <Layout>
-    <Sider>{ sider }</Sider>
-    <Layout>
-      <Header>{ header }</Header>
-      <Content>{ content }</Content>
-      <Footer>{ footer }</Footer>
-    </Layout>
-  </Layout>
+
+  <div className="page-wrapper">
+    <header className="page-header">
+      <div className="panel wrapper">
+        { topPanel }
+      </div>
+      <div className="header content">
+        { headerContent}
+      </div>
+    </header>
+    <div className="section nav-sections">
+      { headerNav }
+
+    </div>
+    <main id="maincontent" className="page-main">
+      <div className="page messages">
+        { notification }
+      </div>
+      <div className="columns">
+        <div className="sidebar sidebar-main">
+          { leftSiderNav }
+        </div>
+        <div className="column main">
+          { mainContent }
+        </div>
+      </div>
+    </main>
+    <footer className="page-footer">
+      <div className="footer content">
+        { footer }
+      </div>
+
+    </footer>
+    <small className="copyright">
+      { copyRight }
+    </small>
+  </div>
 );
 layout.propTypes = {
-  sider: PropTypes.element.isRequired,
-  header: PropTypes.element.isRequired,
-  content: PropTypes.element.isRequired,
+  topPanel: PropTypes.element.isRequired,
+  headerContent: PropTypes.element.isRequired,
+  headerNav: PropTypes.element.isRequired,
+  leftSiderNav: PropTypes.element.isRequired,
+  mainContent: PropTypes.element.isRequired,
   footer: PropTypes.element.isRequired,
+  notification: PropTypes.element.isRequired,
+  copyRight: PropTypes.element.isRequired,
 };
 export default layout;

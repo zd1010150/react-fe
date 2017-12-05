@@ -1,5 +1,5 @@
 'use strict';
-
+const fs = require('fs');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const lessToJs = require('less-vars-to-js');
 const themer = lessToJs(fs.readFileSync(paths.themeLess + '/theme.less','utf8'));
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -44,7 +45,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   ? // Making sure that the publicPath goes back to to build folder.
-    { publicPath: Array(cssFilename.split('/').length).join('../') }
+  { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -97,6 +98,7 @@ module.exports = {
       'react-native': 'react-native-web',
       'views' : paths.appViews,
       'store' : paths.store,
+      'src' : paths.appSrc
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -153,6 +155,12 @@ module.exports = {
             loader: require.resolve('babel-loader'),
             options: {
               compact: true,
+              plugins: [
+                ["import", {
+                  "libraryName": "antd",
+                  "style": true,
+                }]
+              ]
             },
           },
           // The notation here is somewhat confusing.
@@ -168,7 +176,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.(css|less)$/,
+            test: /\.css$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -182,9 +190,7 @@ module.exports = {
                     {
                       loader: require.resolve('css-loader'),
                       options: {
-                        modules: true,
                         importLoaders: 1,
-                        localIdentName: '[name]__[local]___[hash:base64:5]',
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                       },
@@ -209,19 +215,113 @@ module.exports = {
                         ],
                       },
                     },
-
-                    {
-                      loader: require.resolve('less-loader'),
-                      options:{
-                        modifyVars: themer
-                      } // compiles Less to CSS
-                    }
                   ],
                 },
                 extractTextPluginOptions
               )
             ),
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
+          },
+          {
+            test: /\.less$/,
+            exclude : paths.appNodeModules, // 禁用node_modules下面的less被模块化，src下面的样式才可以模块化
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: {
+                    loader: require.resolve('style-loader'),
+                    options: {
+                      hmr: false,
+                    },
+                  },
+                  use:[{
+                    loader: require.resolve('css-loader'),
+                    options: {
+                      modules: true,
+                      minimize: true,
+                      importLoaders: 1,
+                      localIdentName: '[name]__[local]___[hash:base64:5]',
+                    },
+                  },{
+                    loader: require.resolve('postcss-loader'),
+                    options: {
+                      // Necessary for external CSS imports to work
+                      // https://github.com/facebookincubator/create-react-app/issues/2677
+                      ident: 'postcss',
+                      plugins: () => [
+                        require('postcss-flexbugs-fixes'),
+                        autoprefixer({
+                          browsers: [
+                            '>1%',
+                            'last 4 versions',
+                            'Firefox ESR',
+                            'not ie < 9', // React doesn't support IE8 anyway
+                          ],
+                          flexbox: 'no-2009',
+                        }),
+                      ],
+                    },
+                  },{
+                    loader: require.resolve('less-loader'),
+                    options:{
+                      modifyVars: themer,
+                      sourceMap: true
+                    }
+                  }]
+                },
+                extractTextPluginOptions
+              )
+            ),
+          },
+          {
+            test: /\.less$/,
+            include : paths.appNodeModules, // 禁用node_modules下面的less被模块化，src下面的样式才可以模块化
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: {
+                    loader: require.resolve('style-loader'),
+                    options: {
+                      hmr: false,
+                    },
+                  },
+                  use:[{
+                    loader: require.resolve('css-loader'),
+                    options: {
+                      modules: false,
+                      minimize: true,
+                      importLoaders: 1,
+                    },
+                  },{
+                    loader: require.resolve('postcss-loader'),
+                    options: {
+                      // Necessary for external CSS imports to work
+                      // https://github.com/facebookincubator/create-react-app/issues/2677
+                      ident: 'postcss',
+                      plugins: () => [
+                        require('postcss-flexbugs-fixes'),
+                        autoprefixer({
+                          browsers: [
+                            '>1%',
+                            'last 4 versions',
+                            'Firefox ESR',
+                            'not ie < 9', // React doesn't support IE8 anyway
+                          ],
+                          flexbox: 'no-2009',
+                        }),
+                      ],
+                    },
+                  },{
+                    loader: require.resolve('less-loader'),
+                    options:{
+                      modifyVars: themer,
+                      sourceMap: true
+                    }
+                  }]
+                },
+                extractTextPluginOptions
+              )
+            ),
           },
           // "file" loader makes sure assets end up in the `build` folder.
           // When you `import` an asset, you get its filename.

@@ -156,9 +156,9 @@ module.exports = {
               cacheDirectory: true,
               plugins: [
                 ["import", {
-                    "libraryName": "antd",
-                    "style": true,
-                  }]
+                  "libraryName": "antd",
+                  "style": true,
+                }]
               ]
             },
           },
