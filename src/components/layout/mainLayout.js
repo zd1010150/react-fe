@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const layout = ({
-  topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification, copyRight,
-}) => (
+                  topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification, copyRight,
+                }) => (
 
   <div className="page-wrapper">
     <header className="page-header">

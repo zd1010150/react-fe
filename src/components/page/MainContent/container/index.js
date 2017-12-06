@@ -1,10 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import About from 'views/about';
-import Inbox from 'views/inbox';
-import Game from 'views/Game/index';
-import Todo from 'views/Todo/index';
+import { About, Inbox, Todo, Game } from 'views/index';
 
 const HeaderContent = () => (<div>
   <Switch><Route path="/about" component={About} />

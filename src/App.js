@@ -6,7 +6,7 @@ import configureStore from './store/configureStore';
 
 import './App.css';
 import I18n from './i18n/index';
-import Layout from './components/layout';
+import { MainLayout } from './components/layout/index';
 import { TopPanel,
   HeaderContent,
   HeaderNav,
@@ -14,7 +14,7 @@ import { TopPanel,
   MainContent,
   Footer,
   CopyRight,
-  Notification } from './views/index';
+  Notification } from './components/page/index';
 
 // import { baseUrl } from './config/env.config.js';
 
@@ -29,7 +29,7 @@ const App = () => (
     <I18n>
       <BrowserRouter>
         <div className="App">
-          <Layout
+          <MainLayout
             topPanel={<TopPanel />}
             headerContent={<HeaderContent />}
             notification={<Notification />}
