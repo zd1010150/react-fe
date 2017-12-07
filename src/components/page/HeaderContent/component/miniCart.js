@@ -7,16 +7,6 @@ import { intlShape, injectIntl } from 'react-intl';
 
 const languageView = ({ intl, onChange, language }) => {
   const { formatMessage } = intl;
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <a href="javascript:void(0)" onClick={() => onChange('zh')}>{formatMessage({ id: 'global.language.zh' })}</a>
-      </Menu.Item>
-      <Menu.Item>
-        <a href="javascript:void(0)" onClick={() => onChange('en')}>{formatMessage({ id: 'global.language.en' })}</a>
-      </Menu.Item>
-
-    </Menu>);
   return (
     <div data-role="language">
       <Dropdown overlay={menu}>
@@ -28,7 +18,7 @@ const languageView = ({ intl, onChange, language }) => {
   );
 };
 
-
+// checkout/
 languageView.propTypes = {
   language: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

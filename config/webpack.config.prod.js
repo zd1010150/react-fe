@@ -224,7 +224,7 @@ module.exports = {
           },
           {
             test: /\.less$/,
-            exclude : paths.appNodeModules, // 禁用node_modules下面的less被模块化，src下面的样式才可以模块化
+            exclude : [paths.appNodeModules,paths.themeLess], // 禁用node_modules下面的less被模块化，src下面的样式才可以模块化
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -275,7 +275,7 @@ module.exports = {
           },
           {
             test: /\.less$/,
-            include : paths.appNodeModules, // 禁用node_modules下面的less被模块化，src下面的样式才可以模块化
+            include  : [paths.appNodeModules,paths.themeLess], // 禁用node_modules下面的less被模块化，src下面的样式才可以模块化
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {

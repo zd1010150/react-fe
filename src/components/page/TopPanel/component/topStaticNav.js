@@ -1,12 +1,15 @@
 import React from 'react';
+import classNames from 'classnames/bind';
 import { MagentoStaticLink } from 'src/components/ui/index';
+import styles from '../TopPanel.less';
 
+const cx = classNames.bind(styles);
 const topStaticNav = () => {
   const nav = [
     { id: 'global.magento.topNav.home', href: '/home' },
     { id: 'global.magento.topNav.contactUs', href: '/contact' },
   ];
-  return (<ul> {nav.map((item, index) => <MagentoStaticLink key={index} href={item.href} titleId={item.id} />)}</ul>);
+  return (<ul className={cx('top-static-nav')}> {nav.map((item, index) => <li key={index}><MagentoStaticLink href={item.href} titleId={item.id} /></li>)}</ul>);
 };
 
 export default topStaticNav;

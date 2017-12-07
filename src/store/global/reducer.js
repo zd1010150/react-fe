@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TOGGLE_LANGUAGE, SET_PERMISSION } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO } from './actionType';
 
 // 页面默认语言为 zh，此处只是mock
 const language = (state = 'zh', action) => {
@@ -19,8 +19,18 @@ const permission = (state = {}, action) => {
       return state;
   }
 };
+// 账户信息
+const account = (state = { username: 'DANDAN' }, action) => {
+  switch (action.type) {
+    case SET_ACCOUNTINFO:
+      return action.account;
+    default:
+      return state;
+  }
+};
 const rootReducer = combineReducers({
   language,
   permission,
+  account,
 });
 export default rootReducer;

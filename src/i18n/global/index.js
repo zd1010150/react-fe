@@ -2,10 +2,12 @@
 
 import ui from './ui';
 import pageTitle from './pageTitle';
-import magento from './magento'
+import magento from './magento';
+import language from './language';
 
 export default{
   ui,
   pageTitle,
-  magento
+  magento,
+  language,
 };

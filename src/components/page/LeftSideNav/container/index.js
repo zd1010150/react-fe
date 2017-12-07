@@ -24,7 +24,7 @@ class LeftSideNav extends React.Component {
         <SubMenu key="sub2" title={<span>Navigation Two</span>}>
           <Menu.Item key="5"><Link to="/about">About{ hello }</Link></Menu.Item>
           <Menu.Item key="6"><Link to="/game">Game</Link></Menu.Item>
-          <Menu.Item key="6"><Link to="/order">Order</Link></Menu.Item>
+          <Menu.Item key="7"><Link to="/order">Order</Link></Menu.Item>
         </SubMenu>
         <SubMenu key="sub4" title={<span>Navigation Three</span>}>
           <Menu.Item key="9"><Link to="/inbox">Inbox</Link></Menu.Item>

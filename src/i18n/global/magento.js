@@ -4,6 +4,11 @@ export default {
       home: '主页',
       contactUs: '联系我们',
     },
+    welcomeMsg: '{name},欢迎你！',
+    topOperations: {
+      signOut: '退出',
+      myAccount: '我的账户',
+    },
     headerNav: {
       milk: '奶粉',
       cosmetic: '化妆品',
@@ -26,6 +31,11 @@ export default {
     topNav: {
       home: 'Home',
       contactUs: 'Contact Us',
+    },
+    welcomeMsg: 'Welcome,{name}! ',
+    topOperations: {
+      signOut: 'Sign Out',
+      myAccount: 'My Account',
     },
     headerNav: {
       milk: 'Milk',

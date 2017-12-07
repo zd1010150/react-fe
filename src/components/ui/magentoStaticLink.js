@@ -6,22 +6,24 @@ import { getAbsolutePath } from '../../config/magento.config';
 
 
 const magentoStaticLink = ({
-  href, titleId, aClass, language, intl,
+  href, titleId, aClass, language, intl, title,
 }) => {
   const { formatMessage } = intl;
-  console.log(href,"===")
-  return (<a href={getAbsolutePath(href, language)} className={aClass} target="_self">{formatMessage({ id: titleId })}</a>);
+  return (<a href={getAbsolutePath(href, language)} className={aClass} target="_self">{ titleId && titleId.length > 0 ? formatMessage({ id: titleId }) : title }</a>);
 };
 
 magentoStaticLink.defaultProps = {
   aClass: '',
+  titleId: '',
+  title: '',
 }
 magentoStaticLink.propTypes = {
   href: PropTypes.string.isRequired,
-  titleId: PropTypes.string.isRequired,
+  titleId: PropTypes.string,
   aClass: PropTypes.string,
   language: PropTypes.string.isRequired,
   intl: intlShape.isRequired,
+  title: PropTypes.string,
 };
 
 function mapStateToProps(state) {
