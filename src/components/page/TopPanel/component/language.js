@@ -1,28 +1,31 @@
-/* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
+/* eslint-disable no-script-url */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Dropdown, Icon } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
+import classNames from 'classnames/bind';
+import styles from '../TopPanel.less';
 
+const cx = classNames.bind(styles);
 
 const languageView = ({ intl, onChange, language }) => {
   const { formatMessage } = intl;
   const menu = (
     <Menu>
       <Menu.Item>
-        <a href="javascript:void(0)" onClick={() => onChange('zh')}>{formatMessage({ id: 'global.language.zh' })}</a>
+        <button className={cx('ant-dropdown-link')} onClick={() => onChange('zh')}>{formatMessage({ id: 'global.language.zh' })}</button>
       </Menu.Item>
       <Menu.Item>
-        <a href="javascript:void(0)" onClick={() => onChange('en')}>{formatMessage({ id: 'global.language.en' })}</a>
+        <button className={cx('ant-dropdown-link')} onClick={() => onChange('en')}>{formatMessage({ id: 'global.language.en' })}</button>
       </Menu.Item>
 
     </Menu>);
   return (
     <div data-role="language">
       <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link" href="#">
+        <button className={cx('ant-dropdown-link')}>
           {formatMessage({ id: `global.language.${language}` })} <Icon type="down" />
-        </a>
+        </button>
       </Dropdown>
     </div>
   );

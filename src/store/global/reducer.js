@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE } from './actionType';
 
-// 页面默认语言为 zh，此处只是mock
-const language = (state = 'zh', action) => {
+// 页面默认语言为 en，此处只是mock
+const language = (state = 'en', action) => {
   switch (action.type) {
     case TOGGLE_LANGUAGE:
       return action.language;
@@ -28,9 +28,18 @@ const account = (state = { username: 'DANDAN' }, action) => {
       return state;
   }
 };
+const pageTitle = (state = 'global.pageTitle.leads', action) => {
+  switch (action.type) {
+    case SET_PAGETITLE:
+      return action.pageTitle;
+    default:
+      return state;
+  }
+};
 const rootReducer = combineReducers({
   language,
   permission,
   account,
+  pageTitle,
 });
 export default rootReducer;

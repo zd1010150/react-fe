@@ -1,17 +1,16 @@
+/* eslint-disable react/no-typos */
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 
-import { About, Inbox, Todo, Game, Order } from 'views/index';
+import PageTitleView from './pageTitleView';
+import MainContentView from '../component/mainContent';
 
-const HeaderContent = () => (
+const MainContent = () => (
   <div>
-    <Switch><Route path="/about" component={About} />
-      <Route path="/inbox" component={Inbox} />
-      <Route path="/todo" component={Todo} />
-      <Route path="/game" component={Game} />
-      <Route path="/order" component={Order} />
-    </Switch>
+    <PageTitleView />
+
+    <MainContentView />
   </div>
 );
 
-export default HeaderContent;
+
+export default MainContent;

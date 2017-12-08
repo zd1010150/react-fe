@@ -15,7 +15,7 @@ const topPanel = ({ language, onChange, account }) => (
   <div className={cx('panel', 'header')}>
     <Language language={language} onChange={onChange} />
     <TopStaticNav />
-    <Operations account={account} language={language}/>
+    <Operations account={account} language={language} />
     <Welcome account={account} />
   </div>
 );

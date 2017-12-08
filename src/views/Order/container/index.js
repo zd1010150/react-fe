@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Icon, Layout } from 'antd';
+import { setPageTitle } from 'store/global/action';
+import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import MiniCart from '../component/miniCart';
 import styles from './index.less';
@@ -8,15 +11,19 @@ const { Sider, Content } = Layout;
 
 const cx = classNames.bind(styles);
 
-class Order extends React.Component {
+class order extends React.Component {
   state = {
     collapsed: false,
   };
+  componentDidMount() {
+    this.props.setPageTitle('global.pageTitle.order');
+  }
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
   }
+
   render() {
     return (
       <div className={cx('section')}>
@@ -40,5 +47,12 @@ class Order extends React.Component {
   }
 }
 
+order.propTypes = {
+  setPageTitle: PropTypes.func.isRequired,
+};
+const mapDispatchToProp = {
+  setPageTitle,
+};
 
+const Order = connect(null, mapDispatchToProp)(order);
 export default Order;

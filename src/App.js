@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
 
 import configureStore from './store/configureStore';
@@ -29,7 +31,7 @@ window.__store__ = store;
 const App = () => (
   <Provider store={store}>
     <I18n>
-      <BrowserRouter>
+      <HashRouter>
         <div className="App">
           <MainLayout
             topPanel={<TopPanel />}
@@ -42,7 +44,7 @@ const App = () => (
             copyRight={<CopyRight />}
           />
         </div>
-      </BrowserRouter>
+      </HashRouter>
     </I18n>
   </Provider>
 );

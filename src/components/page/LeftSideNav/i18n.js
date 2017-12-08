@@ -1,5 +1,6 @@
 export default {
   zh: {
+    clientLists: '客户列表',
     leads: '所有客户',
     accounts: '交易客户',
     marketingMaterial: '营销',
@@ -7,6 +8,7 @@ export default {
     priceSetting: '价格设置',
   },
   en: {
+    clientLists: 'Client Lists',
     leads: 'Leads',
     accounts: 'Accounts',
     marketingMaterial: 'Marketing Material',

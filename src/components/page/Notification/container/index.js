@@ -1,5 +1,5 @@
 import React from 'react';
 
 
-const Notification = () => (<div> this is notification</div>);
+const Notification = () => (<div style={{marginBottom: 20}}>  </div>);
 export default Notification;
