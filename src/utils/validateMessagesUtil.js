@@ -22,7 +22,7 @@ const MSG = {
       integer: '%s is not an %s',
       float: '%s is not a %s',
       regexp: '%s is not a valid %s',
-      email: '%s is not a valid %s',
+      email: '%s 不合法',
       url: '%s is not a valid %s',
       hex: '%s is not a valid %s',
     },

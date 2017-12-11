@@ -108,7 +108,7 @@ addForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
-
+console.log(getMsgByLanguage('zh') ,"====***")
 
 const AddForm = Form.create({ validateMessages: getMsgByLanguage('zh') })(injectIntl(addForm));
 
