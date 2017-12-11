@@ -241,10 +241,13 @@ addForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const WrapperForm = (props) => {
-  const lang = props.language || 'zh';
-  const AddForm = Form.create({ validateMessages: getMsgByLanguage(lang) })(injectIntl(addForm));
-  return <AddForm {...props} />;
-};
+
+class WrapperForm extends React.Component{
+  render(){
+    const lang = this.props.language || 'zh';
+    const AddForm = Form.create({ validateMessages: getMsgByLanguage(lang) })(injectIntl(addForm));
+    return <AddForm {...this.props} ref={(instance) => { this.instance = instance; }}/>;
+  }
+}
 
 export default WrapperForm;

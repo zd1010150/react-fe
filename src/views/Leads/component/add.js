@@ -17,7 +17,8 @@ class add extends React.Component {
   }
   handleValidate = () => {
     const self = this;
-    this.form.validateFieldsAndScroll((err, values) => {
+    debugger;
+    this.form.instance.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         self.setState({
