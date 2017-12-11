@@ -5,8 +5,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 // import classNames from 'classnames/bind';
 // import styles from '../Leads.less';
-// import getMsgByLanguage from 'src/utils/validateMessagesUtil';
-import LocalFrom from 'src/components/ui/form';
+ import getMsgByLanguage from 'src/utils/validateMessagesUtil';
 
 class addForm extends React.Component {
   state = {
@@ -110,20 +109,7 @@ addForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-// debugger;
-// const AddForm = connect(mapStateToProps)(addForm);
-// console.log(AddForm)
-// const create = (form, language) => {
-//
-// }
 
-// const formProxy = ({ language, ...other }) => (injectIntl(<addForm {...other} />);
-
-window.__store__.subscribe(()=>{
-  let langauge = window.__store__.getState().global.language ;
-
-  console.log()
-})
-const AddForm = LocalFrom(addForm);
+const AddForm = Form.create({ validateMessages: getMsgByLanguage('zh') })(injectIntl(addForm));
 
 export default AddForm;

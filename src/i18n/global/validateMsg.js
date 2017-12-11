@@ -22,7 +22,7 @@ export default {
       integer: '%s is not an %s',
       float: '%s is not a %s',
       regexp: '%s is not a valid %s',
-      email: '%s is not a valid %s',
+      email: '%s 格式不正确 %s',
       url: '%s is not a valid %s',
       hex: '%s is not a valid %s',
     },
