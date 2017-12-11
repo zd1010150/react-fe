@@ -40,7 +40,6 @@ class add extends React.Component {
   render() {
     // const cx = classNames.bind(styles);
     const { formatMessage } = this.props.intl;
-    debugger;
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>{ formatMessage({ id: 'global.ui.button.addBtn' }, { actionType: formatMessage({ id: 'global.properNouns.leads' }) })}</Button>

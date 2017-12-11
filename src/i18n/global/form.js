@@ -13,7 +13,8 @@ export default {
     group: '组',
     interests: '兴趣',
     idFront: 'ID 正面',
-    idback: 'ID 反面',
+    idBack: 'ID 反面',
+    weChat: '微信',
   },
   en: {
     lastName: 'Last Name',
@@ -29,6 +30,7 @@ export default {
     group: 'Group',
     interests: 'Interests',
     idFront: 'ID Front',
-    idback: 'ID Back',
+    idBack: 'ID Back',
+    weChat: 'WeChat',
   },
 };

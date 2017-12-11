@@ -4,5 +4,5 @@ import Leads from 'views/Leads/i18n';
 export default {
   Todo,
   LeftSideNav,
-  Leads
+  Leads,
 };

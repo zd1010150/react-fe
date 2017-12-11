@@ -1,4 +1,4 @@
-
+import formField from 'src/i18n/global/form';
 
 const MSG = {
   zh: {
@@ -110,5 +110,7 @@ const MSG = {
 const getMsgByLanguage = (language) => {
   return MSG[language];
 };
-
+// const getRules = (language = 'zh', filedKey= '', rules) = {
+//
+// }
 export default getMsgByLanguage;
