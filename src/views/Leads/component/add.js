@@ -1,9 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 // import classNames from 'classnames/bind';
-
+import { connect } from 'react-redux';
 import AddForm from './addForm';
 // import styles from '../Leads.less';
 
@@ -55,14 +55,18 @@ class add extends React.Component {
             </Button>,
         ]}
         >
-          <AddForm onSubmit={this.handleSubmit} ref={(c) => { this.form = c; }} />
+          <AddForm language={this.props.language} onSubmit={this.handleSubmit} ref={(c) => { this.form = c; }} />
         </Modal>
       </div>
     );
   }
 }
 add.propTypes = {
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
+  language: PropTypes.string.isRequired,
 };
-const Add = injectIntl(add);
+const mapState = ({ global }) => ({
+  language: global.language,
+});
+const Add = connect(mapState)(injectIntl(add));
 export default Add;

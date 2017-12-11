@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Select, Icon, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
+
 // import classNames from 'classnames/bind';
 // import styles from '../Leads.less';
 import getMsgByLanguage from 'src/utils/validateMessagesUtil';
@@ -240,21 +240,11 @@ addForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
-console.log(getMsgByLanguage('zh'), '====***');
 
 const WrapperForm = (props) => {
-  const lang = props.lang || 'zh';
+  const lang = props.language || 'zh';
   const AddForm = Form.create({ validateMessages: getMsgByLanguage(lang) })(injectIntl(addForm));
   return <AddForm {...props} />;
 };
-WrapperForm.propTypes = {
-  lang: PropTypes.string,
-};
-WrapperForm.defaultProps = {
-  lang: 'zh',
-};
-const mapState = ({ global }) => ({
-  lang: global.language,
-});
-export default connect(mapState)(WrapperForm);
 
+export default WrapperForm;
