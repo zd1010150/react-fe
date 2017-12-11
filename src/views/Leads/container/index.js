@@ -10,16 +10,23 @@ class leadsView extends React.Component {
     this.props.setPageTitle('global.pageTitle.leads');
   }
   render() {
-    return <div><Add /></div>;
+    return (
+      <section className="section section-page">
+        <div className="section-header"><Add /></div>
+        <div className="section-content" />
+        <div className="section-header" />
+      </section>
+    );
   }
 }
 leadsView.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
 };
+
 const mapDispatchToProp = {
   setPageTitle,
 };
 
-const LeadsView = connect(undefined, mapDispatchToProp)(leadsView);
+const LeadsView = connect(null, mapDispatchToProp)(leadsView);
 export default LeadsView;
 

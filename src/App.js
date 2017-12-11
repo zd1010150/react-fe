@@ -21,7 +21,6 @@ import { TopPanel,
 
 // import { baseUrl } from './config/env.config.js';
 
-
 const store = configureStore();
 store.subscribe(() => {
   console.log('redux store ===', store.getState()); // 打印redux中的state

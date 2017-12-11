@@ -1,7 +1,7 @@
 export default {
   zh: {
-    leads: '所有客户',
-    accounts: '交易客户',
+    leads: '潜在客户',
+    accounts: '客户',
     marketingMaterial: '营销',
     order: '订单',
     priceSetting: '价格设置',

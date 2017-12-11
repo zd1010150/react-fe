@@ -3,12 +3,17 @@ import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE } from 
 
 // 页面默认语言为 en，此处只是mock
 const language = (state = 'en', action) => {
+  let globalLanguage;
   switch (action.type) {
     case TOGGLE_LANGUAGE:
-      return action.language;
+      globalLanguage = action.language;
+      break;
     default:
-      return state;
+      globalLanguage = state;
+      break;
   }
+  window.globalLanguage = globalLanguage;
+  return globalLanguage;
 };
 // 权限需要从后端接口获取
 const permission = (state = {}, action) => {
