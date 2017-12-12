@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-
+import { phone } from 'src/utils/regex';
 // import classNames from 'classnames/bind';
 // import styles from '../Leads.less';
 import getMsgByLanguage from 'src/utils/validateMessagesUtil';
@@ -97,9 +97,9 @@ class addForm extends React.Component {
             getFieldDecorator('phone', {
               rules: [{
                 required: true,
-                type: 'number',
-                min: 6,
-                max: 20,
+              }, {
+                message: '电话格式不合法',
+                pattern: phone,
               }],
             })(<Input />)}
         </FormItem>
