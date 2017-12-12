@@ -57,14 +57,11 @@ class addForm extends React.Component {
 
     const groupSelector = getFieldDecorator('group', { initialValue: 'family' })(<Select key="group">{groups.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}</Select>);
 
-    const interestsSelector = getFieldDecorator('interests', { initialValue: 'health', type: 'array' })
-    (<Select
+    const interestsSelector = getFieldDecorator('interests', { initialValue: 'health', type: 'array' })(<Select
       mode="multiple"
       style={{ width: '100%' }}
       key="interests"
-    >{interests.map((item) => {
-      return <Option value={item.value} key={item.value}>{item.title}</Option>;
-    })}
+    >{interests.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}
     </Select>);
 
 
