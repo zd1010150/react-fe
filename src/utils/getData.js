@@ -1,7 +1,6 @@
 /* eslint-disable one-var,handle-callback-err */
-import Store from 'store'
-import { SET_TOKEN, SET_USERINFO } from 'store/mutation-types'
-import fetch from './fetch'
+
+import fetch from './http';
 
 /**
  * 处理各种服务器返回错误
@@ -9,46 +8,41 @@ import fetch from './fetch'
  * @return {[type]}          [description]
  */
 
-let handlerFailedResponse = (response) => {
+const handlerFailedResponse = (response) => {
   if (response.status_code === 401) {
-    vm.toastr.error(vm.$t('info.Unauthenticated'))
-    Store.commit(SET_USERINFO, null)
-    Store.commit(SET_TOKEN, null)
-    vm.$router.replace('/login')
+    console.log('401 error');
   } else if (response.status_code === 429) {
-    vm.toastr.error(vm.$t('info.TOO_MANY_REQUEST'))
+    console.log('429 error');
   } else if (response.status_code === 404) {
-    if (window.vm) {
-      window.vm.$router.replace('/error')
-    }
+    console.log('404 error');
   } else {
-    vm.toastr.error(vm.$t('info.' + response.message) ? vm.$t('info.' + response.message) : response.message)
+    console.log(response.message);
   }
-}
+};
 /**
  * 处理http请求错误
  * @param  {[type]} response [description]
  * @return {[type]}          [description]
  */
-let filterRejectResponse = (error) => {
-  vm.toastr.error(vm.$t('info.NETWORK_ERROR'))
-}
+const filterRejectResponse = (error) => {
+  console.log(error, 'network error');
+};
 
-let fetchData = async function (type = 'GET', url = '', data = {}) {
+const fetchData = async function (type = 'GET', url = '', data = {}) {
   return fetch(type, url, data).then((response) => {
-    let success = response.status_code === 200
+    const success = response.status_code === 200;
     if (!success) {
-      handlerFailedResponse(response)
+      handlerFailedResponse(response);
     }
     return {
       data: response.data,
-      success: success,
+      success,
       message: response.message,
-      errors: response.errors
-    }
+      errors: response.errors,
+    };
   }, (error) => {
-    filterRejectResponse(error)
-  })
-}
+    filterRejectResponse(error);
+  });
+};
 
-export { fetchData }
+export default fetchData;

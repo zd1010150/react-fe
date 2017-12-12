@@ -55,7 +55,7 @@ class addForm extends React.Component {
     })(<Select style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group', { initialValue: 'family' })(<Select key="group">{groups.map(item => <Option value={item.vaule} key={item.value}>{item.title}</Option>)}</Select>);
+    const groupSelector = getFieldDecorator('group', { initialValue: 'family' })(<Select key="group">{groups.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}</Select>);
 
     const interestsSelector = getFieldDecorator('interests', { initialValue: 'health', type: 'array' })
     (<Select
@@ -63,8 +63,7 @@ class addForm extends React.Component {
       style={{ width: '100%' }}
       key="interests"
     >{interests.map((item) => {
-      debugger;
-      return <Option value={item.vaule} key={item.value}>{item.title}</Option>;
+      return <Option value={item.value} key={item.value}>{item.title}</Option>;
     })}
     </Select>);
 
