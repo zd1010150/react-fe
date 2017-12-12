@@ -19,6 +19,7 @@ class add extends React.Component {
     const self = this;
     debugger;
     this.form.instance.validateFieldsAndScroll((err, values) => {
+      console.log('Received err of form: ', err);
       if (!err) {
         console.log('Received values of form: ', values);
         self.setState({

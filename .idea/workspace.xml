@@ -2,6 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd9c487-37d8-450e-a681-14e60311f934" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/components/ui/form.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/Leads/component/test.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/index.js" afterPath="$PROJECT_DIR$/src/components/ui/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/i18n/global/form.js" afterPath="$PROJECT_DIR$/src/i18n/global/form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/regex.js" afterPath="$PROJECT_DIR$/src/utils/regex.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/validateMessagesUtil.js" afterPath="$PROJECT_DIR$/src/utils/validateMessagesUtil.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Leads/Leads.less" afterPath="$PROJECT_DIR$/src/views/Leads/Leads.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Leads/component/add.js" afterPath="$PROJECT_DIR$/src/views/Leads/component/add.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Leads/component/addForm.js" afterPath="$PROJECT_DIR$/src/views/Leads/component/addForm.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -19,22 +28,21 @@
       <file leaf-file-name="addForm.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Leads/component/addForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="488">
-              <caret line="98" column="31" lean-forward="false" selection-start-line="98" selection-start-column="31" selection-end-line="98" selection-end-column="31" />
+            <state relative-caret-position="190">
+              <caret line="200" column="41" lean-forward="false" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#87#113#0" expanded="true" />
-                <element signature="e#371#433#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="regex.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/regex.js">
+      <file leaf-file-name="Leads.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/Leads/Leads.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="18" />
+            <state relative-caret-position="105">
+              <caret line="7" column="10" lean-forward="false" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -69,6 +77,8 @@
       <find>checkPassword</find>
       <find>MAX_FETCH_TIMEOUT</find>
       <find>store</find>
+      <find>getExistRule</find>
+      <find>getErrorMsg</find>
     </findStrings>
     <replaceStrings>
       <replace>url</replace>
@@ -87,7 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/MarketingMaterials/index.js" />
         <option value="$PROJECT_DIR$/src/utils/url.js" />
         <option value="$PROJECT_DIR$/src/views/PriceSetting/component/add.js" />
         <option value="$PROJECT_DIR$/src/views/index.js" />
@@ -122,22 +131,23 @@
         <option value="$PROJECT_DIR$/src/store/global/reducer.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/i18n/global/validateMsg.js" />
-        <option value="$PROJECT_DIR$/src/utils/validateMessagesUtil.js" />
-        <option value="$PROJECT_DIR$/src/views/Leads/component/add.js" />
         <option value="$PROJECT_DIR$/src/i18n/global/ui.js" />
-        <option value="$PROJECT_DIR$/src/i18n/global/form.js" />
         <option value="$PROJECT_DIR$/src/views/Leads/i18n.js" />
         <option value="$PROJECT_DIR$/src/i18n/page/index.js" />
         <option value="$PROJECT_DIR$/src/components/ui/form.js" />
-        <option value="$PROJECT_DIR$/src/components/ui/index.js" />
         <option value="$PROJECT_DIR$/src/utils/validate.js" />
         <option value="$PROJECT_DIR$/src/components/ui/upload.js" />
         <option value="$PROJECT_DIR$/src/config/app.config.js" />
         <option value="$PROJECT_DIR$/src/utils/http.js" />
         <option value="$PROJECT_DIR$/src/utils/getData.js" />
         <option value="$PROJECT_DIR$/src/views/Leads/component/table.js" />
+        <option value="$PROJECT_DIR$/src/views/Leads/component/add.js" />
+        <option value="$PROJECT_DIR$/src/components/ui/index.js" />
         <option value="$PROJECT_DIR$/src/utils/regex.js" />
+        <option value="$PROJECT_DIR$/src/i18n/global/form.js" />
+        <option value="$PROJECT_DIR$/src/utils/validateMessagesUtil.js" />
         <option value="$PROJECT_DIR$/src/views/Leads/component/addForm.js" />
+        <option value="$PROJECT_DIR$/src/views/Leads/Leads.less" />
       </list>
     </option>
   </component>
@@ -153,8 +163,8 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="753" />
-    <option name="y" value="120" />
+    <option name="x" value="110" />
+    <option name="y" value="40" />
     <option name="width" value="1985" />
     <option name="height" value="1129" />
   </component>
@@ -204,6 +214,19 @@
               <item name="react-fe" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react-fe" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react-fe" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="i18n" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react-fe" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react-fe" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="i18n" type="462c0819:PsiDirectoryNode" />
+              <item name="global" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="react-fe" type="b2602c69:ProjectViewProjectNode" />
@@ -296,15 +319,15 @@
       <workItem from="1512366540537" duration="19236000" />
       <workItem from="1512538750922" duration="38979000" />
       <workItem from="1512703027856" duration="16773000" />
-      <workItem from="1512946421658" duration="30118000" />
+      <workItem from="1512946421658" duration="42353000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139881000" />
+    <option name="totallyTimeSpent" value="152116000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="753" y="120" width="1985" height="1129" extended-state="0" />
+    <frame x="110" y="40" width="1985" height="1129" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -390,14 +413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Leads/Leads.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -598,30 +613,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Leads/component/add.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="766">
-          <caret line="59" column="12" lean-forward="true" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/i18n/global/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="2" lean-forward="false" selection-start-line="35" selection-start-column="2" selection-end-line="35" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Leads/i18n.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/i18n/page/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -640,36 +631,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ui/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="7" lean-forward="false" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-          <folding>
-            <element signature="e#50#102#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ui/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="38" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/validateMessagesUtil.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="67" column="20" lean-forward="false" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="20" />
-          <folding>
-            <marker date="1513031197000" expanded="true" signature="5037:5042" ph="//..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/validate.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -683,8 +644,8 @@
         <state relative-caret-position="264">
           <caret line="25" column="32" lean-forward="false" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#99#125#0" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#99#125#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -694,7 +655,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -720,8 +681,8 @@
         <state relative-caret-position="10">
           <caret line="13" column="33" lean-forward="true" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#60#97#0" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="e#60#97#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -742,42 +703,97 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ui/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Leads/component/test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Leads/component/add.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Leads/component/table.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
+        <state relative-caret-position="345">
           <caret line="25" column="20" lean-forward="true" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ui/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#50#102#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/regex.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="18" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="18" />
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/validateMessagesUtil.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="485">
+          <caret line="172" column="7" lean-forward="true" selection-start-line="172" selection-start-column="7" selection-end-line="172" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/i18n/global/form.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="45" lean-forward="true" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Leads/i18n.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="16" lean-forward="false" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Leads/Leads.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="10" lean-forward="false" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Leads/component/addForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="488">
-          <caret line="98" column="31" lean-forward="false" selection-start-line="98" selection-start-column="31" selection-end-line="98" selection-end-column="31" />
+        <state relative-caret-position="190">
+          <caret line="200" column="41" lean-forward="false" selection-start-line="200" selection-start-column="41" selection-end-line="200" selection-end-column="41" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#87#113#0" expanded="true" />
-            <element signature="e#371#433#0" expanded="true" />
           </folding>
         </state>
       </provider>

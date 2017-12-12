@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { phone } from 'src/utils/regex';
-// import classNames from 'classnames/bind';
-// import styles from '../Leads.less';
-import getMsgByLanguage from 'src/utils/validateMessagesUtil';
+import classNames from 'classnames/bind';
+import styles from '../Leads.less';
 import { Upload } from 'src/components/ui/index';
+
+import { getExistRule, getErrorMsg, validator } from 'src/utils/validateMessagesUtil';
 
 class addForm extends React.Component {
   validate() {
@@ -26,9 +26,10 @@ class addForm extends React.Component {
     return e && e.fileList;
   }
   render() {
+    const { language } = this.props;
     const { Item: FormItem } = Form;
     const { Option } = Select;
-    //  const cx = classNames.bind(styles);
+    const cx = classNames.bind(styles);
     const { formatMessage } = this.props.intl;
     const { getFieldDecorator } = this.props.form;
 
@@ -45,6 +46,7 @@ class addForm extends React.Component {
         sm: { span: 18 },
       },
     };
+
 
     // mock 数据
     const groups = [{ title: 'family', value: 'family' }, { title: 'colleague', value: 'colleague' }];
@@ -64,8 +66,9 @@ class addForm extends React.Component {
     >{interests.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}
     </Select>);
 
-
+    const self = this;
     return (
+
       <Form onSubmit={this.handleSubmit}>
         <FormItem
           {...formItemLayout}
@@ -73,9 +76,12 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('lastName', {
-            rules: [{
-              required: true,
-            }],
+            rules: [
+              getExistRule('required', 'lastName', language, { required: true }),
+              {
+                validator: validator.between(3, 50, language),
+              },
+            ],
           })(<Input />)}
         </FormItem>
         <FormItem
@@ -84,9 +90,12 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('firstName', {
-              rules: [{
-                required: true,
-              }],
+              rules: [
+                getExistRule('required', 'firstName', language, { required: true }),
+                {
+                  validator: validator.between(3, 50, language),
+                },
+              ],
             })(<Input />)}
         </FormItem>
         <FormItem
@@ -95,12 +104,11 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('phone', {
-              rules: [{
-                required: true,
-              }, {
-                message: '电话格式不合法',
-                pattern: phone,
-              }],
+              rules: [
+                getExistRule('required', 'phone', language, { required: true }),
+                {
+                  validator: validator.phone(language),
+                }],
             })(<Input />)}
         </FormItem>
         <FormItem
@@ -109,9 +117,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('email', {
-              rules: [{
-                type: 'email',
-              }],
+              rules: [getExistRule('email', 'email', language)],
             })(<Input />)}
         </FormItem>
         <FormItem
@@ -120,8 +126,9 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('address', {
-              rules: [{
-                type: 'string',
+              rules: [
+                {
+                validator: validator.between(3, 150, language),
               }],
             })(<Input />)}
         </FormItem>
@@ -132,7 +139,7 @@ class addForm extends React.Component {
           {
             getFieldDecorator('city', {
               rules: [{
-                type: 'string',
+                validator: validator.between(3, 150, language),
               }],
             })(<Input />)}
         </FormItem>
@@ -143,7 +150,7 @@ class addForm extends React.Component {
           {
             getFieldDecorator('state', {
               rules: [{
-                type: 'string',
+                validator: validator.between(3, 150, language),
               }],
             })(<Input />)}
         </FormItem>
@@ -154,7 +161,7 @@ class addForm extends React.Component {
           {
             getFieldDecorator('country', {
               rules: [{
-                type: 'string',
+                validator: validator.between(3, 150, language),
               }],
             })(<Input />)}
         </FormItem>
@@ -165,11 +172,8 @@ class addForm extends React.Component {
           {
             getFieldDecorator('zipCode', {
               rules: [{
-                type: 'number',
-              }, {
-                type: 'string',
-                len: 6,
-              }],
+                  validator: validator.zipCode(language),
+                }],
             })(<Input />)}
         </FormItem>
         <FormItem
@@ -178,9 +182,7 @@ class addForm extends React.Component {
         >
           {getFieldDecorator('socialMediaNumber', {
             rules: [{
-              type: 'string',
-              min: 4,
-              max: 50,
+              validator: validator.between(3, 80, language),
             }],
           })(<Input addonBefore={socialMediaTypeSelector} style={{ width: '100%' }} />)}
         </FormItem>
@@ -196,20 +198,29 @@ class addForm extends React.Component {
         >
           { interestsSelector }
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label={formatMessage({ id: 'global.ui.button.upload' })}
-        >
-          { getFieldDecorator('idFront', {
-            valuePropName: 'fileList',
-            getValueFromEvent: this.normFile,
-            rules: [{ required: true }],
-          })(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
+        <div className={cx('id-wrapper')}>
+          <FormItem
+            className={cx('id-front')}
+            {...formItemLayout}
+            label={formatMessage({ id: 'global.ui.button.upload' })}
+          >
+            { getFieldDecorator('idFront', {
+              valuePropName: 'fileList',
+              getValueFromEvent: this.normFile,
+            })(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
 
-        </FormItem>
-        <FormItem>
-          { getFieldDecorator('idBack')(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
-        </FormItem>
+          </FormItem>
+          <FormItem
+            className={cx('id-back')}
+
+          >
+            { getFieldDecorator('idBack', {
+              valuePropName: 'fileList',
+              getValueFromEvent: this.normFile,
+            })(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
+          </FormItem>
+        </div>
+
       </Form>
     );
   }
@@ -217,13 +228,14 @@ class addForm extends React.Component {
 addForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 
 class WrapperForm extends React.Component {
   render() {
-    const lang = this.props.language || 'zh';
-    const AddForm = Form.create({ validateMessages: getMsgByLanguage(lang) })(injectIntl(addForm));
+    // const lang = this.props.language || 'zh';
+    const AddForm = Form.create()(injectIntl(addForm));
     return <AddForm {...this.props} ref={(instance) => { this.instance = instance; }} />;
   }
 }

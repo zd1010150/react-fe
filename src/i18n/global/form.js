@@ -15,6 +15,7 @@ export default {
     idFront: 'ID 正面',
     idBack: 'ID 反面',
     weChat: '微信',
+    socialMediaNumber: '社交帐号',
   },
   en: {
     lastName: 'Last Name',
@@ -32,5 +33,6 @@ export default {
     idFront: 'ID Front',
     idBack: 'ID Back',
     weChat: 'WeChat',
+    socialMediaNumber: 'Social Media Number',
   },
 };
