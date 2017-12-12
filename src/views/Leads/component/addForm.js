@@ -1,18 +1,15 @@
+/* eslint-disable react/prop-types,react/jsx-closing-tag-location,import/extensions */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Select, Icon, Modal } from 'antd';
+import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 
 // import classNames from 'classnames/bind';
 // import styles from '../Leads.less';
 import getMsgByLanguage from 'src/utils/validateMessagesUtil';
 import { Upload } from 'src/components/ui/index';
-class addForm extends React.Component {
-  state = {
-    confirmDirty: false,
-    autoCompleteResult: [],
-  };
 
+class addForm extends React.Component {
   validate() {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -21,34 +18,12 @@ class addForm extends React.Component {
       }
     });
   }
-  handleConfirmBlur = (e) => {
-    const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  }
-  checkPassword = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
+  normFile = (e) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e[0];
     }
-  }
-  checkConfirm = (rule, value, callback) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  }
-
-  handleWebsiteChange = (value) => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
-    }
-    this.setState({ autoCompleteResult });
+    return e && e.fileList;
   }
   render() {
     const { Item: FormItem } = Form;
@@ -77,29 +52,21 @@ class addForm extends React.Component {
 
     const socialMediaTypeSelector = getFieldDecorator('socialMediaType', {
       initialValue: 'weChat',
-    })(<Select style={{ width: 70 }}>
-      <Option value="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option>
-      <Option value="QQ">QQ</Option>
+    })(<Select style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group')(<Select>
-      {
-          groups.map((item, index) => <Option value={item.vaule} key={index}>{item.title}</Option>)
-        }
+    const groupSelector = getFieldDecorator('group', { initialValue: 'family' })(<Select key="group">
+      {groups.map(item => <Option value={item.vaule} key={item.value}>{item.title}</Option>)}
     </Select>);
 
-    const interestsSelector = getFieldDecorator('interests')(<Select
+    const interestsSelector = getFieldDecorator('interests', { initialValue: 'health' })(<Select
       mode="multiple"
       style={{ width: '100%' }}
-    >{interests.map((item, index) => <Option value={item.vaule} key={index}>{item.title}</Option>)}
+      key="interests"
+    >{interests.map((item) => <Option value={item.vaule} key={item.value}>{item.title}</Option>)}
     </Select>);
 
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">{ formatMessage({ id: 'global.ui.button.upload' }) }</div>
-      </div>
-    );
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <FormItem
@@ -132,6 +99,9 @@ class addForm extends React.Component {
             getFieldDecorator('phone', {
               rules: [{
                 required: true,
+                type: 'number',
+                min: 6,
+                max: 20,
               }],
             })(<Input />)}
         </FormItem>
@@ -208,15 +178,13 @@ class addForm extends React.Component {
           {...formItemLayout}
           label={formatMessage({ id: 'global.form.socialMedia' })}
         >
-          { socialMediaTypeSelector }
-          {
-            getFieldDecorator('socialMediaNumber', {
-              rules: [{
-                type: 'string',
-                min: 4,
-                max: 50,
-              }],
-            })(<Input />)}
+          {getFieldDecorator('socialMediaNumber', {
+            rules: [{
+              type: 'string',
+              min: 4,
+              max: 50,
+            }],
+          })(<Input addonBefore={socialMediaTypeSelector} style={{ width: '100%' }} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -226,12 +194,24 @@ class addForm extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
+          label={formatMessage({ id: 'global.form.interests' })}
+        >
+          { interestsSelector }
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
           label={formatMessage({ id: 'global.ui.button.upload' })}
         >
-          { getFieldDecorator('idFront')(<Upload pictureQuantity={1} uploadText={formatMessage({ id:'page.Leads.uploadIDFront' })}/>) }
-          { getFieldDecorator('idBack')(<Upload pictureQuantity={1} uploadText={formatMessage({ id:'page.Leads.uploadIDBack' })}/>) }
-        </FormItem>
+          { getFieldDecorator('idFront', {
+            valuePropName: 'fileList',
+            getValueFromEvent: this.normFile,
+            rules: [{ required: true }],
+          })(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
 
+        </FormItem>
+        <FormItem>
+          { getFieldDecorator('idBack')(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
+        </FormItem>
       </Form>
     );
   }
@@ -242,11 +222,11 @@ addForm.propTypes = {
 };
 
 
-class WrapperForm extends React.Component{
-  render(){
+class WrapperForm extends React.Component {
+  render() {
     const lang = this.props.language || 'zh';
     const AddForm = Form.create({ validateMessages: getMsgByLanguage(lang) })(injectIntl(addForm));
-    return <AddForm {...this.props} ref={(instance) => { this.instance = instance; }}/>;
+    return <AddForm {...this.props} ref={(instance) => { this.instance = instance; }} />;
   }
 }
 
