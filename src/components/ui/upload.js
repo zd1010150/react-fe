@@ -4,13 +4,20 @@ import { Upload, Icon, Modal } from 'antd';
 import PropTypes from 'prop-types';
 
 class PicturesWall extends React.Component {
-
   constructor(props) {
     super(props);
+    let fileList = [];
+    if (this.props.file && this.props.file.length > 0) {
+      debugger;
+      fileList.push({
+        status: 'done',
+        url: this.props.file,
+      });
+    }
     this.state = {
       previewVisible: false,
       previewImage: '',
-      fileList: [],
+      fileList,
     };
   }
 
@@ -58,10 +65,12 @@ PicturesWall.defaultProps = {
   onChange() {
 
   },
+  file: '',
 };
 PicturesWall.propTypes = {
   pictureQuantity: PropTypes.number,
   uploadText: PropTypes.string,
   onChange: PropTypes.func,
+  file: PropTypes.string,
 };
 export default PicturesWall;

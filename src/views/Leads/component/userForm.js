@@ -6,10 +6,9 @@ import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../Leads.less';
 import { Upload } from 'src/components/ui/index';
-
 import { getExistRule, getErrorMsg, validator } from 'src/utils/validateMessagesUtil';
 
-class addForm extends React.Component {
+class userForm extends React.Component {
   validate() {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -32,7 +31,7 @@ class addForm extends React.Component {
     const cx = classNames.bind(styles);
     const { formatMessage } = this.props.intl;
     const { getFieldDecorator } = this.props.form;
-
+    const { editLead } = this.props;
     console.log(this.props.form, '====');
     // const { autoCompleteResult } = this.state;
 
@@ -53,13 +52,13 @@ class addForm extends React.Component {
     const interests = [{ title: 'health', value: 'health' }, { title: 'mastic', value: 'mastic' }];
 
     const socialMediaTypeSelector = getFieldDecorator('socialMediaType', {
-      initialValue: 'weChat',
+      initialValue: editLead.socialMediaType || 'weChat',
     })(<Select style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group', { initialValue: 'family' })(<Select key="group">{groups.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}</Select>);
+    const groupSelector = getFieldDecorator('group', { initialValue: editLead.group || 'family' })(<Select key="group">{groups.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}</Select>);
 
-    const interestsSelector = getFieldDecorator('interests', { initialValue: 'health', type: 'array' })(<Select
+    const interestsSelector = getFieldDecorator('interests', { initialValue: editLead.interests || 'health', type: 'array' })(<Select
       mode="multiple"
       style={{ width: '100%' }}
       key="interests"
@@ -76,6 +75,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('lastName', {
+            initialValue: editLead.lastName || '',
             rules: [
               getExistRule('required', 'lastName', language, { required: true }),
               {
@@ -90,6 +90,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('firstName', {
+              initialValue: editLead.firstName || '',
               rules: [
                 getExistRule('required', 'firstName', language, { required: true }),
                 {
@@ -104,6 +105,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('phone', {
+              initialValue: editLead.phone || '',
               rules: [
                 getExistRule('required', 'phone', language, { required: true }),
                 {
@@ -117,6 +119,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('email', {
+              initialValue: editLead.email || '',
               rules: [getExistRule('email', 'email', language)],
             })(<Input />)}
         </FormItem>
@@ -126,6 +129,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('address', {
+              initialValue: editLead.address || '',
               rules: [
                 {
                 validator: validator.between(3, 150, language),
@@ -138,6 +142,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('city', {
+              initialValue: editLead.city || '',
               rules: [{
                 validator: validator.between(3, 150, language),
               }],
@@ -149,6 +154,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('state', {
+              initialValue: editLead.state || '',
               rules: [{
                 validator: validator.between(3, 150, language),
               }],
@@ -160,6 +166,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('country', {
+              initialValue: editLead.country || '',
               rules: [{
                 validator: validator.between(3, 150, language),
               }],
@@ -171,6 +178,7 @@ class addForm extends React.Component {
         >
           {
             getFieldDecorator('zipCode', {
+              initialValue: editLead.zipCode || '',
               rules: [{
                   validator: validator.zipCode(language),
                 }],
@@ -181,6 +189,7 @@ class addForm extends React.Component {
           label={formatMessage({ id: 'global.form.socialMedia' })}
         >
           {getFieldDecorator('socialMediaNumber', {
+            initialValue: editLead.socialMediaNumber || '',
             rules: [{
               validator: validator.between(3, 80, language),
             }],
@@ -205,9 +214,10 @@ class addForm extends React.Component {
             label={formatMessage({ id: 'global.ui.button.upload' })}
           >
             { getFieldDecorator('idFront', {
+              initialValue: editLead.idFront || '',
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
-            })(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
+            })(<Upload file={editLead.idFront || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
 
           </FormItem>
           <FormItem
@@ -215,9 +225,10 @@ class addForm extends React.Component {
 
           >
             { getFieldDecorator('idBack', {
+              initialValue: editLead.idBack || '',
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
-            })(<Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
+            })(<Upload file={editLead.idBack || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
           </FormItem>
         </div>
 
@@ -225,17 +236,21 @@ class addForm extends React.Component {
     );
   }
 }
-addForm.propTypes = {
+userForm.defaultProps = {
+  editLead: null,
+};
+userForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
+  editLead: PropTypes.object,
 };
 
 
 class WrapperForm extends React.Component {
   render() {
     // const lang = this.props.language || 'zh';
-    const AddForm = Form.create()(injectIntl(addForm));
+    const AddForm = Form.create()(injectIntl(userForm));
     return <AddForm {...this.props} ref={(instance) => { this.instance = instance; }} />;
   }
 }

@@ -1,11 +1,57 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Table, Button, Divider, Icon, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
+import ID from './ID';
+import UserDialog from './userDialog';
 
+const mockEditUser = {
+  firstName: 'dan',
+  lastName: 'zhang',
+  phone: '23333',
+  email: '2222',
+  address: '33333',
+  city: '',
+  state: '',
+  country: '',
+  zipCode: '',
+  socialMediaType: 'qq',
+  socialMediaNumber: '12333',
+  group: 'friend',
+  interests: ['mastic'],
+  idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
+  idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
+};
+const mockId = {
+  userId: '23333',
+  idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
+  idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
+  visible: false,
+};
 class leadsTable extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    userDialogVisible: false,
+    editID: null,
+    editLead: null,
+  }
+  editLead(id) {
+    console.log('this is editlead the userID is', id);
+    this.setState(Object.assign({}, this.state, {
+      userDialogVisible: true,
+      editLead: mockEditUser,
+    }));
+  }
+  editID(id) {
+    console.log('this is editid the userID is', id);
+    this.setState(Object.assign({}, this.state, {
+      editID: mockId
+    }))
+  }
+  closeUserDialog(){
+    this.setState(Object.assign({}, this.state, {
+      userDialogVisible: false,
+      editLead: {}
+    }))
   }
   render() {
     const { formatMessage } = this.props.intl;
@@ -36,12 +82,12 @@ class leadsTable extends React.Component {
       render: (text, record) => (
         <span>
           <Tooltip title="查看id">
-            <Icon type="picture" />
+            <Icon type="picture" onClick={this.editID(record.id)} />
           </Tooltip>
           <Divider type="vertical" />
           <Icon type="user" />
           <Divider type="vertical" />
-          <Icon type="edit" />
+          <Icon type="edit" onClick={this.editLead(record.id)} />
           <Divider type="vertical" />
           <Icon type="user-delete" />
           <Divider type="vertical" />
@@ -78,12 +124,19 @@ class leadsTable extends React.Component {
       group: 'family',
       interests: ['health', 'mestic', 'dddd'],
     }];
-    return <Table columns={columns} dataSource={data} />;
+    return (
+      <div>
+        <Table columns={columns} dataSource={data} />
+        <ID {...this.state.editID} />
+        <UserDialog visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onCloseDialog={this.closeUserDialog}/>
+      </div>
+    );
   }
 }
 
 leadsTable.propTypes = {
   intl: intlShape.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 const LeadsTable = injectIntl(leadsTable);

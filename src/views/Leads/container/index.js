@@ -10,10 +10,11 @@ class leadsView extends React.Component {
     this.props.setPageTitle('global.pageTitle.leads');
   }
   render() {
+    const { language } = this.props;
     return (
       <section className="section section-page">
-        <div className="section-header"><Add /></div>
-        <div className="section-content"><Table /></div>
+        <div className="section-header"><Add language={language}/></div>
+        <div className="section-content"><Table language={language}/></div>
         <div className="section-header"/>
       </section>
     );
@@ -21,12 +22,14 @@ class leadsView extends React.Component {
 }
 leadsView.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired,
 };
-
+const mapStateToProps = ({ global }) => ({
+  language: global.language,
+});
 const mapDispatchToProp = {
   setPageTitle,
 };
 
-const LeadsView = connect(null, mapDispatchToProp)(leadsView);
+const LeadsView = connect(mapStateToProps, mapDispatchToProp)(leadsView);
 export default LeadsView;
-
