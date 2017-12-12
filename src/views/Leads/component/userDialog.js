@@ -30,21 +30,21 @@ class userDialog extends React.Component {
   }
   render() {
     const { formatMessage } = this.props.intl;
-    const { editLead, visible, language } = this.props;
+    const { editLead, visible, language, cantEdit } = this.props;
     return (
       <Modal
-        title={editLead ? formatMessage({ id: 'page.Leads.editLeadsDiologTitle' }) : formatMessage({ id: 'page.Leads.addLeadsDialogTitle' })}
+        title={ JSON.stringify(editLead) === "{}" ? formatMessage({ id: 'page.Leads.addLeadsDialogTitle' }) : ( cantEdit ? formatMessage({ id: 'page.Leads.editLeadsDiologTitle' }) : formatMessage({ id: 'page.Leads.leadsDialogDetailTitle'}))}
         visible={visible}
         onOk={this.handleOk}
         onCancel={this.handleCancel}
         footer={[
           <Button key="back" onClick={this.handleCancel}>{ formatMessage({ id: 'global.ui.button.cancel' }) }</Button>,
-          <Button key="submit" type="primary" onClick={() => { this.handleValidate(); }}>
+          <Button disabled={!cantEdit} key="submit" type="primary" onClick={() => { this.handleValidate(); }}>
             { formatMessage({ id: 'global.ui.button.submit' }) }
           </Button>,
         ]}
       >
-        <UserForm editLead={editLead} language={language} onSubmit={this.handleSubmit} ref={(c) => { this.form = c; }} />
+        <UserForm cantEdit={cantEdit} editLead={editLead} language={language} onSubmit={this.handleSubmit} ref={(c) => { this.form = c; }} />
       </Modal>
     );
   }
@@ -53,6 +53,7 @@ class userDialog extends React.Component {
 userDialog.defaultProps = {
   editLead: {},
   visible: false,
+  cantEdit: false,
 };
 userDialog.propTypes = {
   intl: intlShape.isRequired,
@@ -60,6 +61,7 @@ userDialog.propTypes = {
   language: PropTypes.string.isRequired,
   visible: PropTypes.bool,
   onCloseDialog: PropTypes.func.isRequired,
+  cantEdit: PropTypes.bool,
 };
 const UserDialog = injectIntl(userDialog);
 export default UserDialog;

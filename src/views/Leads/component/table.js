@@ -11,10 +11,10 @@ const mockEditUser = {
   phone: '23333',
   email: '2222',
   address: '33333',
-  city: '',
-  state: '',
-  country: '',
-  zipCode: '',
+  city: 'bazhong',
+  state: 'sichuang',
+  country: 'china',
+  zipCode: '123455',
   socialMediaType: 'qq',
   socialMediaNumber: '12333',
   group: 'friend',
@@ -31,27 +31,44 @@ const mockId = {
 class leadsTable extends React.Component {
   state = {
     userDialogVisible: false,
-    editID: null,
-    editLead: null,
+    cantEdit: true,
+    editID: mockId,
+    editLead: mockEditUser,
   }
-  editLead(id) {
+  handleEditLead(id) {
     console.log('this is editlead the userID is', id);
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
+      cantEdit: true,
       editLead: mockEditUser,
     }));
   }
-  editID(id) {
+  handleEditID(id) {
     console.log('this is editid the userID is', id);
-    this.setState(Object.assign({}, this.state, {
-      editID: mockId
-    }))
+
+    const editID = Object.assign({}, this.state.editID, { visible: true });
+    this.setState(Object.assign({}, this.state, { editID }));
   }
-  closeUserDialog(){
+  closeUserDialog() {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: false,
-      editLead: {}
-    }))
+      cantEdit: true,
+      editLead: {},
+    }));
+  }
+  handleIDClose(){
+    console.log('this is editid the userID is', this, this.state);
+
+    const editID = Object.assign({}, this.state.editID, { visible: false });
+    this.setState(Object.assign({}, this.state, { editID }));
+  }
+  handleUserDetail(id){
+    console.log('this is editlead the userID is', id);
+    this.setState(Object.assign({}, this.state, {
+      userDialogVisible: true,
+      cantEdit: false,
+      editLead: mockEditUser,
+    }));
   }
   render() {
     const { formatMessage } = this.props.intl;
@@ -81,15 +98,21 @@ class leadsTable extends React.Component {
       key: 'action',
       render: (text, record) => (
         <span>
-          <Tooltip title="查看id">
-            <Icon type="picture" onClick={this.editID(record.id)} />
+          <Tooltip title={ formatMessage({ id: 'page.Leads.editId'}) }>
+            <Icon type="picture" onClick={() => { this.handleEditID(record.id); }} />
           </Tooltip>
           <Divider type="vertical" />
-          <Icon type="user" />
+          <Tooltip title={ formatMessage({ id: 'page.Leads.userDetail'}) }>
+            <Icon type="user" onClick={() => { this.handleUserDetail(record.id) }}/>
+          </Tooltip>
           <Divider type="vertical" />
-          <Icon type="edit" onClick={this.editLead(record.id)} />
+          <Tooltip title={ formatMessage({ id: 'page.Leads.editUser'}) }>
+            <Icon type="edit" onClick={() => { this.handleEditLead(record.id); }} />
+          </Tooltip>
           <Divider type="vertical" />
-          <Icon type="user-delete" />
+          <Tooltip title={ formatMessage({ id: 'page.Leads.deleteUser'}) }>
+            <Icon type="user-delete" />
+          </Tooltip>
           <Divider type="vertical" />
           <Button type="primary" size="small">Order</Button>
         </span>
@@ -127,8 +150,8 @@ class leadsTable extends React.Component {
     return (
       <div>
         <Table columns={columns} dataSource={data} />
-        <ID {...this.state.editID} />
-        <UserDialog visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onCloseDialog={this.closeUserDialog}/>
+        <ID {...this.state.editID} onClose={this.handleIDClose.bind(this)}/>
+        <UserDialog cantEdit={this.state.cantEdit} visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onCloseDialog={this.closeUserDialog.bind(this)} />
       </div>
     );
   }

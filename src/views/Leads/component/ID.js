@@ -10,31 +10,28 @@ class id extends React.Component {
  state = { visible: this.props.visible }
  handleOk = (e) => {
    console.log(e);
-   this.setState({
-     visible: false,
-   });
+   this.props.onClose()
  }
  handleCancel = (e) => {
    console.log(e);
-   this.setState({
-     visible: false,
-   });
+   this.props.onClose()
  }
  render() {
    const { formatMessage } = this.props.intl;
+   const cx = classNames.bind(styles);
 
    return (
      <Modal
        title="Basic Modal"
-       visible={this.state.visible}
+       visible={this.props.visible}
        onOk={this.handleOk}
        onCancel={this.handleCancel}
      >
        <div className="row">
-         <div className="col-md-6 col-sm-6">
+         <div className="col-md-6 col-sm-6" style={{textAlign:'center'}}>
            <Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} file={this.props.idFront} />
          </div>
-         <div className="col-md-6 col-sm-6">
+         <div className="col-md-6 col-sm-6" style={{textAlign:'center'}}>
            <Upload pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} file={this.props.idBack} />
          </div>
        </div>
@@ -54,6 +51,7 @@ id.propTypes = {
   userId: PropTypes.string,
   idFront: PropTypes.string,
   idBack: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
 };
 const ID = injectIntl(id);
 export default ID;

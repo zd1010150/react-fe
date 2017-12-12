@@ -10,6 +10,7 @@ class PicturesWall extends React.Component {
     if (this.props.file && this.props.file.length > 0) {
       debugger;
       fileList.push({
+        uid: Math.random(),
         status: 'done',
         url: this.props.file,
       });
@@ -41,6 +42,7 @@ class PicturesWall extends React.Component {
         <div className="ant-upload-text">{ this.props.uploadText }</div>
       </div>
     );
+    console.log("disabled", this.props.disabled);
     return (
       <div style={{ display: 'inline-block' }}>
         <Upload
@@ -49,8 +51,9 @@ class PicturesWall extends React.Component {
           fileList={fileList}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
+          disabled={this.props.disabled}
         >
-          { this.props.pictureQuantity < 0 ? uploadButton : (this.state.fileList.length >= this.props.pictureQuantity ? null : uploadButton) }
+          { this.props.disabled ? null : (this.props.pictureQuantity < 0 ? uploadButton : (this.state.fileList.length >= this.props.pictureQuantity ? null : uploadButton)) }
         </Upload>
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
@@ -66,11 +69,13 @@ PicturesWall.defaultProps = {
 
   },
   file: '',
+  disabled: false,
 };
 PicturesWall.propTypes = {
   pictureQuantity: PropTypes.number,
   uploadText: PropTypes.string,
   onChange: PropTypes.func,
   file: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 export default PicturesWall;

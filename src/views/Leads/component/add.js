@@ -25,7 +25,7 @@ class add extends React.Component {
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>{ formatMessage({ id: 'global.ui.button.addBtn' }, { actionType: formatMessage({ id: 'global.properNouns.leads' }) })}</Button>
-        <UserDialog language={this.props.language} visible={this.state.visible} onCloseDialog={this.closeDialog}/>
+        <UserDialog language={this.props.language} visible={this.state.dialogVisible} onCloseDialog={this.closeDialog.bind(this)}/>
       </div>
     );
   }
