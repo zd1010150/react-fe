@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
 import Add from '../component/add';
-
+import Table from '../component/table';
 // const accountView = () => <Add />;
 class leadsView extends React.Component {
   componentDidMount() {
@@ -13,8 +13,8 @@ class leadsView extends React.Component {
     return (
       <section className="section section-page">
         <div className="section-header"><Add /></div>
-        <div className="section-content" />
-        <div className="section-header" />
+        <div className="section-content"><Table /></div>
+        <div className="section-header"/>
       </section>
     );
   }
