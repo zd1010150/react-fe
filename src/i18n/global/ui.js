@@ -6,9 +6,13 @@ export default {
       submit: '提交',
       addBtn: '新增{actionType}',
       upload: '上传',
+      view: '查看{file}',
     },
     input: {
       searchStore: '在此搜索全站商品...',
+    },
+    table: {
+      action: '操作',
     },
   },
   en: {
@@ -18,9 +22,13 @@ export default {
       submit: 'Submit',
       addBtn: 'Add {actionType}',
       upload: 'Upload',
+      view: 'View {file}',
     },
     input: {
       searchStore: 'Search entire store here...',
+    },
+    table: {
+      action: 'Action',
     },
   },
 };

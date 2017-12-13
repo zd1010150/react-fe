@@ -8,16 +8,16 @@ import UserDialog from './userDialog';
 
 
 class add extends React.Component {
-  state = { dialogVisible : false }
+  state = { dialogVisible: false }
   showModal = () => {
     this.setState({
       dialogVisible: true,
     });
   }
-  closeDialog = () =>{
+  closeDialog = () => {
     this.setState({
-      dialogVisible : false
-    })
+      dialogVisible: false,
+    });
   }
   render() {
     // const cx = classNames.bind(styles);
@@ -25,7 +25,7 @@ class add extends React.Component {
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>{ formatMessage({ id: 'global.ui.button.addBtn' }, { actionType: formatMessage({ id: 'global.properNouns.leads' }) })}</Button>
-        <UserDialog language={this.props.language} visible={this.state.dialogVisible} onCloseDialog={this.closeDialog.bind(this)}/>
+        <UserDialog language={this.props.language} visible={this.state.dialogVisible} onClose={() => { this.closeDialog(); }} />
       </div>
     );
   }

@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
-import styles from '../Leads.less';
+import styles from '../Accounts.less';
 import { Upload } from 'src/components/ui/index';
 import { getExistRule, validator } from 'src/utils/validateMessagesUtil';
+
+const cx = classNames.bind(styles);
 
 class userForm extends React.Component {
   validate() {
@@ -28,7 +30,6 @@ class userForm extends React.Component {
     const { language } = this.props;
     const { Item: FormItem } = Form;
     const { Option } = Select;
-    const cx = classNames.bind(styles);
     const { formatMessage } = this.props.intl;
     const { getFieldDecorator } = this.props.form;
     const { editLead, cantEdit } = this.props;

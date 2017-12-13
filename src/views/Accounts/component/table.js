@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Divider, Icon, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Table, Button, Divider, Icon, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 import ID from './ID';
 import UserDialog from './userDialog';
-import DeleteDialog from './deleteDialog';
-
+import HistoryOrderDialog from './historyOrderDialog';
 const mockEditUser = {
   firstName: 'dan',
   lastName: 'zhang',
@@ -32,9 +31,8 @@ const mockId = {
 };
 class leadsTable extends React.Component {
   state = {
-    deleteDialogVisible: false,
-    deleteUserId: 233,
     userDialogVisible: false,
+    historyOrderDialogVisble: false,
     cantEdit: true,
     editID: mockId,
     editLead: mockEditUser,
@@ -52,10 +50,9 @@ class leadsTable extends React.Component {
     const editID = Object.assign({}, this.state.editID, { visible: false });
     this.setState(Object.assign({}, this.state, { editID }));
   }
-  closeDeleteDialog() {
-    console.log('close delete dialog');
+  closeHistoryOrder() {
     this.setState(Object.assign({}, this.state, {
-      deleteDialogVisible: false,
+      historyOrderDialogVisble: false,
     }));
   }
   // table action 操作
@@ -81,11 +78,9 @@ class leadsTable extends React.Component {
       editLead: mockEditUser,
     }));
   }
-  handleDeleteLead(id) {
-    console.log('this is delete the userID is', id);
+  handleHistoryOrder(id) {
     this.setState(Object.assign({}, this.state, {
-      deleteDialogVisible: true,
-      deleteUserId: id,
+      historyOrderDialogVisble: true,
     }));
   }
   render() {
@@ -128,11 +123,9 @@ class leadsTable extends React.Component {
             <Icon type="edit" onClick={() => { this.handleEditLead(record.id); }} />
           </Tooltip>
           <Divider type="vertical" />
-          <Tooltip title={formatMessage({ id: 'page.Leads.deleteUser' })}>
-            <Icon type="user-delete" onClick={() => { this.handleDeleteLead(record.id); }} />
-          </Tooltip>
+          <Button size="small" onClick={() => { this.handleHistoryOrder(record.id); }}>{formatMessage({ id: 'page.Accounts.historyOrder' })}</Button>
           <Divider type="vertical" />
-          <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn">{formatMessage({ id: 'page.Leads.order' })}</Link>
+          <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn">{formatMessage({ id: 'page.Accounts.order' })}</Link>
         </span>
       ),
     }];
@@ -170,7 +163,7 @@ class leadsTable extends React.Component {
         <Table columns={columns} dataSource={data} />
         <ID {...this.state.editID} onClose={() => { this.handleIDClose(); }} />
         <UserDialog cantEdit={this.state.cantEdit} visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onClose={() => { this.closeUserDialog(); }} />
-        <DeleteDialog userId={this.state.deleteUserId} visible={this.state.deleteDialogVisible} onClose={() => { this.closeDeleteDialog(); }} />
+        <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }}/>
       </div>
     );
   }

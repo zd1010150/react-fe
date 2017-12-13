@@ -8,7 +8,6 @@ class PicturesWall extends React.Component {
     super(props);
     let fileList = [];
     if (this.props.file && this.props.file.length > 0) {
-      debugger;
       fileList.push({
         uid: Math.random(),
         status: 'done',
