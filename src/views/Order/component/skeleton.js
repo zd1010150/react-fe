@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
@@ -10,10 +11,10 @@ import SplitOrder from './splitOrder';
 
 class skeleton extends React.Component {
   state = {
-    currentStep: 1,
+    currentStep: 0,
     steps: [{
       title: 'chooseUser',
-      content: <ChooseUser />,
+      content: <ChooseUser user={this.props.user} userId={this.props.userId} setOrderUser={this.props.setOrderUser} />,
     }, {
       title: 'chooseGoods',
       content: <ChooseGood />,
@@ -80,6 +81,8 @@ class skeleton extends React.Component {
 skeleton.propTypes = {
   intl: intlShape.isRequired,
   userId: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+  setOrderUser: PropTypes.func.isRequired,
 };
 const Skeleton = injectIntl(skeleton);
 export default Skeleton;

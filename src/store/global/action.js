@@ -1,4 +1,4 @@
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER } from './actionType';
 
 export const toggleLanguage = language => ({
   type: TOGGLE_LANGUAGE,
@@ -16,4 +16,8 @@ export const setPageTitle = pageTitle => ({
   type: SET_PAGETITLE,
   pageTitle,
 });
+export const setOrderUser = user => ({
+  type: SET_ORDER_USER,
+  user,
+})
 

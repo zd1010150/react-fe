@@ -5,6 +5,8 @@ export default {
     confirmOrder: '确认订单',
     splitOrder: '拆分订单',
     cart: '购物车',
+    selecteUser: '收件人信息',
+    modifyAddress: '更改收件人',
   },
   en: {
     chooseUser: 'Choose User',
@@ -12,5 +14,7 @@ export default {
     confirmOrder: 'Confirm Order',
     splitOrder: 'Split Order',
     cart: 'Cart',
+    selecteUser: 'Client Info',
+    modifyAddress: 'Modify Client',
   },
 };

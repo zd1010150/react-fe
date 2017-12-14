@@ -1,3 +1,2 @@
-export const GET_SELECT_USER_INFO = 'GET_SELECT_USER_INFO';
-export const QUERY_USER = 'QUERY_USER';
+export const QUERY_USER_BY_NAME = 'QUERY_USER_BY_NAME';
 export const QUERY_GOODS = 'QUERY_GOODS';

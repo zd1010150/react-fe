@@ -7,6 +7,7 @@ export default {
       addBtn: '新增{actionType}',
       upload: '上传',
       view: '查看{file}',
+      select: '选择',
     },
     input: {
       searchStore: '在此搜索全站商品...',
@@ -23,6 +24,7 @@ export default {
       addBtn: 'Add {actionType}',
       upload: 'Upload',
       view: 'View {file}',
+      select: 'Select',
     },
     input: {
       searchStore: 'Search entire store here...',
