@@ -14,14 +14,14 @@ class skeleton extends React.Component {
     currentStep: 0,
     steps: [{
       title: 'chooseUser',
-      content: <ChooseUser user={this.props.user} userId={this.props.userId} setOrderUser={this.props.setOrderUser} />,
     }, {
       title: 'chooseGoods',
-      content: <ChooseGood />,
     }, {
       title: 'confirmOrder',
-      content: (<Confirm splitOrder={() => { this.splitOrder(); }} />),
     }],
+  }
+  getStepByTitle() {
+    return this.state.steps[this.state.currentStep].title;
   }
   next() {
     const currentStep = this.state.currentStep + 1;
@@ -35,7 +35,6 @@ class skeleton extends React.Component {
     const newSteps = this.state.steps.slice();
     newSteps.splice(2, 0, {
       title: 'splitOrder',
-      content: <SplitOrder />,
     });
     this.setState({
       steps: newSteps,
@@ -47,9 +46,24 @@ class skeleton extends React.Component {
   }
   render() {
     const { formatMessage } = this.props.intl;
+    const contents = [{
+      title: 'chooseUser',
+      content: <ChooseUser user={this.props.user} setOrderUser={this.props.setOrderUser} />,
+    }, {
+      title: 'chooseGoods',
+      content: <ChooseGood />,
+    }, {
+      title: 'confirmOrder',
+      content: (<Confirm splitOrder={() => { this.splitOrder(); }} />),
+    },
+    {
+      title: 'splitOrder',
+      content: <SplitOrder />,
+    }];
+    const title = this.getStepByTitle();
+    const content = contents.filter(item => item.title === title);
     return (
       <div>
-        { this.props.userId }
         <Step currentStep={this.state.currentStep} steps={this.state.steps} />
         <div className="steps-action">
           {
@@ -71,7 +85,7 @@ class skeleton extends React.Component {
             <Button type="primary" onClick={() => this.submitOrder()}>确认</Button>
           }
         </div>
-        <div className="steps-content">{this.state.steps[this.state.currentStep].content}</div>
+        <div className="steps-content">{ content[0].content }</div>
 
       </div>
     );
@@ -80,7 +94,6 @@ class skeleton extends React.Component {
 
 skeleton.propTypes = {
   intl: intlShape.isRequired,
-  userId: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   setOrderUser: PropTypes.func.isRequired,
 };

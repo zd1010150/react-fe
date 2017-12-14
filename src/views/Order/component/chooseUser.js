@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -10,9 +11,9 @@ const { Search } = Input;
 class chooseUser extends React.Component {
   constructor(props) {
     super(props);
-    const { user, userId } = this.props;
+    const { user } = this.props;
     this.state = {
-      searchAreaVisible: _.isEmpty(user) || _.isEmpty(userId),
+      searchAreaVisible: _.isEmpty(user),
       data: [],
     };
   }
@@ -28,10 +29,6 @@ class chooseUser extends React.Component {
     });
   }
   selectUser(record) {
-    this.setState({
-      searchAreaVisible: false,
-    });
-
     this.props.setOrderUser(record);
   }
   search() {
@@ -79,8 +76,6 @@ class chooseUser extends React.Component {
     let selecteUserEl = <span />;
     let searchUserEl = <span />;
     const modifySelectedUserEl = <Button onClick={() => { this.displaySearch(); }}>{ formatMessage({ id: 'page.Order.modifyAddress' }) }</Button>;
-    const { user, userId } = this.props;
-    const selectedUser = _.isEmpty(userId) ? {} : user;
 
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
@@ -104,7 +99,7 @@ class chooseUser extends React.Component {
       title: formatMessage({ id: 'global.form.group' }),
       dataIndex: 'group',
       key: 'group',
-    },  {
+    }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
       render: (text, record) => (
@@ -113,7 +108,7 @@ class chooseUser extends React.Component {
         </span>
       ),
     }];
-
+    const selectedUser = this.props.user;
     if (!_.isEmpty(selectedUser)) {
       selecteUserEl = (
         <div className="block">
@@ -174,7 +169,6 @@ class chooseUser extends React.Component {
 
 chooseUser.propTypes = {
   intl: intlShape.isRequired,
-  userId: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
   setOrderUser: PropTypes.func.isRequired,
 };
