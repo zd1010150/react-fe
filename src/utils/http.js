@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 import { baseUrl } from '../config/env.config';
 import { MAX_FETCH_TIMEOUT } from '../config/app.config';
 
-export default async (type = 'GET', url = '', data = {}) => {
+export default async (type = 'GET', url = '', data = {}, headers = {}) => {
   type = type.toUpperCase();
   url = baseUrl + url;
 
@@ -13,6 +13,7 @@ export default async (type = 'GET', url = '', data = {}) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      ...headers,
     },
     mode: 'cors',
     cache: 'default', // should set cache to 'no-cache'
