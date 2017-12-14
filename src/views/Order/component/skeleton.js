@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, Tabs } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import Step from './step';
 import ChooseGood from './chooseGood';
@@ -9,6 +9,8 @@ import ChooseUser from './chooseUser';
 import Confirm from './confirm';
 import SplitOrder from './splitOrder';
 
+
+const { TabPane } = Tabs;
 class skeleton extends React.Component {
   state = {
     currentStep: 0,
@@ -19,9 +21,6 @@ class skeleton extends React.Component {
     }, {
       title: 'confirmOrder',
     }],
-  }
-  getStepByTitle() {
-    return this.state.steps[this.state.currentStep].title;
   }
   next() {
     const currentStep = this.state.currentStep + 1;
@@ -46,22 +45,7 @@ class skeleton extends React.Component {
   }
   render() {
     const { formatMessage } = this.props.intl;
-    const contents = [{
-      title: 'chooseUser',
-      content: <ChooseUser user={this.props.user} setOrderUser={this.props.setOrderUser} />,
-    }, {
-      title: 'chooseGoods',
-      content: <ChooseGood />,
-    }, {
-      title: 'confirmOrder',
-      content: (<Confirm splitOrder={() => { this.splitOrder(); }} />),
-    },
-    {
-      title: 'splitOrder',
-      content: <SplitOrder />,
-    }];
-    const title = this.getStepByTitle();
-    const content = contents.filter(item => item.title === title);
+
     return (
       <div>
         <Step currentStep={this.state.currentStep} steps={this.state.steps} />
@@ -85,8 +69,12 @@ class skeleton extends React.Component {
             <Button type="primary" onClick={() => this.submitOrder()}>确认</Button>
           }
         </div>
-        <div className="steps-content">{ content[0].content }</div>
-
+        <Tabs className="steps-content" defaultActiveKey="1" activeKey={this.state.steps[this.state.currentStep].title} >
+          <TabPane tab="" key="chooseUser"><ChooseUser user={this.props.user} setOrderUser={this.props.setOrderUser} userId={this.props.userId} /></TabPane>
+          <TabPane tab="" key="chooseGoods"><ChooseGood /></TabPane>
+          <TabPane tab="" key="splitOrder"><SplitOrder /></TabPane>
+          <TabPane tab="" key="confirmOrder"><Confirm splitOrder={() => { this.splitOrder(); }} /></TabPane>
+        </Tabs>
       </div>
     );
   }

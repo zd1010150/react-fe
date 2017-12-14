@@ -3,27 +3,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { setPageTitle, setOrderUser } from 'store/global/action';
 import queryString from 'query-string';
 import Skeleton from '../component/skeleton';
-import _ from 'lodash';
+
 
 class orderView extends React.Component {
   constructor(props) {
+    console.log('container in construector');
     super(props);
-    const { location, setOrderUser } = this.props;
+    const { location } = this.props;
     const pairs = queryString.parse(location.search);
     this.state = {
       userId: (pairs && pairs.userId) || '',
     };
+    this.props.setPageTitle('global.pageTitle.order');
     if (_.isEmpty(this.state.userId)) {
-      setOrderUser(null);
+      console.log('uerid is empty in consturter ');
+      this.props.setOrderUser(null);
     }
   }
   componentDidMount() {
-    this.props.setPageTitle('global.pageTitle.order');
+    console.log('container did mount:', this.props.user);
   }
   render() {
+    console.log('container render');
     const { language } = this.props;
     return (
       <section className="section section-page">
