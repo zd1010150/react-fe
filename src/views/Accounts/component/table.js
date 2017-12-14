@@ -117,7 +117,7 @@ class leadsTable extends React.Component {
     const data = [{
       id: 122333,
       key: 122333,
-      firstName: 'dan',
+      firstName: '1dan',
       lastName: 'zhang',
       phone: '23333',
       email: '2222',
@@ -135,7 +135,7 @@ class leadsTable extends React.Component {
     }, {
       id: 122345533,
       key: 122345533,
-      firstName: 'dan1',
+      firstName: '2dan1',
       lastName: 'zhang',
       phone: '23333',
       email: '2222',
@@ -153,7 +153,7 @@ class leadsTable extends React.Component {
     }, {
       id: 1224555333333,
       key: 1224555333333,
-      firstName: 'dan2',
+      firstName: '3dan2',
       lastName: 'zhang',
       phone: '23333',
       email: '2222',
