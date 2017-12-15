@@ -106,7 +106,6 @@ const setSelectingQuantity = (allGoods, goods, quantity) => {
   return newAllGoods;
 };
 const updateGoodsWhenEditingCartGoods = (allGoods, goods, quantity) => {
-  debugger;
   let newAllGoods = allGoods.slice();
   newAllGoods = newAllGoods.map((item) => {
     if (item.id === goods.id) {
