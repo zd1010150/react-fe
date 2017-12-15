@@ -1,2 +1,4 @@
 export const QUERY_USER_BY_NAME = 'QUERY_USER_BY_NAME';
-export const QUERY_GOODS = 'QUERY_GOODS';
+
+
+

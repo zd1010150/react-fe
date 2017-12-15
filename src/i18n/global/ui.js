@@ -8,6 +8,7 @@ export default {
       upload: '上传',
       view: '查看{file}',
       select: '选择',
+      addGoodsToCart: '加入购物车',
     },
     input: {
       searchStore: '在此搜索全站商品...',
@@ -25,6 +26,7 @@ export default {
       upload: 'Upload',
       view: 'View {file}',
       select: 'Select',
+      addGoodsToCart: 'Add to Cart',
     },
     input: {
       searchStore: 'Search entire store here...',

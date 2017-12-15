@@ -7,6 +7,9 @@ export default {
     cart: '购物车',
     selecteUser: '收件人信息',
     modifyAddress: '更改收件人',
+    selectGoods: '选择发货商品',
+    selectedGoods: '已选商品',
+    searchPlaceholder: '输入商品名关键词...',
   },
   en: {
     chooseUser: 'Choose User',
@@ -16,5 +19,8 @@ export default {
     cart: 'Cart',
     selecteUser: 'Client Info',
     modifyAddress: 'Modify Client',
+    selectGoods: 'Select Goods',
+    selectedGoods: 'Selected Goods',
+    searchPlaceholder: 'Input key words....',
   },
 };

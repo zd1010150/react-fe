@@ -82,7 +82,6 @@ class chooseUser extends React.Component {
     this.setState(Object.assign({}, this.state, { data }));
   }
   render() {
-    debugger;
     console.log('chooseUser render:', this.props.user, _.isEmpty(this.props.user), this.state.searchAreaVisible);
     const { formatMessage } = this.props.intl;
     let selecteUserEl = <span />;

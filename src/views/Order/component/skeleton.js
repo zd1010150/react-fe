@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Button, Tabs } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import Step from './step';
-import ChooseGood from './chooseGood';
+import ChooseGood from './chooseGood/index';
 import ChooseUser from './chooseUser';
 import Confirm from './confirm';
 import SplitOrder from './splitOrder';
