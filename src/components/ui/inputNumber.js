@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Input } from 'antd';
+import { Icon, Input, Button } from 'antd';
+import classNames from 'classnames/bind';
+import styles from './inputNumber.less';
 
+
+const cx = classNames.bind(styles);
 const numberRegx = /^\d$/g;
 class InputNumber extends React.Component {
   constructor(props) {
@@ -47,29 +51,37 @@ class InputNumber extends React.Component {
   }
   handleChange(event) {
     debugger;
-    console.log('change handler triggered', event.target.value);
-    const value = event.target.value;
-    if (numberRegx.test(value)) {
+    try{
+      const value = Number(event.target.value);
       if (value >= this.state.min && value <= this.state.max) {
         this.setState({
           inputValue: value,
         });
         this.props.onChange(value);
       }
-    }else{
       this.setState({
-        inputValue: this.state.inputValue
-      })
+        inputValue: this.state.inputValue,
+      });
+    }catch(ex){
+      this.setState({
+        inputValue: this.state.inputValue,
+      });
     }
-
   }
   render() {
     return (
-      <span>
-        <Icon type="minus" onClick={() => { this.minus(); }} />
-        <Input size="small" defaultValue={this.props.defaultValue} value={this.state.inputValue} onInput={this.handleChange} onChange={this.handleChange} />
-        <Icon type="plus" onClick={() => { this.plus(); }} />
-      </span>
+      <div className={cx('input-number-wrapper')}>
+        <Button onClick={() => { this.minus(); }} className={cx('input-number-btn')}><Icon type="minus" /></Button>
+        <Input
+          className={cx('input-number-input')}
+          size="small"
+          defaultValue={this.props.defaultValue}
+          value={this.state.inputValue}
+          onInput={(event) => { console.log('this is input', event.target.value) }}
+          onChange={(event) => { console.log('this is change', event.target.value); this.handleChange(event); }}
+        />
+        <Button onClick={() => { this.plus(); }} className={cx('input-number-btn')}><Icon type="plus" /></Button>
+      </div>
     );
   }
 }
