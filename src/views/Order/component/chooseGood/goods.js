@@ -58,7 +58,7 @@ const goods = ({
       value={record.selectingQuantity}
       max={record.availableQuantity}
       onChange={(value) => {
-        console.log(value);
+        console.log(value, "the goods change");
        selectingGoods(record, value);
     }}
     />),

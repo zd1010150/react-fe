@@ -34,7 +34,7 @@ const cart = ({
                 </div>
                 <div className="row">
                   <div className="product-img col-sm-3">Quantity</div>
-                  <div className="product-title col-sm-9"> <InputNumber min={1} value={product.quantity} max={product.availableQuantity} onChange={value => editingCartGoods(product, value)} /></div>
+                  <div className="product-title col-sm-9"> <InputNumber min={1} value={product.quantity} max={product.availableQuantity} onChange={(value) => { console.log('cart change'); editingCartGoods(product, value); }} /></div>
                 </div>
                 <div className="row">
                   <div className="product-img col-sm-3">Total</div>
