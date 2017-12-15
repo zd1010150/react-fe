@@ -1,9 +1,12 @@
 import React from 'react';
+import 'rc-input-number/assets/index.css';
 import PropTypes from 'prop-types';
-import { InputNumber, Button, Table } from 'antd';
+import { Button, Table } from 'antd';
+import InputNumber from 'rc-input-number';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../../Order.less';
+
 
 const cx = classNames.bind(styles);
 
@@ -55,7 +58,8 @@ const goods = ({
       value={record.selectingQuantity}
       max={record.availableQuantity}
       onChange={(value) => {
-      selectingGoods(record, value);
+        console.log(value);
+       selectingGoods(record, value);
     }}
     />),
   },

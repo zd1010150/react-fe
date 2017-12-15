@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputNumber, Icon } from 'antd';
+import 'rc-input-number/assets/index.css';
+import InputNumber from 'rc-input-number';
+import { Icon } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../../Order.less';

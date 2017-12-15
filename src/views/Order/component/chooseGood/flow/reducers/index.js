@@ -66,12 +66,12 @@ const addGoodsToCart = (cart, goods, quantity) => {
   return newCart;
 };
 const deleteGoodsFromCart = (cart, goods) => {
-  debugger;
   let newCart = cart.slice();
   newCart = newCart.filter(item => item.id !== goods.id);
   return newCart;
 };
 const editingCartGoods = (cart, goods, quantity) => {
+  debugger;
   let newCart = cart.slice();
   newCart = newCart.map((item) => {
     if (item.id === goods.id) {
@@ -87,15 +87,9 @@ const setAvailableQuantity = (allGoods, goods, isAddToCart) => {
   let newAllGoods = allGoods.slice();
   newAllGoods = newAllGoods.map((item) => {
     if (item.id === goods.id) {
-      return Object.assign({}, item, {
-        availableQuantity: (
-          isAddToCart ?
-            (item.availableQuantity - item.selectingQuantity)
-            :
-            item.currentQuantity
-        ),
-        selectingQuantity: 0,
-      });
+      const availableQuantity = isAddToCart ? item.availableQuantity - item.selectingQuantity : item.currentQuantity;
+      const selectingQuantity = availableQuantity > 0 ? 1 : 0;
+      return Object.assign({}, item, { availableQuantity, selectingQuantity });
     }
     return item;
   });
@@ -112,6 +106,7 @@ const setSelectingQuantity = (allGoods, goods, quantity) => {
   return newAllGoods;
 };
 const updateGoodsWhenEditingCartGoods = (allGoods, goods, quantity) => {
+  debugger;
   let newAllGoods = allGoods.slice();
   newAllGoods = newAllGoods.map((item) => {
     if (item.id === goods.id) {
