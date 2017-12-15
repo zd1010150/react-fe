@@ -143,7 +143,7 @@ const cart = (state = [], action) => {
       return state;
   }
 };
-const cartCollapse = (state = true, action) => {
+const cartCollapse = (state = false, action) => {
   switch (action.type) {
     case SET_CART_COLLAPSE:
       return action.collapsed;

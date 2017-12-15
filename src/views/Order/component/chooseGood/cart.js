@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'rc-input-number/assets/index.css';
-import InputNumber from 'rc-input-number';
+// import 'rc-input-number/assets/index.css';
+// import InputNumber from 'rc-input-number';
+import { InputNumber } from 'src/components/ui/index';
 import { Icon } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
