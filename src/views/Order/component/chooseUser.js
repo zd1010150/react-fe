@@ -11,21 +11,17 @@ const { Search } = Input;
 class chooseUser extends React.Component {
   constructor(props) {
     super(props);
-    console.log('choose user constructor')
     const { user } = this.props;
     this.state = {
       searchAreaVisible: _.isEmpty(user),
       data: [],
     };
   }
-  componentDidMount() {
-    console.log('chooseUser did mount:', this.props.user);
-  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       searchAreaVisible: _.isEmpty(nextProps.user),
     });
-    console.log('chooseUser receive:', nextProps.user);
   }
   displaySearch() {
     this.setState({
@@ -82,7 +78,6 @@ class chooseUser extends React.Component {
     this.setState(Object.assign({}, this.state, { data }));
   }
   render() {
-    console.log('chooseUser render:', this.props.user, _.isEmpty(this.props.user), this.state.searchAreaVisible);
     const { formatMessage } = this.props.intl;
     let selecteUserEl = <span />;
     let searchUserEl = <span />;

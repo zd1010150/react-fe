@@ -1,58 +1,91 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Icon, Layout } from 'antd';
+import { Icon, Layout, Button } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../../Order.less';
-import Cart from './cart';
-import Search from './search';
+import Orders from './orders';
 import Goods from './goods';
-import { setCarCollapse, queryGoods, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods } from './flow/action.js';
+import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, updateGoodsStatus } from './flow/action';
 
 const { Sider, Content } = Layout;
 
 const cx = classNames.bind(styles);
 
-const chooseGoodView = ({ setCarCollapse, queryGoods, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, goods, cart, cartCollapse }) => (
-  <div className={cx('section')}>
+const splitOrderView = ({
+  ordersBorderCollapse,
+  orders,
+  goods,
+  currentOrder,
+  goodsEnable,
+  selectingGoods,
+  addGoodsToOrder,
+  setOrderStatus,
+  createOrder,
+  deleteOrder,
+  deleteOrderGoods,
+  setOrderGoodsQuantity,
+  updateGoodsStatus,
+}) => {
+  return (<div className={cx('section')}>
     <Layout>
       <Content>
-        <Search queryGoods={queryGoods} />
-        <Goods goodsData={goods} addGoodsToCart={addGoodsToCart} selectingGoods={selectingGoods} />
+        <Button onClick={createOrder}>创建子订单</Button>
+        <Goods
+          goodsEnable={goodsEnable}
+          goodsData={goods}
+          addGoodsToOrder={addGoodsToOrder}
+          selectingGoods={selectingGoods}
+        />
       </Content>
       <Icon
         className="trigger"
-        type={cartCollapse ? 'menu-unfold' : 'menu-fold'}
-        onClick={() => { setCarCollapse(!cartCollapse); }}
+        type={ ordersBorderCollapse ? 'menu-unfold' : 'menu-fold'}
       />
       <Sider
         trigger={null}
         collapsible
-        collapsed={cartCollapse}
+        collapsed={ordersBorderCollapse}
         collapsedWidth={0}
         className={cx('sidebar-cart')}
+        width={300}
       >
-        <Cart cartData={cart} deleteGoods={deleteGoodsFromCart} editingCartGoods={editingCartGoods} />
+        <Orders
+        ordersData={orders}
+        deleteOrderGoods={deleteOrderGoods}
+        setOrderGoodsQuantity={setOrderGoodsQuantity}
+        deleteOrder={deleteOrder}
+        setOrderStatus={setOrderStatus}
+        currentOrder={currentOrder}
+        />
       </Sider>
     </Layout>
   </div>);
+}
 
 
-chooseGoodView.propTypes = {
+splitOrderView.propTypes = {
   intl: intlShape.isRequired,
 };
-const mapStateToProps = ({ order }) => ({
-  ...order.chooseGood,
-});
+const mapStateToProps = ({ order }) => {
+  const { splitOrder } = order;
+  return {
+    orders: splitOrder.orders.orders,
+    currentOrder: splitOrder.orders.currentOrder,
+    goods: splitOrder.goods,
+    goodsEnable: splitOrder.orders.goodsEnable,
+  }
+};
 const mapDispathToProps = {
-  setCarCollapse,
-  queryGoods,
   selectingGoods,
-  addGoodsToCart,
-  deleteGoodsFromCart,
-  editingCartGoods,
+  addGoodsToOrder,
+  setOrderStatus,
+  createOrder,
+  deleteOrder,
+  deleteOrderGoods,
+  setOrderGoodsQuantity,
 };
 
-const ChooseGoodView = connect(mapStateToProps, mapDispathToProps)(injectIntl(chooseGoodView));
-export default ChooseGoodView;
+const SplitOrderView = connect(mapStateToProps, mapDispathToProps)(injectIntl(splitOrderView));
+export default SplitOrderView;

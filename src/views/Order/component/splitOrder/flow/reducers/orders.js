@@ -1,18 +1,13 @@
 import { combineReducers } from 'redux';
 import {
   SO_SET_ORDERS_BOARD_COLLAPSE,
-  SO_SET_ORDER_COLLAPSE,
-  SO_SELECTING_GOODS_QUANTITY,
   SO_ADD_GOODS_TO_ORDER,
   SO_SET_ORDER_STATUS,
   SO_CREATE_ORDER,
   SO_DELETE_ORDER,
   SO_DELETE_ORDER_GOODS,
-  SO_SET_ORDER_GOODS_QUANTITY } from './actionType';
+  SO_SET_ORDER_GOODS_QUANTITY } from '../actionType';
 import { CREATED, EDITING, SAVED, DELETED } from '../orderStatus';
-
-
-let ORDER_ID_SEED = 0;// order id seed
 
 // 一个新order的初始化值
 const order = {
@@ -21,55 +16,48 @@ const order = {
   collapsed: false,
   goods: [],
 };
-const mockOrders = {
-  1: {
-    ...mockOrder,
-  },
-  2: {
-    ...mockOrder,
-  },
-};
-
 const createOrder = (state) => {
-  const newId = ++ORDER_ID_SEED;
-  const newState = Object.assign({}, state, {
+  const newId = Object.keys(state).length + 1;
+  return Object.assign({}, state, {
     [newId]: Object.assign({}, order, { id: newId }),
   });
-  return newState;
 };
 const deleteOrder = (state, order) => Object.keys(state).reduce((result, key) => {
-  if (key !== order.id) {
+  if (Number(key) !== order.id) {
     result[key] = state[key];
   }
   return result;
 }, {});
 const setOrderStatus = (state, order, status) => {
-  const { currentOrder, orders } = state;
+  const { currentOrder, orders, goodsEnable } = state;
   const currentOrderId = currentOrder.id;
-  const { goods, id } = order.goods;
-  const setStatus = (orderStatus, _currentOrder) => {
+  const { goods, id } = order;
+  const setStatus = (orderStatus, _currentOrder, goodsEnable) => {
     const newOrders = Object.assign({}, orders, {
-      [id]: Object.assign({}, state[id], { status: orderStatus }),
+      [id]: Object.assign({}, orders[id], { status: orderStatus }),
     });
     return Object.assign({}, state, {
       orders: newOrders,
       currentOrder: _currentOrder,
+      goodsEnable
     });
   };
   switch (status) {
     case CREATED:
       if (goods && goods.length < 1) {
-        return setStatus(CREATED, currentOrder);
+        return setStatus(CREATED, currentOrder, false);
       }
     case EDITING:
       if ((order.status === CREATED || order.status === SAVED) && currentOrderId === 0) {
-        return setStatus(EDITING, orders[id]);
+        return setStatus(EDITING, orders[id],true);
       }
     case SAVED:
-      return setStatus(SAVED, { id: 0 });
+      return setStatus(SAVED, { id: 0 }, false);
     case DELETED:
       if (order.status === SAVED || currentOrderId !== order.id) { // 正在编辑的不能删除
-        return setStatus(DELETED, currentOrder);
+        return setStatus(DELETED, currentOrder, goodsEnable);
+      } else if (order.status === SAVED || currentOrderId === order.id) { // 删除正在编辑的订单
+        return setStatus(DELETED, { id: 0 }, false);
       }
     default:
       return state;
@@ -147,7 +135,7 @@ const setOrderCollapse = (state, orderId, collapsed) => {
     currentOrder: newCurrenOrder,
   });
 };
-export const  orders = (state = { orders: [], currentOrder: { id: 0 } }, action) => {
+export const orders = (state = { orders: {}, currentOrder: { id: 0 } , goodsEnable : false,}, action) => {
   switch (action.type) {
     case SO_CREATE_ORDER:
       return Object.assign({}, state, { orders: createOrder(state.orders) });
@@ -156,7 +144,7 @@ export const  orders = (state = { orders: [], currentOrder: { id: 0 } }, action)
     case SO_SET_ORDER_STATUS:
       return setOrderStatus(state, action.order, action.status);
     case SO_ADD_GOODS_TO_ORDER:
-      return addGoodsToOrder(state, action.goods, action.quantity);
+      return addGoodsToOrder(state, action.goods, action.goods.selectingQuantity);
     case SO_DELETE_ORDER_GOODS:
       return deleteOrderGoods(state, action.goods);
     case SO_SET_ORDER_GOODS_QUANTITY:
@@ -167,11 +155,11 @@ export const  orders = (state = { orders: [], currentOrder: { id: 0 } }, action)
       return state;
   }
 };
-export const ordersBorderCollapse = (state = true, action) =>{
-  switch(action.type){
+export const ordersBorderCollapse = (state = true, action) => {
+  switch (action.type) {
     case SO_SET_ORDERS_BOARD_COLLAPSE:
       return action.collapsed;
     default:
-      retruen state;
+      return state;
   }
-}
+};

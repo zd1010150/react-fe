@@ -50,7 +50,6 @@ class InputNumber extends React.Component {
     this.props.onChange(newValue);
   }
   handleChange(event) {
-    debugger;
     try{
       const value = Number(event.target.value);
       if (value >= this.state.min && value <= this.state.max) {
@@ -69,10 +68,12 @@ class InputNumber extends React.Component {
     }
   }
   render() {
+    const { disabled } = this.props;
     return (
       <div className={cx('input-number-wrapper')}>
-        <Button onClick={() => { this.minus(); }} className={cx('input-number-btn')}><Icon type="minus" /></Button>
+        <Button disabled={disabled} onClick={() => { this.minus(); }} className={cx('input-number-btn')}><Icon type="minus" /></Button>
         <Input
+          disabled={disabled}
           className={cx('input-number-input')}
           size="small"
           defaultValue={this.props.defaultValue}
@@ -80,7 +81,7 @@ class InputNumber extends React.Component {
           onInput={(event) => { console.log('this is input', event.target.value) }}
           onChange={(event) => { console.log('this is change', event.target.value); this.handleChange(event); }}
         />
-        <Button onClick={() => { this.plus(); }} className={cx('input-number-btn')}><Icon type="plus" /></Button>
+        <Button disabled={disabled} onClick={() => { this.plus(); }} className={cx('input-number-btn')}><Icon type="plus" /></Button>
       </div>
     );
   }
@@ -91,6 +92,7 @@ InputNumber.defaultProps = {
   max: 0,
   value: 0,
   defaultValue: 0,
+  disabled: false,
   onChange() {
 
   },
@@ -101,5 +103,6 @@ InputNumber.propTypes = {
   value: PropTypes.number,
   onChange: PropTypes.func,
   defaultValue: PropTypes.number,
+  disabled: PropTypes.bool,
 };
 export default InputNumber;

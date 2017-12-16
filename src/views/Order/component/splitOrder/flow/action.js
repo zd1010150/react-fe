@@ -8,7 +8,6 @@ import {
   SO_DELETE_ORDER,
   SO_DELETE_ORDER_GOODS,
   SO_SET_ORDER_GOODS_QUANTITY,
-  UPDATE_GOODS_STATUS,
 } from './actionType';
 
 export const setOrderBoardStatus = collapsed => ({
@@ -28,7 +27,6 @@ export const selectingGoods = (goods, quantity) => ({
 export const addGoodsToOrder = (goods, quantity) => ({
   type: SO_ADD_GOODS_TO_ORDER,
   goods,
-  quantity,
 });
 export const setOrderStatus = (order, status, currentOrder) => ({
   type: SO_SET_ORDER_STATUS,
@@ -53,8 +51,4 @@ export const setOrderGoodsQuantity = (goods, quantity, currentOrder, orders) => 
   quantity,
   currentOrder,
   orders,
-});
-export const updateGoodsStatus = currentOrder => ({
-  type: UPDATE_GOODS_STATUS,
-  currentOrder,
 });

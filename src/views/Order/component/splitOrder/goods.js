@@ -12,14 +12,10 @@ import styles from '../../Order.less';
 const cx = classNames.bind(styles);
 
 const goods = ({
-  goodsData, intl, addGoodsToCart, selectingGoods,
+  goodsData, intl, addGoodsToOrder, selectingGoods, goodsEnable,
 }) => {
   const { formatMessage } = intl;
   const columns = [{
-    title: formatMessage({ id: 'global.properNouns.goods.id' }),
-    key: 'id',
-    dataIndex: 'id',
-  }, {
     title: formatMessage({ id: 'global.properNouns.goods.name' }),
     key: 'name',
     dataIndex: 'name',
@@ -36,14 +32,6 @@ const goods = ({
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
   }, {
-    title: formatMessage({ id: 'global.properNouns.goods.lastUpdated' }),
-    dataIndex: 'lastUpdated',
-    key: 'lastUpdated',
-  }, {
-    title: formatMessage({ id: 'global.properNouns.goods.totalValue' }),
-    dataIndex: 'totalValue',
-    key: 'totalValue',
-  }, {
     title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
     dataIndex: 'unitPrice',
     key: 'unitPrice',
@@ -56,6 +44,7 @@ const goods = ({
     key: 'orderQuantity',
     render: (text, record) => (<InputNumber
       min={0}
+      disabled={!goodsEnable}
       value={record.selectingQuantity}
       max={record.availableQuantity}
       onChange={(value) => {
@@ -69,10 +58,11 @@ const goods = ({
     key: 'action',
     render: (text, record) => (
       <span>
-        <Button size="small" onClick={() => { addGoodsToCart(record); }}>{formatMessage({ id: 'global.ui.button.addGoodsToCart' })}</Button>
+        <Button disabled={!goodsEnable} size="small" onClick={() => { addGoodsToOrder(record); }}>{formatMessage({ id: 'global.ui.button.addGoodsToCart' })}</Button>
       </span>
     ),
   }];
+  debugger;
   return (
     <div className="block">
       <div className="block-content">
@@ -87,8 +77,9 @@ goods.defaultProps = {
 goods.propTypes = {
   intl: intlShape.isRequired,
   goodsData: PropTypes.array,
-  addGoodsToCart: PropTypes.func.isRequired,
-  selectingGoods: PropTypes.func.isRequired, // 加入到购物车的数量
+  goodsEnable: PropTypes.bool.isRequired,
+  selectingGoods: PropTypes.func.isRequired,
+  addGoodsToOrder: PropTypes.func.isRequired, // 加入到购物车的数量
 };
 const GoodsView = injectIntl(goods);
 export default GoodsView;

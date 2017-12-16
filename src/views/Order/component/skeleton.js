@@ -7,7 +7,7 @@ import Step from './step';
 import ChooseGood from './chooseGood/index';
 import ChooseUser from './chooseUser';
 import Confirm from './confirm';
-import SplitOrder from './splitOrder';
+import SplitOrder from './splitOrder/index';
 
 
 const { TabPane } = Tabs;

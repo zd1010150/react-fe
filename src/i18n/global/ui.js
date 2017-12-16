@@ -12,6 +12,7 @@ export default {
       delete: '删除',
       edit: '编辑',
       addGoods: '添加商品',
+      save: '保存',
     },
     input: {
       searchStore: '在此搜索全站商品...',
@@ -33,6 +34,7 @@ export default {
       delete: 'Delete',
       edit: 'Edit',
       addGoods: 'Add Goods',
+      save: 'Save',
     },
     input: {
       searchStore: 'Search entire store here...',
