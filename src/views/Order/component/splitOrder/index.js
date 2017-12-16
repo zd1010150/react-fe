@@ -35,6 +35,7 @@ const splitOrderView = ({
         <Goods
           goodsEnable={goodsEnable}
           goodsData={goods}
+          currentOrder={currentOrder}
           addGoodsToOrder={addGoodsToOrder}
           selectingGoods={selectingGoods}
         />

@@ -24,9 +24,10 @@ export const selectingGoods = (goods, quantity) => ({
   goods,
   quantity,
 });
-export const addGoodsToOrder = (goods, quantity) => ({
+export const addGoodsToOrder = (goods, currentOrder) => ({
   type: SO_ADD_GOODS_TO_ORDER,
   goods,
+  currentOrder,
 });
 export const setOrderStatus = (order, status, currentOrder) => ({
   type: SO_SET_ORDER_STATUS,

@@ -69,9 +69,9 @@ const setSelectingQuantity = (state, operatingGoods, quantity) => {
 };
 
 
-const addGoodsToOrder = (state, addedGoods) => {
-  if (addedGoods.selectingQuantity < 1) return state;
-  const newGoods = state.map((item) => {
+const addGoodsToOrder = (state, addedGoods, currentOrder) => {
+  if (addedGoods.selectingQuantity < 1 || currentOrder.status !== EDITING) return state;
+  return state.map((item) => {
     if (item.id === addedGoods.id) {
       const availableQuantity = item.availableQuantity - item.selectingQuantity;
       const selectingQuantity = availableQuantity > 0 ? 1 : 0;
@@ -79,15 +79,14 @@ const addGoodsToOrder = (state, addedGoods) => {
     }
     return item;
   });
-  console.log(Object.assign({}, state, newGoods),"goods**********")
-  return Object.assign({}, state, newGoods);
 };
 const getAllSelectedQuantity = (orders, goodsId, currentOrder) => {
   let sum = 0;
-  const otherOrders = orders.fileter(order => order.id !== currentOrder.id);
-  otherOrders.every((order) => {
-    order.goods.every((item) => {
-      if (item.id == goodsId) {
+
+  const otherOrdersId = Object.keys(orders).filter(item => Number(item) !== currentOrder.id);
+  otherOrdersId.forEach((id) => {
+    orders[id].goods.forEach((item) => {
+      if (item.id === goodsId) {
         sum += item.quantity;
       }
     });
@@ -120,7 +119,7 @@ const goods = (state = initGoods(mockGoods), action) => {
     case SO_SELECTING_GOODS_QUANTITY:
       return setSelectingQuantity(state, action.goods, action.quantity);
     case SO_ADD_GOODS_TO_ORDER:
-      return addGoodsToOrder(state, action.goods);
+      return addGoodsToOrder(state, action.goods, action.currentOrder);
     case SO_DELETE_ORDER_GOODS:
       return updateGoodsQuantityWhenDeleteGoodsFromOrder(state, action.goods);
     case SO_DELETE_ORDER:

@@ -12,7 +12,7 @@ import styles from '../../Order.less';
 const cx = classNames.bind(styles);
 
 const goods = ({
-  goodsData, intl, addGoodsToOrder, selectingGoods, goodsEnable,
+  goodsData, intl, addGoodsToOrder, currentOrder, selectingGoods, goodsEnable,
 }) => {
   const { formatMessage } = intl;
   const columns = [{
@@ -58,7 +58,7 @@ const goods = ({
     key: 'action',
     render: (text, record) => (
       <span>
-        <Button disabled={!goodsEnable} size="small" onClick={() => { addGoodsToOrder(record); }}>{formatMessage({ id: 'global.ui.button.addGoodsToCart' })}</Button>
+        <Button disabled={!goodsEnable} size="small" onClick={() => { addGoodsToOrder(record, currentOrder); }}>{formatMessage({ id: 'global.ui.button.addGoodsToCart' })}</Button>
       </span>
     ),
   }];
@@ -79,6 +79,7 @@ goods.propTypes = {
   goodsData: PropTypes.array,
   goodsEnable: PropTypes.bool.isRequired,
   selectingGoods: PropTypes.func.isRequired,
+  currentOrder: PropTypes.object.isRequired,
   addGoodsToOrder: PropTypes.func.isRequired, // 加入到购物车的数量
 };
 const GoodsView = injectIntl(goods);
