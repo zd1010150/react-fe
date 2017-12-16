@@ -45,7 +45,7 @@ const mockGoods = [{
   id: '1234',
   name: '4swiss capsulates',
   picture: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
-  currentQuantity: 20,
+  currentQuantity: 80,
   lastUpdated: '2017-12-13',
   totalValue: 500,
   unitPrice: 20,
