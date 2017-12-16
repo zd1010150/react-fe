@@ -9,6 +9,9 @@ export default {
       view: '查看{file}',
       select: '选择',
       addGoodsToCart: '加入购物车',
+      delete: '删除',
+      edit: '编辑',
+      addGoods: '添加商品',
     },
     input: {
       searchStore: '在此搜索全站商品...',
@@ -27,6 +30,9 @@ export default {
       view: 'View {file}',
       select: 'Select',
       addGoodsToCart: 'Add to Cart',
+      delete: 'Delete',
+      edit: 'Edit',
+      addGoods: 'Add Goods',
     },
     input: {
       searchStore: 'Search entire store here...',

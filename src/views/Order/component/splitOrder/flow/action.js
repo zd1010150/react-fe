@@ -7,7 +7,9 @@ import {
   SO_CREATE_ORDER,
   SO_DELETE_ORDER,
   SO_DELETE_ORDER_GOODS,
-  SO_SET_ORDER_GOODS_QUANTITY } from './actionType';
+  SO_SET_ORDER_GOODS_QUANTITY,
+  UPDATE_GOODS_STATUS,
+} from './actionType';
 
 export const setOrderBoardStatus = collapsed => ({
   type: SO_SET_ORDERS_BOARD_COLLAPSE,
@@ -23,14 +25,16 @@ export const selectingGoods = (goods, quantity) => ({
   goods,
   quantity,
 });
-export const addGoodsToOrder = goods => ({
+export const addGoodsToOrder = (goods, quantity) => ({
   type: SO_ADD_GOODS_TO_ORDER,
   goods,
+  quantity,
 });
-export const setOrderStatus = (orderId, status) => ({
+export const setOrderStatus = (order, status, currentOrder) => ({
   type: SO_SET_ORDER_STATUS,
-  orderId,
+  order,
   status,
+  currentOrder,
 });
 export const createOrder = () => ({
   type: SO_CREATE_ORDER,
@@ -43,8 +47,14 @@ export const deleteOrderGoods = goods => ({
   type: SO_DELETE_ORDER_GOODS,
   goods,
 });
-export const setOrderGoodsQuantity = (goods, quantity) => ({
+export const setOrderGoodsQuantity = (goods, quantity, currentOrder, orders) => ({
   type: SO_SET_ORDER_GOODS_QUANTITY,
   goods,
   quantity,
+  currentOrder,
+  orders,
+});
+export const updateGoodsStatus = currentOrder => ({
+  type: UPDATE_GOODS_STATUS,
+  currentOrder,
 });

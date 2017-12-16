@@ -75,7 +75,7 @@ const editingCartGoods = (cart, goods, quantity) => {
   let newCart = cart.slice();
   newCart = newCart.map((item) => {
     if (item.id === goods.id) {
-      return Object.assign({}, item, { quantity, availableQuantity: goods.currentQuantity - quantity });
+      return Object.assign({}, item, { quantity });
     }
     return item;
   });
