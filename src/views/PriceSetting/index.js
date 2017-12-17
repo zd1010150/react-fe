@@ -1,3 +1,3 @@
-import PriceSetting from './container/index';
+import PriceSetting from './PriceSettingView';
 
 export default PriceSetting;

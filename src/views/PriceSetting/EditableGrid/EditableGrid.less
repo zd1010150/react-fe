@@ -1,0 +1,21 @@
+.cell {
+  width: 60px;
+}
+
+.editable-grid {
+  :global {
+    .ant-table-body th:first-child, .ant-table-body td:first-child  {
+      background-color: rgb(102, 102, 102);
+      width: 160px;
+      text-align: right;
+    }
+    .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+      padding: 16px 10px;
+    }
+  }
+
+  .category-title {
+    color: white;
+    line-height: 32px;
+  }
+}
