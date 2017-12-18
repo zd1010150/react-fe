@@ -7,6 +7,7 @@ import Accounts from './Accounts/index';
 import Leads from './Leads/index';
 import MarketingMaterials from './MarketingMaterials/index';
 import PriceSetting from './PriceSetting/index';
+import TrackOrders from './TrackOrders/index';
 
 export {
   About,
@@ -18,4 +19,5 @@ export {
   Accounts,
   Leads,
   PriceSetting,
+  TrackOrders,
 };

@@ -6,6 +6,7 @@ export default {
     marketingMaterial: '营销',
     order: '订单',
     priceSetting: '价格设置',
+    trackOrders: '发货单',
   },
   en: {
     clientLists: 'Client Lists',
@@ -14,5 +15,6 @@ export default {
     marketingMaterial: 'Marketing Material',
     order: 'Order',
     priceSetting: 'Price Setting',
+    trackOrders: 'Track Orders',
   },
 };

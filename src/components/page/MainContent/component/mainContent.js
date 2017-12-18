@@ -1,7 +1,7 @@
 /* eslint-disable react/no-typos */
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { About, Inbox, Todo, Game, Order, MarketingMaterials, Accounts, Leads, PriceSetting } from 'views/index';
+import { About, Inbox, Todo, Game, Order, MarketingMaterials, Accounts, Leads, PriceSetting, TrackOrders } from 'views/index';
 
 const mainContentView = () => (
   <Switch><Route path="/about" component={About} />
@@ -13,6 +13,7 @@ const mainContentView = () => (
     <Route path="/clientLists/accounts" component={Accounts} />
     <Route path="/clientLists/leads" component={Leads} />
     <Route path="/priceSetting" component={PriceSetting} />
+    <Route path="/trackOrders" component={TrackOrders} />
   </Switch>
 );
 export default mainContentView;

@@ -12,7 +12,7 @@ const mockId = {
   idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
   visible: false,
 };
-class leadsTable extends React.Component {
+class orderTable extends React.Component {
   state = {
     editID: mockId,
   }
@@ -74,17 +74,19 @@ class leadsTable extends React.Component {
 
     return (
       <div>
-        <Table columns={columns} dataSource={data} />
+        <Table columns={columns} dataSource={orders} />
         <IdDialog {...this.state.editID} onOk={() => { this.handleIDSave(); }} onCancel={() => { this.handleIDClose(); }} />
       </div>
     );
   }
 }
-
-leadsTable.propTypes = {
+orderTable.defaultProps={
+  orders: [],
+}
+orderTable.propTypes = {
   intl: intlShape.isRequired,
-  language: PropTypes.string.isRequired,
+  orders: PropTypes.array,
 };
 
-const LeadsTable = injectIntl(leadsTable);
-export default LeadsTable;
+const OrderTable = injectIntl(orderTable);
+export default OrderTable;

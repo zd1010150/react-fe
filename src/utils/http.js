@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign,no-underscore-dangle */
+import Cookie from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 import { baseUrl } from '../config/env.config';
 import { MAX_FETCH_TIMEOUT } from '../config/app.config';
@@ -18,7 +19,9 @@ export default async (type = 'GET', url = '', data = {}, headers = {}) => {
     mode: 'cors',
     cache: 'default', // should set cache to 'no-cache'
   };
-
+  if (Cookie.get('token')) {
+    // requestConfig.headers['Authorization'] = 'Bearer ' + Cookie.get('token');
+  }
   if (type === 'GET') {
     let dataStr = ''; // 数据拼接字符串
     Object.keys(data).forEach((key) => {

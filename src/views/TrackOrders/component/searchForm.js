@@ -8,31 +8,20 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 const searchForm = ({
-  intl, onSubmit, form, deliveryOrderStatus
+  intl, onSubmit, form, deliveryOrderStatus,
 }) => {
   const { getFieldDecorator } = form;
   const { formatMessage } = intl;
+  const statusSelect = getFieldDecorator('status', { initialValue: 'all' })(<Select>{deliveryOrderStatus.map(item => <Option value={item} key={item}>{item}</Option>)}</Select>);
   return (
-    <Form layout="inline" onSubmit={onSubmit}>
+    <Form layout="inline" onSubmit={onSubmit(...form.getFieldsValue())}>
       <FormItem label={formatMessage({ id: 'pages.TrackOrders.status' })}>
-
-        <Select defaultValue="lucy" style={{ width: 120 }}>
-          {
-            deliveryOrderStatus.map((item)=>(<Option value={item}></Option>)
-          }
-          <Option value="jack">Jack</Option>
-          <Option value="lucy">Lucy</Option>
-          <Option value="disabled" disabled>Disabled</Option>
-          <Option value="Yiminghe">yiminghe</Option>
-        </Select>
-
+        { statusSelect }
       </FormItem>
       <FormItem
         label={formatMessage({ id: 'pages.TrackOrders.receiveName' })}
       >
-        {getFieldDecorator('password', {
-          rules: [{ required: true, message: 'Please input your Password!' }],
-        })(<Input type="password" placeholder="Password" />)}
+        {getFieldDecorator('name')(<Input />)}
       </FormItem>
       <FormItem>
         <Button

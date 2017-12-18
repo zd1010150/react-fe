@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING } from './actionType';
 
 // 页面默认语言为 en，此处只是mock
 const language = (state = 'en', action) => {
@@ -49,11 +49,20 @@ const orderUser = (state = null, action) => {
       return state;
   }
 };
+const settings = (state={deliveryOrderStatus:[]}, action) =>{
+  switch (action.type) {
+    case SET_GLOBAL_SETTING:
+      return Object.assign({}, state, action.settings);
+    default:
+      return state;
+  }
+};
 const rootReducer = combineReducers({
   language,
   permission,
   account,
   pageTitle,
   orderUser,
+  settings
 });
 export default rootReducer;

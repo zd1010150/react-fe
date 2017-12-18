@@ -52,6 +52,10 @@ class Nav extends React.Component {
         id: 'page.LeftSideNav.priceSetting',
         url: '/priceSetting',
       },
+      {
+        id: 'page.LeftSideNav.trackOrders',
+        url: '/trackOrders',
+      },
     ];
     const getChildrenTree = (item) => {
       if (item.children && item.children.length > 0) {
