@@ -49,7 +49,7 @@ const orderUser = (state = null, action) => {
       return state;
   }
 };
-const settings = (state={deliveryOrderStatus:[]}, action) =>{
+const settings = (state = { deliveryOrderStatus: [] }, action) => {
   switch (action.type) {
     case SET_GLOBAL_SETTING:
       return Object.assign({}, state, action.settings);
@@ -63,6 +63,6 @@ const rootReducer = combineReducers({
   account,
   pageTitle,
   orderUser,
-  settings
+  settings,
 });
 export default rootReducer;
