@@ -64,8 +64,7 @@ export default async (type = 'GET', url = '', data = {}, headers = {}) => {
     }
     throw new TypeError('Oops,we haven\'t get JSON! ');
   } catch (error) {
-    return {
-      status_code: response.status,
-    };
+    console.log(error);
+    return error;
   }
 };

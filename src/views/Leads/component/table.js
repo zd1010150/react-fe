@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Table, Divider, Icon, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
-import ID from './ID';
+import { IdDialog } from 'src/components/page';
 import UserDialog from './userDialog';
 import DeleteDialog from './deleteDialog';
 
@@ -52,6 +52,10 @@ class leadsTable extends React.Component {
 
     const editID = Object.assign({}, this.state.editID, { visible: false });
     this.setState(Object.assign({}, this.state, { editID }));
+  }
+  handleIDSave(userId, idFront, idBack) {
+    console.log('this is id saveid', userId, idFront, idBack);
+    this.handleIDClose();
   }
   closeDeleteDialog() {
     console.log('close delete dialog');
@@ -195,7 +199,7 @@ class leadsTable extends React.Component {
     return (
       <div>
         <Table columns={columns} dataSource={data} />
-        <ID {...this.state.editID} onClose={() => { this.handleIDClose(); }} />
+        <IdDialog {...this.state.editID} onOk={() => { this.handleIDSave(); }} onCancel={() => { this.handleIDClose(); }} />
         <UserDialog cantEdit={this.state.cantEdit} visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onClose={() => { this.closeUserDialog(); }} />
         <DeleteDialog userId={this.state.deleteUserId} visible={this.state.deleteDialogVisible} onClose={() => { this.closeDeleteDialog(); }} />
       </div>

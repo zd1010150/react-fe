@@ -4,6 +4,6 @@ import splitOrderReducer from '../component/splitOrder/flow/reducers/index';
 
 const Order = combineReducers({
   chooseGood: chooseGoodReducer,
-  splitOrder: splitOrderReducer
+  splitOrder: splitOrderReducer,
 });
 export default Order;

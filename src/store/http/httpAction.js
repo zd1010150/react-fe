@@ -19,6 +19,7 @@ const dispatch = (request, dispatcher = () => {}) => {
     });
     return data;
   }).catch((err) => {
+    console.log('httpAction',err)
     dispatcher({
       type: HTTP_ACTION_ERROR,
       payload: {

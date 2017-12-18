@@ -73,7 +73,7 @@ class EditableGrid extends Component {
   render() {
     const { priceTable } = this.props;
     return (
-      <Table className={cx('editable-grid')} rowKey="id" columns={this.columns} dataSource={priceTable} />
+      <Table className="editable-grid" rowKey="id" pagination={false} columns={this.columns} dataSource={priceTable} />
     );
   }
 }

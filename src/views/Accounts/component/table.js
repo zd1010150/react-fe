@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Button, Divider, Icon, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import ID from './ID';
+import { IdDialog } from 'src/components/page';
 import UserDialog from './userDialog';
 import HistoryOrderDialog from './historyOrderDialog';
 
@@ -33,6 +33,10 @@ class leadsTable extends React.Component {
 
     const editID = Object.assign({}, this.state.editID, { visible: false });
     this.setState(Object.assign({}, this.state, { editID }));
+  }
+  handleIDSave(userId, idFront, idBack) {
+    console.log('this is id saveid', userId, idFront, idBack);
+    this.handleIDClose();
   }
   closeHistoryOrder() {
     this.setState(Object.assign({}, this.state, {
@@ -172,7 +176,7 @@ class leadsTable extends React.Component {
     return (
       <div>
         <Table columns={columns} dataSource={data} />
-        <ID {...this.state.editID} onClose={() => { this.handleIDClose(); }} />
+        <IdDialog {...this.state.editID} onOk={() => { this.handleIDSave(); }} onCancel={() => { this.handleIDClose(); }} />
         <UserDialog cantEdit={this.state.cantEdit} visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onClose={() => { this.closeUserDialog(); }} />
         <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }} />
       </div>
