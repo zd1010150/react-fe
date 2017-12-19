@@ -3,7 +3,6 @@ import globalsReducer from './global/reducer';
 import loadingReducer from './loading/loadingReducer';
 import pageReducer from './pageReducer';
 
-console.log(pageReducer, 'Page Reducers ====');
 
 export const makeRootReducer = (asyncReducers = {}) => (
   combineReducers({

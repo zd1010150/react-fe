@@ -14,53 +14,53 @@ class leadsTable extends React.Component {
     deleteUserId: 233,
     userDialogVisible: false,
     editID: {},
-    editLead: {},
+    editObj: {},
     operatorType: operateType.VIEW,
   }
   closeUserDialog() {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: false,
-      editLead: {},
+      cantEdit: true,
+      editObj: {},
     }));
   }
   handleIDClose() {
+    console.log('this is editid the userID is', this, this.state);
+
     const editID = Object.assign({}, this.state.editID, { visible: false });
     this.setState(Object.assign({}, this.state, { editID }));
   }
   handleIDSave(userId, idFront, idBack) {
+    console.log('this is id saveid', userId, idFront, idBack);
     this.handleIDClose();
   }
-  closeDeleteDialog() {
+  closeHistoryOrder() {
     this.setState(Object.assign({}, this.state, {
-      deleteDialogVisible: false,
+      historyOrderDialogVisble: false,
     }));
   }
   // table action 操作
   handleEditID(record) {
     const editID = Object.assign({}, this.state.editID, {
-      visible: true, userId: `${record.id}`, idFront: record.idFront, idBack: record.idBack,
+      visible: true, userId: record.id, idFront: record.idFront, idBack: record.idBack,
     });
     this.setState(Object.assign({}, this.state, { editID }));
   }
   handleUserDetail(record) {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
-      editLead: record,
-      operatorType: operateType.VIEW,
+      editObj: record,
     }));
   }
-  handleEditLead(record) {
+  handleeditObj(record) {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
-      editLead: record,
-      operatorType: operateType.EDIT,
+      editObj: record,
     }));
   }
-  handleDeleteLead(id) {
-    console.log('this is delete the userID is', id);
+  handleHistoryOrder(id) {
     this.setState(Object.assign({}, this.state, {
-      deleteDialogVisible: true,
-      deleteUserId: id,
+      historyOrderDialogVisble: true,
     }));
   }
   render() {
@@ -68,7 +68,7 @@ class leadsTable extends React.Component {
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
-      render: (text, record) => <span>{record.first_name} {record.last_name}</span>,
+      render: (text, record) => <span>{record.firstName} {record.lastName}</span>,
     }, {
       title: formatMessage({ id: 'global.form.phone' }),
       dataIndex: 'phone',
@@ -101,30 +101,22 @@ class leadsTable extends React.Component {
           </Tooltip>
           <Divider type="vertical" />
           <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
-            <Icon type="edit" onClick={() => { this.handleEditLead(record); }} />
+            <Icon type="edit" onClick={() => { this.handleeditObj(record); }} />
           </Tooltip>
           <Divider type="vertical" />
-          <Tooltip title={formatMessage({ id: 'page.Leads.deleteUser' })}>
-            <Icon type="user-delete" onClick={() => { this.handleDeleteLead(record.id); }} />
-          </Tooltip>
+          <Button size="small" onClick={() => { this.handleHistoryOrder(record.id); }}>{formatMessage({ id: 'page.Accounts.historyOrder' })}</Button>
           <Divider type="vertical" />
-          <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Leads.order' })}</Link>
+          <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Accounts.order' })}</Link>
+
         </span>
       ),
     }];
-    const { leadsDataTablePagination, updateLeads } = this.props;
-    const pagination = {
-      current: leadsDataTablePagination.currentPage,
-      pageSize: leadsDataTablePagination.perPage,
-      total: leadsDataTablePagination.totalPages,
-    };
     return (
       <div>
-        { this.props.leadsData && this.props.leadsData.length > 0 ? <Table columns={columns} dataSource={this.props.leadsData} pagination={pagination} onChange={(page, pageSize) => { this.props.fetchLeads(pageSize, page); }} /> : ''}
-
+        <Table columns={columns} dataSource={data} />
         <IdDialog {...this.state.editID} onOk={() => { this.handleIDSave(); }} onCancel={() => { this.handleIDClose(); }} />
-        <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editLead} onClose={() => { this.closeUserDialog(); }} userType="Leads" operatorType={this.state.operatorType} update={updateLeads} />
-        <DeleteDialog userId={this.state.deleteUserId} visible={this.state.deleteDialogVisible} onClose={() => { this.closeDeleteDialog(); }} />
+        <LeadsAndAccountsEditAddDialog  visible={this.state.userDialogVisible} editObj={this.state.editObj}  onClose={() => { this.closeUserDialog(); }} />
+        <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }} />
       </div>
     );
   }

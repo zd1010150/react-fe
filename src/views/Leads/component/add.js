@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-// import classNames from 'classnames/bind';
-import UserDialog from './userDialog';
-// import styles from '../Leads.less';
+import { LeadsAndAccountsEditAddDialog } from 'src/components/page';
 
+import operateType from 'src/components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
 
 class add extends React.Component {
-  state = { dialogVisible: false }
+  state = { dialogVisible: false };
   showModal = () => {
     this.setState({
       dialogVisible: true,
@@ -22,17 +21,21 @@ class add extends React.Component {
   render() {
     // const cx = classNames.bind(styles);
     const { formatMessage } = this.props.intl;
+    const { addLeads } = this.props;
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>{ formatMessage({ id: 'global.ui.button.addBtn' }, { actionType: formatMessage({ id: 'global.properNouns.leads' }) })}</Button>
-        <UserDialog language={this.props.language} visible={this.state.dialogVisible} onClose={() => { this.closeDialog(); }} />
+        <LeadsAndAccountsEditAddDialog visible={this.state.dialogVisible} onClose={() => { this.closeDialog(); }} add={addLeads} userType="Leads" operatorType={operateType.ADD} />
       </div>
     );
   }
 }
+add.defaultProps = {
+  addLeads() {},
+};
 add.propTypes = {
   intl: intlShape.isRequired,
-  language: PropTypes.string.isRequired,
+  addLeads: PropTypes.func,
 };
 
 const Add = injectIntl(add);

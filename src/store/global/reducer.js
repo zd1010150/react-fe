@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { combineReducers } from 'redux';
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING } from './actionType';
 
@@ -49,10 +50,31 @@ const orderUser = (state = null, action) => {
       return state;
   }
 };
-const settings = (state = { deliveryOrderStatus: [] }, action) => {
+
+
+// 将后端传回来的数据进行一层map
+const mapSettingData = (data) => {
+  const newData = Object.assign({}, data);
+  return {
+    classification: newData.classification,
+    department: newData.department,
+    paymentGateway: newData.payment_gateway,
+    subCategory: newData.sub_category, // pricesetting 的列，add leads 中的interests 的类别
+    subGroup: newData.sub_group, // Array(7){id: 1, name: "no_profits", created_at: null, updated_at: null}{id: 2, name: "svip", created_at: null, updated_at: null}{id: 3, name: "vvip", created_at: null, updated_at: null}{id: 4, name: "vip", created_at: null, updated_at: null}{id: 5, name: "normal", created_at: null, updated_at: null}{id: 6, name: "family", created_at: null, updated_at: null}{id: 7, name: "friends", created_at: null, updated_at: null}
+    accountStatus: newData.account_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"}
+    accountType: newData.account_type, // {id: 1, name: "散客lead"}{id: 2, name: "散客accounts"} {id: 3, name: "代理"}
+    affiliatedClientStatus: newData.affiliated_client_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"}
+    affiliatedClientType: newData.affiliated_client_type, // {id: 1, name: "affiliated_client.sub-leads"} {id: 2, name: "affiliated_client.sub-accounts"}
+    deliveryOrderStatus: newData.delivery_order_status,
+    orderStatus: newData.order_status,
+    orderType: newData.order_type,
+    userStatus: newData.user_status,
+  };
+};
+const settings = (state = { }, action) => {
   switch (action.type) {
     case SET_GLOBAL_SETTING:
-      return Object.assign({}, state, action.settings);
+      return mapSettingData(action.settings);
     default:
       return state;
   }

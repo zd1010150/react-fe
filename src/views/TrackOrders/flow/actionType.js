@@ -1,3 +1,3 @@
 export const SET_TRACK_ORDER_DATA = 'SET_TRACK_ORDER_DATA';
 export const SET_ID_VIEW = 'SET_ID_VIEW';
-
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY';

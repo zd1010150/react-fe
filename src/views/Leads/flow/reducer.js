@@ -1,5 +1,6 @@
+/* eslint-disable no-param-reassign,max-len */
 import { combineReducers } from 'redux';
-import { SET_ID_VIEW, SET_TRACK_ORDER_DATA } from './actionType';
+import { SET_ID_VIEW, SET_LEADS_DATA, SET_PAGENATIONS } from './actionType';
 
 const data = [{
   id: 122333,
@@ -56,15 +57,30 @@ const data = [{
   idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
   idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
 }];
-const orders = (state = [], action) => {
+const initData = leadsData => leadsData.map((item) => {
+  item.key = item.id;
+  return item;
+});
+const leadsData = (state = [], action) => {
   switch (action.type) {
-    case SET_TRACK_ORDER_DATA:
-      return Object.assign({}, state, action.trackOrders);
+    case SET_LEADS_DATA:
+      return initData(action.leads || []);
     default:
       return state;
   }
 };
-
+const leadsDataTablePagination = (state = { perPage: 15, currentPage: 1, totalPages: 0 }, action) => {
+  switch (action.type) {
+    case SET_PAGENATIONS:
+      return {
+        perPage: action.perPage,
+        currentPage: action.currentPage,
+        totalPages: action.totalPages,
+      };
+    default:
+      return state;
+  }
+};
 const idViews = (state = {}, action) => {
   switch (action.type) {
     case SET_ID_VIEW:
@@ -75,6 +91,7 @@ const idViews = (state = {}, action) => {
 };
 
 export default combineReducers({
-  orders,
+  leadsData,
   idViews,
+  leadsDataTablePagination,
 });

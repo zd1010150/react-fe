@@ -7,7 +7,7 @@ import Footer from './Footer';
 import CopyRight from './CopyRight';
 import Notification from './Notification';
 import IdDialog from './IdDialog';
-
+import LeadsAndAccountsEditAddDialog from './LeadsAndAccountsEditAddDialog/container/index';
 export {
   TopPanel,
   HeaderContent,
@@ -18,5 +18,6 @@ export {
   CopyRight,
   Notification,
   IdDialog,
+  LeadsAndAccountsEditAddDialog
 };
 

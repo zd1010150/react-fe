@@ -4,7 +4,7 @@ import order from 'views/Order/flow/reducer';
 import price from 'views/PriceSetting/flow/priceReducer';
 import marketingMaterials from 'views/MarketingMaterials/flow/reducer';
 import trackOrders from 'views/TrackOrders/flow/reducer';
-
+import leads from 'views/Leads/flow/reducer';
 export default {
   reddiPosts,
   todo,
@@ -12,4 +12,5 @@ export default {
   price,
   marketingMaterials,
   trackOrders,
+  leads,
 };

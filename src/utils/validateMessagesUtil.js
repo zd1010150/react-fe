@@ -144,7 +144,6 @@ const between = (() => {
     ruleName: 'between',
     validator: (min, max, language) => (rule, value = '', callback) => {
       const val = value.trim();
-      console.log(rule, '====== thi si rule');
       if (val.length < 1) {
         callback();
       } else if (val.length < min || val.length > max) {

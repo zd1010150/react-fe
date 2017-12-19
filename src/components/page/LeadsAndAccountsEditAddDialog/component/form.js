@@ -4,38 +4,23 @@ import PropTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
-import styles from '../Leads.less';
+import styles from '../dialog.less';
 import { Upload } from 'src/components/ui/index';
 import { getExistRule, validator } from 'src/utils/validateMessagesUtil';
 
+const cx = classNames.bind(styles);
 class userForm extends React.Component {
-  validate() {
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        this.props.onSubmit(values);
-      }
-    });
-  }
-  normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e[0];
-    }
-    return e && e.fileList;
-  }
   render() {
     const { language } = this.props;
     const { Item: FormItem } = Form;
     const { Option } = Select;
-    const cx = classNames.bind(styles);
     const { formatMessage } = this.props.intl;
     const { getFieldDecorator } = this.props.form;
-    const { editLead, cantEdit } = this.props;
-    const disabled = !cantEdit;
+    const {
+      editObject, canEdit, group, interests,
+    } = this.props;
+    const disabled = !canEdit;
     console.log(this.props.form, '====');
-    // const { autoCompleteResult } = this.state;
-
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -46,45 +31,43 @@ class userForm extends React.Component {
         sm: { span: 18 },
       },
     };
-
-
-    // mock 数据
-    const groups = [{ title: 'family', value: 'family' }, { title: 'colleague', value: 'colleague' }];
-    const interests = [{ title: 'health', value: 'health' }, { title: 'mastic', value: 'mastic' }];
-
     const socialMediaTypeSelector = getFieldDecorator('socialMediaType', {
-      initialValue: editLead.socialMediaType || 'weChat',
+      initialValue: editObject.socialMediaType || '',
     })(<Select disabled={disabled} style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group', { initialValue: editLead.group || 'family' })(<Select disabled={disabled} key="group">{groups.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}</Select>);
+    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || 1 })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
 
-    const interestsSelector = getFieldDecorator('interests', { initialValue: editLead.interests || 'health', type: 'array' })(<Select
-      mode="multiple"
+    const interestsSelector = getFieldDecorator('interests', { initialValue: editObject.interests || 1 })(<Select
       disabled={disabled}
       style={{ width: '100%' }}
       key="interests"
-    >{interests.map(item => <Option value={item.value} key={item.value}>{item.title}</Option>)}
+    >{interests.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
     </Select>);
 
-    const self = this;
     return (
-
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.props.onSubmit}>
+        <FormItem>
+          {
+            getFieldDecorator('id', {
+              initialValue: editObject.id || '',
+            })(<Input type="hidden" />)
+          }
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label={formatMessage({ id: 'global.form.lastName' })}
         >
           {
             getFieldDecorator('lastName', {
-            initialValue: editLead.lastName || '',
-            rules: [
-              getExistRule('required', 'lastName', language, { required: true }),
-              {
-                validator: validator.between(3, 50, language),
-              },
-            ],
-          })(<Input disabled={disabled}/>)}
+              initialValue: editObject.lastName || '',
+              rules: [
+                getExistRule('required', 'lastName', language, { required: true }),
+                {
+                  validator: validator.between(1, 50, language),
+                },
+              ],
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -92,14 +75,14 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('firstName', {
-              initialValue: editLead.firstName || '',
+              initialValue: editObject.firstName || '',
               rules: [
                 getExistRule('required', 'firstName', language, { required: true }),
                 {
-                  validator: validator.between(3, 50, language),
+                  validator: validator.between(1, 50, language),
                 },
               ],
-            })(<Input disabled={disabled}/>)}
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -107,13 +90,13 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('phone', {
-              initialValue: editLead.phone || '',
+              initialValue: editObject.phone || '',
               rules: [
                 getExistRule('required', 'phone', language, { required: true }),
                 {
                   validator: validator.phone(language),
                 }],
-            })(<Input disabled={disabled}/>)}
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -121,9 +104,9 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('email', {
-              initialValue: editLead.email || '',
+              initialValue: editObject.email || '',
               rules: [getExistRule('email', 'email', language)],
-            })(<Input disabled={disabled}/>)}
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -131,12 +114,12 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('address', {
-              initialValue: editLead.address || '',
+              initialValue: editObject.address || '',
               rules: [
                 {
-                validator: validator.between(3, 150, language),
-              }],
-            })(<Input disabled={disabled}/>)}
+                  validator: validator.between(1, 150, language),
+                }],
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -144,11 +127,11 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('city', {
-              initialValue: editLead.city || '',
+              initialValue: editObject.city || '',
               rules: [{
-                validator: validator.between(3, 150, language),
+                validator: validator.between(1, 150, language),
               }],
-            })(<Input disabled={disabled}/>)}
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -156,11 +139,11 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('state', {
-              initialValue: editLead.state || '',
+              initialValue: editObject.state || '',
               rules: [{
-                validator: validator.between(3, 150, language),
+                validator: validator.between(1, 150, language),
               }],
-            })(<Input disabled={disabled}/>)}
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -168,11 +151,11 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('country', {
-              initialValue: editLead.country || '',
+              initialValue: editObject.country || '',
               rules: [{
-                validator: validator.between(3, 150, language),
+                validator: validator.between(1, 150, language),
               }],
-            })(<Input disabled={disabled}/>)}
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -180,22 +163,22 @@ class userForm extends React.Component {
         >
           {
             getFieldDecorator('zipCode', {
-              initialValue: editLead.zipCode || '',
+              initialValue: editObject.zipCode || '',
               rules: [{
-                  validator: validator.zipCode(language),
-                }],
-            })(<Input disabled={disabled}/>)}
+                validator: validator.zipCode(language),
+              }],
+            })(<Input disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
           label={formatMessage({ id: 'global.form.socialMedia' })}
         >
           {getFieldDecorator('socialMediaNumber', {
-            initialValue: editLead.socialMediaNumber || '',
+            initialValue: editObject.socialMediaNumber || '',
             rules: [{
               validator: validator.between(3, 80, language),
             }],
-          })(<Input addonBefore={socialMediaTypeSelector} style={{ width: '100%' }} disabled={disabled}/>)}
+          })(<Input addonBefore={socialMediaTypeSelector} style={{ width: '100%' }} disabled={disabled} />)}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -216,10 +199,8 @@ class userForm extends React.Component {
             label={formatMessage({ id: 'global.ui.button.upload' })}
           >
             { getFieldDecorator('idFront', {
-              initialValue: editLead.idFront || '',
-              valuePropName: 'fileList',
-              getValueFromEvent: this.normFile,
-            })(<Upload disabled={disabled} file={editLead.idFront || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
+              initialValue: editObject.idFront || '',
+            })(<Upload disabled={disabled} file={editObject.idFront || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })} />) }
 
           </FormItem>
           <FormItem
@@ -227,10 +208,8 @@ class userForm extends React.Component {
 
           >
             { getFieldDecorator('idBack', {
-              initialValue: editLead.idBack || '',
-              valuePropName: 'fileList',
-              getValueFromEvent: this.normFile,
-            })(<Upload disabled={disabled} file={editLead.idBack || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
+              initialValue: editObject.idBack || '',
+            })(<Upload disabled={disabled} file={editObject.idBack || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
           </FormItem>
         </div>
 
@@ -239,14 +218,19 @@ class userForm extends React.Component {
   }
 }
 userForm.defaultProps = {
-  editLead: null,
+  editObject: {},
+  canEdit: false,
+  interests: [],
+  group: [],
 };
 userForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
-  editLead: PropTypes.object,
-  cantEdit: PropTypes.bool.isRequired,
+  editObject: PropTypes.object,
+  canEdit: PropTypes.bool,
+  interests: PropTypes.array,
+  group: PropTypes.array,
 };
 
 

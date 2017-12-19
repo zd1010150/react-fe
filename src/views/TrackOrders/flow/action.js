@@ -9,8 +9,8 @@ const setTrackOrderData = trackOrders => ({
   type: SET_TRACK_ORDER_DATA,
   trackOrders,
 });
-export const setSearchForm = (status, name) => dispatch => get('/affiliate/delivery-ordrs', { status, name }, dispatch).then((data) => {
-  console.log('search form', status, name, data);
+export const setSearchForm = (status, name) => dispatch => get('/affiliate/delivery-ordrs', { status, name }, dispatch).then((data)=>{
+  console.log("search form", status, name, data);
   dispatch(setTrackOrderData(data));
 });
 export const fetchTrackOrders = () => dispatch => get('/affiliate/delivery-orders', {}, dispatch).then((data) => {

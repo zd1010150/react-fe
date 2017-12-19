@@ -19,7 +19,7 @@ const dispatch = (request, dispatcher = () => {}) => {
     });
     return data;
   }).catch((err) => {
-    console.log('httpAction',err)
+    console.log('httpAction', err);
     dispatcher({
       type: HTTP_ACTION_ERROR,
       payload: {
@@ -38,3 +38,6 @@ export const get = (url, data, dispatcher) =>
 
 export const httpDelete = (url, data, dispatcher) =>
   (dispatch(http('delete', url, data), dispatcher));
+
+export const put = (url, data, dispatcher) =>
+  (dispatch(http('put', url, data), dispatcher));
