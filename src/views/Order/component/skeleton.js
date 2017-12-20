@@ -5,7 +5,7 @@ import { Button, Tabs } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import Step from './step';
 import ChooseGood from './chooseGood/index';
-import ChooseUser from './chooseUser';
+import ChooseUser from './chooseUser/index';
 import Confirm from './confirm';
 import SplitOrder from './splitOrder/index';
 
@@ -70,7 +70,7 @@ class skeleton extends React.Component {
           }
         </div>
         <Tabs className="steps-content" defaultActiveKey="1" activeKey={this.state.steps[this.state.currentStep].title} >
-          <TabPane tab="" key="chooseUser"><ChooseUser user={this.props.user} setOrderUser={this.props.setOrderUser} userId={this.props.userId} /></TabPane>
+          <TabPane tab="" key="chooseUser"><ChooseUser user={this.props.user} setOrderUser={this.props.setOrderUser} /></TabPane>
           <TabPane tab="" key="chooseGoods"><ChooseGood /></TabPane>
           <TabPane tab="" key="splitOrder"><SplitOrder /></TabPane>
           <TabPane tab="" key="confirmOrder"><Confirm splitOrder={() => { this.splitOrder(); }} /></TabPane>

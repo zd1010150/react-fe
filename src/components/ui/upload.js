@@ -4,25 +4,34 @@ import { Upload, Icon, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import { baseUrl } from 'src/config/env.config';
 import Cookie from 'js-cookie';
+import { apiDomain } from 'src/config/env.config';
 
 class PicturesWall extends React.Component {
   constructor(props) {
     super(props);
-    const fileList = [];
-    if (this.props.file && this.props.file.length > 0) {
-      fileList.push({
-        uid: Math.random(),
-        status: 'done',
-        url: this.props.file,
-      });
-    }
     this.state = {
       previewVisible: false,
       previewImage: '',
-      fileList,
+      fileList: this.initFileList(props.file),
     };
   }
-
+  initFileList = (file) => {
+    const fileList = [];
+    if (file && file.length > 0) {
+      fileList.push({
+        uid: Math.random(),
+        status: 'done',
+        url: `${apiDomain}/${this.props.file}`,
+      });
+    }
+    return fileList;
+  }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("will receiveProps trigger", nextProps);
+  //   this.setState({
+  //     fileList: this.initFileList(nextProps.file),
+  //   });
+  // }
   handleCancel = () => this.setState({ previewVisible: false })
   handlePreview = (file) => {
     this.setState({
@@ -30,12 +39,16 @@ class PicturesWall extends React.Component {
       previewVisible: true,
     });
   }
-  mapFileListToFiles = fileList => fileList.map((item) => {
-    return item.response && item.response.data;
-  });
+  mapFileListToFiles = fileList => fileList.map(item => item.response && item.response.data);
   handleChange = ({ fileList }) => {
+    console.table(fileList);
     this.setState({ fileList });
-    this.props.onChange(this.mapFileListToFiles(fileList));
+    const files = this.mapFileListToFiles(fileList);
+    if (files && files.length > 0) {
+      this.props.onChange(this.mapFileListToFiles(fileList));
+    } else {
+      this.props.onChange([this.props.file]);
+    }
   }
 
   render() {

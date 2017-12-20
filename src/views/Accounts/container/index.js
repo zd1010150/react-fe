@@ -1,40 +1,33 @@
-/* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setPageTitle, setOrderUser } from 'store/global/action';
+import { setPageTitle } from 'store/global/action';
+import Table from './tableView';
 
-import Add from '../component/add';
-import Table from '../component/table';
-
-class accountView extends React.Component {
+class accountsView extends React.Component {
   componentDidMount() {
     this.props.setPageTitle('global.pageTitle.accounts');
   }
   render() {
-    const { language } = this.props;
     return (
       <section className="section section-page">
-        <div className="section-header"><Add language={language} /></div>
-        <div className="section-content"><Table language={language} setOrderUser={this.props.setOrderUser} /></div>
+        <div className="section-content"><Table /></div>
         <div className="section-header" />
       </section>
     );
   }
 }
-accountView.propTypes = {
+
+accountsView.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
-  language: PropTypes.string.isRequired,
-  setOrderUser: PropTypes.func.isRequired,
 };
-const mapStateToProps = ({ global }) => ({
-  language: global.language,
+const mapStateToProps = ({ accounts }) => ({
+  idViews: accounts.idViews,
 });
 const mapDispatchToProp = {
   setPageTitle,
-  setOrderUser,
 };
 
-const AccountView = connect(mapStateToProps, mapDispatchToProp)(accountView);
-export default AccountView;
-
+const AccountsView = connect(mapStateToProps, mapDispatchToProp)(accountsView);
+export default AccountsView;

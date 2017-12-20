@@ -5,6 +5,8 @@ import price from 'views/PriceSetting/flow/priceReducer';
 import marketingMaterials from 'views/MarketingMaterials/flow/reducer';
 import trackOrders from 'views/TrackOrders/flow/reducer';
 import leads from 'views/Leads/flow/reducer';
+import accounts from 'views/Accounts/flow/reducer';
+
 export default {
   reddiPosts,
   todo,
@@ -13,4 +15,5 @@ export default {
   marketingMaterials,
   trackOrders,
   leads,
+  accounts,
 };

@@ -18,6 +18,6 @@ export {
   CopyRight,
   Notification,
   IdDialog,
-  LeadsAndAccountsEditAddDialog
+  LeadsAndAccountsEditAddDialog,
 };
 

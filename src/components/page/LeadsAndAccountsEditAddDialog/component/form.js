@@ -17,10 +17,9 @@ class userForm extends React.Component {
     const { formatMessage } = this.props.intl;
     const { getFieldDecorator } = this.props.form;
     const {
-      editObject, canEdit, group, interests,
+      editObject, canEdit, group, interests,showID
     } = this.props;
     const disabled = !canEdit;
-    console.log(this.props.form, '====');
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -192,7 +191,7 @@ class userForm extends React.Component {
         >
           { interestsSelector }
         </FormItem>
-        <div className={cx('id-wrapper')}>
+        { showID ?  <div className={cx('id-wrapper')}>
           <FormItem
             className={cx('id-front')}
             {...formItemLayout}
@@ -211,7 +210,9 @@ class userForm extends React.Component {
               initialValue: editObject.idBack || '',
             })(<Upload disabled={disabled} file={editObject.idBack || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
           </FormItem>
-        </div>
+        </div>: <span></span>
+        }
+
 
       </Form>
     );
@@ -220,6 +221,7 @@ class userForm extends React.Component {
 userForm.defaultProps = {
   editObject: {},
   canEdit: false,
+  showID: false,
   interests: [],
   group: [],
 };
@@ -231,6 +233,7 @@ userForm.propTypes = {
   canEdit: PropTypes.bool,
   interests: PropTypes.array,
   group: PropTypes.array,
+  showID: PropTypes.bool,
 };
 
 

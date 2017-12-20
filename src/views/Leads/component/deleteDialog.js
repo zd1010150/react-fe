@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 
-const deleteDialog = ({ intl, onClose, visible, userId }) => {
+const deleteDialog = ({ intl, onClose, visible, userId, onDelete }) => {
   const { formatMessage } = intl;
   const handleCancel = () => {
     console.log('cancel delte user');
@@ -11,6 +11,7 @@ const deleteDialog = ({ intl, onClose, visible, userId }) => {
   };
   const handleOK = () => {
     console.log(' delete user', userId);
+    onDelete(userId);
     onClose();
   };
   return (
@@ -33,6 +34,7 @@ const deleteDialog = ({ intl, onClose, visible, userId }) => {
 deleteDialog.propTypes = {
   intl: intlShape.isRequired,
   onClose: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   userId: PropTypes.number.isRequired,
 };

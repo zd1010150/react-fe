@@ -1,10 +1,10 @@
-/* eslint-disable no-shadow */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setOrderUser } from 'store/global/action';
 import Table from '../component/table';
-import { fetchLeads, updateLeads } from '../flow/action';
+import { fetchLeads, updateLeads, deleteLeads } from '../flow/action';
 
 class tableView extends React.Component {
   componentDidMount() {
@@ -12,10 +12,10 @@ class tableView extends React.Component {
   }
   render() {
     const {
-      leadsData, setOrderUser, leadsDataTablePagination, updateLeads
+      leadsData, setOrderUser, leadsDataTablePagination, updateLeads, deleteLeads, fetchLeads,
     } = this.props;
     return (
-      <Table setOrderUser={setOrderUser} leadsData={leadsData} leadsDataTablePagination={leadsDataTablePagination} fetchLeads={fetchLeads} updateLeads={updateLeads}/>
+      <Table setOrderUser={setOrderUser} leadsData={leadsData} leadsDataTablePagination={leadsDataTablePagination} fetchLeads={fetchLeads} updateLeads={updateLeads} deleteLeads={deleteLeads} />
     );
   }
 }
@@ -27,6 +27,7 @@ tableView.propTypes = {
   setOrderUser: PropTypes.func.isRequired,
   fetchLeads: PropTypes.func.isRequired,
   updateLeads: PropTypes.func.isRequired,
+  deleteLeads: PropTypes.func.isRequired,
   leadsDataTablePagination: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({ leads }) => ({
@@ -37,6 +38,7 @@ const mapDispatchToProp = {
   setOrderUser,
   fetchLeads,
   updateLeads,
+  deleteLeads,
 };
 
 const TableView = connect(mapStateToProps, mapDispatchToProp)(tableView);

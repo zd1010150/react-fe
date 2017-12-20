@@ -2,22 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
+import _ from 'lodash';
 // import classNames from 'classnames/bind';
 import operateType from '../flow/operateType';
 import UserForm from './form';
-import _ from 'lodash';
-import { baseUrl } from 'src/config/env.config';
 
 class userDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      canEdit: props.operations !== 'view',
+      showID: props.operatorType === operateType.ADD,
+      canEdit: props.operatorType !== operateType.VIEW,
     };
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      cenEdit: nextProps.operations !== 'view',
+      showID: nextProps.operatorType === operateType.ADD,
+      canEdit: nextProps.operatorType !== operateType.VIEW,
     });
   }
   handleValidate = () => {
@@ -36,10 +37,12 @@ class userDialog extends React.Component {
   mapPostData = (oldValue) => {
     const value = Object.assign({}, oldValue);
     const result = {
+      id: value.id,
       first_name: value.firstName,
       last_name: value.lastName,
       phone: value.phone,
-      address: value.address,
+      email: value.email,
+      street: value.address,
       sub_group_id: value.group,
       sub_category_id: value.interests,
       city: value.city,
@@ -67,7 +70,8 @@ class userDialog extends React.Component {
       firstName: value.first_name,
       lastName: value.last_name,
       phone: value.phone,
-      address: value.address,
+      email: value.email,
+      address: value.street,
       group: value.sub_group_id,
       interests: value.sub_category_id,
       city: value.city,
@@ -81,9 +85,19 @@ class userDialog extends React.Component {
       result.socialMediaNumber = social.social_media_number;
     }
     if (props.document && props.document.length > 0) {
-      result.idFront = baseUrl +"/"+ props.document[0].path;
+      const { name, path } = props.document[0];
+      if (name === 'front_id_doc') {
+        result.idFront = path || '';
+      } else {
+        result.idBack = path || '';
+      }
       if (props.document && props.document.length > 1) {
-        result.idBack = baseUrl +"/"+ props.document[1].path;
+        const { name, path } = props.document[0];
+        if (name === 'front_id_doc') {
+          result.idFront = path || '';
+        } else {
+          result.idBack = path || '';
+        }
       }
     }
     return result;
@@ -115,7 +129,6 @@ class userDialog extends React.Component {
 
       return `${type}.addDialogTitle`;
     })(userType, operatorType);
-
     return (
       <Modal
         title={formatMessage({ id: dialogTitle })}
@@ -129,7 +142,7 @@ class userDialog extends React.Component {
           </Button>,
         ]}
       >
-        <UserForm canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
+        <UserForm showID={this.state.showID} canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
       </Modal>
     );
   }

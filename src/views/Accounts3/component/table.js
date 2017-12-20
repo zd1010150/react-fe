@@ -1,27 +1,31 @@
-/* eslint-disable max-len */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Divider, Icon, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Table, Button, Divider, Icon, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { IdDialog, LeadsAndAccountsEditAddDialog } from 'src/components/page';
-import DeleteDialog from './deleteDialog';
-import operateType from 'src/components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
+import { Link } from 'react-router-dom';
+import { IdDialog } from 'src/components/page';
+import UserDialog from './userDialog';
+import HistoryOrderDialog from './historyOrderDialog';
 
+const mockId = {
+  userId: '23333',
+  idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
+  idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
+  visible: false,
+};
 class leadsTable extends React.Component {
   state = {
-    deleteDialogVisible: false,
-    deleteUserId: 233,
     userDialogVisible: false,
-    editID: {},
-    editObj: {},
-    operatorType: operateType.VIEW,
+    historyOrderDialogVisble: false,
+    cantEdit: true,
+    editID: mockId,
+    editLead: {},
   }
   closeUserDialog() {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: false,
       cantEdit: true,
-      editObj: {},
+      editLead: {},
     }));
   }
   handleIDClose() {
@@ -49,13 +53,15 @@ class leadsTable extends React.Component {
   handleUserDetail(record) {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
-      editObj: record,
+      cantEdit: false,
+      editLead: record,
     }));
   }
-  handleeditObj(record) {
+  handleEditLead(record) {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
-      editObj: record,
+      cantEdit: true,
+      editLead: record,
     }));
   }
   handleHistoryOrder(id) {
@@ -101,7 +107,7 @@ class leadsTable extends React.Component {
           </Tooltip>
           <Divider type="vertical" />
           <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
-            <Icon type="edit" onClick={() => { this.handleeditObj(record); }} />
+            <Icon type="edit" onClick={() => { this.handleEditLead(record); }} />
           </Tooltip>
           <Divider type="vertical" />
           <Button size="small" onClick={() => { this.handleHistoryOrder(record.id); }}>{formatMessage({ id: 'page.Accounts.historyOrder' })}</Button>
@@ -111,11 +117,67 @@ class leadsTable extends React.Component {
         </span>
       ),
     }];
+
+    const data = [{
+      id: 122333,
+      key: 122333,
+      firstName: '1dan',
+      lastName: 'zhang',
+      phone: '23333',
+      email: '2222',
+      address: '33333',
+      city: 'bazhong',
+      state: 'sichuang',
+      country: 'china',
+      zipCode: '123455',
+      socialMediaType: 'qq',
+      socialMediaNumber: '12333',
+      group: 'friend',
+      interests: ['mastic'],
+      idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
+      idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
+    }, {
+      id: 122345533,
+      key: 122345533,
+      firstName: '2dan1',
+      lastName: 'zhang',
+      phone: '23333',
+      email: '2222',
+      address: '33333',
+      city: 'bazhong',
+      state: 'sichuang',
+      country: 'china',
+      zipCode: '123455',
+      socialMediaType: 'qq',
+      socialMediaNumber: '12333',
+      group: 'friend',
+      interests: ['mastic'],
+      idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
+      idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
+    }, {
+      id: 1224555333333,
+      key: 1224555333333,
+      firstName: '3dan2',
+      lastName: 'zhang',
+      phone: '23333',
+      email: '2222',
+      address: '33333',
+      city: 'bazhong',
+      state: 'sichuang',
+      country: 'china',
+      zipCode: '123455',
+      socialMediaType: 'qq',
+      socialMediaNumber: '12333',
+      group: 'friend',
+      interests: ['mastic'],
+      idFront: 'http://img06.tooopen.com/images/20160921/tooopen_sy_179583447187.jpg',
+      idBack: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
+    }];
     return (
       <div>
         <Table columns={columns} dataSource={data} />
         <IdDialog {...this.state.editID} onOk={() => { this.handleIDSave(); }} onCancel={() => { this.handleIDClose(); }} />
-        <LeadsAndAccountsEditAddDialog  visible={this.state.userDialogVisible} editObj={this.state.editObj}  onClose={() => { this.closeUserDialog(); }} />
+        <UserDialog cantEdit={this.state.cantEdit} visible={this.state.userDialogVisible} editLead={this.state.editLead} language={this.props.language} onClose={() => { this.closeUserDialog(); }} />
         <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }} />
       </div>
     );
@@ -124,11 +186,8 @@ class leadsTable extends React.Component {
 
 leadsTable.propTypes = {
   intl: intlShape.isRequired,
+  language: PropTypes.string.isRequired,
   setOrderUser: PropTypes.func.isRequired,
-  leadsData: PropTypes.array.isRequired,
-  leadsDataTablePagination: PropTypes.object.isRequired,
-  fetchLeads: PropTypes.func.isRequired,
-  updateLeads: PropTypes.func.isRequired,
 };
 
 const LeadsTable = injectIntl(leadsTable);
