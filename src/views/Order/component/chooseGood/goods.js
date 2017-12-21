@@ -32,10 +32,6 @@ const goods = ({
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
   }, {
-    title: formatMessage({ id: 'global.properNouns.goods.lastUpdated' }),
-    dataIndex: 'lastUpdated',
-    key: 'lastUpdated',
-  }, {
     title: formatMessage({ id: 'global.properNouns.goods.totalValue' }),
     dataIndex: 'totalValue',
     key: 'totalValue',

@@ -7,7 +7,6 @@ const selectedUserView = ({
   intl, selectedUser, setSearchAreaVisible, searchAreaVisible,
 }) => {
   const { formatMessage } = intl;
-  console.log(selectedUser,"selecteduser info")
   let idFront = '';
   let idBack = '';
   if (selectedUser.document && selectedUser.document.length > 0) {

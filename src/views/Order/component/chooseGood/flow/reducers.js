@@ -20,9 +20,9 @@ const mixAvailableQuantity = (state, goods, cart) => {
     totalValue: 10, // mock
     unitPrice: 10, // mock
     recommendedPrice: item.product.recommended_price,
-    availableQuantity: item.current_quantity - getSeletedQuantity(item.id, cart),
+    availableQuantity: item.current_quantity - getSeletedQuantity(item.product.id, cart),
     selectingQuantity: 1,
-    key: item.id,
+    key: item.product.id,
     totalPrice: 0,
   }));
   return newGoods;
@@ -66,10 +66,7 @@ const setAvailableQuantity = (allGoods, goods, isAddToCart) => {
   let newAllGoods = allGoods.slice();
   newAllGoods = newAllGoods.map((item) => {
     if (item.id === goods.id) {
-      const availableQuantity = isAddToCart ?
-        item.availableQuantity - item.selectingQuantity
-        :
-        item.currentQuantity;
+      const availableQuantity = isAddToCart ? item.availableQuantity - item.selectingQuantity : item.currentQuantity;
       const selectingQuantity = availableQuantity > 0 ? 1 : 0;
       return Object.assign({}, item, { availableQuantity, selectingQuantity });
     }

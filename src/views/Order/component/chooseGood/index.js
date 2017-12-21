@@ -35,13 +35,14 @@ class chooseGoodView extends React.Component {
       totalPrice,
       goodsTablePagination,
       setCurrentStep,
+      steps,
     } = this.props;
     return (
       <div className={cx('section')}>
         <Button
           style={{ marginLeft: 8 }}
           onClick={() => {
-            setCurrentStep(0);
+            setCurrentStep(steps.indexOf('chooseGood') - 1);
           }}
         >
           previous
@@ -50,7 +51,8 @@ class chooseGoodView extends React.Component {
           style={{ marginLeft: 8 }}
           disabled={!(cart && cart.length > 0)}
           onClick={() => {
-            setCurrentStep(2);
+            if(totalPrice){}
+            setCurrentStep(steps.indexOf('chooseGood') + 1);
           }}
         >
           next
@@ -86,7 +88,6 @@ chooseGoodView.propTypes = {
   queryGoodsByPaging: PropTypes.func.isRequired,
 };
 const mapStateToProps = ({ order }) => ({
-  ...order.chooseGood,
   goods: order.chooseGood.goods,
   cart: order.chooseGood.cart.goods,
   totalItemQuantity: order.chooseGood.cart.totalItemQuantity,
@@ -94,6 +95,7 @@ const mapStateToProps = ({ order }) => ({
   cartCollapse: order.chooseGood.cartCollapse,
   goodsTablePagination: order.chooseGood.goodsTablePagination,
   searchKey: order.chooseGood.searchKey,
+  steps: order.skeleton.steps,
 });
 const mapDispathToProps = {
   setCarCollapse,
