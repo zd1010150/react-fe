@@ -1,7 +1,10 @@
 // ui的state
 export const SET_CART_COLLAPSE = 'SET_CART_COLLAPSE';
+export const SET_PAGENATIONS = 'SET_PAGENATIONS';
 
-export const QUERY_GOODS = 'QUERY_GOODS';
+export const SET_SEARCH_KEY = 'SET_SEARCH_KEY';
+
+export const SET_GOODS = 'SET_GOODS';
 export const SELECTING_GOODS_QUANTITY = 'SELECTING_GOODS_QUANTITY';
 
 export const ADD_GOODS_TO_CART = 'ADD_GOODS_TO_CART';

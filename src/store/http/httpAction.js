@@ -4,6 +4,7 @@ import {
   HTTP_ACTION_DOING,
   HTTP_ACTION_ERROR,
 } from './constants.js';
+import { addError } from '../global/action';
 
 const dispatch = (request, dispatcher = () => {}) => {
   dispatcher({
@@ -11,15 +12,21 @@ const dispatch = (request, dispatcher = () => {}) => {
     payload: {},
   });
   return request.then((data) => {
-    dispatcher({
-      type: HTTP_ACTION_DONE,
-      payload: {
-        data,
-      },
-    });
-    return data;
+    console.log('data from server====>', data);
+    if (data.status_code) {
+      dispatcher(addError(data.message));
+    } else {
+      dispatcher({
+        type: HTTP_ACTION_DONE,
+        payload: {
+          data,
+        },
+      });
+      return data;
+    }
   }).catch((err) => {
-    console.log('httpAction', err);
+    console.log('err from server=====>', err);
+
     dispatcher({
       type: HTTP_ACTION_ERROR,
       payload: {

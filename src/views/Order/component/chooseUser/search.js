@@ -9,7 +9,6 @@ const searchView = ({
   intl, selectedUser, searchByKeys, setSearchAreaVisible,
 }) => {
   const { formatMessage } = intl;
-  debugger;
   return (
     <div>
       <Search

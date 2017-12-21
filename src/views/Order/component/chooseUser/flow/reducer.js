@@ -1,6 +1,7 @@
 import { SET_USER_TABLE_DATA, SET_SEARCH_AREA_VISIBLE } from './actionType';
 import { combineReducers } from 'redux';
-
+import { SET_ORDER_USER } from 'src/store/global/actionType';
+import _ from 'lodash';
 const users = (state = [], action) => {
   switch (action.type) {
     case SET_USER_TABLE_DATA:
@@ -18,8 +19,17 @@ const searchAreaVisible = (state = true, action) => {
       return state;
   }
 };
+const hasSeletedUser = (state = false, action) => {
+  switch (action.type) {
+    case SET_ORDER_USER:
+      return !_.isEmpty(action.user);
+    default:
+      return state;
+  }
+}
 const chooseUser = combineReducers({
   users,
   searchAreaVisible,
+  hasSeletedUser,
 });
 export default chooseUser;

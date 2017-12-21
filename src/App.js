@@ -15,9 +15,11 @@ import { TopPanel,
   HeaderNav,
   LeftSideNav,
   MainContent,
+  ErrorNotification,
   Footer,
   CopyRight,
   Notification } from './components/page/index';
+
 const store = configureStore();
 
 // 在非生成环境，都打印redux中的state,以便于跟踪调试
@@ -28,6 +30,7 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 store.dispatch(fetchGlobalSetting()); // 获取所有的配置,页面中大多数数据请求都基于本配置
+ErrorNotification(store);
 
 window.__store__ = store;
 // topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification,

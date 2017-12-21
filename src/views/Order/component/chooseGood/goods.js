@@ -12,21 +12,17 @@ import styles from '../../Order.less';
 const cx = classNames.bind(styles);
 
 const goods = ({
-  goodsData, intl, addGoodsToCart, selectingGoods,
+  goodsData, intl, addGoodsToCart, selectingGoods, goodsTablePagination, queryGoodsByPaging
 }) => {
   const { formatMessage } = intl;
   const columns = [{
-    title: formatMessage({ id: 'global.properNouns.goods.id' }),
-    key: 'id',
-    dataIndex: 'id',
-  }, {
     title: formatMessage({ id: 'global.properNouns.goods.name' }),
-    key: 'name',
     dataIndex: 'name',
+    key: 'name',
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.picture' }),
     key: 'picture',
-    render: text => <img src={text} alt="goods pic" />,
+    render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.category' }),
     dataIndex: 'category',
@@ -59,7 +55,6 @@ const goods = ({
       value={record.selectingQuantity}
       max={record.availableQuantity}
       onChange={(value) => {
-        console.log("selectingQuantity:",record.selectingQuantity, "availableQuantity:",record.availableQuantity, value, "the goods change");
        selectingGoods(record, value);
     }}
     />),
@@ -73,10 +68,21 @@ const goods = ({
       </span>
     ),
   }];
+  const pagination = {
+    defaultCurrent: goodsTablePagination.currentPage,
+    current: goodsTablePagination.currentPage,
+    defaultPageSize: goodsTablePagination.perPage,
+    pageSize: goodsTablePagination.perPage,
+    total: goodsTablePagination.total,
+    onChange(page, pageSize) {
+      console.log(page, pageSize, '- --- pagintation change');
+      queryGoodsByPaging(pageSize, page);
+    },
+  };
   return (
     <div className="block">
       <div className="block-content">
-        <Table columns={columns} dataSource={goodsData} />
+        <Table columns={columns} dataSource={goodsData} pagination={pagination} />
       </div>
     </div>);
 };
@@ -89,6 +95,8 @@ goods.propTypes = {
   goodsData: PropTypes.array,
   addGoodsToCart: PropTypes.func.isRequired,
   selectingGoods: PropTypes.func.isRequired, // 加入到购物车的数量
+  goodsTablePagination: PropTypes.object.isRequired,
+  queryGoodsByPaging: PropTypes.func.isRequired,
 };
 const GoodsView = injectIntl(goods);
 export default GoodsView;

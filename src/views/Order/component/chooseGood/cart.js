@@ -11,13 +11,15 @@ import styles from '../../Order.less';
 const cx = classNames.bind(styles);
 
 const cart = ({
-  cartData, intl, deleteGoods, editingCartGoods,
+  cartData, intl, deleteGoods, editingCartGoods, totalItemQuantity, totalPrice,
 }) => {
   const { formatMessage } = intl;
   return (
     <div className="block">
       <div className="block-title">
         <strong>{ formatMessage({ id: 'page.Order.selectedGoods' }) }</strong>
+        <span> {totalItemQuantity} </span>
+        <span> {totalPrice} </span>
       </div>
       <div className="block-content">
         <ul>
@@ -66,6 +68,8 @@ cart.propTypes = {
   cartData: PropTypes.array,
   deleteGoods: PropTypes.func.isRequired,
   editingCartGoods: PropTypes.func.isRequired,
+  totalItemQuantity: PropTypes.number.isRequired,
+  totalPrice: PropTypes.number.isRequired,
 };
 const CartView = injectIntl(cart);
 export default CartView;

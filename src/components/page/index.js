@@ -8,6 +8,8 @@ import CopyRight from './CopyRight';
 import Notification from './Notification';
 import IdDialog from './IdDialog';
 import LeadsAndAccountsEditAddDialog from './LeadsAndAccountsEditAddDialog/container/index';
+import ErrorNotification from './ErrorNotification';
+
 export {
   TopPanel,
   HeaderContent,
@@ -19,5 +21,6 @@ export {
   Notification,
   IdDialog,
   LeadsAndAccountsEditAddDialog,
+  ErrorNotification,
 };
 

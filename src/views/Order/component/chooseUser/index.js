@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Button } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import { setSearchAreaVisible, searchByKeys } from './flow/action';
 import Search from './search';
 import SelectedUser from './selectedUser';
 import Table from './table';
+import { setCurrentStep } from '../skeleton/flow/action';
 
 class chooseUser extends React.Component {
   constructor(props) {
@@ -23,10 +25,15 @@ class chooseUser extends React.Component {
   }
   render() {
     const {
-      user, users, setOrderUser, searchAreaVisible, setSearchAreaVisible, searchByKeys,
+      user, users, setOrderUser, searchAreaVisible, setSearchAreaVisible, searchByKeys, hasSeletedUser, setCurrentStep,
     } = this.props;
     return (
       <div>
+        <Button style={{ marginLeft: 8 }} disabled={!hasSeletedUser} onClick={() => {
+          setCurrentStep(1);
+        }}>
+          next
+        </Button>
         {searchAreaVisible ?
           <Search selectedUser={user} searchByKeys={searchByKeys} setSearchAreaVisible={setSearchAreaVisible} /> : ''}
         {searchAreaVisible && users.length > 0 ? <Table users={users} setSeletedUser={setOrderUser} /> : ''}
@@ -47,15 +54,16 @@ chooseUser.propTypes = {
   searchAreaVisible: PropTypes.bool.isRequired,
   setSearchAreaVisible: PropTypes.func.isRequired,
   searchByKeys: PropTypes.func.isRequired,
+  hasSeletedUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = ({ order }) => ({
-  searchAreaVisible: order.chooseUser.searchAreaVisible,
-  users: order.chooseUser.users,
+  ...order.chooseUser,
 });
 const mapDispatchToProps = {
   setSearchAreaVisible,
   searchByKeys,
+  setCurrentStep,
 };
 const ChooseUser = connect(mapStateToProps, mapDispatchToProps)(injectIntl(chooseUser));
 export default ChooseUser;
