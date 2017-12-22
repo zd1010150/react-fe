@@ -30,6 +30,7 @@ class splitOrderView extends React.Component {
     const postData = [];
     Object.keys(this.props.orders).forEach((orderid) => {
       const order = this.props.orders[orderid];
+      if (order.goods && order.goods.length < 1) return;
       postData.push(order.goods.map(item => ({
         price: item.price,
         product_id: item.id,
@@ -51,20 +52,18 @@ class splitOrderView extends React.Component {
     });
   }
   goNextStep() {
-    const isAllBeAdded = this.props.goods.reduce((isAllbeAdded, item) => isAllbeAdded && (item.availableQuantity === 0), true); // 第一步： 判断是否有剩余的商品没有添加
+    const isAllBeAdded = this.props.goods.reduce(
+      (isAllbeAdded, item) =>
+        isAllbeAdded && (item.availableQuantity === 0),
+      true,
+    ); // 第一步： 判断是否有剩余的商品没有添加
     if (!isAllBeAdded) {
       this.setState({
         hasRemainGoodsConfirmDialogVisible: true,
       });
       return;
     }
-    const allValidate = Object.keys(this.props.orders).reduce((validate, item) => this.props.orders[item].status !== SAVED, true); // 第二步：判断是否有子订单没有保存
-    this.setState({
-      errorMsg: allValidate ? '' : '有未保存的订单，请保存后继续下一步',
-    });
-    if (allValidate) {
-      this.creatDeliveryOrder();
-    }
+    this.creatDeliveryOrder();
   }
   goPreviousStep() {
     this.setState({

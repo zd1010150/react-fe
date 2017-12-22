@@ -200,6 +200,8 @@ const getTotal = (state) => {
     if (orderCost > max) {
       order.error = '总价超过了总体300,请再进行拆单';
       validate = false;
+    } else {
+      order.error = '';
     }
     order.goods = newGoods;
     order.totalPrice = orderPrice;
