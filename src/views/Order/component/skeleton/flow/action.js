@@ -1,6 +1,6 @@
 import { post } from 'src/store/http/httpAction';
 
-import { SET_CURRENT_STEP, ADD_STEP, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP } from './actionType';
+import { SET_CURRENT_STEP, ADD_STEP, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP, RESET_ORDER } from './actionType';
 
 
 export const setCurrentStep = step => ({
@@ -23,6 +23,9 @@ export const addSteps = (index, step) => ({
 const setDeliveryOrders = deliveryOrders => ({
   type: SET_DELIVERY_ORDERS,
   deliveryOrders,
+});
+const resetSteps = () => ({
+  type: RESET_ORDER
 });
 export const createDeliveryOrder = orders => (dispatch, getState) => {
   const { orderUser } = getState().global;

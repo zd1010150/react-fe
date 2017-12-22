@@ -4,3 +4,4 @@ export const SET_CURRENT_STEP = 'SET_CURRENT_STEP';
 export const ADD_STEP = 'ADD_STEP';
 
 export const SET_DELIVERY_ORDERS = 'SET_DELIVERY_ORDERS';
+export const RESET_ORDER = 'RESET_ORDER';

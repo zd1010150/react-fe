@@ -1,6 +1,7 @@
 
 import { combineReducers } from 'redux';
 import { SET_CART_COLLAPSE, SET_GOODS, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_PAGENATIONS, SET_SEARCH_KEY, SET_CART_GOODS_PRICE } from './actionType';
+import { RESET_ORDER } from '../../skeleton/flow/actionType';
 
 const getSeletedQuantity = (itemId, cart) => {
   const items = cart.filter(item => item.id === itemId);
@@ -100,6 +101,8 @@ const updateGoodsWhenEditingCartGoods = (allGoods, goods, quantity) => {
 };
 const goods = (state = [], action) => {
   switch (action.type) {
+    case RESET_ORDER:
+      return [];
     case SET_GOODS:
       return mixAvailableQuantity(state, action.goods, action.cart);
     case ADD_GOODS_TO_CART:
@@ -150,6 +153,10 @@ const cart = (state = {
 }, action) => {
   let newGoods;
   switch (action.type) {
+    case RESET_ORDER:
+      return {
+        goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0,
+      };
     case ADD_GOODS_TO_CART:
       newGoods = addGoodsToCart(state.goods, action.goods, action.goods.selectingQuantity);
       break;

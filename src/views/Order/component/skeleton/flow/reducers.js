@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_STEP, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP } from './actionType';
+import { ADD_STEP, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP, RESET_ORDER } from './actionType';
 
 
 const steps = (state = {
@@ -8,6 +8,8 @@ const steps = (state = {
 }, action) => {
   let stepIndex;
   switch (action.type) {
+    case RESET_ORDER:
+      return { steps: ['chooseUser', 'chooseGoods', 'confirmOrder'], currentStep: 0 };
     case SET_NEXT_STEP:
       stepIndex = state.steps.indexOf(action.step);
       if (stepIndex > -1 && stepIndex + 1 < state.steps.length) {
