@@ -8,8 +8,18 @@ import {
   SO_DELETE_ORDER,
   SO_DELETE_ORDER_GOODS,
   SO_SET_ORDER_GOODS_QUANTITY,
+  SO_INIT_GOODS,
+  SO_RESET_ORDER,
+  SO_SET_MAX,
 } from './actionType';
-
+export const setMax = max => ({
+  type: SO_SET_MAX,
+  max,
+});
+export const initGoods = (goods) => ({
+  type: SO_INIT_GOODS,
+  goods,
+});
 export const setOrderBoardStatus = collapsed => ({
   type: SO_SET_ORDERS_BOARD_COLLAPSE,
   collapsed,
@@ -46,6 +56,10 @@ export const deleteOrderGoods = goods => ({
   type: SO_DELETE_ORDER_GOODS,
   goods,
 });
+export const resetOrder = () => ({
+  type: SO_RESET_ORDER,
+});
+
 export const setOrderGoodsQuantity = (goods, quantity, currentOrder, orders) => ({
   type: SO_SET_ORDER_GOODS_QUANTITY,
   goods,

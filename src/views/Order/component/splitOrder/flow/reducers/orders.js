@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import _ from 'lodash';
 import {
   SO_SET_ORDERS_BOARD_COLLAPSE,
   SO_ADD_GOODS_TO_ORDER,
@@ -6,9 +7,12 @@ import {
   SO_CREATE_ORDER,
   SO_DELETE_ORDER,
   SO_DELETE_ORDER_GOODS,
-  SO_SET_ORDER_GOODS_QUANTITY } from '../actionType';
+  SO_RESET_ORDER,
+  SO_SET_ORDER_GOODS_QUANTITY,
+  SO_SET_MAX,
+} from '../actionType';
 import { CREATED, EDITING, SAVED, DELETED } from '../orderStatus';
-import _ from 'lodash';
+
 let ORDER_SEED = 0;
 // 一个新order的初始化值
 const order = {
@@ -26,7 +30,6 @@ const createOrder = (state) => {
 };
 const deleteOrder = (state, order) => {
   const { orders, currentOrder, goodsEnable } = state;
-  debugger;
   const newOrders = Object.keys(orders).reduce((result, key) => {
     if (Number(key) !== order.id) {
       result[key] = orders[key];
@@ -36,7 +39,7 @@ const deleteOrder = (state, order) => {
   let newCurrenOrder = Object.assign({}, currentOrder);
   let newGoodsEnable = goodsEnable;
   if (_.isEmpty(newOrders)) {
-    newCurrenOrder = { id: 0 , goods: []};
+    newCurrenOrder = { id: 0, goods: [] };
     newGoodsEnable = false;
   }
   return Object.assign({}, state, {
@@ -172,25 +175,72 @@ const setOrderCollapse = (state, orderId, collapsed) => {
     currentOrder: newCurrenOrder,
   });
 };
-export const orders = (state = { orders: {}, currentOrder: { id: 0 }, goodsEnable: false }, action) => {
+
+const getTotal = (state) => {
+  const { orders, max } = state;
+  const newOrders = Object.assign({}, orders);
+  const orderId = Object.keys(orders);
+  let orderCost = 0;
+  let orderPrice = 0;
+  let singleCost = 0;
+  let singlePrice = 0;
+  let order = {};
+  let validate = true;
+  orderId.forEach((id) => {
+    orderCost = 0;
+    orderPrice = 0;
+    order = newOrders[id];
+    const newGoods = order.goods.map((item) => {
+      singlePrice = item.quantity * item.price;
+      singleCost = item.quantity * item.unitPrice;
+      orderCost += singleCost;
+      orderPrice += singlePrice;
+      return Object.assign({}, item, { totalPrice: singlePrice, totalCost: singleCost });
+    });
+    if (orderCost > max) {
+      order.error = '总价超过了总体300,请再进行拆单';
+      validate = false;
+    }
+    order.goods = newGoods;
+    order.totalPrice = orderPrice;
+    order.totalCost = orderCost;
+    newOrders[id] = order;
+  });
+
+  return Object.assign({}, state, { orders: newOrders, validate });
+};
+export const orders = (state = {
+  orders: {}, currentOrder: { id: 0 }, goodsEnable: false, validate: false, max: 0,
+}, action) => {
+  let newState;
   switch (action.type) {
+    case SO_SET_MAX:
+      return Object.assign({}, state, { max: action.max });
+    case SO_RESET_ORDER:
+      return { orders: {}, currentOrder: { id: 0 }, goodsEnable: false };
     case SO_CREATE_ORDER:
       return Object.assign({}, state, { orders: createOrder(state.orders) });
     case SO_DELETE_ORDER:
-      return deleteOrder(state, action.order);
+      newState = deleteOrder(state, action.order);
+      break;
     case SO_SET_ORDER_STATUS:
       return setOrderStatus(state, action.order, action.status);
     case SO_ADD_GOODS_TO_ORDER:
-      return addGoodsToOrder(state, action.goods, action.goods.selectingQuantity);
+      newState = addGoodsToOrder(state, action.goods, action.goods.selectingQuantity);
+      break;
     case SO_DELETE_ORDER_GOODS:
-      return deleteOrderGoods(state, action.goods);
+      newState = deleteOrderGoods(state, action.goods);
+      break;
     case SO_SET_ORDER_GOODS_QUANTITY:
-      return setOrderGoodsQuantity(state, action.goods, action.quantity);
+      newState = setOrderGoodsQuantity(state, action.goods, action.quantity);
+      break;
     case SO_SET_ORDERS_BOARD_COLLAPSE:
       return setOrderCollapse(state, action.orderId, action.collapsed);
+
     default:
       return state;
   }
+  return getTotal(newState);
 };
 export const ordersBorderCollapse = (state = true, action) => {
   switch (action.type) {

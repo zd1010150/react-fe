@@ -1,25 +1,43 @@
 import { combineReducers } from 'redux';
-import { SET_CURRENT_STEP, ADD_STEP } from './actionType';
+import { ADD_STEP, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP } from './actionType';
 
 
-const currentStep = (state = 0, action) => {
+const steps = (state = {
+  steps: ['chooseUser', 'chooseGoods', 'confirmOrder'],
+  currentStep: 0,
+}, action) => {
+  let stepIndex;
   switch (action.type) {
-    case SET_CURRENT_STEP:
-      return action.step;
+    case SET_NEXT_STEP:
+      stepIndex = state.steps.indexOf(action.step);
+      if (stepIndex > -1 && stepIndex + 1 < state.steps.length) {
+        return Object.assign({}, state, { currentStep: stepIndex + 1 });
+      }
+      return state;
+    case SET_PREVIOUS_STEP:
+      stepIndex = state.steps.indexOf(action.step);
+      if (stepIndex > -1 && stepIndex - 1 > -1) {
+        return Object.assign({}, state, { currentStep: stepIndex - 1 });
+      }
+      return state;
+    case ADD_STEP:
+      const newSteps = state.steps.slice();
+      newSteps.splice(action.index, 0, action.step);
+      return Object.assign({}, state, { steps: newSteps });
     default:
       return state;
   }
 };
-const steps = (state = ['chooseUser', 'chooseGoods', 'confirmOrder'], action) => {
+const deliveryOrders = (state = [], action) => {
   switch (action.type) {
-    case ADD_STEP:
-      return state.slice.splice(action.index, 0, action.step);
+    case SET_DELIVERY_ORDERS:
+      return action.deliveryOrders;
     default:
       return state;
   }
 };
 const skeleton = combineReducers({
-  currentStep,
   steps,
+  deliveryOrders,
 });
 export default skeleton;

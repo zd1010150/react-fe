@@ -1,10 +1,10 @@
 import { get, post, put, httpDelete } from 'src/store/http/httpAction';
-import { SET_CART_COLLAPSE, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_GOODS, SET_SEARCH_KEY, SET_PAGENATIONS } from './actionType';
+import { SET_CART_COLLAPSE, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_GOODS, SET_SEARCH_KEY, SET_PAGENATIONS, SET_CART_GOODS_PRICE, } from './actionType';
 
-const setSearchKey = (searchKey) => ({
+const setSearchKey = searchKey => ({
   type: SET_SEARCH_KEY,
   searchKey,
-})
+});
 const setPaginations = (perPage, currentPage, total) => ({
   type: SET_PAGENATIONS,
   perPage,
@@ -66,4 +66,10 @@ export const queryBySearchKey = searchKey => (dispatch, getState) => {
   dispatch(setSearchKey(searchKey));
   return fetchData(perPage, currentPage, searchKey, dispatch, goods);
 };
+
+export const setItemPrice = (goodsId, price) => ({
+  type: SET_CART_GOODS_PRICE,
+  goodsId,
+  price,
+})
 

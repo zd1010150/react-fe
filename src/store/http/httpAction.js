@@ -13,8 +13,15 @@ const dispatch = (request, dispatcher = () => {}) => {
   });
   return request.then((data) => {
     console.log('data from server====>', data);
-    if (data.status_code) {
-      dispatcher(addError(data.message));
+
+    if (data.errors) {
+      const { errors } = data;
+      Object.keys(errors).forEach((key) => {
+        const msgs = errors[key];
+        msgs.forEach((msg) => {
+          dispatcher(addError(msg));
+        });
+      });
     } else {
       dispatcher({
         type: HTTP_ACTION_DONE,

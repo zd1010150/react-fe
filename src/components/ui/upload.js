@@ -53,9 +53,6 @@ class PicturesWall extends React.Component {
 
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
-    const headers = {
-      Authorization: `Bearer ${Cookie.get('token')}`,
-    };
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -71,7 +68,7 @@ class PicturesWall extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
           disabled={this.props.disabled}
-          headers={headers}
+          withCredentials
         >
           { this.props.disabled ? null : (this.props.pictureQuantity < 0 ? uploadButton : (this.state.fileList.length >= this.props.pictureQuantity ? null : uploadButton)) }
         </Upload>

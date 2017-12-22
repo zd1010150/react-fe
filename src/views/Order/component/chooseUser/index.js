@@ -8,7 +8,7 @@ import { setSearchAreaVisible, searchByKeys } from './flow/action';
 import Search from './search';
 import SelectedUser from './selectedUser';
 import Table from './table';
-import { setCurrentStep } from '../skeleton/flow/action';
+import { goNextStep } from '../skeleton/flow/action';
 
 class chooseUser extends React.Component {
   constructor(props) {
@@ -25,13 +25,25 @@ class chooseUser extends React.Component {
   }
   render() {
     const {
-      user, users, setOrderUser, searchAreaVisible, setSearchAreaVisible, searchByKeys, hasSeletedUser, setCurrentStep,
+      user,
+      users,
+      setOrderUser,
+      searchAreaVisible,
+      setSearchAreaVisible,
+      searchByKeys,
+      hasSeletedUser,
+      goNextStep,
     } = this.props;
     return (
       <div>
-        <Button style={{ marginLeft: 8 }} disabled={!hasSeletedUser} onClick={() => {
-          setCurrentStep(1);
-        }}>
+        <Button
+          style={{ marginLeft: 8 }}
+          disabled={!hasSeletedUser}
+          onClick={() => {
+            console.log('it is trigger');
+          goNextStep('chooseUser');
+        }}
+        >
           next
         </Button>
         {searchAreaVisible ?
@@ -63,7 +75,7 @@ const mapStateToProps = ({ order }) => ({
 const mapDispatchToProps = {
   setSearchAreaVisible,
   searchByKeys,
-  setCurrentStep,
+  goNextStep,
 };
 const ChooseUser = connect(mapStateToProps, mapDispatchToProps)(injectIntl(chooseUser));
 export default ChooseUser;

@@ -1,8 +1,18 @@
-import {  SET_CURRENT_STEP, ADD_STEP } from './actionType';
+import { post } from 'src/store/http/httpAction';
+
+import { SET_CURRENT_STEP, ADD_STEP, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP } from './actionType';
 
 
 export const setCurrentStep = step => ({
   type: SET_CURRENT_STEP,
+  step,
+});
+export const goNextStep = step => ({
+  type: SET_NEXT_STEP,
+  step,
+});
+export const goPreviousStep = step => ({
+  type: SET_PREVIOUS_STEP,
   step,
 });
 export const addSteps = (index, step) => ({
@@ -10,3 +20,21 @@ export const addSteps = (index, step) => ({
   index,
   step,
 });
+const setDeliveryOrders = deliveryOrders => ({
+  type: SET_DELIVERY_ORDERS,
+  deliveryOrders,
+});
+export const createDeliveryOrder = orders => (dispatch, getState) => {
+  const { orderUser } = getState().global;
+  const postData = {
+    affiliated_clients_id: orderUser.id,
+    orders,
+  };
+  post('/affiliate/delivery-orders/batch-create', postData, dispatch).then((data) => {
+    console.log(data, '<=====deliveryorder data====>');
+    if (data) {
+      dispatch(setDeliveryOrders(data));
+    }
+  });
+};
+

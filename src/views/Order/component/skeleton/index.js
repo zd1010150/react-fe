@@ -9,7 +9,6 @@ import ChooseGood from '../chooseGood/index';
 import ChooseUser from '../chooseUser/index';
 import Confirm from '../confirm';
 import SplitOrder from '../splitOrder/index';
-import { setCurrentStep, addSteps } from './flow/action';
 
 const { TabPane } = Tabs;
 class skeleton extends React.Component {
@@ -19,16 +18,16 @@ class skeleton extends React.Component {
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      currentStep, setCurrentStep, steps, setOrderUser, user, addSteps,
+      steps, setOrderUser, user,
     } = this.props;
     return (
       <div>
-        <Step currentStep={currentStep} steps={steps.map(item => ({ title: item }))} />
-        <Tabs className="steps-content" defaultActiveKey="1" activeKey={steps[currentStep]} >
+        <Step currentStep={steps.currentStep} steps={steps.steps.map(item => ({ title: item }))} />
+        <Tabs className="steps-content" defaultActiveKey="1" activeKey={steps.steps[steps.currentStep]} >
           <TabPane tab="" key="chooseUser"><ChooseUser user={user} setOrderUser={setOrderUser} /></TabPane>
           <TabPane tab="" key="chooseGoods"><ChooseGood /></TabPane>
           <TabPane tab="" key="splitOrder"><SplitOrder /></TabPane>
-          <TabPane tab="" key="confirmOrder"><Confirm splitOrder={() => { addSteps(2, 'splitOrder'); setCurrentStep(2); }} /></TabPane>
+          <TabPane tab="" key="confirmOrder"><Confirm /></TabPane>
         </Tabs>
       </div>
     );
@@ -39,18 +38,12 @@ skeleton.propTypes = {
   intl: intlShape.isRequired,
   user: PropTypes.object.isRequired,
   setOrderUser: PropTypes.func.isRequired,
-  currentStep: PropTypes.number.isRequired,
-  setCurrentStep: PropTypes.func.isRequired,
-  addSteps: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ order }) => (
   { ...order.skeleton }
 );
-const mapDispatchToProps = {
-  setCurrentStep,
-  addSteps,
-};
 
-const Skeleton = connect(mapStateToProps, mapDispatchToProps)(injectIntl(skeleton));
+
+const Skeleton = connect(mapStateToProps)(injectIntl(skeleton));
 export default Skeleton;

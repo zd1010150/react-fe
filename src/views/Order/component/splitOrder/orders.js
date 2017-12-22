@@ -44,7 +44,7 @@ const orders = ({
                 <Panel header={`order-${order.id}`} key={order.id}>
                   <div className="block">
                     <div className="block-title">
-                      <span className='text-error'> {order.error} </span>
+                      <span className="text-error"> {order.error} </span>
                       { getOperationBtnByStatus(order) }
                       <Button onClick={() => { deleteOrder(order); }}>{formatMessage({ id: 'global.ui.button.delete' })}</Button>
                     </div>
@@ -78,7 +78,8 @@ const orders = ({
                             </div>
                             <div className="row">
                               <div className="product-img col-sm-3">Total</div>
-                              <div className="product-title col-sm-9"> {product.totalPrice}</div>
+                              <div className="product-title col-sm-9"> 总成本价：{product.totalCost}</div>
+                              <div className="product-title col-sm-9"> 总价：{product.totalPrice}</div>
                             </div>
                           </li>
                               ))

@@ -1,6 +1,6 @@
 
 import { combineReducers } from 'redux';
-import { SET_CART_COLLAPSE, SET_GOODS, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_PAGENATIONS, SET_SEARCH_KEY } from './actionType';
+import { SET_CART_COLLAPSE, SET_GOODS, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_PAGENATIONS, SET_SEARCH_KEY, SET_CART_GOODS_PRICE } from './actionType';
 
 const getSeletedQuantity = (itemId, cart) => {
   const items = cart.filter(item => item.id === itemId);
@@ -18,12 +18,14 @@ const mixAvailableQuantity = (state, goods, cart) => {
     category: item.product.magento_category_id,
     lastUpdated: item.product.updated_at,
     totalValue: 10, // mock
-    unitPrice: 10, // mock
+    unitPrice: 10, // mock,理论应该按照总价/数量
     recommendedPrice: item.product.recommended_price,
     availableQuantity: item.current_quantity - getSeletedQuantity(item.product.id, cart),
     selectingQuantity: 1,
     key: item.product.id,
-    totalPrice: 0,
+    totalPrice: 0, // 总售价
+    price: item.product.recommended_price, // 售价
+    totalCost: 0, // 总成本价
   }));
   return newGoods;
 };
@@ -37,12 +39,11 @@ const addGoodsToCart = (cart, goods, quantity) => {
         const newQuantity = item.quantity + quantity;
         return Object.assign({}, item, {
           quantity: newQuantity,
-          totalPrice: newQuantity * item.unitPrice,
         });
       } return item;
     });
   } else {
-    newCart.push(Object.assign({}, goods, { quantity, totalPrice: quantity* goods.unitPrice }));
+    newCart.push(Object.assign({}, goods, { quantity }));
   }
   return newCart;
 };
@@ -55,7 +56,7 @@ const editingCartGoods = (cart, goods, quantity) => {
   let newCart = cart.slice();
   newCart = newCart.map((item) => {
     if (item.id === goods.id) {
-      return Object.assign({}, item, { quantity, totalPrice: quantity * item.unitPrice });
+      return Object.assign({}, item, { quantity });
     }
     return item;
   });
@@ -113,21 +114,40 @@ const goods = (state = [], action) => {
       return state;
   }
 };
-
+const editItemPrice = (cart, goodsId, price) => cart.map((item) => {
+  if (item.id === goodsId) {
+    return Object.assign({}, item, { price });
+  }
+  return item;
+});
 const getTotalInfo = (cart) => {
+  let totalCost = 0;
   let totalPrice = 0;
   let totalItemQuantity = 0;
-  cart.forEach((item) => {
+  let singleTotalPrice = 0;
+  let singleTotalCost = 0;
+  const newCart = cart.map((item) => {
     totalItemQuantity += item.quantity;
-    totalPrice += item.quantity * item.unitPrice;
+    totalPrice += item.quantity * item.price;
+    totalCost += item.quantity * item.unitPrice;
+    singleTotalCost = item.quantity * item.unitPrice;
+    singleTotalPrice = item.quantity * item.price;
+    return Object.assign({}, item, {
+      totalPrice: singleTotalPrice,
+      totalCost: singleTotalCost,
+    });
   });
   return {
+    goods: newCart,
     totalPrice,
     totalItemQuantity,
+    totalCost,
   };
 };
 
-const cart = (state = { goods: [], totalPrice: 0, totalItemQuantity: 0 }, action) => {
+const cart = (state = {
+  goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0,
+}, action) => {
   let newGoods;
   switch (action.type) {
     case ADD_GOODS_TO_CART:
@@ -139,11 +159,14 @@ const cart = (state = { goods: [], totalPrice: 0, totalItemQuantity: 0 }, action
     case EDITING_CART_GOODS:
       newGoods = editingCartGoods(state.goods, action.goods, action.quantity);
       break;
+    case SET_CART_GOODS_PRICE:
+      newGoods = editItemPrice(state.goods, action.goodsId, action.price);
+      break;
     default:
       return state;
   }
 
-  return Object.assign({}, state, { goods: newGoods, ...getTotalInfo(newGoods) });
+  return Object.assign({}, state, { ...getTotalInfo(newGoods) });
 };
 const cartCollapse = (state = false, action) => {
   switch (action.type) {

@@ -22,11 +22,7 @@ const goods = ({
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.picture' }),
     key: 'picture',
-    render: text => <img src={text} alt="goods pic" />,
-  }, {
-    title: formatMessage({ id: 'global.properNouns.goods.category' }),
-    dataIndex: 'category',
-    key: 'category',
+    render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.currentQuantity' }),
     dataIndex: 'availableQuantity',
@@ -36,9 +32,9 @@ const goods = ({
     dataIndex: 'unitPrice',
     key: 'unitPrice',
   }, {
-    title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
-    dataIndex: 'recommendedPrice',
-    key: 'recommendedPrice',
+    title: formatMessage({ id: 'global.properNouns.goods.price' }),
+    dataIndex: 'price',
+    key: 'price',
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
     key: 'orderQuantity',
@@ -62,7 +58,6 @@ const goods = ({
       </span>
     ),
   }];
-  debugger;
   return (
     <div className="block">
       <div className="block-content">

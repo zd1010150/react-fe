@@ -24,10 +24,6 @@ const goods = ({
     key: 'picture',
     render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
   }, {
-    title: formatMessage({ id: 'global.properNouns.goods.category' }),
-    dataIndex: 'category',
-    key: 'category',
-  }, {
     title: formatMessage({ id: 'global.properNouns.goods.currentQuantity' }),
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
@@ -78,7 +74,7 @@ const goods = ({
   return (
     <div className="block">
       <div className="block-content">
-        <Table columns={columns} dataSource={goodsData} pagination={pagination} />
+        <Table  columns={columns} dataSource={goodsData} pagination={pagination} />
       </div>
     </div>);
 };

@@ -8,8 +8,9 @@ import styles from '../../Order.less';
 import Cart from './cart';
 import Search from './search';
 import Goods from './goods';
-import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods } from './flow/action.js';
-import { setCurrentStep } from '../skeleton/flow/action';
+import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, setItemPrice } from './flow/action.js';
+import { createDeliveryOrder, addSteps, goNextStep, goPreviousStep } from '../skeleton/flow/action';
+import { initGoods } from '../splitOrder/flow/action';
 
 const { Sider, Content } = Layout;
 
@@ -18,6 +19,22 @@ const cx = classNames.bind(styles);
 class chooseGoodView extends React.Component {
   componentDidMount() {
     this.props.queryGoodsByPaging();
+  }
+  submitOrder() {
+    const {
+      totalCost, cart, createDeliveryOrder, addSteps, initGoods
+    } = this.props;
+    if (totalCost >= 300) { // 如果超过300 就分担。此处是mock，需要更改为global setting中传入的值
+      addSteps(2, 'splitOrder');
+      initGoods(cart);
+    } else {
+      const postData = cart.map(item => ({
+        price: item.price,
+        product_id: item.id,
+        quantity: item.quantity,
+      }));
+      createDeliveryOrder([postData]);
+    }
   }
   render() {
     const {
@@ -33,16 +50,19 @@ class chooseGoodView extends React.Component {
       cartCollapse,
       totalItemQuantity,
       totalPrice,
+      totalCost,
       goodsTablePagination,
-      setCurrentStep,
       steps,
+      setItemPrice,
+      goNextStep,
+      goPreviousStep
     } = this.props;
     return (
       <div className={cx('section')}>
         <Button
           style={{ marginLeft: 8 }}
           onClick={() => {
-            setCurrentStep(steps.indexOf('chooseGood') - 1);
+            goPreviousStep('chooseGoods');
           }}
         >
           previous
@@ -51,8 +71,8 @@ class chooseGoodView extends React.Component {
           style={{ marginLeft: 8 }}
           disabled={!(cart && cart.length > 0)}
           onClick={() => {
-            if(totalPrice){}
-            setCurrentStep(steps.indexOf('chooseGood') + 1);
+            this.submitOrder();
+            goNextStep('chooseGoods');
           }}
         >
           next
@@ -74,8 +94,9 @@ class chooseGoodView extends React.Component {
             collapsed={cartCollapse}
             collapsedWidth={0}
             className={cx('sidebar-cart')}
+            width={300}
           >
-            <Cart cartData={cart} deleteGoods={deleteGoodsFromCart} editingCartGoods={editingCartGoods} totalItemQuantity={totalItemQuantity} totalPrice={totalPrice} />
+            <Cart cartData={cart} deleteGoods={deleteGoodsFromCart} editingCartGoods={editingCartGoods} totalItemQuantity={totalItemQuantity} totalPrice={totalPrice} totalCost={totalCost} setItemPrice={setItemPrice} />
           </Sider>
         </Layout>
       </div>);
@@ -90,6 +111,7 @@ chooseGoodView.propTypes = {
 const mapStateToProps = ({ order }) => ({
   goods: order.chooseGood.goods,
   cart: order.chooseGood.cart.goods,
+  totalCost: order.chooseGood.cart.totalCost,
   totalItemQuantity: order.chooseGood.cart.totalItemQuantity,
   totalPrice: order.chooseGood.cart.totalPrice,
   cartCollapse: order.chooseGood.cartCollapse,
@@ -105,7 +127,12 @@ const mapDispathToProps = {
   deleteGoodsFromCart,
   editingCartGoods,
   queryBySearchKey,
-  setCurrentStep,
+  setItemPrice,
+  createDeliveryOrder,
+  addSteps,
+  goNextStep,
+  goPreviousStep,
+  initGoods,
 };
 
 const ChooseGoodView = connect(mapStateToProps, mapDispathToProps)(injectIntl(chooseGoodView));

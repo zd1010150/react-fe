@@ -1,59 +1,18 @@
 import {
-  SO_SET_ORDERS_BOARD_COLLAPSE,
-  SO_SET_ORDER_COLLAPSE,
   SO_SELECTING_GOODS_QUANTITY,
   SO_ADD_GOODS_TO_ORDER,
-  SO_SET_ORDER_STATUS,
-  SO_CREATE_ORDER,
   SO_DELETE_ORDER,
   SO_DELETE_ORDER_GOODS,
   SO_SET_ORDER_GOODS_QUANTITY,
+  SO_INIT_GOODS,
 } from '../actionType';
-import { CREATED, EDITING, SAVED, DELETED } from '../orderStatus';
+import { EDITING } from '../orderStatus';
 
-const mockGoods = [{
-  id: '1231',
-  name: 'swiss capsulates',
-  picture: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
-  currentQuantity: 3,
-  lastUpdated: '2017-12-13',
-  totalValue: 500,
-  unitPrice: 20,
-  recommendedPrice: 40,
-  category: 'vitamins',
-}, {
-  id: '1232',
-  name: '2swiss capsulates',
-  picture: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
-  currentQuantity: 20,
-  lastUpdated: '2017-12-13',
-  totalValue: 500,
-  unitPrice: 20,
-  recommendedPrice: 40,
-  category: 'vitamins',
-}, {
-  id: '1233',
-  name: '3swiss capsulates',
-  picture: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
-  currentQuantity: 20,
-  lastUpdated: '2017-12-13',
-  totalValue: 500,
-  unitPrice: 20,
-  recommendedPrice: 40,
-  category: 'vitamins',
-}, {
-  id: '1234',
-  name: '4swiss capsulates',
-  picture: 'http://img2.3lian.com/2014/f5/158/d/86.jpg',
-  currentQuantity: 80,
-  lastUpdated: '2017-12-13',
-  totalValue: 500,
-  unitPrice: 20,
-  recommendedPrice: 40,
-  category: 'vitamins',
-}];
 const initGoods = goods => goods.map(item => Object.assign({}, item, {
-  availableQuantity: item.currentQuantity,
+  currentQuantity: item.quantity,
+  availableQuantity: item.quantity,
+  totalPrice: 0,
+  totalCost: 0,
   selectingQuantity: 1,
   key: item.id,
 }));
@@ -114,8 +73,10 @@ const updateGoodsQuantityWhenDeleteOrder = (state, order) => {
   return orderGoods.reduce((innerState, goods) =>
     updateGoodsQuantityWhenDeleteGoodsFromOrder(innerState, goods), state);
 };
-const goods = (state = initGoods(mockGoods), action) => {
+const goods = (state = [], action) => {
   switch (action.type) {
+    case SO_INIT_GOODS:
+      return initGoods(action.goods);
     case SO_SELECTING_GOODS_QUANTITY:
       return setSelectingQuantity(state, action.goods, action.quantity);
     case SO_ADD_GOODS_TO_ORDER:
