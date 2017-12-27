@@ -70,11 +70,11 @@ class chooseGoodView extends React.Component {
               goodsTablePagination={goodsTablePagination}
             />
           </Content>
-          <Icon
+          {/* <Icon
             className="trigger"
             type={cartCollapse ? 'menu-unfold' : 'menu-fold'}
             onClick={() => { setCarCollapse(!cartCollapse); }}
-          />
+          /> */}
           <Sider
             trigger={null}
             collapsible

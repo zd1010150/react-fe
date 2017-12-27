@@ -1,6 +1,7 @@
 @import "~src/assets/less/theme.less";
 .sidebar-cart{
   background-color: transparent;
+  margin-left: 20px;
 }
 .tab-block-title{
   padding-top: 20px;
@@ -47,6 +48,14 @@
 }
 
 /*choose goods*/
+.product-row{
+  height: 30px;
+  line-height: 29px;
+}
+.product-small-row{
+  height: 28px;
+  line-height: 28px;
+}
 .choose-good-block{
   padding-top: 20px;
 
@@ -59,14 +68,18 @@
 }
 .choose-goods-cart{
  position: relative;
-  min-height: 400px;
   padding: 0px 20px;
+  background-color: #ffffff;
 }
 .choose-goods-cart-title{
-
+  margin-bottom: 10px !important;
 }
 .choose-goods-cart-content{
-
+  min-height: 200px;
+  max-height: 1000px;
+  overflow: auto;
+  padding-bottom: 30px;
+  display: table;
 }
 .choose-goods-cart-footer{
   position:absolute;
@@ -75,16 +88,69 @@
   right:0px;
   background-color: @primary-color;
   height: 30px;
-  padding: 10px;
+  line-height: 30px;
+  padding: 10px 20px;
   color: @brk-text-white-color;
   box-sizing: content-box;
   font-weight: 300;
+  font-size: 12px;
+}
+.null-goods-cart{
+  height: 200px;
+  line-height: 200px;
+  display: inline-block;
+  vertical-align: middle;
 }
 .choose-good-cart-list{
   list-style: none;
-  padding:0px;
+  padding:0px 10px 20px;
+  font-size: 12px;
+
 }
 .choose-good-cart-product{
-  padding:0px;
+  padding:10px 0px 3px;
   maring:0px;
+  border-bottom: 1px solid @brk-body-bg-color;
+
+}
+.product-label-name{
+  display: inline-block;
+  max-width: 83px;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.choose-good-price-input{
+  padding: 2px 5px;
+  font-size: 12px;
+  width:70px;
+
+}
+.product-label{
+  vertical-align: middle;
+}
+.product-value{
+  vertical-align: middle;
+}
+.product-price-input{
+  width:83px;
+}
+.product-prices{
+  text-align: left;
+  height:28px;
+}
+.product-price{
+  height:28px;
+  line-height: 28px;
+  display: inline-block;
+}
+.edit-price-btn{
+  float: right;
+}
+.save-price-btn{
+  float: right;
+}
+.delete-product-btn {
+  float: right;
 }
