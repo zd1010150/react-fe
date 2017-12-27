@@ -7,7 +7,6 @@ import { MAX_FETCH_TIMEOUT } from '../config/app.config';
 export default async (type = 'GET', url = '', data = {}, headers = {}) => {
   type = type.toUpperCase();
   url = baseUrl + url;
-  console.log(url, data, "===")
   const requestConfig = {
     credentials: 'include',
     method: type,

@@ -12,7 +12,7 @@ const search = ({ queryGoods, intl }) => {
   const { formatMessage } = intl;
   return (
     <div className="block">
-      <div className="block-title">
+      <div className={classNames(cx('choose-goods-tab-title'), 'block-title')}>
         <strong>{ formatMessage({ id: 'page.Order.selectGoods' }) }</strong>
       </div>
       <div className="block-content">

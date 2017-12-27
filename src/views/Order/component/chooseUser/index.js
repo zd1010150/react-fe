@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
+import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import { setSearchAreaVisible, searchByKeys } from './flow/action';
@@ -9,7 +10,9 @@ import Search from './search';
 import SelectedUser from './selectedUser';
 import Table from './table';
 import { goNextStep } from '../skeleton/flow/action';
+import styles from '../../Order.less';
 
+const cx = classNames.bind(styles);
 class chooseUser extends React.Component {
   constructor(props) {
     super(props);
@@ -35,25 +38,32 @@ class chooseUser extends React.Component {
       goNextStep,
     } = this.props;
     return (
-      <div>
-        <Button
-          style={{ marginLeft: 8 }}
-          disabled={!hasSeletedUser}
-          onClick={() => {
-            console.log('it is trigger');
-          goNextStep('chooseUser');
-        }}
-        >
-          next
-        </Button>
-        {searchAreaVisible ?
-          <Search selectedUser={user} searchByKeys={searchByKeys} setSearchAreaVisible={setSearchAreaVisible} /> : ''}
-        {searchAreaVisible && users.length > 0 ? <Table users={users} setSeletedUser={setOrderUser} /> : ''}
-        {!_.isEmpty(user) ? <SelectedUser
-          selectedUser={user}
-          setSearchAreaVisible={setSearchAreaVisible}
-          searchAreaVisible={searchAreaVisible}
-        /> : ''}
+      <div className="block">
+
+        <div className={classNames('block-content', cx('tab-block-title'))}>
+          {searchAreaVisible ?
+            <Search selectedUser={user} searchByKeys={searchByKeys} setSearchAreaVisible={setSearchAreaVisible} /> : ''}
+          {searchAreaVisible && users.length > 0 ? <Table users={users} setSeletedUser={setOrderUser} /> : ''}
+          {!_.isEmpty(user) ? <SelectedUser
+            selectedUser={user}
+            setSearchAreaVisible={setSearchAreaVisible}
+            searchAreaVisible={searchAreaVisible}
+          /> : ''}
+        </div>
+        <div className="block-footer">
+          <Button
+            type="primary"
+            className={cx('order-step-next-btn')}
+            style={{ marginLeft: 8 }}
+            disabled={!hasSeletedUser}
+            onClick={() => {
+              console.log('it is trigger');
+              goNextStep('chooseUser');
+            }}
+          >
+            next <Icon type="arrow-right" />
+          </Button>
+        </div>
       </div>
     );
   }

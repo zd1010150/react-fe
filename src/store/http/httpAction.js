@@ -1,4 +1,5 @@
 import http from 'src/utils/http';
+import _ from 'lodash';
 import {
   HTTP_ACTION_DONE,
   HTTP_ACTION_DOING,
@@ -14,14 +15,20 @@ const dispatch = (request, dispatcher = () => {}) => {
   return request.then((data) => {
     console.log('data from server====>', data);
 
-    if (data.errors) {
-      const { errors } = data;
-      Object.keys(errors).forEach((key) => {
-        const msgs = errors[key];
-        msgs.forEach((msg) => {
-          dispatcher(addError(msg));
+    if (data.errors || data.status_code) {
+      let { errors } = data;
+      errors = errors || data.status_code;
+      if (_.isArray(data.errors)) {
+        Object.keys(errors).forEach((key) => {
+          const msgs = errors[key];
+          msgs.forEach((msg) => {
+            dispatcher(addError(msg));
+          });
         });
-      });
+      } else {
+        dispatch(addError(JSON.stringify(data)));
+      }
+      throw new Error(JSON.stringify(data));
     } else {
       dispatcher({
         type: HTTP_ACTION_DONE,

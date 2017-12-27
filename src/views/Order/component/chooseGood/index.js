@@ -12,7 +12,7 @@ import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, a
 import { createDeliveryOrder, addSteps, goNextStep, goPreviousStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Footer } = Layout;
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +22,7 @@ class chooseGoodView extends React.Component {
   }
   submitOrder() {
     const {
-      totalCost, cart, createDeliveryOrder, addSteps, initGoods
+      totalCost, cart, createDeliveryOrder, addSteps, initGoods,
     } = this.props;
     if (totalCost >= 300) { // 如果超过300 就分担。此处是mock，需要更改为global setting中传入的值
       addSteps(2, 'splitOrder');
@@ -55,33 +55,20 @@ class chooseGoodView extends React.Component {
       steps,
       setItemPrice,
       goNextStep,
-      goPreviousStep
+      goPreviousStep,
     } = this.props;
     return (
-      <div className={cx('section')}>
-        <Button
-          style={{ marginLeft: 8 }}
-          onClick={() => {
-            goPreviousStep('chooseGoods');
-          }}
-        >
-          previous
-        </Button>
-        <Button
-          style={{ marginLeft: 8 }}
-          disabled={!(cart && cart.length > 0)}
-          onClick={() => {
-            this.submitOrder();
-            goNextStep('chooseGoods');
-          }}
-        >
-          next
-        </Button>
-        <Layout>
-
+      <div className={cx('choose-good-block')}>
+        <Layout className={cx('choose-good-block-content')}>
           <Content>
             <Search queryGoods={queryBySearchKey} />
-            <Goods goodsData={goods} addGoodsToCart={addGoodsToCart} selectingGoods={selectingGoods} queryGoodsByPaging={queryGoodsByPaging} goodsTablePagination={goodsTablePagination} />
+            <Goods
+              goodsData={goods}
+              addGoodsToCart={addGoodsToCart}
+              selectingGoods={selectingGoods}
+              queryGoodsByPaging={queryGoodsByPaging}
+              goodsTablePagination={goodsTablePagination}
+            />
           </Content>
           <Icon
             className="trigger"
@@ -96,10 +83,43 @@ class chooseGoodView extends React.Component {
             className={cx('sidebar-cart')}
             width={300}
           >
-            <Cart cartData={cart} deleteGoods={deleteGoodsFromCart} editingCartGoods={editingCartGoods} totalItemQuantity={totalItemQuantity} totalPrice={totalPrice} totalCost={totalCost} setItemPrice={setItemPrice} />
+            <Cart
+              cartData={cart}
+              deleteGoods={deleteGoodsFromCart}
+              editingCartGoods={editingCartGoods}
+              totalItemQuantity={totalItemQuantity}
+              totalPrice={totalPrice}
+              totalCost={totalCost}
+              setItemPrice={setItemPrice}
+            />
           </Sider>
         </Layout>
-      </div>);
+        <div className="block-footer">
+          <Button
+            className={cx('order-step-previous-btn')}
+            style={{ marginLeft: 8 }}
+            onClick={() => {
+                goPreviousStep('chooseGoods');
+              }}
+          >
+            <Icon type="arrow-left" /> previous
+          </Button>
+          <Button
+            className={cx('order-step-next-btn')}
+            type="primary"
+            style={{ marginLeft: 8 }}
+            disabled={!(cart && cart.length > 0)}
+            onClick={() => {
+                this.submitOrder();
+                goNextStep('chooseGoods');
+              }}
+          >
+              next <Icon type="arrow-right" />
+          </Button>
+        </div>
+
+      </div>
+    );
   }
 }
 
