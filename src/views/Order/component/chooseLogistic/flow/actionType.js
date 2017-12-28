@@ -1,0 +1,1 @@
+export const SET_LOGISITIC_COST = 'SET_LOGISITIC_COST';

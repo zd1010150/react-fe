@@ -71,7 +71,7 @@ const setOrderStatus = (state, order, status) => {
       if ((order.status === CREATED || order.status === SAVED) && currentOrderId === 0) {
         return setStatus(EDITING, Object.assign({}, orders[id], { status: EDITING }), true);
       } else if ((order.status === CREATED || order.status === SAVED) && currentOrderId !== order.id) {
-        return setStatus(order.status, currentOrder, goodsEnable, 'EDIT_BEFORE_SAVEING');
+        return setStatus(order.status, currentOrder, goodsEnable, 'ERROR_EDIT_BEFORE_SAVEING');
       }
     case SAVED:
       return setStatus(SAVED, { id: 0 }, false);
@@ -182,6 +182,7 @@ const getTotal = (state) => {
   const orderId = Object.keys(orders);
   let orderCost = 0;
   let orderPrice = 0;
+  let orderQuantity = 0;
   let singleCost = 0;
   let singlePrice = 0;
   let order = {};
@@ -195,17 +196,19 @@ const getTotal = (state) => {
       singleCost = item.quantity * item.unitPrice;
       orderCost += singleCost;
       orderPrice += singlePrice;
-      return Object.assign({}, item, { totalPrice: singlePrice, totalCost: singleCost });
+      orderQuantity += item.quantity;
+      return Object.assign({}, item, { totalPrice: Number(singlePrice.toFixed(2)), totalCost: Number(singleCost.toFixed(2)) });
     });
     if (orderCost > max) {
-      order.error = '总价超过了总体300,请再进行拆单';
+      order.error = 'ERROR_MAXIMUM_VALUE';
       validate = false;
     } else {
       order.error = '';
     }
     order.goods = newGoods;
-    order.totalPrice = orderPrice;
-    order.totalCost = orderCost;
+    order.totalPrice = Number(orderPrice.toFixed(2));
+    order.totalCost = Number(orderCost.toFixed(2));
+    order.totalQuantity = orderQuantity;
     newOrders[id] = order;
   });
 

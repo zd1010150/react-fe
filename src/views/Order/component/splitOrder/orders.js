@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { InputNumber } from 'src/components/ui/index';
-import { Icon, Collapse, Button } from 'antd';
+import { Icon, Collapse, Button, Divider } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../../Order.less';
-import { CREATED, EDITING, SAVED, DELETED } from './flow/orderStatus';
+import { CREATED, EDITING, SAVED } from './flow/orderStatus';
 
 const { Panel } = Collapse;
 const cx = classNames.bind(styles);
@@ -18,80 +18,102 @@ const orders = ({
   const getOperationBtnByStatus = (order) => {
     if (order.status === SAVED) {
       if (order.goods.length > 0) {
-        return <Button onClick={() => { setOrderStatus(order, EDITING, currentOrder);  }}>{formatMessage({ id: 'global.ui.button.edit' })}</Button>;
+        return <Button size="small" onClick={() => { setOrderStatus(order, EDITING, currentOrder); }}>{formatMessage({ id: 'global.ui.button.edit' })}</Button>;
       }
-      return <Button onClick={() => { setOrderStatus(order, EDITING, currentOrder);  }}>{formatMessage({ id: 'global.ui.button.addGoods' })}</Button>;
+      return <Button size="small" type="primary" onClick={() => { setOrderStatus(order, EDITING, currentOrder); }}>{formatMessage({ id: 'global.ui.button.addGoods' })}</Button>;
     } else if (order.status === EDITING) {
-      return <Button onClick={() => { setOrderStatus(order, SAVED, currentOrder);  }}>{formatMessage({ id: 'global.ui.button.save' })}</Button>;
+      return <Button size="small" type="primary" onClick={() => { setOrderStatus(order, SAVED, currentOrder); }}>{formatMessage({ id: 'global.ui.button.save' })}</Button>;
     } else if (order.status === CREATED) {
-      return <Button onClick={() => { setOrderStatus(order, EDITING, currentOrder);  }}>{formatMessage({ id: 'global.ui.button.addGoods' })}</Button>;
+      return <Button size="small" type="primary" onClick={() => { setOrderStatus(order, EDITING, currentOrder); }}>{formatMessage({ id: 'global.ui.button.addGoods' })}</Button>;
     }
   };
+  const orderDataEl = (
+    <Collapse defaultActiveKey={['1']}>
 
-  return (
-    <div className="block">
-      <div className="block-title">
-        <strong>{ formatMessage({ id: 'page.Order.selectedGoods' }) }</strong>
+      {
+      Object.keys(ordersData).map((key) => {
+        const order = ordersData[key];
+        const disabled = order.status === SAVED;
+        return (
+          <Panel header={`order-${order.id}`} key={order.id}>
+            <div className={classNames('block', cx('split-order-sub-order-block'))}>
+              <div className={classNames('block-title', cx('split-order-sub-order-title'))}>
+                { getOperationBtnByStatus(order) }
+                <Button size="small" onClick={() => { deleteOrder(order); }}>{formatMessage({ id: 'global.ui.button.delete' })}</Button>
+              </div>
+              <div className="block-content">
+                {order.error && order.error.length > 0 ? (<p className="text-danger"><Icon type="warning" />  {formatMessage({ id: `page.Order.${order.error}` })} </p>) : ''}
+                <ul className={classNames(cx('choose-good-cart-list'), cx('split-order-sub-order-goods-list'))}>
+                  { order.goods.map(product => (
+                    <li className={classNames(cx('choose-good-cart-product'))} key={product.id}>
 
-      </div>
-      <div className="block-content">
-        <Collapse defaultActiveKey={['1']}>
-          {
-            Object.keys(ordersData).map((key) => {
-              const order = ordersData[key];
-              const disabled = order.status === SAVED ? true : false;
-              return (
-                <Panel header={`order-${order.id}`} key={order.id}>
-                  <div className="block">
-                    <div className="block-title">
-                      <span className="text-error"> {order.error} </span>
-                      { getOperationBtnByStatus(order) }
-                      <Button onClick={() => { deleteOrder(order); }}>{formatMessage({ id: 'global.ui.button.delete' })}</Button>
-                    </div>
-                    <div className="block-content">
-                      <ul>
-                        { order.goods.map(product => (
-                          <li className="product" key={product.id}>
-                            <Button disabled={disabled} onClick={() => deleteOrderGoods(product)}>
-                              <Icon type="close-circle-o" />
-                            </Button>
-                            <div className="row">
-                              <div className="product-img col-sm-3"><img src={product.picture} className="product-thumbnail" alt="product thumbnail" /></div>
-                              <div className="product-title col-sm-9"> {product.name}</div>
-                            </div>
-                            <div className="row">
-                              <div className="product-img col-sm-3">Price</div>
-                              <div className="product-title col-sm-9"> {product.unitPrice}</div>
-                            </div>
-                            <div className="row">
-                              <div className="product-img col-sm-3">Quantity</div>
-                              <div className="product-title col-sm-9"> <InputNumber
-                                min={1}
-                                disabled={disabled}
-                                value={product.quantity}
-                                max={product.availableQuantity}
-                                onChange={(value) => {
-                                      setOrderGoodsQuantity(product, value, currentOrder, ordersData);
-                                    }}
-                              />
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="product-img col-sm-3">Total</div>
-                              <div className="product-title col-sm-9"> 总成本价：{product.totalCost}</div>
-                              <div className="product-title col-sm-9"> 总价：{product.totalPrice}</div>
-                            </div>
-                          </li>
-                              ))
-                          }
-                      </ul>
-                    </div>
+                      <div className={classNames('row')}>
+                        <div className="product-img col-sm-4"><img
+                          src={product.picture}
+                          className="product-thumbnail"
+                          alt="product thumbnail"
+                        />
+                        </div>
+                        <div className="product-title col-sm-8">
+                          <span className={classNames(cx('product-label'), cx('product-label-name'))}>{product.name}</span>
+                          <Button className={classNames('icon-btn', 'ordinary', cx('delete-product-btn'))} onClick={() => deleteOrderGoods(product)} ><Icon type="delete" /></Button>
+                        </div>
+                      </div>
+
+                      <div className={classNames('row', cx('product-row'))}>
+                        <div className="col-sm-4"><span className={cx('product-label')}>数量:</span></div>
+                        <div className="col-sm-8"><InputNumber
+                          min={1}
+                          disabled={disabled}
+                          value={product.quantity}
+                          max={product.availableQuantity}
+                          onChange={(value) => { setOrderGoodsQuantity(product, value, currentOrder, ordersData); }}
+                        />
+                        </div>
+                      </div>
+                      <div className={classNames('row', cx('product-row'))}>
+                        <div className="col-sm-4"><span className={cx('product-label')}>总成本：</span></div>
+                        <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
+                      </div>
+                      <div className={classNames('row', cx('product-row'))}>
+                        <div className="col-sm-4"><span className={cx('product-label')}>总售价：</span></div>
+                        <div className="col-sm-8">{product.price} x {product.quantity} = {product.totalPrice}</div>
+                      </div>
+                    </li>
+                  ))
+                  }
+                </ul>
+                { order.goods && order.goods.length > 0 ? (
+                  <div className={classNames('block-footer', cx('split-order-sub-order-footer'))}>
+                    <span>总共{order.totalQuantity}件</span>
+                    <Divider type="vertical" />
+                    <span>总成本:{order.totalCost} </span>
+                    <Divider type="vertical" />
+                    <span>总售价:{order.totalPrice} </span>
                   </div>
-                </Panel>
-              );
-            })
-          }
-        </Collapse>
+                ) : ''}
+
+              </div>
+            </div>
+          </Panel>
+        );
+      })
+    }
+    </Collapse>
+  );
+  const nullOrderDataEl = (
+    <div className={cx('null-sub-order')}>
+      <p>亲，你发货的商品价值超过了300刀，需要对物品进行拆分发货，点击<Icon type="plus" />创建发货单，</p>
+      <p className="text-danger"><Icon type="warning" />注意:每个发货单的商品价值不能超过300刀</p>
+    </div>
+  );
+  return (
+    <div className={classNames('block', cx('split-order-sub-orders-block'))}>
+      <div className={classNames('block-title', cx('split-order-sub-orders-block-title'))}>
+        <strong>子订单</strong>
+      </div>
+      <div className={classNames('block-content', cx('split-order-sub-orders-block-content'))}>
+        { Object.keys(ordersData).length > 0 ? orderDataEl : nullOrderDataEl }
       </div>
     </div>);
 };

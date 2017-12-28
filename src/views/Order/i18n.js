@@ -9,7 +9,10 @@ export default {
     modifyAddress: '更改收件人',
     selectGoods: '选择发货商品',
     selectedGoods: '已选商品',
+    chooseLogistic: '选择物流',
     searchPlaceholder: '输入商品名关键词...',
+    ERROR_EDIT_BEFORE_SAVEING: '请先保存正在编辑的订单',
+    ERROR_MAXIMUM_VALUE: '超过了最大额度300刀,请再进行拆单',
   },
   en: {
     chooseUser: 'Choose User',
@@ -21,6 +24,9 @@ export default {
     modifyAddress: 'Modify Client',
     selectGoods: 'Select Goods',
     selectedGoods: 'Selected Goods',
+    chooseLogistic: 'Choose Logistics',
     searchPlaceholder: 'Input key words....',
+    ERROR_EDIT_BEFORE_SAVEING: 'Please save the editing order firstly',
+    ERROR_MAXIMUM_VALUE: 'Over the maxiume value of per order',
   },
 };

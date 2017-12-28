@@ -11,7 +11,7 @@ const { Search } = Input;
 const search = ({ queryGoods, intl }) => {
   const { formatMessage } = intl;
   return (
-    <div className="block">
+    <div className={classNames('block', cx('choose-goods-search-block'))}>
       <div className={classNames(cx('choose-goods-tab-title'), 'block-title')}>
         <strong>{ formatMessage({ id: 'page.Order.selectGoods' }) }</strong>
       </div>

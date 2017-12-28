@@ -55,23 +55,24 @@ class selectedUserView extends React.Component {
         </div>
         <div className="block-content">
           <table className={cx('selected-user-info-table')}>
-            <tr>
-              <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.name' }) }</td>
-              <td className={cx('selected-user-info-table-info')}>{(selectedUser.first_name || '') + (selectedUser.last_name || '')}</td>
-              <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.phone' }) }</td>
-              <td className={cx('selected-user-info-table-info')}>{selectedUser.phone}</td>
-            </tr>
-            <tr>
-              <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.address' }) }</td>
-              <td className={cx('selected-user-info-table-info')}>{selectedUser.street || ''} {selectedUser.city || ''} {selectedUser.state || ''} {selectedUser.country || ''}  {selectedUser.zipCode || ''}</td>
-              <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.ID' }) }</td>
-              <td className={cx('selected-user-info-table-info')}>
-                { idBack.length > 0 ? <img src={`${apiDomain}/${idBack}`} alt="id back" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idBack}`); }} /> : '' }
-                { idFront.length > 0 ? <img src={`${apiDomain}/${idFront}`} alt="id front" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idFront}`); }} /> : '' }
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.name' }) }</td>
+                <td className={cx('selected-user-info-table-info')}>{(selectedUser.first_name || '') + (selectedUser.last_name || '')}</td>
+                <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.phone' }) }</td>
+                <td className={cx('selected-user-info-table-info')}>{selectedUser.phone}</td>
+              </tr>
+              <tr>
+                <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.address' }) }</td>
+                <td className={cx('selected-user-info-table-info')}>{selectedUser.street || ''} {selectedUser.city || ''} {selectedUser.state || ''} {selectedUser.country || ''}  {selectedUser.zipCode || ''}</td>
+                <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.ID' }) }</td>
+                <td className={cx('selected-user-info-table-info')}>
+                  { idBack.length > 0 ? <img src={`${apiDomain}/${idBack}`} alt="id back" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idBack}`); }} /> : '' }
+                  { idFront.length > 0 ? <img src={`${apiDomain}/${idFront}`} alt="id front" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idFront}`); }} /> : '' }
+                </td>
+              </tr>
 
-
+            </tbody>
           </table>
 
 

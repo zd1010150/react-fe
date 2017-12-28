@@ -41,10 +41,11 @@ export const editingCartGoods = (goods, quantity) => ({
   quantity,
 });
 
-const fetchData = (per_page, page, search, dispatch, goods) => get('/affiliate/inventorys', {
+const fetchData = (per_page, page, search, affiliated_client_id, dispatch, goods) => get('/affiliate/inventorys', {
   per_page,
   page,
   search,
+  affiliated_client_id,
 }, dispatch).then((data) => {
   dispatch(setGoods(data.data, goods));
   const { pagination } = data.meta;
@@ -53,18 +54,21 @@ const fetchData = (per_page, page, search, dispatch, goods) => get('/affiliate/i
 
 
 export const queryGoodsByPaging = (perPage = 2, currentPage = 1) => (dispatch, getState) => {
-  const search = getState().order.chooseGood.searchKey;
-  const goods = getState().order.chooseGood.cart.goods;
-  return fetchData(perPage, currentPage, search, dispatch, goods);
+  const state = getState();
+  const search = state.order.chooseGood.searchKey;
+  const goods = state.order.chooseGood.cart.goods;
+  const clientId = state.global.orderUser.id;
+  return fetchData(perPage, currentPage, search, clientId, dispatch, goods);
 };
 
 export const queryBySearchKey = searchKey => (dispatch, getState) => {
-  const { goodsTablePagination } = getState().order.chooseGood;
+  const state = getState();
+  const { goodsTablePagination } = state.order.chooseGood;
   const { perPage, currentPage } = goodsTablePagination;
-  const goods = getState().order.chooseGood.cart.goods;
-
+  const goods = state.order.chooseGood.cart.goods;
+  const clientId = state.global.orderUser.id;
   dispatch(setSearchKey(searchKey));
-  return fetchData(perPage, currentPage, searchKey, dispatch, goods);
+  return fetchData(perPage, currentPage, searchKey, clientId, dispatch, goods);
 };
 
 export const setItemPrice = (goodsId, price) => ({

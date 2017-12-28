@@ -69,6 +69,7 @@ const mapSettingData = (data) => {
     orderStatus: newData.order_status,
     orderType: newData.order_type,
     userStatus: newData.user_status,
+    freightSetting: newData.freight_setting,
   };
 };
 const settings = (state = { }, action) => {

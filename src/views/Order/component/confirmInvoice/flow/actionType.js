@@ -1,0 +1,1 @@
+export const SET_INVOICE_INFO = 'SET_INVOICE_INFO';

@@ -44,7 +44,7 @@ const goods = ({
       value={record.selectingQuantity}
       max={record.availableQuantity}
       onChange={(value) => {
-        console.log("selectingQuantity:",record.selectingQuantity, "availableQuantity:",record.availableQuantity, value, "the goods change");
+        console.log('selectingQuantity:', record.selectingQuantity, 'availableQuantity:', record.availableQuantity, value, 'the goods change');
        selectingGoods(record, value);
     }}
     />),
@@ -59,11 +59,8 @@ const goods = ({
     ),
   }];
   return (
-    <div className="block">
-      <div className="block-content">
-        <Table columns={columns} dataSource={goodsData} />
-      </div>
-    </div>);
+    <Table columns={columns} dataSource={goodsData} className="choose-goods-table" />
+  );
 };
 
 goods.defaultProps = {

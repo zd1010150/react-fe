@@ -136,15 +136,15 @@ const getTotalInfo = (cart) => {
     singleTotalCost = item.quantity * item.unitPrice;
     singleTotalPrice = item.quantity * item.price;
     return Object.assign({}, item, {
-      totalPrice: singleTotalPrice,
-      totalCost: singleTotalCost,
+      totalPrice: Number(singleTotalPrice.toFixed(2)),
+      totalCost: Number(singleTotalCost.toFixed(2)),
     });
   });
   return {
     goods: newCart,
-    totalPrice,
+    totalPrice: Number(totalPrice.toFixed(2)),
     totalItemQuantity,
-    totalCost,
+    totalCost: Number(totalCost.toFixed(2)),
   };
 };
 

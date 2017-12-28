@@ -9,7 +9,7 @@ import Cart from './cart';
 import Search from './search';
 import Goods from './goods';
 import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, setItemPrice } from './flow/action.js';
-import { createDeliveryOrder, addSteps, goNextStep, goPreviousStep } from '../skeleton/flow/action';
+import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goNextStep, goPreviousStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
 
 const { Sider, Content, Footer } = Layout;
@@ -22,10 +22,10 @@ class chooseGoodView extends React.Component {
   }
   submitOrder() {
     const {
-      totalCost, cart, createDeliveryOrder, addSteps, initGoods,
+      totalCost, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods,
     } = this.props;
     if (totalCost >= 300) { // 如果超过300 就分担。此处是mock，需要更改为global setting中传入的值
-      addSteps(2, 'splitOrder');
+      addSplitOrder();
       initGoods(cart);
     } else {
       const postData = cart.map(item => ({
@@ -34,6 +34,7 @@ class chooseGoodView extends React.Component {
         quantity: item.quantity,
       }));
       createDeliveryOrder([postData]);
+      deleteSplitOrder();
     }
   }
   render() {
@@ -149,7 +150,8 @@ const mapDispathToProps = {
   queryBySearchKey,
   setItemPrice,
   createDeliveryOrder,
-  addSteps,
+  addSplitOrder,
+  deleteSplitOrder,
   goNextStep,
   goPreviousStep,
   initGoods,

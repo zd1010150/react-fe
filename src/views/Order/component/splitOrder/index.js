@@ -37,8 +37,8 @@ class splitOrderView extends React.Component {
         quantity: item.quantity,
       })));
     });
-    this.props.createDeliveryOrder(postData);
     this.props.goNextStep('splitOrder');
+    //this.props.createDeliveryOrder(postData);
   }
   confirmHasRemainGoods() {
     this.setState({
@@ -52,6 +52,12 @@ class splitOrderView extends React.Component {
     });
   }
   goNextStep() {
+    if (_.isEmpty(this.props.orders)) {
+      Modal.error({
+        title: '你还没有创建任何发货单，不能进行下一步',
+      });
+      return;
+    }
     const isAllBeAdded = this.props.goods.reduce(
       (isAllbeAdded, item) =>
         isAllbeAdded && (item.availableQuantity === 0),
@@ -100,24 +106,74 @@ class splitOrderView extends React.Component {
     } = this.props;
 
     return (
-      <div className={cx('section')}>
-        <Button
-          style={{ marginLeft: 8 }}
-          onClick={() => {
-        this.goPreviousStep();
-      }}
-        >
-        previous
-        </Button>
-        <Button
-          style={{ marginLeft: 8 }}
-          disabled={!ordersValidate}
-          onClick={() => {
-            this.goNextStep();
-      }}
-        >
-        next
-        </Button>
+      <div className={cx('split-order-block')}>
+        <Layout className={cx('split-order-content')}>
+          <Content>
+            <div className="block">
+              <div className="block-title">
+                <strong>已选商品</strong>
+                <Button
+                  size="small"
+                  type="primary"
+                  className={cx('create-sub-order-btn')}
+                  onClick={createOrder}
+                >
+                  <Icon type="plus" />发货单
+                </Button>
+              </div>
+              <div className="block-content">
+                <Goods
+                  goodsEnable={goodsEnable}
+                  goodsData={goods}
+                  currentOrder={currentOrder}
+                  addGoodsToOrder={addGoodsToOrder}
+                  selectingGoods={selectingGoods}
+                />
+              </div>
+            </div>
+            <span className="text-danger">{this.state.errorMsg}</span>
+          </Content>
+          {
+            /* <Icon className="trigger" type={ordersBorderCollapse ? 'menu-unfold' : 'menu-fold'} /> */
+          }
+          <Sider
+            trigger={null}
+            collapsible
+            collapsed={ordersBorderCollapse}
+            collapsedWidth={0}
+            className={classNames(cx('sidebar-cart'), 'sidebar-cart')}
+            width={300}
+          >
+            <Orders
+              ordersData={orders}
+              deleteOrderGoods={deleteOrderGoods}
+              setOrderGoodsQuantity={setOrderGoodsQuantity}
+              deleteOrder={deleteOrder}
+              setOrderStatus={setOrderStatus}
+              currentOrder={currentOrder}
+            />
+          </Sider>
+        </Layout>
+        <div className="block-footer">
+          <Button
+            className={cx('order-step-previous-btn')}
+            onClick={() => {
+          this.goPreviousStep();
+        }}
+          >
+            <Icon type="arrow-left" /> previous
+          </Button>
+          <Button
+            className={cx('order-step-next-btn')}
+            disabled={!ordersValidate}
+            type="primary"
+            onClick={() => {
+              this.goNextStep();
+        }}
+          >
+          next <Icon type="arrow-right" />
+          </Button>
+        </div>
         <Modal
           title="Modal"
           visible={this.state.goPreviousStepConfirmDialogVisible}
@@ -138,37 +194,6 @@ class splitOrderView extends React.Component {
         >
           <p>你挑选的商品，还有部分未分配到子发货单中，确定继续？</p>
         </Modal>
-        <span className="text-error">{this.state.errorMsg}</span>
-        <Layout>
-          <Content>
-            <Button onClick={createOrder}>创建子订单</Button>
-            <Goods
-              goodsEnable={goodsEnable}
-              goodsData={goods}
-              currentOrder={currentOrder}
-              addGoodsToOrder={addGoodsToOrder}
-              selectingGoods={selectingGoods}
-            />
-          </Content>
-          <Icon className="trigger" type={ordersBorderCollapse ? 'menu-unfold' : 'menu-fold'} />
-          <Sider
-            trigger={null}
-            collapsible
-            collapsed={ordersBorderCollapse}
-            collapsedWidth={0}
-            className={cx('sidebar-cart')}
-            width={300}
-          >
-            <Orders
-              ordersData={orders}
-              deleteOrderGoods={deleteOrderGoods}
-              setOrderGoodsQuantity={setOrderGoodsQuantity}
-              deleteOrder={deleteOrder}
-              setOrderStatus={setOrderStatus}
-              currentOrder={currentOrder}
-            />
-          </Sider>
-        </Layout>
       </div>
     );
   }

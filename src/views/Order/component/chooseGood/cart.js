@@ -105,7 +105,7 @@ class cart extends React.Component {
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className="col-sm-4"><span className={cx('product-label')}>总成本：</span></div>
-              <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalPrice}</div>
+              <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className="col-sm-4"><span className={cx('product-label')}>总售价：</span></div>
@@ -118,10 +118,8 @@ class cart extends React.Component {
     );
     const nullCartDataEl = (
       <div className={cx('null-goods-cart')}>
-        <Icon type="shopping-cart" />
-        <p>发货车空空如也，点击左边商品列表，添加商品</p>
+        <p><Icon type="shopping-cart" />发货车空空如也，点击左边商品列表，添加商品</p>
       </div>
-
     );
     return (
       <div className={classNames('block', cx('choose-goods-cart'))}>

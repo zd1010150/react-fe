@@ -1,7 +1,7 @@
 export const SET_NEXT_STEP = 'SET_NEXT_STEP';
 export const SET_PREVIOUS_STEP = 'SET_PREVIOUS_STEP';
 export const SET_CURRENT_STEP = 'SET_CURRENT_STEP';
-export const ADD_STEP = 'ADD_STEP';
-
+export const ADD_SPLIT_ORDER = 'ADD_SPLIT_ORDER';
+export const DELETE_SPLIT_ORDER = 'DELETE_SPLIT_ORDER';
 export const SET_DELIVERY_ORDERS = 'SET_DELIVERY_ORDERS';
 export const RESET_ORDER = 'RESET_ORDER';
