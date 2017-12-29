@@ -37,9 +37,9 @@ const layout = ({
       </div>
 
     </footer>
-    <small className="copyright">
+    <div className="copyright">
       { copyRight }
-    </small>
+    </div>
   </div>
 );
 layout.propTypes = {

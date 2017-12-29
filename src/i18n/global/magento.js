@@ -26,6 +26,15 @@ export default {
       myProductsReviews: '我评价的商品',
       newsletterSubscription: '订阅产品信息',
     },
+    footerInformation: {
+      return: '回馈',
+      delivery: '派送信息',
+    },
+    footerOurOffers: {
+      newProduct: '新产品',
+      topSeller: '热销产品',
+      special: '特别的产品',
+    },
   },
   en: {
     topNav: {
@@ -53,6 +62,15 @@ export default {
       billingAgreements: 'Billing Agreements',
       myProductsReviews: 'My Products Reviews',
       newsletterSubscription: 'Newsletter Subscription',
+    },
+    footerInformation: {
+      return: 'Return',
+      delivery: 'Delivery',
+    },
+    footerOurOffers: {
+      newProduct: 'New Product',
+      topSeller: 'Top Seller',
+      special: 'Special',
     },
   },
 };
