@@ -18,9 +18,9 @@ class orderView extends React.Component {
       userId: (pairs && pairs.userId) || '',
     };
     this.props.setPageTitle('global.pageTitle.order');
-    if (_.isEmpty(this.state.userId)) {
-      this.props.setOrderUser(null);
-    }
+    // if (_.isEmpty(this.state.userId)) {
+    //   this.props.setOrderUser(null);
+    // }
   }
 
   render() {
