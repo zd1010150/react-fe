@@ -21,7 +21,7 @@ class skeleton extends React.Component {
     return (
       <div>
         <Step currentStep={steps.currentStep} steps={steps.steps.map(item => ({ title: item }))} />
-        <Tabs className="steps-content" defaultActiveKey="1" activeKey={steps.steps[steps.currentStep]}>
+        <Tabs className="steps-content" defaultActiveKey="1" activeKey={steps.steps[steps.currentStep]} animated={false}>
           <TabPane tab="" key="chooseUser"><ChooseUser user={user} setOrderUser={setOrderUser} /></TabPane>
           <TabPane tab="" key="chooseGoods"><ChooseGood /></TabPane>
           <TabPane tab="" key="splitOrder"><SplitOrder /></TabPane>

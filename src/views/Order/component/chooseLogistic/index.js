@@ -12,6 +12,9 @@ import { confirmGetInvoice } from '../confirmInvoice/flow/action';
 const RadioGroup = Radio.Group;
 const cx = classNames.bind(styles);
 class chooseLogisticView extends React.Component {
+  state = {
+    logisticType: this.props.freightSetting[0].id || 0,
+  }
   componentDidMount() {
     this.getTotalFee(this.props.freightSetting[0].id, this.props.deliveryOrderIds);
   }
@@ -21,11 +24,19 @@ class chooseLogisticView extends React.Component {
     }
   }
   getTotalFee(logisticId, orderids) {
+    this.setState({
+      logisticType: logisticId,
+    });
     this.props.getTotalLogisticFee(logisticId, orderids);
   }
   render() {
     const {
-      goNextStep, goPreviousStep, freightSetting, confirmGetInvoice, totalFee,
+      goNextStep,
+      goPreviousStep,
+      freightSetting,
+      confirmGetInvoice,
+      totalFee,
+      deliveryOrderIds,
     } = this.props;
     return (
       <div className={classNames('block', cx('choose-logistic-block'))}>
@@ -33,9 +44,9 @@ class chooseLogisticView extends React.Component {
           <strong> 选择物流 </strong>
         </div>
         <div className="block-content">
-          {/* <RadioGroup
-            onChange={value => this.getTotalFee(value)}
-            value={freightSetting && freightSetting[0].id}
+          <RadioGroup
+            onChange={e => this.getTotalFee(e.target.value, deliveryOrderIds)}
+            value={this.state.logisticType}
           >
             {
               freightSetting.map(f => (
@@ -45,7 +56,7 @@ class chooseLogisticView extends React.Component {
                 </Radio>
                 ))
             }
-          </RadioGroup> */}
+          </RadioGroup>
           <p>总计：{totalFee}</p>
         </div>
         <div className="block-footer">

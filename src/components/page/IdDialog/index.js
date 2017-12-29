@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Icon } from 'antd';
+import { Modal, Icon, Input } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Upload } from 'src/components/ui/index';
 
@@ -60,6 +60,9 @@ class id extends React.Component {
         <div className="row">
           {getRejectReason()}
           <div className="col-md-12 col-sm-12 text-danger text-center" >{this.state.errorMsg}</div>
+          <div className="col-md-12 col-sm-12 text-danger text-center" >
+            <p>身份证号码：<Input placeholder="input the id number /" /></p>
+          </div>
           <div className="col-md-6 col-sm-6" style={{ textAlign: 'center' }}>
             <p className="text-center">{formatMessage({ id: 'global.form.idFront' })}</p>
             <Upload

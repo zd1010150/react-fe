@@ -9,7 +9,7 @@ import styles from '../../Order.less';
 import Orders from './orders';
 import Goods from './goods';
 import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, resetOrder, setMax } from './flow/action';
-import { goNextStep, goPreviousStep, createDeliveryOrder } from '../skeleton/flow/action';
+import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder } from '../skeleton/flow/action';
 import { SAVED } from './flow/orderStatus';
 
 const { Sider, Content } = Layout;
@@ -38,7 +38,7 @@ class splitOrderView extends React.Component {
       })));
     });
     this.props.goNextStep('splitOrder');
-    //this.props.createDeliveryOrder(postData);
+    this.props.createDeliveryOrder(postData);
   }
   confirmHasRemainGoods() {
     this.setState({
@@ -82,6 +82,7 @@ class splitOrderView extends React.Component {
     });
     this.props.resetOrder();
     this.props.goPreviousStep('splitOrder');
+    this.props.deleteSplitOrder();
   }
   cancelPreviousDialog() {
     this.setState({
@@ -208,6 +209,7 @@ splitOrderView.propTypes = {
   goPreviousStep: PropTypes.func.isRequired,
   goNextStep: PropTypes.func.isRequired,
   goods: PropTypes.array.isRequired,
+  deleteSplitOrder: PropTypes.func.isRequired,
 };
 const mapStateToProps = ({ order }) => {
   const { splitOrder } = order;
@@ -229,6 +231,7 @@ const mapDispathToProps = {
   setOrderGoodsQuantity,
   goNextStep,
   goPreviousStep,
+  deleteSplitOrder,
   resetOrder,
   setMax,
   createDeliveryOrder,
