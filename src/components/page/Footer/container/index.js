@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { MagentoStaticLink } from 'src/components/ui/index';
 
 const Footer = () => (
   <div className="row">
@@ -28,14 +28,13 @@ const Footer = () => (
         </div>
         <div className="section-content">
           <ul>
-            <li>Returns
-                Delivery
+            <li>Returns</li>
+            <li>Delivery
                 Service
                 Gift Cards
                 Mobile
                 Gift Cards
                 Unsubscribe Notification</li>
-            <li></li>
             <li></li>
             <li></li>
             <li></li>
