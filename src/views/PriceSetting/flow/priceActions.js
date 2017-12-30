@@ -1,22 +1,8 @@
 import _ from 'lodash';
+import { get, post } from 'src/store/http/httpAction';
 import {
   SET_PRICE_TABLE, SET_EDITABLE, CHANGE_CELL, SAVE_ROW, CANCEL_ROW,
-  roleGroupIdToKeyMapping, generatePriceTable,
 } from './constants';
-
-const pathPriceTable = (priceData) => {
-  const categories = generatePriceTable();
-  return _.map(categories, (category) => {
-    const primateCategory = {};
-    _.each(_.filter(priceData, { categoryId: category.id }), (priceItem) => {
-      primateCategory[roleGroupIdToKeyMapping[priceItem.groupId]] = priceItem.value;
-    });
-    return {
-      ...category,
-      ...primateCategory,
-    };
-  });
-};
 
 export const setPriceData = priceTable => ({
   type: SET_PRICE_TABLE,
@@ -26,14 +12,14 @@ export const setPriceData = priceTable => ({
 });
 
 export const fetchPriceTable = () => (dispatch) => {
-  setTimeout(() => {
-    const backData = [{
-      groupId: 1, categoryId: 2, value: 5,
-    }, {
-      groupId: 2, categoryId: 2, value: 8,
-    }];
-    dispatch(setPriceData(pathPriceTable(backData)));
-  }, 0);
+  get('/affiliate/sub-category-sub-groups').then((data) => {
+    const backData = (data.data || []).map(item => ({
+      groupId: item.sub_group_id,
+      categoryId: item.sub_category_id,
+      value: item.percentage,
+    }));
+    dispatch(setPriceData(backData));
+  });
 };
 
 export const toEdit = categoryId => ({
@@ -43,18 +29,29 @@ export const toEdit = categoryId => ({
   },
 });
 
-export const changeCell = (value, categoryId, dataIndex) => ({
+export const changeCell = (value, categoryId, groupId) => ({
   type: CHANGE_CELL,
   payload: {
     value,
     categoryId,
-    dataIndex,
+    groupId,
   },
 });
 
-export const saveRow = () => ({
-  type: SAVE_ROW,
-});
+export const saveRow = () => (dispatch, getState) => {
+  const { displayPriceTable, editingRowId } = getState().price;
+  const validCells = _.filter(displayPriceTable, ({ value, categoryId }) => (
+    categoryId === editingRowId && !!value
+  ));
+  const formData = validCells.map(item => ({
+    sub_group_id: item.groupId,
+    sub_category_id: item.categoryId,
+    percentage: item.value,
+  }));
+  post('/affiliate/sub-category-sub-groups/batchSave', { data: formData }).then(() => {
+    dispatch(fetchPriceTable());
+  });
+};
 
 export const cancelRow = () => ({
   type: CANCEL_ROW,

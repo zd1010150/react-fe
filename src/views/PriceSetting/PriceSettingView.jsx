@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as globalActions from 'store/global/action';
 import * as priceActions from './flow/priceActions';
+import { roleGroupsSelector, finalPriceTableSelector } from './flow/reselect';
 import EditableGrid from './EditableGrid';
 
 const propTypes = {
   setPageTitle: PropTypes.func.isRequired,
   fetchPriceTable: PropTypes.func.isRequired,
+  roleGroups: PropTypes.array.isRequired,
+  editingRowId: PropTypes.number.isRequired,
   priceTable: PropTypes.array.isRequired,
   toEdit: PropTypes.func.isRequired,
   changeCell: PropTypes.func.isRequired,
@@ -23,12 +26,14 @@ class PriceSettingView extends React.Component {
   }
   render() {
     const {
-      priceTable, toEdit, changeCell, saveRow, cancelRow,
+      roleGroups, priceTable, editingRowId, toEdit, changeCell, saveRow, cancelRow,
     } = this.props;
     return (
       <div>
         <EditableGrid
+          roleGroups={roleGroups}
           priceTable={priceTable}
+          editingRowId={editingRowId}
           toEdit={toEdit}
           changeCell={changeCell}
           saveRow={saveRow}
@@ -44,10 +49,12 @@ const mapDispatchToProp = {
   ...priceActions,
   setPageTitle: globalActions.setPageTitle,
 };
-const mapState = ({ price }) => {
-  const { displayPriceTable } = price;
+const mapState = (state) => {
+  console.log('priceTable', finalPriceTableSelector(state));
   return {
-    priceTable: displayPriceTable,
+    editingRowId: state.price.editingRowId,
+    roleGroups: roleGroupsSelector(state),
+    priceTable: finalPriceTableSelector(state),
   };
 };
 
