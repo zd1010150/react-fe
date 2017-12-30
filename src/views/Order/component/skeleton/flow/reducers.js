@@ -41,6 +41,8 @@ const steps = (state = {
 };
 const deliveryOrders = (state = [], action) => {
   switch (action.type) {
+    case RESET_ORDER:
+      return [];
     case SET_DELIVERY_ORDERS:
       return action.deliveryOrders;
     default:

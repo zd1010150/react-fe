@@ -6,3 +6,4 @@ export const SET_ORDER_USER = 'SET_ORDER_USER';
 export const SET_GLOBAL_SETTING = 'SET_GLOBAL_SETTING';
 export const ADD_ERROR = 'ADD_ERROR';
 export const MARK_READED_ERROR = 'MARK_READED_ERROR';
+export const RESET_ORDER = 'RESET_ORDER';

@@ -12,6 +12,7 @@ import {
   SO_SET_MAX,
 } from '../actionType';
 import { CREATED, EDITING, SAVED, DELETED } from '../orderStatus';
+import { RESET_ORDER } from '../../../skeleton/flow/actionType';
 
 let ORDER_SEED = 0;
 // 一个新order的初始化值
@@ -219,6 +220,15 @@ export const orders = (state = {
 }, action) => {
   let newState;
   switch (action.type) {
+    case RESET_ORDER:
+      ORDER_SEED = 0;
+      return {
+        orders: {},
+        currentOrder: { id: 0 },
+        goodsEnable: false,
+        validate: false,
+        max: 0,
+      };
     case SO_SET_MAX:
       return Object.assign({}, state, { max: action.max });
     case SO_RESET_ORDER:

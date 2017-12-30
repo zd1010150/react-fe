@@ -7,6 +7,8 @@ import {
   SO_INIT_GOODS,
 } from '../actionType';
 import { EDITING } from '../orderStatus';
+import { RESET_ORDER } from '../../../skeleton/flow/actionType';
+
 
 const initGoods = goods => goods.map(item => Object.assign({}, item, {
   currentQuantity: item.quantity,
@@ -75,6 +77,8 @@ const updateGoodsQuantityWhenDeleteOrder = (state, order) => {
 };
 const goods = (state = [], action) => {
   switch (action.type) {
+    case RESET_ORDER:
+      return [];
     case SO_INIT_GOODS:
       return initGoods(action.goods);
     case SO_SELECTING_GOODS_QUANTITY:

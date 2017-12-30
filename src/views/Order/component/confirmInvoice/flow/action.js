@@ -1,7 +1,13 @@
 
 import { post } from 'src/store/http/httpAction';
-import { SET_INVOICE_INFO } from './actionType';
+import { SET_INVOICE_INFO, SET_INVOICE_ADDRESS } from './actionType';
 
+const setInvoiceAddress = (userName, phone, address) => ({
+  type: SET_INVOICE_ADDRESS,
+  userName,
+  phone,
+  address,
+});
 const setInvoiceInfo = invoices => ({
   type: SET_INVOICE_INFO,
   invoices,
@@ -14,4 +20,3 @@ export const confirmGetInvoice = () => (dispatch, getState) => {
     dispatch(setInvoiceInfo(data));
   });
 };
-

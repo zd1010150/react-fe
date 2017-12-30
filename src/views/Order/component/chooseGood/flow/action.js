@@ -76,4 +76,3 @@ export const setItemPrice = (goodsId, price) => ({
   goodsId,
   price,
 })
-

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { combineReducers } from 'redux';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, ADD_ERROR, MARK_READED_ERROR } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, ADD_ERROR, MARK_READED_ERROR, RESET_ORDER } from './actionType';
 
 // 页面默认语言为 en，此处只是mock
 const language = (state = 'en', action) => {
@@ -46,6 +46,8 @@ const orderUser = (state = null, action) => {
   switch (action.type) {
     case SET_ORDER_USER:
       return action.user;
+    case RESET_ORDER:
+      return null;
     default:
       return state;
   }

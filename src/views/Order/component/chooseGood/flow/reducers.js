@@ -1,6 +1,16 @@
 
 import { combineReducers } from 'redux';
-import { SET_CART_COLLAPSE, SET_GOODS, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_PAGENATIONS, SET_SEARCH_KEY, SET_CART_GOODS_PRICE } from './actionType';
+import {
+  SET_CART_COLLAPSE,
+  SET_GOODS,
+  SELECTING_GOODS_QUANTITY,
+  ADD_GOODS_TO_CART,
+  DELETE_GOODS_FROM_CART,
+  EDITING_CART_GOODS,
+  SET_PAGENATIONS,
+  SET_SEARCH_KEY,
+  SET_CART_GOODS_PRICE,
+} from './actionType';
 import { RESET_ORDER } from '../../skeleton/flow/actionType';
 
 const getSeletedQuantity = (itemId, cart) => {
@@ -185,6 +195,12 @@ const cartCollapse = (state = false, action) => {
 };
 const goodsTablePagination = (state = { perPage: 2, currentPage: 1, totalPages: 0 }, action) => {
   switch (action.type) {
+    case RESET_ORDER:
+      return {
+        perPage: 2,
+        currentPage: 1,
+        totalPages: 0,
+      };
     case SET_PAGENATIONS:
       return {
         perPage: action.perPage,
@@ -197,6 +213,8 @@ const goodsTablePagination = (state = { perPage: 2, currentPage: 1, totalPages: 
 };
 const searchKey = (state = '', action) => {
   switch (action.type) {
+    case RESET_ORDER:
+      return '';
     case SET_SEARCH_KEY:
       return action.searchKey;
     default:

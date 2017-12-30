@@ -25,9 +25,9 @@ const setDeliveryOrders = deliveryOrders => ({
   type: SET_DELIVERY_ORDERS,
   deliveryOrders,
 });
-// const resetSteps = () => ({
-//   type: RESET_ORDER
-// });
+export const resetOrder = () => ({
+  type: RESET_ORDER
+});
 export const createDeliveryOrder = orders => (dispatch, getState) => {
   const { orderUser } = getState().global;
   const postData = {
@@ -35,10 +35,8 @@ export const createDeliveryOrder = orders => (dispatch, getState) => {
     orders,
   };
   post('/affiliate/delivery-orders/batch-create', postData, dispatch).then((data) => {
-    console.log(data, '<=====deliveryorder data====>');
     if (data) {
       dispatch(setDeliveryOrders(data));
     }
   });
 };
-
