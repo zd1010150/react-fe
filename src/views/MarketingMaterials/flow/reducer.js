@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { SET_MARKETING_MATERIAL, SET_MM_LANGUAGE, SET_MM_CATEGORY } from './actionType';
 
-const marketingLanguage = (state = 'zh', action) => {
+const marketingLanguage = (state = '', action) => {
   switch (action.type) {
     case SET_MM_LANGUAGE:
       return action.language;
@@ -17,7 +17,7 @@ const marketingCategory = (state = '', action) => {
       return state;
   }
 };
-const marketingMaterias = (state = {}, action) => {
+const marketingMaterias = (state = [], action) => {
   switch (action.type) {
     case SET_MARKETING_MATERIAL:
       return action.marketingMaterias;

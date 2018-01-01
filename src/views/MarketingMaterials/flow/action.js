@@ -17,6 +17,6 @@ export const receiveMarketingmaterials = marketingMaterias => ({
 });
 export const getMarketingMaterial = () => (dispath) => {
   get('/affiliate/marketing-materials', {}, dispath).then((data) => {
-    dispath(receiveMarketingmaterials(data));
+    dispath(receiveMarketingmaterials((data && data.data) || []));
   });
 };

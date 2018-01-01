@@ -50,7 +50,6 @@ const mapDispatchToProp = {
   setPageTitle: globalActions.setPageTitle,
 };
 const mapState = (state) => {
-  console.log('priceTable', finalPriceTableSelector(state));
   return {
     editingRowId: state.price.editingRowId,
     roleGroups: roleGroupsSelector(state),

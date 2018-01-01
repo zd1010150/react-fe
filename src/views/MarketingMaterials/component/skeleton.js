@@ -1,53 +1,72 @@
-/*
-
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Radio } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import Plan from './plan';
+
+const { TabPane } = Tabs;
 class skeleton extends React.Component {
   state = {
     language: 'zh',
+    category: (this.props.category && this.props.category[0] && this.props.category[0].id) || '',
+  }
+  componentDidMount() {
+    this.props.setMMCategory(this.state.category);
+    this.props.setMMLanguage(this.state.language);
   }
   handleModeChange = (e) => {
     const language = e.target.value;
     this.setState({ language });
+    this.props.setMMLanguage(language);
+  }
+  handleCategoryChange = (categoryId) => {
+    this.setState({ category: categoryId });
+    this.props.setMMCategory(categoryId);
   }
   render() {
     const { formatMessage } = this.props.intl;
-
+    const { plans, category } = this.props;
     return (
       <div>
-        <Radio.Group onChange={() => { this.handleLanguageChange(); }} value={this.state.language} style={{ marginBottom: 8 }}>
+        <Radio.Group onChange={(e) => { this.handleLanguageChange(e); }} value={this.state.language} style={{ marginBottom: 8 }}>
           <Radio.Button value="zh">{ formatMessage({ id: 'global.language.zh' }) }</Radio.Button>
           <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button>
         </Radio.Group>
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey={this.state.category}
+          activeKey={this.state.category}
           style={{ height: 220 }}
+          onChange={
+            (categoryId) => {
+              this.handleCategoryChange(categoryId);
+            }
+            }
         >
-          <TabPane tab="Tab 1" key="1"><Plan detail={ detail } /></TabPane>
-          <TabPane tab="Tab 2" key="2">Content of tab 2</TabPane>
-          <TabPane tab="Tab 3" key="3">Content of tab 3</TabPane>
-          <TabPane tab="Tab 4" key="4">Content of tab 4</TabPane>
-          <TabPane tab="Tab 5" key="5">Content of tab 5</TabPane>
-          <TabPane tab="Tab 6" key="6">Content of tab 6</TabPane>
-          <TabPane tab="Tab 7" key="7">Content of tab 7</TabPane>
-          <TabPane tab="Tab 8" key="8">Content of tab 8</TabPane>
-          <TabPane tab="Tab 9" key="9">Content of tab 9</TabPane>
-          <TabPane tab="Tab 10" key="10">Content of tab 10</TabPane>
-          <TabPane tab="Tab 11" key="11">Content of tab 11</TabPane>
+          {category.map(item => (<TabPane tab={item.name} key={item.id} />))}
         </Tabs>
+        {
+          plans.map(plan =>
+            (<Plan
+              key={plan.id}
+              title={plan.title}
+              pictures={plan.images}
+              video={plan.video_urls && plan.video_urls[0]}
+              text={plan.description}
+            />))
+        }
       </div>
     );
   }
 }
+skeleton.defaultProps = {
+  plans: [],
+};
 skeleton.propTypes = {
   intl: intlShape.isRequired,
-  category: PropTypes.array(PropTypes.obj),
-  plans
+  category: PropTypes.array,
+  plans: PropTypes.array,
+  setMMCategory: PropTypes.func.isRequired,
+  setMMLanguage: PropTypes.func.isRequired,
 };
 const Skeleton = injectIntl(skeleton);
 export default Skeleton;
-*/

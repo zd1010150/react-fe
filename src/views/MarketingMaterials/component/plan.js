@@ -4,7 +4,9 @@ import { Card } from 'antd';
 import { QRcode } from 'components/ui/index';
 
 const { Grid } = Card;
-const plan = ({ category, detail }) => {
+const plan = ({
+  pictures, video, text, title,
+}) => {
   const outerGridStyle = {
     width: '27%',
     textAlign: 'center',
@@ -17,14 +19,11 @@ const plan = ({ category, detail }) => {
     width: '33.3%',
     textAlign: 'center',
   };
-  const {
-    pictures, video, text, url,
-  } = detail;
   return (
-    <Card title={category}>
+    <Card title={title}>
       <Grid style={outerGridStyle}>
         <Card>
-          {pictures.map((item, index) => <Grid style={picGridStyle} key={index}><img src={item} alt="marketing pic" /></Grid>)}
+          {pictures.map((item, index) => <Grid style={picGridStyle} key={index}><img src={item.path} alt="marketing pic" /></Grid>)}
         </Card>
       </Grid>
       <Grid style={outerGridStyle}><img src={video} alt="video thumbnail pic" /></Grid>
@@ -33,10 +32,17 @@ const plan = ({ category, detail }) => {
     </Card>
   );
 };
-
+plan.defaultProps = {
+  title: '',
+  pictures: [],
+  video: '',
+  text: '',
+};
 plan.propTypes = {
-  category: PropTypes.string.isRequired,
-  detail: PropTypes.obj.isRequired,
+  title: PropTypes.string,
+  pictures: PropTypes.array,
+  video: PropTypes.string,
+  text: PropTypes.string,
 };
 
 export default plan;

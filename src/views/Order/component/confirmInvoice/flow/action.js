@@ -13,7 +13,7 @@ const setInvoiceInfo = invoices => ({
   type: SET_INVOICE_INFO,
   invoices,
 });
-const confirmGetInvoice = () => (dispatch, getState) => {
+export const confirmGetInvoice = () => (dispatch, getState) => {
   const state = getState();
   const freight = state.order.chooseLogistic.logisticType;
   const deliveryIds = state.order.skeleton.deliveryOrders;
@@ -21,4 +21,3 @@ const confirmGetInvoice = () => (dispatch, getState) => {
     dispatch(setInvoiceInfo(data));
   });
 };
-export default confirmGetInvoice;

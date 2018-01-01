@@ -11,7 +11,6 @@ import Address from './address';
 import Invoice from './invoice';
 import { resetOrder } from '../skeleton/flow/action';
 
-
 const cx = classNames.bind(styles);
 
 class confirmInvoiceView extends React.Component {
