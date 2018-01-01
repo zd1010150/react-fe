@@ -1,5 +1,5 @@
-import formField from 'src/i18n/global/form';
-import { phoneReg, zipCodeReg } from 'src/utils/regex';
+import formField from 'i18n/global/form';
+import { phoneReg, zipCodeReg } from 'utils/regex';
 // 定义所有校验规则的错误信息
 const errorMessages = (() => {
   const zhMessages = {

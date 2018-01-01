@@ -1,5 +1,5 @@
 
-import { post } from 'src/store/http/httpAction';
+import { post } from 'store/http/httpAction';
 import { SET_INVOICE_INFO } from './actionType';
 
 const setInvoiceInfo = invoices => ({

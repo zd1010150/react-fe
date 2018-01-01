@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
-import { MagentoStaticLink } from 'src/components/ui/index';
+import { MagentoStaticLink } from 'components/ui/index';
 import styles from '../TopPanel.less';
 
 const cx = classNames.bind(styles);

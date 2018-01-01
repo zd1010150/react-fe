@@ -5,8 +5,8 @@ import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../Accounts.less';
-import { Upload } from 'src/components/ui/index';
-import { getExistRule, validator } from 'src/utils/validateMessagesUtil';
+import { Upload } from 'components/ui/index';
+import { getExistRule, validator } from 'utils/validateMessagesUtil';
 
 const cx = classNames.bind(styles);
 

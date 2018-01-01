@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputNumber } from 'src/components/ui/index';
+import { InputNumber } from 'components/ui/index';
 import { Icon, Button, Input, Divider } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';

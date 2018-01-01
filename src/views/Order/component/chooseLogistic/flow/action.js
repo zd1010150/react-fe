@@ -1,4 +1,4 @@
-import { post } from 'src/store/http/httpAction';
+import { post } from 'store/http/httpAction';
 import { SET_LOGISITIC_COST } from './actionType';
 
 export const setFreightFee = (logisticType, fee) => ({

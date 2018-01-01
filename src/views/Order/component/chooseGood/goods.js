@@ -2,7 +2,7 @@ import React from 'react';
 // import 'rc-input-number/assets/index.css';
 import PropTypes from 'prop-types';
 import { Button, Table } from 'antd';
-import { InputNumber } from 'src/components/ui/index';
+import { InputNumber } from 'components/ui/index';
 // import InputNumber from 'rc-input-number';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';

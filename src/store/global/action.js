@@ -1,4 +1,4 @@
-import { get } from 'src/store/http/httpAction';
+import { get } from 'store/http/httpAction';
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, ADD_ERROR, MARK_READED_ERROR, } from './actionType';
 
 export const addError = error =>({

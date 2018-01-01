@@ -1,4 +1,4 @@
-import { get } from 'src/store/http/httpAction';
+import { get } from 'store/http/httpAction';
 import { SET_MARKETING_MATERIAL } from './actionType';
 
 export const receiveMarketingmaterials = marketingMaterias => ({

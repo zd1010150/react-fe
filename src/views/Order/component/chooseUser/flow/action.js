@@ -1,4 +1,4 @@
-import { get } from 'src/store/http/httpAction';
+import { get } from 'store/http/httpAction';
 import { SET_USER_TABLE_DATA, SET_SEARCH_AREA_VISIBLE } from './actionType';
 
 export const setUsersData = users => ({

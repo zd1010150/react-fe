@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { get, post } from 'src/store/http/httpAction';
+import { get, post } from 'store/http/httpAction';
 import {
   SET_PRICE_TABLE, SET_EDITABLE, CHANGE_CELL, SAVE_ROW, CANCEL_ROW,
 } from './constants';

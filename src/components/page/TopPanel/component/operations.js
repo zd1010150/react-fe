@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu, Dropdown, Icon } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { MagentoStaticLink } from 'src/components/ui/index';
-import { getAbsolutePath } from 'src/config/magento.config';
+import { MagentoStaticLink } from 'components/ui/index';
+import { getAbsolutePath } from 'config/magento.config';
 
 const operatorView = ({ intl, account, language }) => {
   const { formatMessage } = intl;

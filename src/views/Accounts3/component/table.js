@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Button, Divider, Icon, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { IdDialog } from 'src/components/page';
+import { IdDialog } from 'components/page';
 import UserDialog from './userDialog';
 import HistoryOrderDialog from './historyOrderDialog';
 

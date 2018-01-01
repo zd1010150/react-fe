@@ -1,4 +1,4 @@
-import { post } from 'src/store/http/httpAction';
+import { post } from 'store/http/httpAction';
 
 import { SET_CURRENT_STEP, ADD_SPLIT_ORDER, DELETE_SPLIT_ORDER, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP, RESET_ORDER } from './actionType';
 

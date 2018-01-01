@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import { goPreviousStep } from '../skeleton/flow/action';
 import styles from '../../Order.less';
-import { baseUrl } from 'src/config/env.config';
+import { baseUrl } from 'config/env.config';
 
 const cx = classNames.bind(styles);
 

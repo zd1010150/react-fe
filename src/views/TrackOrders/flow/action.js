@@ -1,4 +1,4 @@
-import { get } from 'src/store/http/httpAction';
+import { get } from 'store/http/httpAction';
 import { SET_TRACK_ORDER_DATA, SET_ID_VIEW } from './actionType';
 
 export const setIdViewData = data => ({

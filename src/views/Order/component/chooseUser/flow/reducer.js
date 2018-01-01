@@ -1,6 +1,6 @@
 import { SET_USER_TABLE_DATA, SET_SEARCH_AREA_VISIBLE } from './actionType';
 import { combineReducers } from 'redux';
-import { SET_ORDER_USER } from 'src/store/global/actionType';
+import { SET_ORDER_USER } from 'store/global/actionType';
 import _ from 'lodash';
 const users = (state = [], action) => {
   switch (action.type) {

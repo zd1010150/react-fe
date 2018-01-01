@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames/bind';
 import styles from '../Copyright.less';
-import { getAbsolutePath } from 'src/config/magento.config';
+import { getAbsolutePath } from 'config/magento.config';
 
 const cx = classNames.bind(styles);
 const CopyRight = ({language}) => (
