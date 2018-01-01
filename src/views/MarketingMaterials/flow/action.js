@@ -1,5 +1,7 @@
-import { get } from 'src/store/http/httpAction';
+
+import { get } from 'store/http/httpAction';
 import { SET_MARKETING_MATERIAL, SET_MM_LANGUAGE, SET_MM_CATEGORY } from './actionType';
+
 
 export const setMMLanguage = language => ({
   type: SET_MM_LANGUAGE,

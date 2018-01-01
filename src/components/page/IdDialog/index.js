@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Modal, Icon, Input } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { Upload } from 'src/components/ui/index';
+import { Upload } from 'components/ui/index';
 
 
 class id extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MagentoStaticLink } from 'src/components/ui/index';
+import { MagentoStaticLink } from 'components/ui/index';
 import { Icon } from 'antd';
 import classNames from 'classnames/bind';
 import styles from '../Footer.less';

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Icon, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { IdDialog } from 'src/components/page';
+import { IdDialog } from 'components/page';
 
 
 const mockId = {

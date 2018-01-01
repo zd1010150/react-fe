@@ -1,4 +1,4 @@
-import { get, post, put, httpDelete } from 'src/store/http/httpAction';
+import { get, post, put, httpDelete } from 'store/http/httpAction';
 import { SET_CART_COLLAPSE, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_GOODS, SET_SEARCH_KEY, SET_PAGENATIONS, SET_CART_GOODS_PRICE, } from './actionType';
 
 const setSearchKey = searchKey => ({

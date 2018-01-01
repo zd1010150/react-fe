@@ -5,8 +5,8 @@ import { Menu } from 'antd';
 import { intlShape } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import { getParentUrl } from 'src/utils/url';
-import { MagentoStaticLink } from 'src/components/ui/index';
+import { getParentUrl } from 'utils/url';
+import { MagentoStaticLink } from 'components/ui/index';
 import styles from '../LeftSideNav.less';
 
 const cx = classNames.bind(styles);

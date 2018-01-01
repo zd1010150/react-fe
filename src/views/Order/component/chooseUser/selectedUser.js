@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { apiDomain } from 'src/config/env.config';
+import { apiDomain } from 'config/env.config';
 import { intlShape, injectIntl } from 'react-intl';
 import { Button, Modal, Icon } from 'antd';
 import classNames from 'classnames/bind';

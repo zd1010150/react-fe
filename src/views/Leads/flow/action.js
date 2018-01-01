@@ -1,4 +1,4 @@
-import { get, post, put, httpDelete } from 'src/store/http/httpAction';
+import { get, post, put, httpDelete } from 'store/http/httpAction';
 import { SET_LEADS_DATA, SET_ID_VIEW, SET_PAGENATIONS } from './actionType';
 
 export const setIdViewData = data => ({

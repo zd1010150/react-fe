@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { getAbsolutePath } from 'src/config/magento.config';
+import { getAbsolutePath } from 'config/magento.config';
 import styles from '../HeaderContent.less';
 
 const cx = classNames.bind(styles);

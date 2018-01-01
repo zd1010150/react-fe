@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { getAbsolutePath } from 'src/config/magento.config';
+import { getAbsolutePath } from 'config/magento.config';
 
 const { Search } = Input;
 

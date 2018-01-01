@@ -5,9 +5,9 @@ import classNames from 'classnames/bind';
 import { Table, Divider, Icon, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
-import { IdDialog, LeadsAndAccountsEditAddDialog } from 'src/components/page';
+import { IdDialog, LeadsAndAccountsEditAddDialog } from 'components/page';
 import DeleteDialog from './deleteDialog';
-import operateType from 'src/components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
+import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
 
 class leadsTable extends React.Component {
   state = {

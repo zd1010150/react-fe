@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
-import { LeadsAndAccountsEditAddDialog } from 'src/components/page';
+import { LeadsAndAccountsEditAddDialog } from 'components/page';
 
-import operateType from 'src/components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
+import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
 
 class add extends React.Component {
   state = { dialogVisible: false };

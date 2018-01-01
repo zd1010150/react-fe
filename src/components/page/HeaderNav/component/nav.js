@@ -3,8 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu } from 'antd';
 import classNames from 'classnames/bind';
-import { MagentoStaticLink } from 'src/components/ui/index';
-import { getAbsolutePath } from 'src/config/magento.config';
+import { MagentoStaticLink } from 'components/ui/index';
+import { getAbsolutePath } from 'config/magento.config';
 import styles from '../HeaderNav.less';
 
 const cx = classNames.bind(styles);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'antd';
-import { QRcode } from 'src/components/ui/index';
+import { QRcode } from 'components/ui/index';
 
 const { Grid } = Card;
 const plan = ({ category, detail }) => {

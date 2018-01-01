@@ -1,5 +1,6 @@
 
-import { post } from 'src/store/http/httpAction';
+
+import { post } from 'store/http/httpAction';
 import { SET_INVOICE_INFO, SET_INVOICE_ADDRESS } from './actionType';
 
 const setInvoiceAddress = (userName, phone, address) => ({
@@ -12,7 +13,7 @@ const setInvoiceInfo = invoices => ({
   type: SET_INVOICE_INFO,
   invoices,
 });
-export const confirmGetInvoice = () => (dispatch, getState) => {
+const confirmGetInvoice = () => (dispatch, getState) => {
   const state = getState();
   const freight = state.order.chooseLogistic.logisticType;
   const deliveryIds = state.order.skeleton.deliveryOrders;
@@ -20,3 +21,4 @@ export const confirmGetInvoice = () => (dispatch, getState) => {
     dispatch(setInvoiceInfo(data));
   });
 };
+export default confirmGetInvoice;
