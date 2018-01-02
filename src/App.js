@@ -2,15 +2,14 @@
 import React from 'react';
 // import { BrowserRouter } from 'react-router-dom';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-
 import { Provider } from 'react-redux';
-
+import CMS from 'views/CMS/index';
 import configureStore from './store/configureStore';
 import { fetchGlobalSetting } from './store/global/action';
 import './assets/less/index.less';
 import I18n from './i18n/index';
-import { MainLayout } from './components/layout/index';
-import CMS from 'views/CMS/index';
+import { MainLayout, CmsLayout } from './components/layout/index';
+import { ErrorNotification } from './components/page/index';
 
 const store = configureStore();
 
@@ -21,10 +20,11 @@ if (process.env.NODE_ENV !== 'production') {
     console.log('redux store ===', store.getState());
   });
 }
-store.dispatch(fetchGlobalSetting()); // 获取所有的配置,页面中大多数数据请求都基于本配置
-// ErrorNotification(store);
-
 window.__store__ = store;
+store.dispatch(fetchGlobalSetting()); // 获取所有的配置,页面中大多数数据请求都基于本配置
+ErrorNotification(store);
+
+
 // topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification,
 const App = () => (
   <Provider store={store}>
@@ -32,7 +32,7 @@ const App = () => (
       <HashRouter>
         <div className="App">
           <Switch>
-            <Route path="/CMS" exact component={CMS} />
+            <Route path="/CMS" exact component={CmsLayout} />
             <Route path="/" component={MainLayout} />
           </Switch>
         </div>

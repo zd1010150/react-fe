@@ -72,6 +72,7 @@ const mapSettingData = (data) => {
     orderType: newData.order_type,
     userStatus: newData.user_status,
     freightSetting: newData.freight_setting,
+    countries: newData.country,
   };
 };
 const settings = (state = { }, action) => {

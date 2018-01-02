@@ -13,9 +13,9 @@ const setCMS = (data) => {
   };
 };
 
-const getMaterial = id => dispatch => get(`/affiliate/marketing-materials/${id}`, dispatch).then((data) => {
+const getMaterial = id => dispatch => get(`/affiliate/marketing-materials/${id}`,  {}, dispatch).then((data) => {
   if (data && (!data.status_code)) {
-    dispatch(setCMS(data));
+    dispatch(setCMS(data.data));
   }
 });
 export default getMaterial;

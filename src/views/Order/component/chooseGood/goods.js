@@ -74,7 +74,7 @@ const goods = ({
   return (
     <div className="block">
       <div className="block-content">
-        <Table  columns={columns} dataSource={goodsData} pagination={pagination} className="choose-goods-table" />
+        <Table  columns={columns} dataSource={goodsData} pagination={pagination} className="choose-goods-table" rowKey="id"/>
       </div>
     </div>);
 };

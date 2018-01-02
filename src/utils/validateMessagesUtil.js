@@ -1,5 +1,5 @@
 import formField from 'i18n/global/form';
-import { phoneReg, zipCodeReg } from 'utils/regex';
+import { phoneReg, zipCodeReg, idNumberReg } from 'utils/regex';
 // 定义所有校验规则的错误信息
 const errorMessages = (() => {
   const zhMessages = {
@@ -192,9 +192,29 @@ const zipCode = (() => {
     },
   };
 })();
+const idNumber = (() => {
+  const zhMsg = { idNumber: () => '身份证信息不合法.' };
+  const enMsg = { idNumber: () => 'it is invalid ID Number.' };
+  return {
+    zhMsg,
+    enMsg,
+    ruleName: 'idNumber',
+    validator: language => (rule, value = '', callback) => {
+      const val = value.trim();
+      if (val.length < 1) {
+        callback();
+      } else if (!idNumberReg.test(val)) {
+        callback(getErrorMsg('idNumber', rule.field, language));
+      } else {
+        callback();
+      }
+    },
+  };
+})();
 const validator = {
   between: registerRule(between),
   phone: registerRule(phone),
   zipCode: registerRule(zipCode),
+  idNumber: registerRule(idNumber),
 };
 export { getExistRule, getErrorMsg, validator };

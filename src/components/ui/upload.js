@@ -69,6 +69,7 @@ class PicturesWall extends React.Component {
           onChange={this.handleChange}
           disabled={this.props.disabled}
           withCredentials
+          headers={{ 'Accept-Language': window.__store__.getState().global.language }}
         >
           { this.props.disabled ? null : (this.props.pictureQuantity < 0 ? uploadButton : (this.state.fileList.length >= this.props.pictureQuantity ? null : uploadButton)) }
         </Upload>

@@ -12,14 +12,14 @@ const searchForm = ({
 }) => {
   const { getFieldDecorator } = form;
   const { formatMessage } = intl;
-  const statusSelect = getFieldDecorator('status', { initialValue: 'all' })(<Select>{deliveryOrderStatus.map(item => <Option value={item} key={item}>{item}</Option>)}</Select>);
+  const statusSelect = getFieldDecorator('status', { initialValue: deliveryOrderStatus[0] && deliveryOrderStatus[0].id })(<Select>{deliveryOrderStatus.map(item => <Option value={item.id} key={item}>{item.name}</Option>)}</Select>);
   return (
     <Form layout="inline" onSubmit={onSubmit(...form.getFieldsValue())}>
-      <FormItem label={formatMessage({ id: 'pages.TrackOrders.status' })}>
+      <FormItem label={formatMessage({ id: 'page.TrackOrders.status' })}>
         { statusSelect }
       </FormItem>
       <FormItem
-        label={formatMessage({ id: 'pages.TrackOrders.receiveName' })}
+        label={formatMessage({ id: 'page.TrackOrders.receiveName' })}
       >
         {getFieldDecorator('name')(<Input />)}
       </FormItem>

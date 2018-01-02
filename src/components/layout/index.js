@@ -1,3 +1,3 @@
 import MainLayout from './mainLayout';
-
-export { MainLayout };
+import CmsLayout from './cmsLayout';
+export { MainLayout, CmsLayout };

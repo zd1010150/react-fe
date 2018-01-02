@@ -10,6 +10,13 @@ import { getExistRule, validator } from 'utils/validateMessagesUtil';
 
 const cx = classNames.bind(styles);
 class userForm extends React.Component {
+  handleCountryChange(countryCode) {
+    if (countryCode === 'CH') {
+      this.props.form.setFieldsValue({
+        note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
+      });
+    }
+  }
   render() {
     const { language } = this.props;
     const { Item: FormItem } = Form;
@@ -17,7 +24,7 @@ class userForm extends React.Component {
     const { formatMessage } = this.props.intl;
     const { getFieldDecorator } = this.props.form;
     const {
-      editObject, canEdit, group, interests,showID
+      editObject, canEdit, group, interests, showID, countries,
     } = this.props;
     const disabled = !canEdit;
     const formItemLayout = {
@@ -42,6 +49,12 @@ class userForm extends React.Component {
       style={{ width: '100%' }}
       key="interests"
     >{interests.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
+    </Select>);
+
+    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].id) })(<Select disabled={disabled} key="country" onChange={(e) => { this.handleCountryChange(e.target.key); }}>
+      {
+          countries.map(item => <Option value={item.id} key={item.code}>{item.name}</Option>)
+        }
     </Select>);
 
     return (
@@ -148,13 +161,7 @@ class userForm extends React.Component {
           {...formItemLayout}
           label={formatMessage({ id: 'global.form.country' })}
         >
-          {
-            getFieldDecorator('country', {
-              initialValue: editObject.country || '',
-              rules: [{
-                validator: validator.between(1, 150, language),
-              }],
-            })(<Input disabled={disabled} />)}
+          { countriesEl}
         </FormItem>
         <FormItem
           {...formItemLayout}
@@ -165,6 +172,18 @@ class userForm extends React.Component {
               initialValue: editObject.zipCode || '',
               rules: [{
                 validator: validator.zipCode(language),
+              }],
+            })(<Input disabled={disabled} />)}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label={formatMessage({ id: 'global.form.idNumber' })}
+        >
+          {
+            getFieldDecorator('idNumber', {
+              initialValue: editObject.idNumber || '',
+              rules: [{
+                validator: validator.idNumber(language),
               }],
             })(<Input disabled={disabled} />)}
         </FormItem>
@@ -191,7 +210,7 @@ class userForm extends React.Component {
         >
           { interestsSelector }
         </FormItem>
-        { showID ?  <div className={cx('id-wrapper')}>
+        { showID ? <div className={cx('id-wrapper')}>
           <FormItem
             className={cx('id-front')}
             {...formItemLayout}
@@ -210,7 +229,7 @@ class userForm extends React.Component {
               initialValue: editObject.idBack || '',
             })(<Upload disabled={disabled} file={editObject.idBack || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
           </FormItem>
-        </div>: <span></span>
+        </div> : <span />
         }
 
 
@@ -224,6 +243,7 @@ userForm.defaultProps = {
   showID: false,
   interests: [],
   group: [],
+  countries: [],
 };
 userForm.propTypes = {
   intl: intlShape.isRequired,
@@ -233,6 +253,7 @@ userForm.propTypes = {
   canEdit: PropTypes.bool,
   interests: PropTypes.array,
   group: PropTypes.array,
+  countries: PropTypes.array,
   showID: PropTypes.bool,
 };
 

@@ -117,7 +117,7 @@ class userDialog extends React.Component {
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      editObject, visible, language, userType, operatorType, group, interests,
+      editObject, visible, language, userType, operatorType, group, interests, countries,
     } = this.props;
     const dialogTitle = ((_userType, _operatorType) => {
       const type = `page.${_userType}`;
@@ -142,7 +142,7 @@ class userDialog extends React.Component {
           </Button>,
         ]}
       >
-        <UserForm showID={this.state.showID} canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
+        <UserForm showID={this.state.showID} canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} countries={countries} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
       </Modal>
     );
   }
@@ -156,6 +156,7 @@ userDialog.defaultProps = {
   operatorType: 'view',
   interests: [],
   group: [],
+  countries: [],
 };
 userDialog.propTypes = {
   intl: intlShape.isRequired,
@@ -168,6 +169,7 @@ userDialog.propTypes = {
   operatorType: PropTypes.string,
   interests: PropTypes.array,
   group: PropTypes.array,
+  countries: PropTypes.array,
   userType: PropTypes.string.isRequired, // Leads,Accounts
 };
 const UserDialog = injectIntl(userDialog);

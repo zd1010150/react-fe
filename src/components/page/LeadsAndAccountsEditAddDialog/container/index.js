@@ -9,6 +9,7 @@ const mapStateToProps = ({ global }) => ({
   language: global.language,
   interests: global.settings.subCategory,
   group: global.settings.subGroup,
+  countries: global.settings.countries,
 });
 
 

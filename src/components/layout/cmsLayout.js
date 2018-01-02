@@ -2,11 +2,10 @@ import React from 'react';
 import { TopPanel,
   HeaderContent,
   HeaderNav,
-  LeftSideNav,
-  MainContent,
   Footer,
   CopyRight,
   Notification } from '../page/index';
+import CMS from 'views/CMS/index';
 
 const layout = () => (
   <div className="page-wrapper">
@@ -27,12 +26,7 @@ const layout = () => (
         <Notification />
       </div>
       <div className="columns">
-        <div className="sidebar sidebar-main">
-          <LeftSideNav />
-        </div>
-        <div className="column main">
-          <MainContent />
-        </div>
+        <CMS/>
       </div>
     </main>
     <footer className="page-footer">

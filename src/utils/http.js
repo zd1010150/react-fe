@@ -7,11 +7,14 @@ import { MAX_FETCH_TIMEOUT } from '../config/app.config';
 export default async (type = 'GET', url = '', data = {}, headers = {}) => {
   type = type.toUpperCase();
   url = baseUrl + url;
+  const langauge = window.__store__ && window.__store__.getState() && window.__store__.getState().global.language;
+  console.log("<===>", langauge);
   const requestConfig = {
     credentials: 'include',
     method: type,
     headers: {
       Accept: 'application/json',
+      'Accept-Language': langauge,
       'Content-Type': 'application/json',
       ...headers,
     },
@@ -64,7 +67,7 @@ export default async (type = 'GET', url = '', data = {}, headers = {}) => {
     }
     throw new TypeError('Oops,we haven\'t get JSON! ');
   } catch (error) {
-    console.log(error);
+    console.log("error===",error);
     return error;
   }
 };

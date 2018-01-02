@@ -37,6 +37,7 @@ class orderTable extends React.Component {
 
   render() {
     const { formatMessage } = this.props.intl;
+    const { orders, queryByPaging, trackOrderDataTablePagination } = this.props;
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
@@ -70,11 +71,20 @@ class orderTable extends React.Component {
         </span>
       ),
     }];
-
+    const pagination = {
+      defaultCurrent: trackOrderDataTablePagination.currentPage,
+      current: trackOrderDataTablePagination.currentPage,
+      defaultPageSize: trackOrderDataTablePagination.perPage,
+      pageSize: trackOrderDataTablePagination.perPage,
+      total: trackOrderDataTablePagination.total,
+      onChange(page, pageSize) {
+        queryByPaging(pageSize, page);
+      },
+    };
 
     return (
       <div>
-        <Table columns={columns} dataSource={orders} />
+        <Table columns={columns} dataSource={orders} pagination={pagination} />
         <IdDialog {...this.state.editID} onOk={() => { this.handleIDSave(); }} onCancel={() => { this.handleIDClose(); }} />
       </div>
     );
@@ -86,6 +96,8 @@ orderTable.defaultProps={
 orderTable.propTypes = {
   intl: intlShape.isRequired,
   orders: PropTypes.array,
+  queryByPaging: PropTypes.func.isRequired,
+  trackOrderDataTablePagination: PropTypes.object.isRequired,
 };
 
 const OrderTable = injectIntl(orderTable);

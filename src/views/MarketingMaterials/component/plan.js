@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'antd';
+import { cmsUrl } from 'config/env.config';
 import classNames from 'classnames/bind';
 import { QRcode } from 'components/ui/index';
 import styles from '../MarketingMaterials.less';
@@ -8,22 +9,23 @@ import styles from '../MarketingMaterials.less';
 const cx = classNames.bind(styles);
 const { Grid } = Card;
 const plan = ({
-  pictures, video, text, title,
+  pictures, video, text, title, id,
 }) => {
   const cardBodyStyle = {
     padding: '5px',
 
-  }
+  };
   const outerGridStyle = {
     width: '27%',
     textAlign: 'center',
     padding: '5px',
     boxShadow: 'none',
+
   };
   const qrGridStyle = {
     width: '19%',
     textAlign: 'center',
-    padding: '5px',
+    padding: '45px 15px',
     boxShadow: 'none',
   };
   const picGridStyle = {
@@ -46,7 +48,7 @@ const plan = ({
         </video>
       </Grid>
       <Grid style={outerGridStyle}>{text}</Grid>
-      <Grid style={qrGridStyle}>{/* <QRcode url={url} width="100%" height="100%" /> */}</Grid>
+      <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}`} width="160px" height="160px" /> </Grid>
     </Card>
   );
 };

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_ERROR, MARK_READED_ERROR  } from './actionType';
+import { ADD_ERROR, MARK_READED_ERROR } from './actionType';
 
 const addError = (state, error) => {
   const id = state.length + 1;
@@ -20,7 +20,6 @@ const markReadedError = (state, errorId) => state.map((item) => {
 const errors = (state = [], action) => {
   switch (action.type) {
     case ADD_ERROR:
-      debugger;
       return addError(state, action.error);
     case MARK_READED_ERROR:
       return markReadedError(state, action.id);
