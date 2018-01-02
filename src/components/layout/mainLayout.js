@@ -1,55 +1,52 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { TopPanel,
+  HeaderContent,
+  HeaderNav,
+  LeftSideNav,
+  MainContent,
+  Footer,
+  CopyRight,
+  Notification } from '../page/index';
 
 const layout = ({
-  topPanel, headerContent, headerNav, leftSiderNav, mainContent, footer, notification, copyRight,
-}) => (
 
+}) => (
   <div className="page-wrapper">
     <header className="page-header">
       <div className="panel wrapper">
-        { topPanel }
+        <TopPanel />
       </div>
       <div className="header content">
-        { headerContent}
+        <HeaderContent />
       </div>
     </header>
     <div className="section nav-sections">
-      { headerNav }
+      <HeaderNav />
 
     </div>
     <main id="maincontent" className="page-main">
       <div className="page messages">
-        { notification }
+        <Notification />
       </div>
       <div className="columns">
         <div className="sidebar sidebar-main">
-          { leftSiderNav }
+          <LeftSideNav />
         </div>
         <div className="column main">
-          { mainContent }
+          <MainContent />
         </div>
       </div>
     </main>
     <footer className="page-footer">
       <div className="footer content">
-        { footer }
+        <Footer />
       </div>
 
     </footer>
     <div className="copyright">
-      { copyRight }
+      <CopyRight />
     </div>
   </div>
 );
-layout.propTypes = {
-  topPanel: PropTypes.element.isRequired,
-  headerContent: PropTypes.element.isRequired,
-  headerNav: PropTypes.element.isRequired,
-  leftSiderNav: PropTypes.element.isRequired,
-  mainContent: PropTypes.element.isRequired,
-  footer: PropTypes.element.isRequired,
-  notification: PropTypes.element.isRequired,
-  copyRight: PropTypes.element.isRequired,
-};
+
 export default layout;

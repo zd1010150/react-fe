@@ -6,6 +6,7 @@ import marketingMaterials from 'views/MarketingMaterials/flow/reducer';
 import trackOrders from 'views/TrackOrders/flow/reducer';
 import leads from 'views/Leads/flow/reducer';
 import accounts from 'views/Accounts/flow/reducer';
+import cms from 'views/CMS/flow/reducer';
 
 export default {
   reddiPosts,
@@ -16,4 +17,5 @@ export default {
   trackOrders,
   leads,
   accounts,
+  cms
 };

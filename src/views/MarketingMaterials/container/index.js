@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,33 +13,36 @@ class mmView extends React.Component {
     this.props.getMarketingMaterial();
   }
   render() {
-    const {isLoading, visibleMarketingMaterials, category, setMMLanguage, setMMCategory} = this.props;
+    const {isLoading, visibleMarketingMaterials, category, categorys, language, setMMLanguage, setMMCategory} = this.props;
     return (
       <section className="section section-page">
-        <span>loading: { JSON.stringify(this.props.loading)} </span>
-        { JSON.stringify(visibleMarketingMaterials) }
-        <Skeleton category={category} plans={visibleMarketingMaterials} setMMLanguage={setMMLanguage} setMMCategory={setMMCategory}/>
+        <Skeleton categorys={categorys} plans={visibleMarketingMaterials} setMMLanguage={setMMLanguage} setMMCategory={setMMCategory} language={language} category={category} />
       </section>);
   }
 }
 mmView.defaultProps = {
-  marketingMaterials: {},
+  visibleMarketingMaterials: [],
+  categorys: [],
 };
 mmView.propTypes = {
+  category: PropTypes.number,
+  categorys: PropTypes.array,
   setPageTitle: PropTypes.func.isRequired,
-  marketingMaterials: PropTypes.object,
+  visibleMarketingMaterials: PropTypes.array,
   getMarketingMaterial: PropTypes.func.isRequired,
 };
 const mapStateToProp = state => ({
   loading: state.isLoading,
   visibleMarketingMaterials: getVisibleMarketingMaterials(state.marketingMaterials),
-  category: state.global.settings.classification || [],
+  categorys: state.global.settings.classification,
+  language: state.marketingMaterials.marketingLanguage,
+  category: state.marketingMaterials.marketingCategory,
 });
 const mapDispatchToProp = {
   setPageTitle,
   getMarketingMaterial,
   setMMLanguage,
-  setMMCategory
+  setMMCategory,
 };
 
 const MmView = connect(mapStateToProp, mapDispatchToProp)(mmView);

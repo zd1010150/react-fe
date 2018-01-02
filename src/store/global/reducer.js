@@ -83,6 +83,7 @@ const settings = (state = { }, action) => {
   }
 };
 const addError = (state, error) => {
+  debugger;
   const id = state.length + 1;
   const newState = state.slice();
   newState.push({

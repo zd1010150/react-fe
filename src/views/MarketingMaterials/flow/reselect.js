@@ -11,6 +11,7 @@ const getVisibleMarketingMaterials = createSelector(
     getMarketingLanuageSelector,
     getMarketingCategorySelector,
   ],
-  (all, language, category) => all.filter(item => item.classification_id === category && item.language === language),
+  (all, language, category) => all.filter(item =>
+    item.classification_id === category && item.language === language),
 );
 export default getVisibleMarketingMaterials;
