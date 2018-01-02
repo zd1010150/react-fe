@@ -1,15 +1,8 @@
 import { get } from 'store/http/httpAction';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, ADD_ERROR, MARK_READED_ERROR } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING} from './actionType';
 import { setMMCategory } from 'views/MarketingMaterials/flow/action';
 
-export const addError = error => ({
-  type: ADD_ERROR,
-  error,
-});
-export const markReadedError = id => ({
-  type: MARK_READED_ERROR,
-  id,
-});
+
 export const toggleLanguage = language => ({
   type: TOGGLE_LANGUAGE,
   language,

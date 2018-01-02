@@ -1,10 +1,10 @@
 
 import { notification } from 'antd';
-import { markReadedError } from 'store/global/action';
+import { markReadedError } from 'store/error/action';
 
 const errorNotification = (store) => {
   store.subscribe(() => {
-    const unReadErrors = store.getState().global.errors.filter(item => !item.readed);
+    const unReadErrors = store.getState().errors.filter(item => !item.readed);
     unReadErrors.forEach((item) => {
       notification.error({
         message: item.msg,

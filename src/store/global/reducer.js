@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { combineReducers } from 'redux';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, ADD_ERROR, MARK_READED_ERROR, RESET_ORDER } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_ORDER } from './actionType';
 
 // 页面默认语言为 en，此处只是mock
 const language = (state = 'en', action) => {
@@ -82,33 +82,7 @@ const settings = (state = { }, action) => {
       return state;
   }
 };
-const addError = (state, error) => {
-  debugger;
-  const id = state.length + 1;
-  const newState = state.slice();
-  newState.push({
-    id,
-    msg: error,
-    readed: false,
-  });
-  return newState;
-};
-const markReadedError = (state, errorId) => state.map((item) => {
-  if (item.id === errorId) {
-    return Object.assign({}, item, { readed: true });
-  }
-  return item;
-});
-const errors = (state = [], action) => {
-  switch (action.type) {
-    case ADD_ERROR:
-      return addError(state, action.error);
-    case MARK_READED_ERROR:
-      return markReadedError(state, action.id);
-    default:
-      return state;
-  }
-};
+
 const rootReducer = combineReducers({
   language,
   permission,
@@ -116,6 +90,5 @@ const rootReducer = combineReducers({
   pageTitle,
   orderUser,
   settings,
-  errors,
 });
 export default rootReducer;

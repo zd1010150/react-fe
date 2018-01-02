@@ -4,51 +4,56 @@ import {
   HTTP_ACTION_DONE,
   HTTP_ACTION_DOING,
   HTTP_ACTION_ERROR,
-} from './constants.js';
-import { ADD_ERROR } from '../global/actionType';
-import { addError } from '../global/action';
+} from './constants';
 
-console.log('--->adderror', addError);
+import { addError } from '../error/action';
+
 const dispatch = (request, dispatcher = () => {}) => {
   dispatcher({
     type: HTTP_ACTION_DOING,
     payload: {},
   });
-  return request.then((data) => {
-    console.log('data from server====>', data);
-
+  console.log("url")
+ return request.then((data) => {
+    console.log('data from server====>', dispatcher);
+   dispatcher(addError('test before'));
+   debugger;
     if (data.errors || data.status_code || data.message) {
-      let { errors } = data;
-      errors = errors || data.status_code;
-      if (_.isArray(data.errors)) {
-        Object.keys(errors).forEach((key) => {
-          const msgs = errors[key];
-          msgs.forEach((msg) => {
-            dispatcher({
-              type: ADD_ERROR,
-              error: msg,
-            });
-          });
-        });
-      } else {
-        dispatcher({
-          type: ADD_ERROR,
-          error: data.message,
-        });
-      }
+      // let { errors } = data;
+      // errors = errors || data.status_code;
+      // if (_.isArray(data.errors)) {
+      //   Object.keys(errors).forEach((key) => {
+      //     const msgs = errors[key];
+      //     msgs.forEach((msg) => {
+      //       dispatcher({
+      //         type: ADD_ERROR,
+      //         error: msg,
+      //       });
+      //     });
+      //   });
+      // } else {
+      console.log('--->error', dispatcher);
+      //   dispatcher(addError(data.message));
+      // }
+
+
       // throw new Error(JSON.stringify(data));
+
+      dispatcher(addError('test error'));
     } else {
+      console.log('--->correct', dispatcher);
+      dispatcher(addError('test success'));
       dispatcher({
         type: HTTP_ACTION_DONE,
         payload: {
           data,
         },
       });
+
       return data;
     }
   }).catch((err) => {
     console.log('err from server=====>', err);
-
     dispatcher({
       type: HTTP_ACTION_ERROR,
       payload: {
