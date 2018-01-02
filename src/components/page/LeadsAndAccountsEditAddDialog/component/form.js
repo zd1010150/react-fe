@@ -12,10 +12,13 @@ const cx = classNames.bind(styles);
 class userForm extends React.Component {
   handleCountryChange(countryCode) {
     if (countryCode === 'CH') {
-      this.props.form.setFieldsValue({
-        note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-      });
+      this.props.form.validateFields(['idNumber'], { force: true });
+    }else{
+      this.props.form.validateFields(['idNumber'], { force: false });
     }
+  }
+  state = {
+    checkIdNumber :
   }
   render() {
     const { language } = this.props;

@@ -2,38 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd9c487-37d8-450e-a681-14e60311f934" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/layout/cmsLayout.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/CMS/CMS.less" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/utils/validate.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.js" afterPath="$PROJECT_DIR$/src/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/layout/index.js" afterPath="$PROJECT_DIR$/src/components/layout/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/layout/mainLayout.js" afterPath="$PROJECT_DIR$/src/components/layout/mainLayout.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/page/ErrorNotification/index.js" afterPath="$PROJECT_DIR$/src/components/page/ErrorNotification/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/component/dialog.js" afterPath="$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/component/dialog.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/component/form.js" afterPath="$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/component/form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/container/index.js" afterPath="$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/container/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/upload.js" afterPath="$PROJECT_DIR$/src/components/ui/upload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config/env.config.js" afterPath="$PROJECT_DIR$/src/config/env.config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/i18n/global/form.js" afterPath="$PROJECT_DIR$/src/i18n/global/form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/error/reducer.js" afterPath="$PROJECT_DIR$/src/store/error/reducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/global/reducer.js" afterPath="$PROJECT_DIR$/src/store/global/reducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/http/httpAction.js" afterPath="$PROJECT_DIR$/src/store/http/httpAction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/http.js" afterPath="$PROJECT_DIR$/src/utils/http.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/regex.js" afterPath="$PROJECT_DIR$/src/utils/regex.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/url.js" afterPath="$PROJECT_DIR$/src/utils/url.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/validateMessagesUtil.js" afterPath="$PROJECT_DIR$/src/utils/validateMessagesUtil.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CMS/container/index.js" afterPath="$PROJECT_DIR$/src/views/CMS/container/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/CMS/flow/action.js" afterPath="$PROJECT_DIR$/src/views/CMS/flow/action.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/MarketingMaterials/component/plan.js" afterPath="$PROJECT_DIR$/src/views/MarketingMaterials/component/plan.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseGood/goods.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseGood/goods.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/component/searchForm.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/component/searchForm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/component/table.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/component/table.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/container/index.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/container/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/flow/action.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/flow/action.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/flow/actionType.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/flow/actionType.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/flow/reducer.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/flow/reducer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/TrackOrders/i18n.js" afterPath="$PROJECT_DIR$/src/views/TrackOrders/i18n.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -50,8 +19,8 @@
       <file leaf-file-name="form.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/component/form.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="163" column="10" lean-forward="false" selection-start-line="163" selection-start-column="10" selection-end-line="163" selection-end-column="10" />
+            <state relative-caret-position="165">
+              <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -401,12 +370,12 @@
       <workItem from="1512946421658" duration="154825000" />
       <workItem from="1513722852208" duration="26568000" />
       <workItem from="1513814646921" duration="61117000" />
-      <workItem from="1514414489794" duration="52199000" />
+      <workItem from="1514414489794" duration="52461000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="404472000" />
+    <option name="totallyTimeSpent" value="404734000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="23" width="1994" height="1129" extended-state="6" />
@@ -937,8 +906,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/page/LeadsAndAccountsEditAddDialog/component/form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="163" column="10" lean-forward="false" selection-start-line="163" selection-start-column="10" selection-end-line="163" selection-end-column="10" />
+        <state relative-caret-position="165">
+          <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
