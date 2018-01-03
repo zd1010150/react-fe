@@ -193,7 +193,7 @@ const zipCode = (() => {
   };
 })();
 const idNumber = (() => {
-  const zhMsg = { idNumber: () => '身份证信息不合法.' };
+  const zhMsg = { idNumber: () => '身份证号码不合法.' };
   const enMsg = { idNumber: () => 'it is invalid ID Number.' };
   return {
     zhMsg,

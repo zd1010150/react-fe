@@ -1,47 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { Modal, Icon, Input } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
+import { idNumberReg } from 'utils/regex';
 import { Upload } from 'components/ui/index';
+import styles from './IdDialog.less';
 
-
+const cx = classNames.bind(styles);
 class id extends React.Component {
   state = {
     orginal: {
       idFront: this.props.idFront,
       idBack: this.props.idBack,
+      idNumber: this.props.idNumber,
     },
     errorMsg: '',
+    idNumber: this.props.idNumber,
     idFront: this.props.idFront,
     idBack: this.props.idFront,
     key: Math.random(), // 为了让upload重新渲染
   };
-  handleSubmit() {
-    const { onOk } = this.props;
-
-    if (this.state.orginal.idFront === this.state.idFront && this.state.orginal.idBack === this.state.idBack) {
-      this.setState({
-        errorMsg: '你没有上传任何新的文件!',
-      });
-    } else { onOk(this.state.idFront, this.state.idBack); }
-  }
   componentWillReceiveProps(nextProps) {
     const orginal = Object.assign({}, this.state.orginal, {
       idFront: nextProps.idFront,
       idBack: nextProps.idBack,
+      idNumber: nextProps.idNumber,
     });
     this.setState({
       idFront: nextProps.idFront,
       idBack: nextProps.idBack,
+      idNumber: nextProps.idNumber,
       errorMsg: '',
       orginal,
       key: Math.random(), // 为了让upload重新渲染
     });
   }
+  handleIdNumberChange(idNumber) {
+    this.setState({
+      idNumber,
+    });
+  }
+  handleSubmit() {
+    const { onOk } = this.props;
+    if (this.state.idNumber && (!idNumberReg.test(this.state.idNumber))) {
+      this.setState({
+        errorMsg: '身份证号码不合法',
+      });
+      return;
+    }
+    if (this.state.orginal.idNumber === this.state.idNumber && this.state.orginal.idFront === this.state.idFront && this.state.orginal.idBack === this.state.idBack) {
+      this.setState({
+        errorMsg: '你没有做任何修改!',
+      });
+    } else {
+      onOk(this.state.idNumber, this.state.idFront, this.state.idBack);
+    }
+  }
   render() {
     const {
-      intl, visible, userId, idFront, idBack, onCancel, rejectReseason, allRejectReasons,
+      intl, visible, idFront, idBack, onCancel, rejectReseason, allRejectReasons,
     } = this.props;
     const { formatMessage } = intl;
     const getRejectReason = () => {
@@ -58,11 +77,25 @@ class id extends React.Component {
         onCancel={() => onCancel()}
       >
         <div className="row">
-          {getRejectReason()}
-          <div className="col-md-12 col-sm-12 text-danger text-center" >{this.state.errorMsg}</div>
-          <div className="col-md-12 col-sm-12 text-danger text-center" >
-            <p>身份证号码：<Input placeholder="input the id number /" /></p>
+          <div className="col-md-6 col-sm-6 text-danger" >{getRejectReason()}</div>
+          <div className="col-md-6 col-sm-6 text-danger" >{this.state.errorMsg}</div>
+        </div>
+        <div className="row">
+          <div className="col-md-10 col-sm-offset-2" >
+            <form className="form-horizontal">
+              <div className="form-group">
+                <label className="control-label">身份证号码：</label>
+                <Input
+                  className={classNames('form-control', cx('id-number-input'))}
+                  placeholder="input the id number /"
+                  value={this.state.idNumber}
+                  onInput={e => this.handleIdNumberChange(e.target.value)}
+                />
+              </div>
+            </form>
           </div>
+        </div>
+        <div className="row">
           <div className="col-md-6 col-sm-6" style={{ textAlign: 'center' }}>
             <p className="text-center">{formatMessage({ id: 'global.form.idFront' })}</p>
             <Upload
@@ -70,7 +103,7 @@ class id extends React.Component {
               pictureQuantity={1}
               uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })}
               file={idFront}
-              onChange={fileList => this.setState({ idFront: fileList && fileList.length > 0 && fileList[0] })}
+              onChange={fileList => this.setState({ idFront: (fileList && fileList.length > 0 && fileList[0]) || '' })}
             />
           </div>
           <div className="col-md-6 col-sm-6" style={{ textAlign: 'center' }}>
@@ -80,7 +113,7 @@ class id extends React.Component {
               pictureQuantity={1}
               uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })}
               file={idBack}
-              onChange={fileList => this.setState({ idBack: fileList && fileList.length > 0 && fileList[0] })}
+              onChange={fileList => this.setState({ idBack: (fileList && fileList.length > 0 && fileList[0]) || '' })}
             />
           </div>
         </div>
@@ -92,16 +125,16 @@ class id extends React.Component {
 
 id.defaultProps = {
   visible: false,
-  userId: '',
+  idNumber: '',
   idFront: '',
   idBack: '',
   rejectReseason: 0,
-  allRejectReasons: []
+  allRejectReasons: [],
 };
 id.propTypes = {
   intl: intlShape.isRequired,
   visible: PropTypes.bool,
-  userId: PropTypes.string,
+  idNumber: PropTypes.string,
   idFront: PropTypes.string,
   idBack: PropTypes.string,
   onOk: PropTypes.func.isRequired,

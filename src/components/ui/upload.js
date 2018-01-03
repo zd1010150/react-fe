@@ -41,13 +41,13 @@ class PicturesWall extends React.Component {
   }
   mapFileListToFiles = fileList => fileList.map(item => item.response && item.response.data);
   handleChange = ({ fileList }) => {
-    console.table(fileList);
     this.setState({ fileList });
     const files = this.mapFileListToFiles(fileList);
     if (files && files.length > 0) {
       this.props.onChange(this.mapFileListToFiles(fileList));
     } else {
-      this.props.onChange([this.props.file]);
+      // this.props.onChange([this.props.file]);
+      this.props.onChange([]);
     }
   }
 

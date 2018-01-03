@@ -8,7 +8,6 @@ export default async (type = 'GET', url = '', data = {}, headers = {}) => {
   type = type.toUpperCase();
   url = baseUrl + url;
   const langauge = window.__store__ && window.__store__.getState() && window.__store__.getState().global.language;
-  console.log("<===>", langauge);
   const requestConfig = {
     credentials: 'include',
     method: type,

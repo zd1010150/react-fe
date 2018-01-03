@@ -13,7 +13,7 @@ const mainContentView = () => (
     <Route path="/clientLists/accounts" component={Accounts} />
     <Route path="/clientLists/leads" component={Leads} />
     <Route path="/priceSetting" component={PriceSetting} />
-    <Route path="/trackOrders" component={TrackOrders} />
+    <Route path="/trackOrders/" component={TrackOrders} />
   </Switch>
 );
 export default mainContentView;

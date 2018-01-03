@@ -17,5 +17,5 @@ export default {
   trackOrders,
   leads,
   accounts,
-  cms
+  cms,
 };

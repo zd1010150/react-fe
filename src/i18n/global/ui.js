@@ -21,6 +21,9 @@ export default {
     table: {
       action: '操作',
     },
+    select: {
+      all: '全部',
+    },
   },
   en: {
     button: {
@@ -43,6 +46,9 @@ export default {
     },
     table: {
       action: 'Action',
+    },
+    select: {
+      all: 'All',
     },
   },
 };

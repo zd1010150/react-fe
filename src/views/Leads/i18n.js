@@ -12,6 +12,7 @@ export default {
     userDetail: '详情',
     deleteUser: '删除',
     order: '发货',
+    complementAddressTip: '完善地址信息，才能进行发货',
   },
   en: {
     uploadIDFront: 'Upload ID Front',
@@ -26,5 +27,6 @@ export default {
     userDetail: 'User Detail',
     deleteUser: 'Delete',
     order: 'Send Goods',
+    complementAddressTip: 'Complete the address info before send goods',
   },
 };

@@ -12,10 +12,16 @@ class tableView extends React.Component {
   }
   render() {
     const {
-      leadsData, setOrderUser, leadsDataTablePagination, updateLeads, deleteLeads, fetchLeads,
+      leadsData,
+      setOrderUser,
+      leadsDataTablePagination,
+      updateLeads,
+      deleteLeads,
+      fetchLeads,
+      countries,
     } = this.props;
     return (
-      <Table setOrderUser={setOrderUser} leadsData={leadsData} leadsDataTablePagination={leadsDataTablePagination} fetchLeads={fetchLeads} updateLeads={updateLeads} deleteLeads={deleteLeads} />
+      <Table setOrderUser={setOrderUser} leadsData={leadsData} leadsDataTablePagination={leadsDataTablePagination} fetchLeads={fetchLeads} updateLeads={updateLeads} deleteLeads={deleteLeads}/>
     );
   }
 }
@@ -30,7 +36,7 @@ tableView.propTypes = {
   deleteLeads: PropTypes.func.isRequired,
   leadsDataTablePagination: PropTypes.object.isRequired,
 };
-const mapStateToProps = ({ leads }) => ({
+const mapStateToProps = ({ leads, global }) => ({
   leadsData: leads.leadsData,
   leadsDataTablePagination: leads.leadsDataTablePagination,
 });

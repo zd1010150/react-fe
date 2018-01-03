@@ -4,21 +4,39 @@ import PropTypes from 'prop-types';
 import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
-import styles from '../dialog.less';
+import _ from 'lodash';
+import { CHINA_CODE } from 'config/app.config';
 import { Upload } from 'components/ui/index';
 import { getExistRule, validator } from 'utils/validateMessagesUtil';
+import styles from '../dialog.less';
+
 
 const cx = classNames.bind(styles);
 class userForm extends React.Component {
-  handleCountryChange(countryCode) {
-    if (countryCode === 'CH') {
-      this.props.form.validateFields(['idNumber'], { force: true });
-    }else{
-      this.props.form.validateFields(['idNumber'], { force: false });
-    }
-  }
   state = {
-    checkIdNumber :
+    checkIdNumber: this.ifCheckIDNumber(this.props),
+  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     checkIdNumber: this.ifCheckIDNumber(nextProps),
+  //   });
+  // }
+  ifCheckIDNumber(props) {
+    if (_.isEmpty(props && props.editObject)) {
+      return (props.countries && props.countries[0].code) === CHINA_CODE;
+    }
+    return props.editObject.country === CHINA_CODE;
+  }
+  handleCountryChange(countryId) {
+    const countryCode = this.props.countries.filter(c => c.id === countryId)[0].code;
+    const checkIdNumber = countryCode === CHINA_CODE;
+    this.setState({
+      checkIdNumber,
+    }, () => {
+      if (checkIdNumber) {
+        this.props.form.validateFields(['idNumber'], { force: true });
+      }
+    });
   }
   render() {
     const { language } = this.props;
@@ -54,7 +72,7 @@ class userForm extends React.Component {
     >{interests.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
     </Select>);
 
-    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].id) })(<Select disabled={disabled} key="country" onChange={(e) => { this.handleCountryChange(e.target.key); }}>
+    const countriesEl = getFieldDecorator('country', { initialValue: Number(editObject.country) || (countries[0] && countries[0].id) })(<Select disabled={disabled} onChange={(countryId) => { this.handleCountryChange(countryId); }}>
       {
           countries.map(item => <Option value={item.id} key={item.code}>{item.name}</Option>)
         }
@@ -185,7 +203,9 @@ class userForm extends React.Component {
           {
             getFieldDecorator('idNumber', {
               initialValue: editObject.idNumber || '',
-              rules: [{
+              rules: [
+                getExistRule('required', 'idNumber', language, { required: this.state.checkIdNumber }),
+                {
                 validator: validator.idNumber(language),
               }],
             })(<Input disabled={disabled} />)}
@@ -213,7 +233,7 @@ class userForm extends React.Component {
         >
           { interestsSelector }
         </FormItem>
-        { showID ? <div className={cx('id-wrapper')}>
+        <div className={classNames(cx('id-wrapper'), showID ? 'show' : 'hidden')}>
           <FormItem
             className={cx('id-front')}
             {...formItemLayout}
@@ -232,10 +252,7 @@ class userForm extends React.Component {
               initialValue: editObject.idBack || '',
             })(<Upload disabled={disabled} file={editObject.idBack || null} pictureQuantity={1} uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })} />) }
           </FormItem>
-        </div> : <span />
-        }
-
-
+        </div>
       </Form>
     );
   }

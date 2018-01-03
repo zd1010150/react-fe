@@ -5,9 +5,11 @@ import classNames from 'classnames/bind';
 import { Table, Divider, Icon, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
+import _ from 'lodash';
 import { IdDialog, LeadsAndAccountsEditAddDialog } from 'components/page';
 import DeleteDialog from './deleteDialog';
 import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
+import { Address } from 'components/ui/index';
 
 class leadsTable extends React.Component {
   state = {
@@ -28,14 +30,12 @@ class leadsTable extends React.Component {
     const editID = Object.assign({}, this.state.editID, { visible: false });
     this.setState(Object.assign({}, this.state, { editID }));
   }
-  handleIDSave(idFront, idBack) {
+  handleIDSave(idNumber, idFront, idBack) {
     const file = {
-      file: {
-        front_id_doc: idFront,
-        back_id_doc: idBack,
-      },
+      front_id_doc: idFront,
+      back_id_doc: idBack,
     };
-    const postData = Object.assign({}, this.state.editLead, { file });
+    const postData = Object.assign({}, this.state.editLead, { file, id_number: idNumber });
     this.props.updateLeads(postData);
     this.handleIDClose();
   }
@@ -48,6 +48,7 @@ class leadsTable extends React.Component {
   handleEditID(record) {
     let idFront = '';
     let idBack = '';
+    const idNumber = record.id_number;
     const rejectReseason = 0;
 
     if (record.document && record.document.length > 0) {
@@ -67,7 +68,12 @@ class leadsTable extends React.Component {
       }
     }
     const editID = Object.assign({}, this.state.editID, {
-      visible: true, userId: `${record.id}`, idFront, idBack, rejectReseason,
+      visible: true,
+      userId: `${record.id}`,
+      idFront,
+      idBack,
+      rejectReseason,
+      idNumber,
     });
     this.setState(Object.assign({}, this.state, { editID, editLead: record }));
   }
@@ -86,7 +92,6 @@ class leadsTable extends React.Component {
     }));
   }
   handleDeleteLead(id) {
-    console.log('this is delete the userID is', id);
     this.setState(Object.assign({}, this.state, {
       deleteDialogVisible: true,
       deleteUserId: id,
@@ -104,9 +109,7 @@ class leadsTable extends React.Component {
       key: 'phone',
     }, {
       title: formatMessage({ id: 'global.form.address' }),
-      render: (text, record) => (
-        <span>{record.address} {record.city} {record.state} {record.state} {record.country} {record.zipCode}</span>
-      ),
+      render: (text, record) => <Address country={Number(record.country)} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
       key: 'address',
     }, {
       title: formatMessage({ id: 'global.form.email' }),
@@ -120,7 +123,6 @@ class leadsTable extends React.Component {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
       render: (text, record) => {
-        console.log('record:', record.status);
         const idBtnClasses = classNames({
           btn: true,
           'btn-danger': Number(record.status) === 3,
@@ -128,14 +130,14 @@ class leadsTable extends React.Component {
         });
 
         const sendGoodsBtn = () => {
-          if (record.document && record.document.length > 1) {
+          if ((!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code))) {
             return (
               <span>
                 <Divider type="vertical" />
                 <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Leads.order' })}</Link>
               </span>
             );
-          } return '';
+          } return (<span><Divider type="vertical" /><Tooltip title={formatMessage({id: 'page.Leads.complementAddressTip'})}><Icon type="warning" className="text-danger" /></Tooltip></span>);
         };
         return (
           <span>
@@ -177,7 +179,7 @@ class leadsTable extends React.Component {
     return (
       <div>
         <Table columns={columns} dataSource={this.props.leadsData} pagination={pagination} />
-        <IdDialog {...this.state.editID} onOk={(idFront, idBack) => { this.handleIDSave(idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editLead.rejectReseason || 0} />
+        <IdDialog {...this.state.editID} onOk={(idNumber, idFront, idBack) => { this.handleIDSave(idNumber, idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editLead.rejectReseason || 0} />
         <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editLead} onClose={() => { this.closeUserDialog(); }} userType="Leads" operatorType={this.state.operatorType} update={updateLeads} />
         <DeleteDialog userId={this.state.deleteUserId} visible={this.state.deleteDialogVisible} onClose={() => { this.closeDeleteDialog(); }} onDelete={deleteLeads} />
       </div>

@@ -1,7 +1,7 @@
 import { get } from 'store/http/httpAction';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING} from './actionType';
+import _ from 'lodash';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING } from './actionType';
 import { setMMCategory } from 'views/MarketingMaterials/flow/action';
-
 
 export const toggleLanguage = language => ({
   type: TOGGLE_LANGUAGE,
@@ -29,9 +29,11 @@ const setGlobalSetting = settings => ({
   settings,
 });
 export const fetchGlobalSetting = () => dispatch => get('/affiliate/global-settings', {}, dispatch).then((data) => {
-  dispatch(setGlobalSetting(data));
-  if (data && data.classification && data.classification.length > 0) {
-    dispatch(setMMCategory(data.classification[0].id));
+  if (!_.isEmpty(data)) {
+    dispatch(setGlobalSetting(data));
+    if (!_.isEmpty(data.classification)) {
+      dispatch(setMMCategory(data.classification[0].id));
+    }
   }
 });
 

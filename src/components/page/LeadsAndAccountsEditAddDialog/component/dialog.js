@@ -49,9 +49,10 @@ class userDialog extends React.Component {
       state: value.state,
       country: value.country,
       zip_code: value.zipCode,
+      id_number: value.idNumber,
       file: {
-        front_id_doc: value.idFront[0],
-        back_id_doc: value.idBack[0],
+        front_id_doc: _.isArray(value.idFront) ? value.idFront[0] : value.idFront,
+        back_id_doc: _.isArray(value.idBack) ? value.idBack[0] : value.idBack,
       },
     };
     if (_.trim(value.socialMediaNumber).length > 0 && value.socialMediaType.length > 0) {
@@ -78,6 +79,7 @@ class userDialog extends React.Component {
       state: value.state,
       country: value.country,
       zipCode: value.zip_code,
+      idNumber: value.id_number,
     };
     if (props.socials && props.socials.length > 0) {
       const social = props.socials[0];
@@ -142,7 +144,7 @@ class userDialog extends React.Component {
           </Button>,
         ]}
       >
-        <UserForm showID={this.state.showID} canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} countries={countries} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
+        <UserForm key={Math.random()} showID={this.state.showID} canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} countries={countries} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
       </Modal>
     );
   }

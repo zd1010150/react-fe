@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import { SET_ID_VIEW, SET_TRACK_ORDER_DATA, SET_TRACK_ORDER_PAGINATION, SET_TRACK_ORDER_SEARCH_KEY } from './actionType';
+import { SET_ID_VIEW, SET_TRACK_ORDER_DATA, SET_TRACK_ORDER_PAGINATION, SET_TRACK_ORDER_SEARCH_KEY, SET_TRACK_ORDER_DETAIL_INFO } from './actionType';
 
 const orders = (state = [], action) => {
   switch (action.type) {
     case SET_TRACK_ORDER_DATA:
-      return Object.assign({}, state, action.trackOrders);
+      return action.trackOrders;
     default:
       return state;
   }
@@ -30,7 +30,8 @@ const trackOrderDataTablePagination = (state = { perPage: 10, currentPage: 1, to
       return state;
   }
 };
-const searchKey = (state = { status: '', name: '' }, action) => {
+
+const searchKey = (state = { status: -1, name: '' }, action) => {
   switch (action.type) {
     case SET_TRACK_ORDER_SEARCH_KEY:
       return Object.assign({}, state, {
@@ -41,8 +42,19 @@ const searchKey = (state = { status: '', name: '' }, action) => {
       return state;
   }
 };
+
+const trackOrder = (state = {}, action) => {
+  switch (action.type) {
+    case SET_TRACK_ORDER_DETAIL_INFO:
+      return action.trackOrder;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   orders,
+  trackOrder,
   idViews,
   trackOrderDataTablePagination,
   searchKey,

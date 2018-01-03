@@ -13,12 +13,11 @@ const dispatch = (request, dispatcher = () => {}) => {
     type: HTTP_ACTION_DOING,
     payload: {},
   });
-  console.log('url:');
   return request.then((data) => {
     if (data.errors || data.status_code || data.message) {
       let { errors } = data;
       errors = errors || data.status_code;
-      if (_.isArray(data.errors)) {
+      if (!_.isEmpty(data.errors)) {
         Object.keys(errors).forEach((key) => {
           const msgs = errors[key];
           msgs.forEach((msg) => {

@@ -19,5 +19,5 @@ export {
   Accounts,
   Leads,
   PriceSetting,
-  TrackOrders,
+  TrackOrders
 };

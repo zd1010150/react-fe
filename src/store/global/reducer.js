@@ -75,7 +75,7 @@ const mapSettingData = (data) => {
     countries: newData.country,
   };
 };
-const settings = (state = { }, action) => {
+const settings = (state = { countries:[] }, action) => {
   switch (action.type) {
     case SET_GLOBAL_SETTING:
       return mapSettingData(action.settings);
