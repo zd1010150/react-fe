@@ -86,7 +86,14 @@ class Nav extends React.Component {
 
     return (
       <div>
-        <Menu mode="inline" inlineIndent={30} className={cx('left-side-nav')} defaultSelectedKeys={[location.pathname]} defaultOpenKeys={[getParentUrl(location.pathname)]} selectedKeys={[location.pathname]}>
+        <Menu
+          mode="inline"
+          inlineIndent={30}
+          className={cx('left-side-nav')}
+          defaultSelectedKeys={[location.pathname]}
+          defaultOpenKeys={[getParentUrl(location.pathname)]}
+          selectedKeys={[location.pathname]}
+        >
           { menu }
         </Menu>
       </div>

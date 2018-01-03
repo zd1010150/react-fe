@@ -1,16 +1,15 @@
 /* eslint-disable react/prop-types,no-shadow */
 import React from 'react';
-import { Switch, Route, withRouter } from 'react-router';
-
+import { withRouter } from 'react-router';
+import queryString from 'query-string';
 import TableView from './tableView';
 import DetailView from './detailView';
 
-const trackOrderIndexView = () => (
-  <Switch>
-    <Route path="/" component={TableView} />
-    <Route path="/detail" component={DetailView} />
-  </Switch>
-);
+const trackOrderIndexView = ({ location }) => {
+  const pairs = queryString.parse(location.search);
+  const currentView = pairs.view && pairs.view === 'detail' ? <DetailView /> : <TableView />;
+  return (<div>{currentView}</div>);
+};
 
 
 const TrackOrderIndexView = withRouter((trackOrderIndexView));

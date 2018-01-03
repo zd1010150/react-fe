@@ -9,14 +9,13 @@ import { Address } from 'components/ui/index';
 
 
 class orderTable extends React.Component {
-
   handleTrackingNumberClick(trackOrder) {
     this.props.setTrackOrderDetailInfo(trackOrder);
-    this.props.history.replace('/trackOrders/detail');
+    this.props.history.replace('/trackOrders?view=detail');
   }
   viewDetail(trackOrder) {
     this.props.setTrackOrderDetailInfo(trackOrder);
-    this.props.history.replace('/trackOrders/detail');
+    this.props.history.replace('/trackOrders?view=detail');
   }
   render() {
     const { formatMessage } = this.props.intl;

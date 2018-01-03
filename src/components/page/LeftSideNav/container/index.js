@@ -6,12 +6,13 @@ import { intlShape, injectIntl } from 'react-intl';
 
 import Nav from '../component/nav';
 
-const leftSideNavView = ({ intl, location }) => <Nav intl={intl} location={location} />;
+const leftSideNavView = ({ intl, location, match }) => <Nav intl={intl} location={location} match={match} />;
 
 
 leftSideNavView.propTypes = {
   intl: intlShape.isRequired,
   location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 const LeftSideNavView = withRouter(injectIntl(leftSideNavView));
