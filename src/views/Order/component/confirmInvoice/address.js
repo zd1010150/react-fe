@@ -9,9 +9,9 @@ const cx = classNames.bind(styles);
 const addressView = ({
   intl, userName, phone, address,
 }) => (
-  <Card className={classNames(cx('confirm-invoice-address'), 'confirm-invoice-address-card')} title="收件人信息" bodyStyle={{ padding: '15px' }}>
-    <ul className={classNames(cx('confirm-invoice-ul'), 'trade-info-ul')}>
-      <li className={cx('confirm-invoice-ul-address-li')}>
+  <Card className={classNames('invoice-address', 'invoice-address-card')} title="收件人信息" bodyStyle={{ padding: '15px' }}>
+    <ul className={classNames('invoice-ul', 'invoice-address-ul')}>
+      <li >
         <div className="trade-info-dt">
           Receiver:
         </div>
@@ -19,7 +19,7 @@ const addressView = ({
           { userName }
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-address-li')}>
+      <li >
         <div className="trade-info-dt">
           Phone:
         </div>
@@ -27,7 +27,7 @@ const addressView = ({
           { phone }
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-address-li')}>
+      <li>
         <div className="trade-info-dt">
           Address:
         </div>

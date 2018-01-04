@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Card } from 'antd';
+import { Table } from 'antd';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import styles from '../../Order.less';
+import { Logistics, Currency} from 'components/ui/index';
 
 const cx = classNames.bind(styles);
 const invoice = ({
@@ -29,8 +30,8 @@ const invoice = ({
   }];
 
   const header = (
-    <ul className={classNames(cx('confirm-invoice-ul'), 'trade-info-ul')}>
-      <li className={cx('confirm-invoice-ul-table-header-li')}>
+    <ul className={classNames('invoice-ul', 'invoice-table-header-ul')}>
+      <li>
         <div className="trade-info-dt">
             Order Number:
         </div>
@@ -38,7 +39,7 @@ const invoice = ({
           { orderNumber }
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-table-header-li')}>
+      <li>
         <div className="trade-info-dt">
             Tracking Number
         </div>
@@ -46,15 +47,15 @@ const invoice = ({
           { trackingNumber }
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-table-header-li')}>
+      <li>
         <div className="trade-info-dt">
           Logistics:
         </div>
         <div className="trade-info-dd">
-          { freightSetting }
+          <Logistics freight={freightSetting} />
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-table-header-li')}>
+      <li>
         <div className="trade-info-dt">
           Order Time:
         </div>
@@ -65,24 +66,24 @@ const invoice = ({
     </ul>
   );
   const footer = (
-    <ul className={classNames(cx('confirm-invoice-ul'), 'trade-info-ul')}>
-      <li className={cx('confirm-invoice-ul-footer-li')}>
+    <ul className={classNames('invoice-ul', 'invoice-table-footer-ul')}>
+      <li>
         <div className="trade-info-dt">
           Total Price:
         </div>
         <div className="trade-info-dd">
-          { totalPrice }
+          <Currency value={totalPrice} />
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-footer-li')}>
+      <li>
         <div className="trade-info-dt">
           Shipping Cost:
         </div>
         <div className="trade-info-dd">
-          { shippingCost }
+          <Currency value={shippingCost} />
         </div>
       </li>
-      <li className={cx('confirm-invoice-ul-footer-li')}>
+      <li>
         <div className="trade-info-dd">
             Total { totalQuantity } Item
         </div>
@@ -93,7 +94,7 @@ const invoice = ({
   return (
     <Table
       rowKey="id"
-      className="confirm-invoice-table"
+      className="invoice-table"
       columns={columns}
       dataSource={items}
       bordered
@@ -109,12 +110,13 @@ invoice.defaultProps = {
   shippingCost: 0,
   orderTime: '',
   totalQuantity: 0,
+  freightSetting: 0,
 };
 invoice.propTypes = {
   intl: intlShape.isRequired,
   orderNumber: PropTypes.string.isRequired,
   trackingNumber: PropTypes.string.isRequired,
-  freightSetting: PropTypes.string.isRequired,
+  freightSetting: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   items: PropTypes.array,
   totalPrice: PropTypes.number,
   totalQuantity: PropTypes.number,

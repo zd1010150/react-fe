@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { CHINESE_CODE } from 'config/app.config';
 
 const address = ({
   language, country, countries, street, city, state, zipCode,
 }) => {
   const countryObj = countries.filter(c => c.id === Number(country));
   const countryName = _.isEmpty(countryObj) ? '' : countryObj[0].name;
-  if (language === 'zh') {
+  if (language === CHINESE_CODE) {
     return <span>{countryName}{state}{city}{street} {zipCode}</span>;
   }
   return <span>{street} {city} {state} {countryName} {zipCode}</span>;
@@ -20,7 +21,7 @@ address.defaultProps = {
   state: '',
   zipCode: '',
   countries: [],
-  language: 'zh',
+  language: CHINESE_CODE,
 };
 address.propTypes = {
   country: PropTypes.number,

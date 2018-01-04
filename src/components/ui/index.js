@@ -4,6 +4,10 @@ import Upload from './upload';
 import QRcode from './qrcode';
 import InputNumber from './inputNumber';
 import Address from './address';
+import Username from './username';
+import Currency from './currency';
+import OrderStatus from './orderStatus';
+import Logistics from './logistics';
 
 export {
   MagentoStaticLink,
@@ -11,4 +15,8 @@ export {
   QRcode,
   InputNumber,
   Address,
+  Username,
+  Currency,
+  OrderStatus,
+  Logistics,
 };

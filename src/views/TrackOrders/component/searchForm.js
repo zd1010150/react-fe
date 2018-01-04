@@ -4,15 +4,19 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 
+import classNames from 'classnames/bind';
+import styles from '../TrackOrders.less';
+
 const FormItem = Form.Item;
 const { Option } = Select;
+const cx = classNames.bind(styles);
 
 const searchForm = ({
   intl, onSubmit, form, deliveryOrderStatus, defaultStatus,
 }) => {
   const { getFieldDecorator } = form;
   const { formatMessage } = intl;
-  const statusSelect = getFieldDecorator('status', { initialValue: defaultStatus })(<Select>
+  const statusSelect = getFieldDecorator('status', { initialValue: defaultStatus })(<Select className={cx('status-select')}>
     <Option value={-1}>{formatMessage({ id: 'global.ui.select.all' }) }</Option>
     {deliveryOrderStatus.map(item => <Option value={item.id} key={item}>{item.name}</Option>)}
   </Select>);

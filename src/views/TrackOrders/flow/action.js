@@ -40,9 +40,9 @@ export const queryByPaging = (perPage, currentPage) => (dispatch, getState) => {
 };
 
 export const queryBySearchKey = (status, name) => (dispatch, getState) => {
-  const { perPage, currentPage } = getState().trackOrders.trackOrderDataTablePagination;
+  const { perPage } = getState().trackOrders.trackOrderDataTablePagination;
   dispatch(setSearchKey(status, name));
-  return fetchData(perPage, currentPage, status, name, dispatch);
+  return fetchData(perPage, 1, status, name, dispatch);
 };
 export const setTrackOrderDetailInfo = ( trackOrder ) => ({
   type: SET_TRACK_ORDER_DETAIL_INFO,

@@ -35,7 +35,7 @@ class trackOrderView extends React.Component {
         <div className="section-header">
           <SearchForm
             onSubmit={({ status, name }) => {
-              queryBySearchKey(status, name);
+              queryBySearchKey(status, name  || '');
             }}
             deliveryOrderStatus={deliveryOrderStatus}
             defaultStatus={defaultStatus}

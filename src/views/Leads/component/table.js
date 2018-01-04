@@ -9,7 +9,7 @@ import _ from 'lodash';
 import { IdDialog, LeadsAndAccountsEditAddDialog } from 'components/page';
 import DeleteDialog from './deleteDialog';
 import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
-import { Address } from 'components/ui/index';
+import { Address, Username } from 'components/ui/index';
 
 class leadsTable extends React.Component {
   state = {
@@ -102,7 +102,7 @@ class leadsTable extends React.Component {
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
-      render: (text, record) => <span>{record.first_name} {record.last_name}</span>,
+      render: (text, record) => <Username firstName={record.first_name} lastName={record.last_name} />,
     }, {
       title: formatMessage({ id: 'global.form.phone' }),
       dataIndex: 'phone',

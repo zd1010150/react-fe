@@ -73,6 +73,7 @@ const mapSettingData = (data) => {
     userStatus: newData.user_status,
     freightSetting: newData.freight_setting,
     countries: newData.country,
+    baseCurrency: newData.base_currency,
   };
 };
 const settings = (state = { countries:[] }, action) => {

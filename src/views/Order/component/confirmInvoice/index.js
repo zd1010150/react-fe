@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
+import { Currency } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
 import { goPreviousStep } from '../skeleton/flow/action';
 import styles from '../../Order.less';
@@ -25,12 +27,10 @@ class confirmInvoiceView extends React.Component {
       freightId,
       invoices,
       address,
-      freightSettings,
       resetOrder,
     } = this.props;
     const invoicesEl = invoices.map((item) => {
       const deliveryOrder = item.delivery_order;
-      const freight = freightSettings.filter(f => (f.id === item.freight_setting_id));
       const totalQuantity = deliveryOrder.items.reduce((sum, i) => {
         sum += i.quantity;
         return sum;
@@ -41,7 +41,7 @@ class confirmInvoiceView extends React.Component {
           key={deliveryOrder.order_number}
           orderNumber={deliveryOrder.order_number}
           trackingNumber={deliveryOrder.tracking_number}
-          freightSetting={freight[0].name}
+          freightSetting={item.freight_setting_id}
           items={deliveryOrder.items}
           totalPrice={item.cny_total_value}
           totalQuantity={totalQuantity}
@@ -51,7 +51,7 @@ class confirmInvoiceView extends React.Component {
       );
     });
     return (
-      <div className={classNames('block', cx('confirm-invoice-block'))}>
+      <div className={classNames('block', 'invoice-block', 'section-confirm-invoice')}>
         <div className="block-title">
           <strong> 订单确认 </strong>
         </div>
@@ -62,12 +62,12 @@ class confirmInvoiceView extends React.Component {
           </form>
           <Address {...address} />
           {invoicesEl}
-          <p className={classNames(cx('confirm-invoice-total-shipping-cost'), 'text-primary')}>
+          <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
             Total Shipping Cost:
-            <strong>{ totalCost }</strong>
+            <strong><Currency value={totalCost} /></strong>
           </p>
         </div>
-        <div className={classNames('block-footer', cx('confirm-invoice-block-footer'))}>
+        <div className={classNames('block-footer', 'invoice-block-footer')}>
           <Button
             className={cx('order-step-previous-btn')}
             onClick={() => {
@@ -108,7 +108,6 @@ const mapStateToProps = ({ order, global }) => ({
   deliveryOrderIds: order.skeleton.deliveryOrders,
   invoices: order.confirmInvoice.invoices,
   address: order.confirmInvoice.address,
-  freightSettings: global.settings.freightSetting,
 });
 const mapDispathToProps = {
   goPreviousStep,

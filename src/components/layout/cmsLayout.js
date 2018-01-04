@@ -1,11 +1,12 @@
 import React from 'react';
+import CMS from 'views/CMS/index';
 import { TopPanel,
   HeaderContent,
   HeaderNav,
   Footer,
   CopyRight,
   Notification } from '../page/index';
-import CMS from 'views/CMS/index';
+
 
 const layout = () => (
   <div className="page-wrapper">
