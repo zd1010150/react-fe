@@ -12,6 +12,7 @@ import { baseUrl } from 'config/env.config';
 import Address from './address';
 import Invoice from './invoice';
 import { resetOrder } from '../skeleton/flow/action';
+import { getReceiver } from './flow/reselect';
 
 const cx = classNames.bind(styles);
 
@@ -26,9 +27,11 @@ class confirmInvoiceView extends React.Component {
       deliveryOrderIds,
       freightId,
       invoices,
-      address,
+      receiver,
       resetOrder,
+      intl,
     } = this.props;
+    const { formatMessage } = intl;
     const invoicesEl = invoices.map((item) => {
       const deliveryOrder = item.delivery_order;
       const totalQuantity = deliveryOrder.items.reduce((sum, i) => {
@@ -43,7 +46,7 @@ class confirmInvoiceView extends React.Component {
           trackingNumber={deliveryOrder.tracking_number}
           freightSetting={item.freight_setting_id}
           items={deliveryOrder.items}
-          totalPrice={item.cny_total_value}
+          totalPrice={item.amount}
           totalQuantity={totalQuantity}
           orderTime={item.created_at}
           shippingCost={item.shipping_cost}
@@ -60,7 +63,7 @@ class confirmInvoiceView extends React.Component {
             <input type="hidden" name="freight_id" value={freightId} />
             <input type="hidden" name="delivery_orders_ids" value={deliveryOrderIds} />
           </form>
-          <Address {...address} />
+          <Address {...receiver} />
           {invoicesEl}
           <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
             Total Shipping Cost:
@@ -74,7 +77,7 @@ class confirmInvoiceView extends React.Component {
               goPreviousStep('confirmOrder');
             }}
           >
-            <Icon type="arrow-left" /> previous
+            <Icon type="arrow-left" /> { formatMessage({ id: 'global.ui.button.previous' }) }
           </Button>
           <Button
             className={cx('order-step-next-btn')}
@@ -84,7 +87,7 @@ class confirmInvoiceView extends React.Component {
               this.confirmPayFreight();
             }}
           >
-            支付 <Icon type="pay-circle-o" />
+            { formatMessage({ id: 'global.ui.button.pay' }) } <Icon type="pay-circle-o" />
           </Button>
         </div>
       </div>
@@ -94,7 +97,8 @@ class confirmInvoiceView extends React.Component {
 confirmInvoiceView.defaultProps = {
   deliveryOrderIds: [],
   freightId: 0,
-  invoices: {},
+  invoices: [],
+  receiver: {},
 };
 confirmInvoiceView.propTypes = {
   intl: intlShape.isRequired,
@@ -102,12 +106,14 @@ confirmInvoiceView.propTypes = {
   deliveryOrderIds: PropTypes.array,
   freightId: PropTypes.number,
   invoices: PropTypes.array,
+  receiver: PropTypes.object,
 };
-const mapStateToProps = ({ order, global }) => ({
+const mapStateToProps = ({ order }) => ({
   freightId: order.chooseLogistic.logisticType,
   deliveryOrderIds: order.skeleton.deliveryOrders,
   invoices: order.confirmInvoice.invoices,
   address: order.confirmInvoice.address,
+  receiver: getReceiver(order.confirmInvoice.invoices),
 });
 const mapDispathToProps = {
   goPreviousStep,

@@ -8,6 +8,7 @@ import Username from './username';
 import Currency from './currency';
 import OrderStatus from './orderStatus';
 import Logistics from './logistics';
+import Product from './product';
 
 export {
   MagentoStaticLink,
@@ -19,4 +20,5 @@ export {
   Currency,
   OrderStatus,
   Logistics,
+  Product,
 };

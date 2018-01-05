@@ -36,7 +36,9 @@ class chooseUser extends React.Component {
       searchByKeys,
       hasSeletedUser,
       goNextStep,
+      intl,
     } = this.props;
+    const { formatMessage } = intl;
     return (
       <div className="block">
 
@@ -61,7 +63,7 @@ class chooseUser extends React.Component {
               goNextStep('chooseUser');
             }}
           >
-            next <Icon type="arrow-right" />
+            { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
           </Button>
         </div>
       </div>

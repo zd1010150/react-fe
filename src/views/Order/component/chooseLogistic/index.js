@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Icon, Radio } from 'antd';
+import { Currency } from 'components/ui/index';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import { getTotalLogisticFee } from './flow/action';
@@ -37,11 +38,13 @@ class chooseLogisticView extends React.Component {
       confirmGetInvoice,
       totalFee,
       deliveryOrderIds,
+      intl,
     } = this.props;
+    const { formatMessage } = intl;
     return (
       <div className={classNames('block', cx('choose-logistic-block'))}>
         <div className="block-title">
-          <strong> 选择物流 </strong>
+          <strong> { formatMessage({ id: 'global.properNouns.logistics' })} </strong>
         </div>
         <div className="block-content">
           <RadioGroup
@@ -57,7 +60,7 @@ class chooseLogisticView extends React.Component {
                 ))
             }
           </RadioGroup>
-          <p>总计：{totalFee}</p>
+          <p>{ formatMessage({ id: 'global.properNouns.goods.shippingCost' })}：<Currency value={totalFee} /></p>
         </div>
         <div className="block-footer">
           <Button
@@ -66,7 +69,7 @@ class chooseLogisticView extends React.Component {
             goPreviousStep('chooseLogistic');
           }}
           >
-            <Icon type="arrow-left" /> previous
+            <Icon type="arrow-left" /> { formatMessage({ id: 'global.ui.button.previous' }) }
           </Button>
           <Button
             className={cx('order-step-next-btn')}
@@ -76,7 +79,7 @@ class chooseLogisticView extends React.Component {
               goNextStep('chooseLogistic');
           }}
           >
-          next <Icon type="arrow-right" />
+            { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
           </Button>
         </div>
       </div>

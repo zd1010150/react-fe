@@ -11,6 +11,7 @@ import Goods from './goods';
 import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, resetOrder, setMax } from './flow/action';
 import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder } from '../skeleton/flow/action';
 import { SAVED } from './flow/orderStatus';
+import { CURRENCY_SYMBOL } from 'config/app.config';
 
 const { Sider, Content } = Layout;
 
@@ -24,7 +25,15 @@ class splitOrderView extends React.Component {
       hasRemainGoodsConfirmDialogVisible: false, // 商品没有分单完成，还有余下的商品没有分完
       errorMsg: '',
     };
-    props.setMax(300); // mock
+    this.setMaxDuty(props);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setMaxDuty(nextProps);
+  }
+  setMaxDuty(props) {
+    const { dutySetting } = props;
+    const max = _.isEmpty(dutySetting) ? 300 : dutySetting[0].threshold;
+    props.setMax(max); // mock
   }
   creatDeliveryOrder() {
     const postData = [];
@@ -52,9 +61,14 @@ class splitOrderView extends React.Component {
     });
   }
   goNextStep() {
-    if (_.isEmpty(this.props.orders)) {
+    const { formatMessage } = this.props.intl;
+    let isAllNull = true;
+    Object.keys(this.props.orders).forEach((key) => {
+      isAllNull = isAllNull && _.isEmpty(this.props.orders[key].goods);
+    });
+    if (isAllNull) {
       Modal.error({
-        title: '你还没有创建任何发货单，不能进行下一步',
+        title: formatMessage({ id: 'page.Order.cantGoChooselogistics' }),
       });
       return;
     }
@@ -104,22 +118,24 @@ class splitOrderView extends React.Component {
       deleteOrderGoods,
       setOrderGoodsQuantity,
       ordersValidate,
+      intl,
+      baseCurency,
+      max,
     } = this.props;
-
+    const { formatMessage } = intl;
     return (
       <div className={cx('split-order-block')}>
         <Layout className={cx('split-order-content')}>
           <Content>
             <div className="block">
               <div className="block-title">
-                <strong>已选商品</strong>
                 <Button
                   size="small"
                   type="primary"
                   className={cx('create-sub-order-btn')}
                   onClick={createOrder}
                 >
-                  <Icon type="plus" />发货单
+                  <Icon type="plus" />{ formatMessage({ id: 'global.properNouns.deliveryOrder' }) }
                 </Button>
               </div>
               <div className="block-content">
@@ -152,6 +168,8 @@ class splitOrderView extends React.Component {
               deleteOrder={deleteOrder}
               setOrderStatus={setOrderStatus}
               currentOrder={currentOrder}
+              symbol={_.isEmpty(baseCurency) ? '' : CURRENCY_SYMBOL[baseCurency[0].name]}
+              max={max}
             />
           </Sider>
         </Layout>
@@ -162,7 +180,7 @@ class splitOrderView extends React.Component {
           this.goPreviousStep();
         }}
           >
-            <Icon type="arrow-left" /> previous
+            <Icon type="arrow-left" /> { formatMessage({ id: 'global.ui.button.previous' }) }
           </Button>
           <Button
             className={cx('order-step-next-btn')}
@@ -172,7 +190,7 @@ class splitOrderView extends React.Component {
               this.goNextStep();
         }}
           >
-          next <Icon type="arrow-right" />
+            { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
           </Button>
         </div>
         <Modal
@@ -180,20 +198,20 @@ class splitOrderView extends React.Component {
           visible={this.state.goPreviousStepConfirmDialogVisible}
           onOk={() => this.confirmGoPrevious()}
           onCancel={() => this.cancelPreviousDialog()}
-          okText="确认"
-          cancelText="取消"
+          okText={formatMessage({ id: 'global.ui.button.ok' })}
+          cancelText={formatMessage({ id: 'global.ui.button.cancel' })}
         >
-          <p>离开本页面，你目前创建的订单将全部丢失，确定继续？</p>
+          <p>{ formatMessage({ id: 'page.Order.leaveSplitOrder' }) }</p>
         </Modal>
         <Modal
           title="Modal"
           visible={this.state.hasRemainGoodsConfirmDialogVisible}
           onOk={() => this.confirmHasRemainGoods()}
           onCancel={() => this.cancelHasRemainGoods()}
-          okText="确认"
-          cancelText="取消"
+          okText={formatMessage({ id: 'global.ui.button.ok' })}
+          cancelText={formatMessage({ id: 'global.ui.button.cancel' })}
         >
-          <p>你挑选的商品，还有部分未分配到子发货单中，确定继续？</p>
+          <p>{ formatMessage({ id: 'page.Order.leaveRestGoods' }) }</p>
         </Modal>
       </div>
     );
@@ -211,7 +229,7 @@ splitOrderView.propTypes = {
   goods: PropTypes.array.isRequired,
   deleteSplitOrder: PropTypes.func.isRequired,
 };
-const mapStateToProps = ({ order }) => {
+const mapStateToProps = ({ order, global }) => {
   const { splitOrder } = order;
   return {
     ordersValidate: splitOrder.orders.validate,
@@ -219,6 +237,10 @@ const mapStateToProps = ({ order }) => {
     currentOrder: splitOrder.orders.currentOrder,
     goods: splitOrder.goods,
     goodsEnable: splitOrder.orders.goodsEnable,
+    dutySetting: global.dutySetting,
+    selectedUser: global.orderUser,
+    baseCurency: global.settings.baseCurrency,
+    max: splitOrder.orders.max,
   };
 };
 const mapDispathToProps = {

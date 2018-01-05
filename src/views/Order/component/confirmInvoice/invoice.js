@@ -3,37 +3,36 @@ import PropTypes from 'prop-types';
 import { Table } from 'antd';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
-import styles from '../../Order.less';
-import { Logistics, Currency} from 'components/ui/index';
+import { Logistics, Currency, Product } from 'components/ui/index';
+import { getUnitPrice } from 'utils/mathUtil';
 
-const cx = classNames.bind(styles);
 const invoice = ({
   intl, orderNumber, trackingNumber, freightSetting, items, totalPrice, totalQuantity, shippingCost, orderTime,
 }) => {
+  const { formatMessage } = intl;
   const columns = [{
-    title: 'Product ID',
-    dataIndex: 'product_id',
+    title: formatMessage({ id: 'global.properNouns.goods.product' }),
+    key: 'product',
+    width: 350,
+    render: (text, record) => (<Product product={record.product} />),
   }, {
-    title: 'Product Name',
-    key: 'productName',
-    render: () => (<span> 爱他美奶粉 一段900 克 2-3 岁</span>),
-  }, {
-    title: 'Quantity',
+    title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
     dataIndex: 'quantity',
   }, {
-    title: 'Price',
+    title: formatMessage({ id: 'global.properNouns.goods.price' }),
     key: 'price',
-    render: () => ('10.00'),
+    render: (text, record) => <Currency value={getUnitPrice(record.amount, record.quantity)} />,
   }, {
-    title: 'Total Price',
-    dataIndex: 'amount_cny',
+    title: formatMessage({ id: 'global.properNouns.goods.totalPrice' }),
+    key: 'amount',
+    render: (text, record) => <Currency value={record.amount} />,
   }];
 
   const header = (
     <ul className={classNames('invoice-ul', 'invoice-table-header-ul')}>
       <li>
         <div className="trade-info-dt">
-            Order Number:
+          { formatMessage({ id: 'global.properNouns.orderNo' }) }
         </div>
         <div className="trade-info-dd">
           { orderNumber }
@@ -41,7 +40,7 @@ const invoice = ({
       </li>
       <li>
         <div className="trade-info-dt">
-            Tracking Number
+          { formatMessage({ id: 'global.properNouns.trackingNo' }) }
         </div>
         <div className="trade-info-dd">
           { trackingNumber }
@@ -49,7 +48,7 @@ const invoice = ({
       </li>
       <li>
         <div className="trade-info-dt">
-          Logistics:
+          { formatMessage({ id: 'global.properNouns.logistics' }) }
         </div>
         <div className="trade-info-dd">
           <Logistics freight={freightSetting} />
@@ -57,7 +56,7 @@ const invoice = ({
       </li>
       <li>
         <div className="trade-info-dt">
-          Order Time:
+          { formatMessage({ id: 'global.properNouns.orderDate' }) }
         </div>
         <div className="trade-info-dd">
           { orderTime }
@@ -69,7 +68,7 @@ const invoice = ({
     <ul className={classNames('invoice-ul', 'invoice-table-footer-ul')}>
       <li>
         <div className="trade-info-dt">
-          Total Price:
+          { formatMessage({ id: 'global.properNouns.goods.totalPrice' }) }
         </div>
         <div className="trade-info-dd">
           <Currency value={totalPrice} />
@@ -77,7 +76,7 @@ const invoice = ({
       </li>
       <li>
         <div className="trade-info-dt">
-          Shipping Cost:
+          { formatMessage({ id: 'global.properNouns.goods.shippingCost' }) }
         </div>
         <div className="trade-info-dd">
           <Currency value={shippingCost} />
@@ -85,7 +84,10 @@ const invoice = ({
       </li>
       <li>
         <div className="trade-info-dd">
-            Total { totalQuantity } Item
+          { formatMessage({ id: 'global.properNouns.total' }) }
+          { totalQuantity }
+          { formatMessage({ id: 'global.properNouns.item' }) }
+
         </div>
       </li>
     </ul>

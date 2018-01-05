@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { toggleLanguage } from 'store/global/action';
+import { toggleLanguage, fetchGlobalSetting } from 'store/global/action';
 import Language from '../component/language';
 import TopStaticNav from '../component/topStaticNav';
 import Operations from '../component/operations';
@@ -11,18 +11,29 @@ import styles from '../TopPanel.less';
 
 const cx = classNames.bind(styles);
 
-const topPanel = ({ language, onChange, account }) => (
-  <div className={cx('panel', 'header')}>
-    <Language language={language} onChange={onChange} />
-    <TopStaticNav />
-    <Operations account={account} language={language} />
-    <Welcome account={account} />
-  </div>
-);
+class topPanel extends React.Component {
+  changeLanguage(language) {
+    const { toggleLanguage, fetchGlobalSetting } = this.props;
+    toggleLanguage(language);
+    fetchGlobalSetting();
+  }
+  render() {
+    const { language, account } = this.props;
+    return (
+      <div className={cx('panel', 'header')}>
+        <Language language={language} onChange={(language) => this.changeLanguage(language) } />
+        <TopStaticNav />
+        <Operations account={account} language={language} />
+        <Welcome account={account} />
+      </div>
+    );
+  }
+}
 
 topPanel.propTypes = {
   language: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  toggleLanguage: PropTypes.func.isRequired,
+  fetchGlobalSetting: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 const mapStateToProps = ({ global }) => ({
@@ -30,7 +41,8 @@ const mapStateToProps = ({ global }) => ({
   account: global.account,
 });
 const mapDispatchToProp = {
-  onChange: toggleLanguage,
+  toggleLanguage,
+  fetchGlobalSetting,
 };
 
 const TopPanel = connect(mapStateToProps, mapDispatchToProp)(topPanel);

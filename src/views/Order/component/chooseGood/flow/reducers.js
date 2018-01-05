@@ -1,4 +1,4 @@
-
+import _ from 'lodash';
 import { combineReducers } from 'redux';
 import {
   SET_CART_COLLAPSE,
@@ -12,6 +12,8 @@ import {
   SET_CART_GOODS_PRICE,
 } from './actionType';
 import { RESET_ORDER } from '../../skeleton/flow/actionType';
+import { getUnitPrice } from 'utils/mathUtil';
+import { MagentoProductImgPrefix } from 'config/magento.config';
 
 const getSeletedQuantity = (itemId, cart) => {
   const items = cart.filter(item => item.id === itemId);
@@ -23,13 +25,14 @@ const mixAvailableQuantity = (state, goods, cart) => {
   const newGoods = goods.map(item => ({
     id: item.product.id,
     name: item.product.name,
+    sku: item.product.sku,
     // picture: item.product.image_url,
-    picture: 'http://api.breakabletest.com/storage/ids/VehgtQ1z8wE1hGvr9HvPXSz86hOUmdeaFc6rEuAV.jpeg',
+    picture: `${MagentoProductImgPrefix}${item.product.image_url}`,
     currentQuantity: item.current_quantity,
     category: item.product.magento_category_id,
     lastUpdated: item.product.updated_at,
-    totalValue: 10, // mock
-    unitPrice: 10, // mock,理论应该按照总价/数量
+    totalValue: item.total_value, // mock
+    unitPrice: getUnitPrice(item.total_value, item.current_quantity), // mock,理论应该按照总价/数量
     recommendedPrice: item.product.recommended_price,
     availableQuantity: item.current_quantity - getSeletedQuantity(item.product.id, cart),
     selectingQuantity: 1,
@@ -136,30 +139,36 @@ const editItemPrice = (cart, goodsId, price) => cart.map((item) => {
 const getTotalInfo = (cart) => {
   let totalCost = 0;
   let totalPrice = 0;
+  let totalDuty = 0;
   let totalItemQuantity = 0;
   let singleTotalPrice = 0;
   let singleTotalCost = 0;
+  let singleTotalDuty = 0;
   const newCart = cart.map((item) => {
     totalItemQuantity += item.quantity;
     totalPrice += item.quantity * item.price;
     totalCost += item.quantity * item.unitPrice;
+    totalDuty += item.quantity * item.recommendedPrice;
     singleTotalCost = item.quantity * item.unitPrice;
     singleTotalPrice = item.quantity * item.price;
+    singleTotalDuty = item.quantity * item.recommendedPrice;
     return Object.assign({}, item, {
-      totalPrice: Number(singleTotalPrice.toFixed(2)),
-      totalCost: Number(singleTotalCost.toFixed(2)),
+      totalPrice: _.floor(singleTotalPrice, 3),
+      totalCost: _.floor(singleTotalCost, 3),
+      totalDuty: _.floor(singleTotalDuty, 3),
     });
   });
   return {
     goods: newCart,
-    totalPrice: Number(totalPrice.toFixed(2)),
+    totalPrice: _.floor(totalPrice, 3),
     totalItemQuantity,
-    totalCost: Number(totalCost.toFixed(2)),
+    totalCost: _.floor(totalCost, 3),
+    totalDuty: _.floor(totalDuty, 3),
   };
 };
 
 const cart = (state = {
-  goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0,
+  goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0, totalDuty: 0,
 }, action) => {
   let newGoods;
   switch (action.type) {

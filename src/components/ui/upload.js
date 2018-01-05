@@ -3,7 +3,6 @@ import React from 'react';
 import { Upload, Icon, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import { baseUrl } from 'config/env.config';
-import Cookie from 'js-cookie';
 import { apiDomain } from 'config/env.config';
 
 class PicturesWall extends React.Component {

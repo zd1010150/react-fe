@@ -98,36 +98,47 @@ class leadsTable extends React.Component {
     }));
   }
   render() {
+    const { affiliatedClientStatus } = this.props;
     const { formatMessage } = this.props.intl;
+    const rejectObj = _.find(affiliatedClientStatus, { name: 'reject' });
+    const approveObj = _.find(affiliatedClientStatus, { name: 'active' });
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
+      width: 200,
       render: (text, record) => <Username firstName={record.first_name} lastName={record.last_name} />,
     }, {
       title: formatMessage({ id: 'global.form.phone' }),
       dataIndex: 'phone',
       key: 'phone',
+      width: 100,
     }, {
       title: formatMessage({ id: 'global.form.address' }),
-      render: (text, record) => <Address country={Number(record.country)} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
+      render: (text, record) => <Address country={record.country} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
       key: 'address',
+      width: 200,
     }, {
       title: formatMessage({ id: 'global.form.email' }),
       dataIndex: 'email',
       key: 'email',
+      width: 150,
     }, {
       title: formatMessage({ id: 'global.form.group' }),
       dataIndex: 'group',
       key: 'group',
+      width: 80,
     }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
       render: (text, record) => {
-        const idBtnClasses = classNames({
-          btn: true,
-          'btn-danger': Number(record.status) === 3,
-          'btn-success': Number(record.status) === 2,
-        });
+        const idBtnType = () => {
+          if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {
+            return 'primary';
+          }
+          if (Number(record.status) === (_.isEmpty(approveObj) ? 0 : approveObj.id)) {
+            return 'danger';
+          } return 'default';
+        };
 
         const sendGoodsBtn = () => {
           if ((!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code))) {
@@ -137,7 +148,7 @@ class leadsTable extends React.Component {
                 <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Leads.order' })}</Link>
               </span>
             );
-          } return (<span><Divider type="vertical" /><Tooltip title={formatMessage({id: 'page.Leads.complementAddressTip'})}><Icon type="warning" className="text-danger" /></Tooltip></span>);
+          } return (<span><Divider type="vertical" /><Tooltip title={formatMessage({ id: 'page.Leads.complementAddressTip' })}><Icon type="warning" className="text-danger" /></Tooltip></span>);
         };
         return (
           <span>
@@ -154,7 +165,7 @@ class leadsTable extends React.Component {
             </Tooltip>
             <Divider type="vertical" />
             <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
-              <Button onClick={() => { this.handleEditID(record); }} size="small" className={idBtnClasses}><Icon type="picture" />ID</Button>
+              <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
             </Tooltip>
             { sendGoodsBtn() }
           </span>
@@ -179,14 +190,16 @@ class leadsTable extends React.Component {
     return (
       <div>
         <Table columns={columns} dataSource={this.props.leadsData} pagination={pagination} />
-        <IdDialog {...this.state.editID} onOk={(idNumber, idFront, idBack) => { this.handleIDSave(idNumber, idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editLead.rejectReseason || 0} />
+        <IdDialog {...this.state.editID} onOk={(idNumber, idFront, idBack) => { this.handleIDSave(idNumber, idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editLead.reject_reason_id || 0} />
         <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editLead} onClose={() => { this.closeUserDialog(); }} userType="Leads" operatorType={this.state.operatorType} update={updateLeads} />
         <DeleteDialog userId={this.state.deleteUserId} visible={this.state.deleteDialogVisible} onClose={() => { this.closeDeleteDialog(); }} onDelete={deleteLeads} />
       </div>
     );
   }
 }
-
+leadsTable.defaultProps = {
+  affiliatedClientStatus: [],
+};
 leadsTable.propTypes = {
   intl: intlShape.isRequired,
   setOrderUser: PropTypes.func.isRequired,
@@ -195,6 +208,8 @@ leadsTable.propTypes = {
   fetchLeads: PropTypes.func.isRequired,
   updateLeads: PropTypes.func.isRequired,
   deleteLeads: PropTypes.func.isRequired,
+  affiliatedClientStatus: PropTypes.array,
+
 };
 
 const LeadsTable = injectIntl(leadsTable);

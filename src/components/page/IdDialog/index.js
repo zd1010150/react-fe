@@ -64,7 +64,7 @@ class id extends React.Component {
     } = this.props;
     const { formatMessage } = intl;
     const getRejectReason = () => {
-      const reason = allRejectReasons.filter(item => (Number(item.id) === rejectReseason));
+      const reason = allRejectReasons.filter(item => (Number(item.id) === Number(rejectReseason)));
       if (reason && reason.length > 0) {
         return (<div className="col-md-12 col-sm-12 text-danger text-center" ><Icon type="warning" />{ reason[0].name }</div>);
       } return null;
@@ -77,8 +77,10 @@ class id extends React.Component {
         onCancel={() => onCancel()}
       >
         <div className="row">
-          <div className="col-md-6 col-sm-6 text-danger" >{getRejectReason()}</div>
-          <div className="col-md-6 col-sm-6 text-danger" >{this.state.errorMsg}</div>
+          <div className="col-md-12 pb-md text-danger" >{getRejectReason()}</div>
+        </div>
+        <div className="row">
+          <div className="col-md-12 pb-md text-danger" >{this.state.errorMsg}</div>
         </div>
         <div className="row">
           <div className="col-md-10 col-sm-offset-2" >
@@ -89,7 +91,7 @@ class id extends React.Component {
                   className={classNames('form-control', cx('id-number-input'))}
                   placeholder="input the id number /"
                   value={this.state.idNumber}
-                  onInput={e => this.handleIdNumberChange(e.target.value)}
+                  onChange={e => this.handleIdNumberChange(e.target.value)}
                 />
               </div>
             </form>
@@ -143,7 +145,7 @@ id.propTypes = {
   allRejectReasons: PropTypes.array,
 };
 const mapStateToProps = ({ global }) => ({
-  allRejectReasons: global.settings.reject_reasons,
+  allRejectReasons: global.settings.rejectReasons,
 });
 const ID = connect(mapStateToProps)(injectIntl(id));
 export default ID;

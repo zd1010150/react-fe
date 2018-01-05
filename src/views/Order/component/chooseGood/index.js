@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { Icon, Layout, Button } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
+import { CHINA_CODE, MAX_PAYABLE_PRICE } from 'config/app.config';
 import styles from '../../Order.less';
 import Cart from './cart';
 import Search from './search';
@@ -22,9 +24,11 @@ class chooseGoodView extends React.Component {
   }
   submitOrder() {
     const {
-      totalCost, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods,
+      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods, dutySetting, selectedUser
     } = this.props;
-    if (totalCost >= 300) { // 如果超过300 就分担。此处是mock，需要更改为global setting中传入的值
+    const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting[0].threshold);
+    const { country } = selectedUser;
+    if (totalDuty >= max && country === CHINA_CODE) { // 如果超过300,并且是发往中国 就分担。此处是mock，需要更改为global setting中传入的值
       addSplitOrder();
       initGoods(cart);
     } else {
@@ -52,12 +56,15 @@ class chooseGoodView extends React.Component {
       totalItemQuantity,
       totalPrice,
       totalCost,
+      totalDuty,
       goodsTablePagination,
       steps,
       setItemPrice,
       goNextStep,
       goPreviousStep,
+      intl,
     } = this.props;
+    const { formatMessage } = intl;
     return (
       <div className={cx('choose-good-block')}>
         <Layout className={cx('choose-good-block-content')}>
@@ -91,6 +98,7 @@ class chooseGoodView extends React.Component {
               totalItemQuantity={totalItemQuantity}
               totalPrice={totalPrice}
               totalCost={totalCost}
+              totalDuty={totalDuty}
               setItemPrice={setItemPrice}
             />
           </Sider>
@@ -103,7 +111,7 @@ class chooseGoodView extends React.Component {
                 goPreviousStep('chooseGoods');
               }}
           >
-            <Icon type="arrow-left" /> previous
+            <Icon type="arrow-left" /> { formatMessage({ id: 'global.ui.button.previous' }) }
           </Button>
           <Button
             className={cx('order-step-next-btn')}
@@ -115,7 +123,7 @@ class chooseGoodView extends React.Component {
                 goNextStep('chooseGoods');
               }}
           >
-              next <Icon type="arrow-right" />
+            { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
           </Button>
         </div>
 
@@ -129,16 +137,19 @@ chooseGoodView.propTypes = {
   intl: intlShape.isRequired,
   queryGoodsByPaging: PropTypes.func.isRequired,
 };
-const mapStateToProps = ({ order }) => ({
+const mapStateToProps = ({ order, global }) => ({
   goods: order.chooseGood.goods,
   cart: order.chooseGood.cart.goods,
   totalCost: order.chooseGood.cart.totalCost,
   totalItemQuantity: order.chooseGood.cart.totalItemQuantity,
   totalPrice: order.chooseGood.cart.totalPrice,
+  totalDuty: order.chooseGood.cart.totalDuty,
   cartCollapse: order.chooseGood.cartCollapse,
   goodsTablePagination: order.chooseGood.goodsTablePagination,
   searchKey: order.chooseGood.searchKey,
   steps: order.skeleton.steps,
+  dutySetting: global.dutySetting,
+  selectedUser: global.orderUser,
 });
 const mapDispathToProps = {
   setCarCollapse,

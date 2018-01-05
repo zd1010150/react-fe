@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputNumber } from 'components/ui/index';
-import { Icon, Button, Input, Divider } from 'antd';
+import { InputNumber, Currency } from 'components/ui/index';
+import { Icon, Button, Input, Divider, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../../Order.less';
@@ -46,6 +46,7 @@ class cart extends React.Component {
       totalItemQuantity,
       totalPrice,
       totalCost,
+      totalDuty,
       setItemPrice,
     } = this.props;
     const { formatMessage } = intl;
@@ -63,12 +64,19 @@ class cart extends React.Component {
               />
               </div>
               <div className="product-title col-sm-8">
-                <span className={classNames(cx('product-label'), cx('product-label-name'))}>{product.name}</span>
+                <div className={classNames(cx('product-label-name-wrapper'))}>
+                  <span className={classNames(cx('product-label'), cx('product-label-name'), cx('goods-product-name'))}>
+                    <Tooltip title={product.name}>{product.name}</Tooltip>
+                  </span>
+                  <small className={classNames(cx('product-label'), cx('product-label-name'))}>
+                    <Tooltip title={product.sku}>{product.sku}</Tooltip>
+                  </small>
+                </div>
                 <Button className={classNames('icon-btn', 'ordinary', cx('delete-product-btn'))} onClick={() => deleteGoods(product)} ><Icon type="delete" /></Button>
               </div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
-              <div className={classNames('col-sm-4')}><span className={cx('product-label', cx('product-price'))}>单价:</span></div>
+              <div className={classNames('col-sm-4')}><span className={cx('product-label', cx('product-price'))}>{ formatMessage({ id: 'global.properNouns.goods.price' })}:</span></div>
               <div className={classNames('product-title', 'col-sm-8', cx('product-prices'))}>
                 <Input
                   className={classNames(cx('product-price-input'), 'input-number')}
@@ -94,7 +102,7 @@ class cart extends React.Component {
               </div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
-              <div className="col-sm-4"><span className={cx('product-label')}>数量:</span></div>
+              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.quantity' })}:</span></div>
               <div className="col-sm-8"><InputNumber
                 min={1}
                 value={product.quantity}
@@ -104,12 +112,16 @@ class cart extends React.Component {
               </div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
-              <div className="col-sm-4"><span className={cx('product-label')}>总成本：</span></div>
+              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
               <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
-              <div className="col-sm-4"><span className={cx('product-label')}>总售价：</span></div>
+              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.total' })}：</span></div>
               <div className="col-sm-8">{product.price} x {product.quantity} = {product.totalPrice}</div>
+            </div>
+            <div className={classNames('row', cx('product-row'))}>
+              <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.duty' })}：</span></div>
+              <div className="col-sm-8">{product.recommendedPrice} x {product.quantity} = {product.totalDuty}</div>
             </div>
           </li>
         ))
@@ -118,7 +130,7 @@ class cart extends React.Component {
     );
     const nullCartDataEl = (
       <div className={cx('null-goods-cart')}>
-        <p><Icon type="shopping-cart" />发货车空空如也，点击左边商品列表，添加商品</p>
+        <p><Icon type="shopping-cart" />{ formatMessage({ id: 'page.Order.nullCart' }) }</p>
       </div>
     );
     return (
@@ -130,11 +142,13 @@ class cart extends React.Component {
           { cartData && cartData.length < 1 ? nullCartDataEl : cartDataEl }
         </div>
         <div className={classNames('block-footer', cx('choose-goods-cart-footer'))}>
-          <span>总共{totalItemQuantity}件</span>
+          <span>{ formatMessage({ id: 'global.properNouns.total' })} {totalItemQuantity} { formatMessage({ id: 'global.properNouns.item' })}</span>
           <Divider type="vertical" />
-          <span>总成本:{totalCost} </span>
+          <span>{ formatMessage({ id: 'global.properNouns.goods.totalCost' })}:<Currency value={totalCost} />  </span>
+          <br />
+          <span>{ formatMessage({ id: 'global.properNouns.goods.totalPrice' })}:<Currency value={totalPrice} /></span>
           <Divider type="vertical" />
-          <span>总售价:{totalPrice} </span>
+          <span>{ formatMessage({ id: 'global.properNouns.goods.totalDuty' })}:<Currency value={totalDuty} /></span>
         </div>
       </div>);
   }
@@ -152,6 +166,7 @@ cart.propTypes = {
   totalItemQuantity: PropTypes.number.isRequired,
   totalPrice: PropTypes.number.isRequired,
   totalCost: PropTypes.number.isRequired,
+  totalDuty: PropTypes.number.isRequired,
 };
 const CartView = injectIntl(cart);
 export default CartView;

@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import _ from 'lodash';
 import {
   SO_SET_ORDERS_BOARD_COLLAPSE,
@@ -183,33 +182,39 @@ const getTotal = (state) => {
   const orderId = Object.keys(orders);
   let orderCost = 0;
   let orderPrice = 0;
+  let orderDuty = 0;
   let orderQuantity = 0;
   let singleCost = 0;
   let singlePrice = 0;
+  let singleDuty = 0;
   let order = {};
   let validate = true;
   orderId.forEach((id) => {
     orderCost = 0;
     orderPrice = 0;
+    orderDuty = 0;
     order = newOrders[id];
     const newGoods = order.goods.map((item) => {
       singlePrice = item.quantity * item.price;
       singleCost = item.quantity * item.unitPrice;
+      singleDuty = item.quantity * item.recommendedPrice;
       orderCost += singleCost;
       orderPrice += singlePrice;
+      orderDuty += singleDuty;
       orderQuantity += item.quantity;
-      return Object.assign({}, item, { totalPrice: Number(singlePrice.toFixed(2)), totalCost: Number(singleCost.toFixed(2)) });
+      return Object.assign({}, item, { totalDuty: _.floor(singleDuty), totalPrice: _.floor(singlePrice, 3), totalCost: _.floor(singleCost, 3)});
     });
-    if (orderCost > max) {
+    if (orderDuty > max) {
       order.error = 'ERROR_MAXIMUM_VALUE';
       validate = false;
     } else {
       order.error = '';
     }
     order.goods = newGoods;
-    order.totalPrice = Number(orderPrice.toFixed(2));
-    order.totalCost = Number(orderCost.toFixed(2));
+    order.totalPrice = _.floor(orderPrice, 3);
+    order.totalCost = _.floor(orderCost, 3);
     order.totalQuantity = orderQuantity;
+    order.totalDuty = _.floor(orderDuty, 3);
     newOrders[id] = order;
   });
 

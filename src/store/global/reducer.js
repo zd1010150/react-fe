@@ -65,7 +65,7 @@ const mapSettingData = (data) => {
     subGroup: newData.sub_group, // Array(7){id: 1, name: "no_profits", created_at: null, updated_at: null}{id: 2, name: "svip", created_at: null, updated_at: null}{id: 3, name: "vvip", created_at: null, updated_at: null}{id: 4, name: "vip", created_at: null, updated_at: null}{id: 5, name: "normal", created_at: null, updated_at: null}{id: 6, name: "family", created_at: null, updated_at: null}{id: 7, name: "friends", created_at: null, updated_at: null}
     accountStatus: newData.account_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"}
     accountType: newData.account_type, // {id: 1, name: "散客lead"}{id: 2, name: "散客accounts"} {id: 3, name: "代理"}
-    affiliatedClientStatus: newData.affiliated_client_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"}
+    affiliatedClientStatus: newData.affiliated_client_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"} 身份证的状态
     affiliatedClientType: newData.affiliated_client_type, // {id: 1, name: "affiliated_client.sub-leads"} {id: 2, name: "affiliated_client.sub-accounts"}
     deliveryOrderStatus: newData.delivery_order_status,
     orderStatus: newData.order_status,
@@ -74,6 +74,9 @@ const mapSettingData = (data) => {
     freightSetting: newData.freight_setting,
     countries: newData.country,
     baseCurrency: newData.base_currency,
+    dutySetting: newData.duty_setting,
+    rejectReasons: newData.reject_reasons,
+    //baseCurrency: (newData.base_currency && newData.base_currency[0] && newData.base_currency[0].name) || '',
   };
 };
 const settings = (state = { countries:[] }, action) => {

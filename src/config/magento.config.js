@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const MagentoDomain = process.env.__MAGENTO_DOMAIN__;
-
+const MagentoProductImgPrefix = `${MagentoDomain}/pub/media/catalog/product`;
 const getAbsolutePath = (url, language) => {
   const tempet = MagentoDomain + url;
   const lang = language === 'en' ? 'en' : 'ch';
@@ -9,4 +9,4 @@ const getAbsolutePath = (url, language) => {
   return `${tempet}?___store=${lang}`;
 };
 
-export { MagentoDomain, getAbsolutePath };
+export { MagentoDomain, getAbsolutePath, MagentoProductImgPrefix };

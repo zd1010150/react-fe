@@ -2,7 +2,7 @@ import React from 'react';
 // import 'rc-input-number/assets/index.css';
 import PropTypes from 'prop-types';
 import { Button, Table } from 'antd';
-import { InputNumber } from 'components/ui/index';
+import { InputNumber, Currency } from 'components/ui/index';
 // import InputNumber from 'rc-input-number';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
@@ -17,28 +17,34 @@ const goods = ({
   const { formatMessage } = intl;
   const columns = [{
     title: formatMessage({ id: 'global.properNouns.goods.name' }),
-    dataIndex: 'name',
     key: 'name',
+    width: 300,
+    render: (text, record) => <p className={cx('goods-product-name')}>{record.name}<br /><small className={cx('goods-product-sku')}>{record.sku}</small></p>,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.picture' }),
     key: 'picture',
+    width: 100,
     render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.currentQuantity' }),
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
+    width: 100,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.totalValue' }),
-    dataIndex: 'totalValue',
     key: 'totalValue',
+    render: (text, record) => <Currency value={record.totalValue} />,
+    width: 100,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
-    dataIndex: 'unitPrice',
     key: 'unitPrice',
+    render: (text, record) => <Currency value={record.unitPrice} />,
+    width: 100,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
-    dataIndex: 'recommendedPrice',
     key: 'recommendedPrice',
+    render: (text, record) => <Currency value={record.recommendedPrice} />,
+    width: 150,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
     key: 'orderQuantity',
@@ -56,7 +62,7 @@ const goods = ({
     key: 'action',
     render: (text, record) => (
       <span>
-        <Button size="small" onClick={() => { addGoodsToCart(record); }}>{formatMessage({ id: 'global.ui.button.addGoodsToCart' })}</Button>
+        <Button size="small" type="primary" shape="circle" onClick={() => { addGoodsToCart(record); }} icon="shopping-cart" />
       </span>
     ),
   }];
@@ -67,7 +73,6 @@ const goods = ({
     pageSize: goodsTablePagination.perPage,
     total: goodsTablePagination.total,
     onChange(page, pageSize) {
-      console.log(page, pageSize, '- --- pagintation change');
       queryGoodsByPaging(pageSize, page);
     },
   };

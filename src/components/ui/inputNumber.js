@@ -6,7 +6,6 @@ import styles from './inputNumber.less';
 
 
 const cx = classNames.bind(styles);
-const numberRegx = /^\d$/g;
 class InputNumber extends React.Component {
   constructor(props) {
     super(props);

@@ -14,7 +14,6 @@ import ChooseLogistic from '../chooseLogistic/index';
 const { TabPane } = Tabs;
 class skeleton extends React.Component {
   render() {
-    const { formatMessage } = this.props.intl;
     const {
       steps, setOrderUser, user,
     } = this.props;
@@ -34,7 +33,6 @@ class skeleton extends React.Component {
 }
 
 skeleton.propTypes = {
-  intl: intlShape.isRequired,
   user: PropTypes.object.isRequired,
   setOrderUser: PropTypes.func.isRequired,
 };
@@ -44,5 +42,5 @@ const mapStateToProps = ({ order }) => (
 );
 
 
-const Skeleton = connect(mapStateToProps)(injectIntl(skeleton));
+const Skeleton = connect(mapStateToProps)(skeleton);
 export default Skeleton;

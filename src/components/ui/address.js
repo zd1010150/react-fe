@@ -7,7 +7,7 @@ import { CHINESE_CODE } from 'config/app.config';
 const address = ({
   language, country, countries, street, city, state, zipCode,
 }) => {
-  const countryObj = countries.filter(c => c.id === Number(country));
+  const countryObj = countries.filter(c => c.code === country);
   const countryName = _.isEmpty(countryObj) ? '' : countryObj[0].name;
   if (language === CHINESE_CODE) {
     return <span>{countryName}{state}{city}{street} {zipCode}</span>;
@@ -15,7 +15,7 @@ const address = ({
   return <span>{street} {city} {state} {countryName} {zipCode}</span>;
 };
 address.defaultProps = {
-  country: 1,
+  country: '',
   street: '',
   city: '',
   state: '',
@@ -24,7 +24,7 @@ address.defaultProps = {
   language: CHINESE_CODE,
 };
 address.propTypes = {
-  country: PropTypes.number,
+  country: PropTypes.string,
   street: PropTypes.string,
   city: PropTypes.string,
   state: PropTypes.string,

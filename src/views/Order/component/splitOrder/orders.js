@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { InputNumber } from 'components/ui/index';
-import { Icon, Collapse, Button, Divider } from 'antd';
+import { InputNumber, Currency } from 'components/ui/index';
+import { Icon, Collapse, Button, Divider, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import styles from '../../Order.less';
@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const cx = classNames.bind(styles);
 
 const orders = ({
-  ordersData, currentOrder, intl, deleteOrderGoods, setOrderGoodsQuantity, deleteOrder, setOrderStatus,
+  ordersData, currentOrder, intl, deleteOrderGoods, setOrderGoodsQuantity, deleteOrder, setOrderStatus, symbol, max,
 }) => {
   const { formatMessage } = intl;
   const getOperationBtnByStatus = (order) => {
@@ -31,11 +31,11 @@ const orders = ({
     <Collapse defaultActiveKey={['1']}>
 
       {
-      Object.keys(ordersData).map((key) => {
+      Object.keys(ordersData).map((key, index) => {
         const order = ordersData[key];
         const disabled = order.status === SAVED;
         return (
-          <Panel header={`order-${order.id}`} key={order.id}>
+          <Panel header={formatMessage({ id: 'global.properNouns.deliveryOrder' }) +"-"+ (index+1)} key={order.id}>
             <div className={classNames('block', cx('split-order-sub-order-block'))}>
               <div className={classNames('block-title', cx('split-order-sub-order-title'))}>
                 { getOperationBtnByStatus(order) }
@@ -55,13 +55,20 @@ const orders = ({
                         />
                         </div>
                         <div className="product-title col-sm-8">
-                          <span className={classNames(cx('product-label'), cx('product-label-name'))}>{product.name}</span>
+                          <div className={classNames(cx('product-label-name-wrapper'))}>
+                            <span className={classNames(cx('product-label'), cx('product-label-name'), cx('goods-product-name'))}>
+                              <Tooltip title={product.name}>{product.name}</Tooltip>
+                            </span>
+                            <small className={classNames(cx('product-label'), cx('product-label-name'))}>
+                              <Tooltip title={product.sku}>{product.sku}</Tooltip>
+                            </small>
+                          </div>
                           <Button className={classNames('icon-btn', 'ordinary', cx('delete-product-btn'))} onClick={() => deleteOrderGoods(product)} ><Icon type="delete" /></Button>
                         </div>
                       </div>
 
                       <div className={classNames('row', cx('product-row'))}>
-                        <div className="col-sm-4"><span className={cx('product-label')}>数量:</span></div>
+                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.quantity' })}:</span></div>
                         <div className="col-sm-8"><InputNumber
                           min={1}
                           disabled={disabled}
@@ -72,12 +79,16 @@ const orders = ({
                         </div>
                       </div>
                       <div className={classNames('row', cx('product-row'))}>
-                        <div className="col-sm-4"><span className={cx('product-label')}>总成本：</span></div>
+                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
                         <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
                       </div>
                       <div className={classNames('row', cx('product-row'))}>
-                        <div className="col-sm-4"><span className={cx('product-label')}>总售价：</span></div>
+                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.total' })}：</span></div>
                         <div className="col-sm-8">{product.price} x {product.quantity} = {product.totalPrice}</div>
+                      </div>
+                      <div className={classNames('row', cx('product-row'))}>
+                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.duty' })}：</span></div>
+                        <div className="col-sm-8">{product.recommendedPrice} x {product.quantity} = {product.totalDuty}</div>
                       </div>
                     </li>
                   ))
@@ -85,11 +96,13 @@ const orders = ({
                 </ul>
                 { order.goods && order.goods.length > 0 ? (
                   <div className={classNames('block-footer', cx('split-order-sub-order-footer'))}>
-                    <span>总共{order.totalQuantity}件</span>
+                    <span>{formatMessage({ id: 'global.properNouns.total' })}{order.totalQuantity}{formatMessage({ id: 'global.properNouns.item' })}</span>
                     <Divider type="vertical" />
-                    <span>总成本:{order.totalCost} </span>
-                    <Divider type="vertical" />
-                    <span>总售价:{order.totalPrice} </span>
+                    <span>{formatMessage({ id: 'global.properNouns.goods.totalCost' })}:<Currency value={order.totalCost} /> </span>
+                    <br />
+                    <span>{formatMessage({ id: 'global.properNouns.goods.totalPrice' })}:<Currency value={order.totalPrice} /></span>
+                    <br />
+                    <span>{formatMessage({ id: 'global.properNouns.goods.totalDuty' })}:<Currency value={order.totalDuty} /></span>
                   </div>
                 ) : ''}
 
@@ -103,14 +116,18 @@ const orders = ({
   );
   const nullOrderDataEl = (
     <div className={cx('null-sub-order')}>
-      <p>亲，你发货的商品价值超过了300刀，需要对物品进行拆分发货，点击<Icon type="plus" />创建发货单，</p>
-      <p className="text-danger"><Icon type="warning" />注意:每个发货单的商品价值不能超过300刀</p>
+      <p>
+        { formatMessage({ id: 'page.Order.nullOrder' }, { symbol, max }) }
+        <Icon type="plus" className="text-primary" />
+        { formatMessage({ id: 'page.Order.createOrder' }) }
+      </p>
+      <p className="text-danger"><Icon type="warning" />{ formatMessage({ id: 'page.Order.maxPrice' }, { symbol, max }) }</p>
     </div>
   );
   return (
     <div className={classNames('block', cx('split-order-sub-orders-block'))}>
       <div className={classNames('block-title', cx('split-order-sub-orders-block-title'))}>
-        <strong>子订单</strong>
+        <strong>{formatMessage({ id: 'global.properNouns.deliveryOrder' }) }</strong>
       </div>
       <div className={classNames('block-content', cx('split-order-sub-orders-block-content'))}>
         { Object.keys(ordersData).length > 0 ? orderDataEl : nullOrderDataEl }
@@ -120,6 +137,8 @@ const orders = ({
 
 orders.defaultProps = {
   ordersData: [],
+  symbol: '',
+  max: 0,
 };
 orders.propTypes = {
   intl: intlShape.isRequired,
@@ -129,6 +148,8 @@ orders.propTypes = {
   deleteOrder: PropTypes.func.isRequired,
   setOrderStatus: PropTypes.func.isRequired,
   currentOrder: PropTypes.object.isRequired,
+  symbol: PropTypes.string,
+  max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 const OrdersView = injectIntl(orders);
 export default OrdersView;

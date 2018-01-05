@@ -14,9 +14,6 @@ const searchView = ({
   const { formatMessage } = intl;
   return (
     <div className={classNames(cx('choose-user-search'), 'block')}>
-      <div className="block-title">
-        <strong>Search User </strong>
-      </div>
       <div className="row">
         <div
           className={classNames({
@@ -25,7 +22,7 @@ const searchView = ({
           })}
         >
           <Search
-            placeholder="input search text"
+            placeholder={formatMessage({ id: 'global.ui.input.searchUser' })}
             onSearch={value => searchByKeys(value)}
             enterButton
           />

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { intlShape, injectIntl } from 'react-intl';
 import { Table, Button } from 'antd';
+import { Address, Username } from 'components/ui/index';
 
 const table = ({ intl, users, setSeletedUser }) => {
   const { formatMessage } = intl;
   const columns = [{
     title: formatMessage({ id: 'global.form.name' }),
     key: 'name',
-    render: (text, record) => <span>{record.first_name} {record.last_name}</span>,
+    render: (text, record) => <Username firstName={record.first_name} lastName={record.last_name} />,
   }, {
     title: formatMessage({ id: 'global.form.phone' }),
     dataIndex: 'phone',
@@ -17,7 +18,7 @@ const table = ({ intl, users, setSeletedUser }) => {
   }, {
     title: formatMessage({ id: 'global.form.address' }),
     render: (text, record) => (
-      <span>{record.street} {record.city} {record.state} {record.state} {record.country} {record.zipCode}</span>
+      <Address country={record.country} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />
     ),
     key: 'address',
   }, {
@@ -32,12 +33,12 @@ const table = ({ intl, users, setSeletedUser }) => {
     title: formatMessage({ id: 'global.ui.table.action' }),
     key: 'action',
     render: (text, record) => {
-      const disabled = record.document && record.document.length < 2;
+      const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
       return (
         <span>
           <Button
             size="small"
-            disabled={disabled}
+            disabled={!enable}
             onClick={() => {
           setSeletedUser(record);
         }}
