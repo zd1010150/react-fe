@@ -2,50 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd9c487-37d8-450e-a681-14e60311f934" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/ui/product.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/ui/product.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/reselect.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/Order/component/confirm.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/less/global/block.less" afterPath="$PROJECT_DIR$/src/assets/less/global/block.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/less/global/ui.less" afterPath="$PROJECT_DIR$/src/assets/less/global/ui.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/page/IdDialog/index.js" afterPath="$PROJECT_DIR$/src/components/page/IdDialog/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/page/TopPanel/container/index.js" afterPath="$PROJECT_DIR$/src/components/page/TopPanel/container/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/address.js" afterPath="$PROJECT_DIR$/src/components/ui/address.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/currency.js" afterPath="$PROJECT_DIR$/src/components/ui/currency.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/index.js" afterPath="$PROJECT_DIR$/src/components/ui/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/inputNumber.js" afterPath="$PROJECT_DIR$/src/components/ui/inputNumber.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ui/upload.js" afterPath="$PROJECT_DIR$/src/components/ui/upload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config/app.config.js" afterPath="$PROJECT_DIR$/src/config/app.config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config/magento.config.js" afterPath="$PROJECT_DIR$/src/config/magento.config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/i18n/global/properNouns.js" afterPath="$PROJECT_DIR$/src/i18n/global/properNouns.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/i18n/global/ui.js" afterPath="$PROJECT_DIR$/src/i18n/global/ui.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/global/reducer.js" afterPath="$PROJECT_DIR$/src/store/global/reducer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Leads/component/table.js" afterPath="$PROJECT_DIR$/src/views/Leads/component/table.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Leads/container/tableView.js" afterPath="$PROJECT_DIR$/src/views/Leads/container/tableView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/Order.less" afterPath="$PROJECT_DIR$/src/views/Order/Order.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseGood/cart.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseGood/cart.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseGood/flow/reducers.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseGood/flow/reducers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseGood/goods.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseGood/goods.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseGood/index.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseGood/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseGood/search.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseGood/search.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseLogistic/index.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseLogistic/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseUser/index.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseUser/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseUser/search.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseUser/search.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseUser/selectedUser.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseUser/selectedUser.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/chooseUser/table.js" afterPath="$PROJECT_DIR$/src/views/Order/component/chooseUser/table.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/address.js" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/address.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/action.js" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/action.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/actionType.js" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/actionType.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/reduers.js" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/flow/reduers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/index.js" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/invoice.js" afterPath="$PROJECT_DIR$/src/views/Order/component/confirmInvoice/invoice.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/skeleton/index.js" afterPath="$PROJECT_DIR$/src/views/Order/component/skeleton/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/splitOrder/flow/reducers/orders.js" afterPath="$PROJECT_DIR$/src/views/Order/component/splitOrder/flow/reducers/orders.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/splitOrder/goods.js" afterPath="$PROJECT_DIR$/src/views/Order/component/splitOrder/goods.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/splitOrder/index.js" afterPath="$PROJECT_DIR$/src/views/Order/component/splitOrder/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/component/splitOrder/orders.js" afterPath="$PROJECT_DIR$/src/views/Order/component/splitOrder/orders.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/Order/i18n.js" afterPath="$PROJECT_DIR$/src/views/Order/i18n.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -59,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="table.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="table.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Leads/component/table.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2483">
-              <caret line="192" column="224" lean-forward="false" selection-start-line="192" selection-start-column="224" selection-end-line="192" selection-end-column="224" />
+            <state relative-caret-position="327">
+              <caret line="107" column="15" lean-forward="false" selection-start-line="107" selection-start-column="15" selection-end-line="107" selection-end-column="15" />
               <folding>
                 <element signature="e#29#55#0" expanded="true" />
               </folding>
@@ -105,10 +62,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/page/IdDialog/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
+            <state relative-caret-position="1230">
               <caret line="82" column="42" lean-forward="false" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -258,8 +215,8 @@
         <option value="$PROJECT_DIR$/src/views/Order/component/splitOrder/orders.js" />
         <option value="$PROJECT_DIR$/src/views/Leads/container/tableView.js" />
         <option value="$PROJECT_DIR$/src/store/global/reducer.js" />
-        <option value="$PROJECT_DIR$/src/views/Leads/component/table.js" />
         <option value="$PROJECT_DIR$/src/components/page/IdDialog/index.js" />
+        <option value="$PROJECT_DIR$/src/views/Leads/component/table.js" />
       </list>
     </option>
   </component>
@@ -495,12 +452,12 @@
       <workItem from="1513722852208" duration="26568000" />
       <workItem from="1513814646921" duration="61117000" />
       <workItem from="1514414489794" duration="73063000" />
-      <workItem from="1515023253582" duration="44107000" />
+      <workItem from="1515023253582" duration="44305000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="469443000" />
+    <option name="totallyTimeSpent" value="469641000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2048" height="1152" extended-state="0" />
@@ -1005,22 +962,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Leads/component/table.js">
+    <entry file="file://$PROJECT_DIR$/src/components/page/IdDialog/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2483">
-          <caret line="192" column="224" lean-forward="false" selection-start-line="192" selection-start-column="224" selection-end-line="192" selection-end-column="224" />
+        <state relative-caret-position="1230">
+          <caret line="82" column="42" lean-forward="false" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
           <folding>
-            <element signature="e#29#55#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/page/IdDialog/index.js">
+    <entry file="file://$PROJECT_DIR$/src/views/Leads/component/table.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="82" column="42" lean-forward="false" selection-start-line="82" selection-start-column="42" selection-end-line="82" selection-end-column="42" />
+        <state relative-caret-position="327">
+          <caret line="107" column="15" lean-forward="false" selection-start-line="107" selection-start-column="15" selection-end-line="107" selection-end-column="15" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#29#55#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -105,7 +105,7 @@ class leadsTable extends React.Component {
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
-      width: 200,
+      width: 150,
       render: (text, record) => <Username firstName={record.first_name} lastName={record.last_name} />,
     }, {
       title: formatMessage({ id: 'global.form.phone' }),
@@ -126,10 +126,10 @@ class leadsTable extends React.Component {
       title: formatMessage({ id: 'global.form.group' }),
       dataIndex: 'group',
       key: 'group',
-      width: 80,
     }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
+      width: 280,
       render: (text, record) => {
         const idBtnType = () => {
           if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {
