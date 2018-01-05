@@ -13,7 +13,6 @@ const plan = ({
 }) => {
   const cardBodyStyle = {
     padding: '5px',
-
   };
   const outerGridStyle = {
     width: '27%',
@@ -21,6 +20,12 @@ const plan = ({
     padding: '5px',
     boxShadow: 'none',
 
+  };
+  const videGridStyle = {
+    width: '27%',
+    textAlign: 'center',
+    padding: '55px 5px',
+    boxShadow: 'none',
   };
   const qrGridStyle = {
     width: '19%',
@@ -42,12 +47,12 @@ const plan = ({
           {pictures.map((item, index) => <Grid style={picGridStyle} key={index}><img src={item.path} alt="marketing pic" className={cx('plan-img')} /></Grid>)}
         </Card>
       </Grid>
-      <Grid style={outerGridStyle}>
-        <video>
+      <Grid style={videGridStyle}>
+        <video width="100%">
           <source src={video} />
         </video>
       </Grid>
-      <Grid style={outerGridStyle}>{text}</Grid>
+      <Grid style={videGridStyle}>{text}</Grid>
       <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}`} width="160px" height="160px" /> </Grid>
     </Card>
   );
