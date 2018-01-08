@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { setPageTitle, setOrderUser } from 'store/global/action';
+import { resetOrder, setCurrentStep, setDeliveryOrders, deleteSplitOrder } from '../component/skeleton/flow/action';
 import queryString from 'query-string';
 import Skeleton from '../component/skeleton/index';
 
@@ -12,17 +13,32 @@ import Skeleton from '../component/skeleton/index';
 class orderView extends React.Component {
   constructor(props) {
     super(props);
-    const { location } = this.props;
-    const pairs = queryString.parse(location.search);
-    this.state = {
-      userId: (pairs && pairs.userId) || '',
-    };
-    this.props.setPageTitle('global.pageTitle.order');
-    // if (_.isEmpty(this.state.userId)) {
-    //   this.props.setOrderUser(null);
-    // }
+    this.init(props);
   }
-
+  componentWillReceiveProps(nextProps) {
+    this.init(nextProps);
+  }
+  init(props) {
+    const {
+      location,
+      resetOrder,
+      setCurrentStep,
+      setDeliveryOrders,
+      setPageTitle,
+      deleteSplitOrder,
+    } = props;
+    const pairs = queryString.parse(location.search);
+    const deliveryOrderId = (pairs && pairs.deliveryOrderId) || '';
+    setPageTitle('global.pageTitle.order');
+    if (!_.isEmpty(deliveryOrderId)) {
+      resetOrder();
+      setCurrentStep('chooseLogistic');
+      setDeliveryOrders([Number(deliveryOrderId)]);
+    } else {
+      setCurrentStep('chooseUser');
+      deleteSplitOrder();
+    }
+  }
   render() {
     return (
       <section className="section section-page">
@@ -40,6 +56,10 @@ const mapStateToProps = ({ global }) => ({
 const mapDispatchToProp = {
   setPageTitle,
   setOrderUser,
+  resetOrder,
+  setCurrentStep,
+  setDeliveryOrders,
+  deleteSplitOrder,
 };
 
 const OrderView = connect(mapStateToProps, mapDispatchToProp)(orderView);

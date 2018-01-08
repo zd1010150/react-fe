@@ -18,7 +18,7 @@ export default {
     weChat: '微信',
     socialMediaNumber: '社交帐号',
     name: '姓名',
-    ID: '身份证信息',
+    ID: '身份证号码',
     orderNumber: '订单号',
     trackingNumber: '单号',
     allAddress: '地址',

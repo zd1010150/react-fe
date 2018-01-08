@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { ADD_SPLIT_ORDER, DELETE_SPLIT_ORDER, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP, RESET_ORDER } from './actionType';
+import { ADD_SPLIT_ORDER, DELETE_SPLIT_ORDER, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP, RESET_ORDER, SET_CURRENT_STEP } from './actionType';
 
 const deleteSplitOrder = (state) => {
   if (state.steps.indexOf('splitOrder') > -1) {
@@ -15,6 +15,12 @@ const steps = (state = {
 }, action) => {
   let stepIndex;
   switch (action.type) {
+    case SET_CURRENT_STEP:
+      stepIndex = state.steps.indexOf(action.stepTitle);
+      if (stepIndex > -1 && stepIndex < state.steps.length) {
+        return Object.assign({}, state, { currentStep: stepIndex });
+      }
+      return state;
     case RESET_ORDER:
       return { steps: ['chooseUser', 'chooseGoods', 'chooseLogistic', 'confirmOrder'], currentStep: 0 };
     case SET_NEXT_STEP:

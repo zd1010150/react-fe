@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
 import Table from './tableView';
 
-class accountsView extends React.Component {
+class accountView extends React.Component {
   componentDidMount() {
     this.props.setPageTitle('global.pageTitle.accounts');
   }
@@ -19,7 +19,7 @@ class accountsView extends React.Component {
   }
 }
 
-accountsView.propTypes = {
+accountView.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
 };
 const mapStateToProps = ({ accounts }) => ({
@@ -29,5 +29,5 @@ const mapDispatchToProp = {
   setPageTitle,
 };
 
-const AccountsView = connect(mapStateToProps, mapDispatchToProp)(accountsView);
-export default AccountsView;
+const AccountView = connect(mapStateToProps, mapDispatchToProp)(accountView);
+export default AccountView;

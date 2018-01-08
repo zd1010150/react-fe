@@ -10,7 +10,7 @@ const addressView = ({
 }) => {
   const { formatMessage } = intl;
   return (
-    <Card className={classNames('invoice-address', 'invoice-address-card')} title="收件人信息" bodyStyle={{ padding: '15px' }}>
+    <Card className={classNames('invoice-address', 'invoice-address-card')} title={formatMessage({ id: 'global.properNouns.allReciveAddress' })} bodyStyle={{ padding: '15px' }}>
       <ul className={classNames('invoice-ul', 'invoice-address-ul')}>
         <li >
           <div className="trade-info-dt">

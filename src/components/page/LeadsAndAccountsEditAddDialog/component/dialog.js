@@ -4,21 +4,21 @@ import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
 // import classNames from 'classnames/bind';
-import operateType from '../flow/operateType';
+import operateTypes from '../flow/operateType';
 import UserForm from './form';
 
 class userDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showID: props.operatorType === operateType.ADD,
-      canEdit: props.operatorType !== operateType.VIEW,
+      showID: props.operatorType === operateTypes.ADD,
+      canEdit: props.operatorType !== operateTypes.VIEW,
     };
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      showID: nextProps.operatorType === operateType.ADD,
-      canEdit: nextProps.operatorType !== operateType.VIEW,
+      showID: nextProps.operatorType === operateTypes.ADD,
+      canEdit: nextProps.operatorType !== operateTypes.VIEW,
     });
   }
   handleValidate = () => {
@@ -106,9 +106,9 @@ class userDialog extends React.Component {
   }
   handleSubmit = (value) => {
     const postform = this.mapPostData(value);
-    if (this.props.operatorType === operateType.ADD) {
+    if (this.props.operatorType === operateTypes.ADD) {
       this.props.add(postform);
-    } else if (this.props.operatorType === operateType.EDIT) {
+    } else if (this.props.operatorType === operateTypes.EDIT) {
       this.props.update(postform);
     }
     this.props.onClose();
@@ -123,9 +123,9 @@ class userDialog extends React.Component {
     } = this.props;
     const dialogTitle = ((_userType, _operatorType) => {
       const type = `page.${_userType}`;
-      if (_operatorType === operateType.EDIT) {
+      if (_operatorType === operateTypes.EDIT) {
         return `${type}.editDiologTitle`;
-      } else if (_operatorType === operatorType.VIEW) {
+      } else if (_operatorType === operateTypes.VIEW) {
         return `${type}.viewDialogTitle`;
       }
 
@@ -155,7 +155,7 @@ userDialog.defaultProps = {
   visible: false,
   add() {},
   update() {},
-  operatorType: 'view',
+  operatorType: '',
   interests: [],
   group: [],
   countries: [],

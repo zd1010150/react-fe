@@ -56,7 +56,7 @@ class confirmInvoiceView extends React.Component {
     return (
       <div className={classNames('block', 'invoice-block', 'section-confirm-invoice')}>
         <div className="block-title">
-          <strong> 订单确认 </strong>
+          <strong> {formatMessage({ id: 'page.Order.confirmOrder' })} </strong>
         </div>
         <div className="block-content">
           <form name="payFreightForm" action={`${baseUrl}/affiliate/delivery-orders/pay`} method="post">
@@ -66,7 +66,7 @@ class confirmInvoiceView extends React.Component {
           <Address {...receiver} />
           {invoicesEl}
           <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
-            Total Shipping Cost:
+            {formatMessage({ id: 'global.properNouns.goods.shippingCost' })}:
             <strong><Currency value={totalCost} /></strong>
           </p>
         </div>

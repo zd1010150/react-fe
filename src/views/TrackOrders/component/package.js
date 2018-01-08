@@ -5,7 +5,7 @@ import { getUnitPrice } from 'utils/mathUtil';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import styles from '../TrackOrders.less';
-import { Currency, OrderStatus, Logistics } from 'components/ui/index';
+import { Currency, OrderStatus, Logistics, Product } from 'components/ui/index';
 import LogisticsDetail from './logisticsDetail';
 
 const cx = classNames.bind(styles);
@@ -13,23 +13,24 @@ const cx = classNames.bind(styles);
 const detailOrder = ({
   intl, trackingNumber, items, detailInfo, status, logistic, updateTime, totalPrice, totalQuantity,
 }) => {
+  const { formatMessage } = intl;
   const columns = [
     {
-      title: 'Product Name',
-      key: 'productName',
-      dataIndex: 'product.name',
-      width: 200,
+      title: formatMessage({ id: 'global.properNouns.goods.product' }),
+      key: 'product',
+      width: 350,
+      render: (text, record) => (<Product product={record.product} />),
     }, {
-      title: 'Quantity',
+      title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
       dataIndex: 'quantity',
       width: 100,
     }, {
-      title: 'Price',
+      title: formatMessage({ id: 'global.properNouns.goods.price' }),
       key: 'price',
       width: 100,
       render: (text, record) => <Currency value={getUnitPrice(record.amount, record.quantity)} />,
     }, {
-      title: 'Total Price',
+      title: formatMessage({ id: 'global.properNouns.goods.totalPrice' }),
       key: 'amount',
       render: (text, record) => <Currency value={record.amount} />,
     }];
@@ -38,7 +39,7 @@ const detailOrder = ({
     <ul className={classNames('invoice-ul', 'invoice-table-header-ul')}>
       <li>
         <div className="trade-info-dt">
-          Tracking Number:
+          { formatMessage({ id: 'global.properNouns.trackingNo' }) }:
         </div>
         <div className="trade-info-dd">
           { trackingNumber }
@@ -46,7 +47,7 @@ const detailOrder = ({
       </li>
       <li>
         <div className="trade-info-dt">
-          Status:
+          { formatMessage({ id: 'global.properNouns.orderStatus' }) }:
         </div>
         <div className="trade-info-dd">
           <OrderStatus status={status} />
@@ -54,15 +55,15 @@ const detailOrder = ({
       </li>
       <li>
         <div className="trade-info-dt">
-          Logistics:
+          { formatMessage({ id: 'global.properNouns.logistics' }) }:
         </div>
         <div className="trade-info-dd">
           <Logistics freight={logistic} />
           {
             detailInfo && detailInfo.length > 0 ?
             (
-              <Popover content={<LogisticsDetail infos={detailInfo} />} title="物流详情">
-                <Button className={classNames('icon-btn')} type="primary"> 详情>> </Button>
+              <Popover content={<LogisticsDetail infos={detailInfo} />} title={formatMessage({ id: 'global.properNouns.logisticsDetail' })} >
+                <Button className={classNames('icon-btn')} type="primary"> {formatMessage({ id: 'global.properNouns.logisticsDetail' })} >> </Button>
               </Popover>
             ) : ''
           }
@@ -71,7 +72,7 @@ const detailOrder = ({
       </li>
       <li>
         <div className="trade-info-dt">
-          UpdateTime:
+          { formatMessage({ id: 'global.properNouns.updateDate' }) }:
         </div>
         <div className="trade-info-dd">
           { updateTime }
@@ -83,7 +84,7 @@ const detailOrder = ({
     <ul className={classNames('invoice-ul', 'invoice-table-footer-ul')}>
       <li>
         <div className="trade-info-dt">
-          Total Price:
+          { formatMessage({ id: 'global.properNouns.goods.totalPrice' }) }:
         </div>
         <div className="trade-info-dd">
           <Currency value={totalPrice} />
@@ -92,7 +93,7 @@ const detailOrder = ({
 
       <li>
         <div className="trade-info-dd">
-          Total { totalQuantity } Item
+          { formatMessage({ id: 'global.properNouns.total' }) } { totalQuantity } { formatMessage({ id: 'global.properNouns.item' }) }
         </div>
       </li>
     </ul>

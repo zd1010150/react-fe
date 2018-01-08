@@ -5,7 +5,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import HistoryOrders from './historyOrders';
 
 const historyOrderDialog = ({
-  intl, onClose, visible,
+  intl, onClose, visible, historyOrder
 }) => {
   const { formatMessage } = intl;
   const handleOK = () => {
@@ -19,13 +19,14 @@ const historyOrderDialog = ({
       title={formatMessage({ id: 'page.Accounts.historyOrderDialogTitle' })}
       visible={visible}
       onCancel={handleCancel}
+      width={800}
       footer={[
         <Button key="submit" type="primary" onClick={() => { handleOK(); }}>
           { formatMessage({ id: 'global.ui.button.ok' }) }
         </Button>,
       ]}
     >
-      <HistoryOrders />
+      <HistoryOrders historyOrder={historyOrder}/>
     </Modal>
   );
 };
@@ -33,6 +34,7 @@ historyOrderDialog.propTypes = {
   intl: intlShape.isRequired,
   onClose: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
+  historyOrder: PropTypes.object.isRequired,
 };
 const HistoryOrderDialog = injectIntl(historyOrderDialog);
 export default HistoryOrderDialog;

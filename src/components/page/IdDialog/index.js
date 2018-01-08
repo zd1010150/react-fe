@@ -1,10 +1,12 @@
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { Modal, Icon, Input } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { idNumberReg } from 'utils/regex';
+import { CHINA_CODE } from 'config/app.config';
 import { Upload } from 'components/ui/index';
 import styles from './IdDialog.less';
 
@@ -15,6 +17,7 @@ class id extends React.Component {
       idFront: this.props.idFront,
       idBack: this.props.idBack,
       idNumber: this.props.idNumber,
+      country: this.props.country,
     },
     errorMsg: '',
     idNumber: this.props.idNumber,
@@ -27,11 +30,13 @@ class id extends React.Component {
       idFront: nextProps.idFront,
       idBack: nextProps.idBack,
       idNumber: nextProps.idNumber,
+      country: nextProps.country,
     });
     this.setState({
       idFront: nextProps.idFront,
       idBack: nextProps.idBack,
       idNumber: nextProps.idNumber,
+      country: nextProps.country,
       errorMsg: '',
       orginal,
       key: Math.random(), // 为了让upload重新渲染
@@ -43,16 +48,23 @@ class id extends React.Component {
     });
   }
   handleSubmit() {
-    const { onOk } = this.props;
+    const { onOk, intl } = this.props;
+    const { formatMessage } = intl;
+    if (this.state.country === CHINA_CODE && _.isEmpty(this.state.idNumber)) {
+      this.setState({
+        errorMsg: formatMessage({ id: 'global.error.ERROR_CHINA_REQUIRE_ID' }),
+      });
+      return;
+    }
     if (this.state.idNumber && (!idNumberReg.test(this.state.idNumber))) {
       this.setState({
-        errorMsg: '身份证号码不合法',
+        errorMsg: formatMessage({ id: 'global.error.ERROR_INVALID_ID' }),
       });
       return;
     }
     if (this.state.orginal.idNumber === this.state.idNumber && this.state.orginal.idFront === this.state.idFront && this.state.orginal.idBack === this.state.idBack) {
       this.setState({
-        errorMsg: '你没有做任何修改!',
+        errorMsg: formatMessage({ id: 'global.error.ERROR_NO_MODIFY' }),
       });
     } else {
       onOk(this.state.idNumber, this.state.idFront, this.state.idBack);
@@ -86,10 +98,10 @@ class id extends React.Component {
           <div className="col-md-10 col-sm-offset-2" >
             <form className="form-horizontal">
               <div className="form-group">
-                <label className="control-label">身份证号码：</label>
+                <label className="control-label">{formatMessage({ id: 'global.form.ID' })}：</label>
                 <Input
                   className={classNames('form-control', cx('id-number-input'))}
-                  placeholder="input the id number /"
+                  placeholder={formatMessage({ id: 'global.ui.input.inputIdNumber' })}
                   value={this.state.idNumber}
                   onChange={e => this.handleIdNumberChange(e.target.value)}
                 />
@@ -132,6 +144,7 @@ id.defaultProps = {
   idBack: '',
   rejectReseason: 0,
   allRejectReasons: [],
+  country: CHINA_CODE,
 };
 id.propTypes = {
   intl: intlShape.isRequired,
@@ -143,6 +156,7 @@ id.propTypes = {
   onCancel: PropTypes.func.isRequired,
   rejectReseason: PropTypes.number,
   allRejectReasons: PropTypes.array,
+  country: PropTypes.string,
 };
 const mapStateToProps = ({ global }) => ({
   allRejectReasons: global.settings.rejectReasons,

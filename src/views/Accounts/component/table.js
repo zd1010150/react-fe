@@ -2,39 +2,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
+import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
+import { Address, Username } from 'components/ui/index';
 import { Table, Divider, Icon, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
+import _ from 'lodash';
 import { IdDialog, LeadsAndAccountsEditAddDialog } from 'components/page';
-import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
 import HistoryOrderDialog from './historyOrderDialog';
+
 
 class accountsTable extends React.Component {
   state = {
     userDialogVisible: false,
     editID: {},
-    editObj: {},
+    editAccounts: {},
     operatorType: operateType.VIEW,
+    historyOrderDialogVisble: false,
+    historyOrder: {
+      profits: {
+        most_bought_product: {
+          name: '',
+        },
+        total_spending: 0,
+        total_profits: 0,
+      },
+      invoices: [],
+    },
   }
   closeUserDialog() {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: false,
-      cantEdit: true,
-      editObj: {},
+      editAccounts: {},
     }));
   }
   handleIDClose() {
     const editID = Object.assign({}, this.state.editID, { visible: false });
     this.setState(Object.assign({}, this.state, { editID }));
   }
-  handleIDSave(userId, idFront, idBack) {
+  handleIDSave(idNumber, idFront, idBack) {
     const file = {
-      file: {
-        front_id_doc: idFront,
-        back_id_doc: idBack,
-      },
+      front_id_doc: idFront,
+      back_id_doc: idBack,
     };
-    const postData = Object.assign({}, this.state.editObj, { file });
+    const postData = Object.assign({}, this.state.editLead, { file, id_number: idNumber });
     this.props.updateAccounts(postData);
     this.handleIDClose();
   }
@@ -47,6 +58,7 @@ class accountsTable extends React.Component {
   handleEditID(record) {
     let idFront = '';
     let idBack = '';
+    const idNumber = record.id_number;
     const rejectReseason = 0;
 
     if (record.document && record.document.length > 0) {
@@ -57,7 +69,7 @@ class accountsTable extends React.Component {
         idBack = path || '';
       }
       if (record.document && record.document.length > 1) {
-        const { name, path } = record.document[0];
+        const { name, path } = record.document[1];
         if (name === 'front_id_doc') {
           idFront = path || '';
         } else {
@@ -66,131 +78,158 @@ class accountsTable extends React.Component {
       }
     }
     const editID = Object.assign({}, this.state.editID, {
-      visible: true, userId: `${record.id}`, idFront, idBack, rejectReseason,
+      visible: true,
+      userId: `${record.id}`,
+      idFront,
+      idBack,
+      rejectReseason,
+      idNumber,
+      country: record.country,
     });
-    this.setState(Object.assign({}, this.state, { editID, editObj: record }));
+    this.setState(Object.assign({}, this.state, { editID, editLead: record }));
   }
   handleUserDetail(record) {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
-      editObj: record,
+      editAccounts: record,
+      operatorType: operateType.VIEW,
     }));
   }
-  handleeditObj(record) {
+  handleEditAccounts(record) {
     this.setState(Object.assign({}, this.state, {
       userDialogVisible: true,
-      editObj: record,
+      editAccounts: record,
+      operatorType: operateType.EDIT,
     }));
   }
-  handleHistoryOrder(id) {
+  handleHistoryOrder(historyOrder) {
     this.setState(Object.assign({}, this.state, {
       historyOrderDialogVisble: true,
+      historyOrder,
     }));
   }
   render() {
-    const {
-      accountsData, accountsDataTablePagination, fetchAccounts, updateAccounts,
-    } = this.props;
+    const { affiliatedClientStatus } = this.props;
     const { formatMessage } = this.props.intl;
+    const rejectObj = _.find(affiliatedClientStatus, { name: 'reject' });
+    const approveObj = _.find(affiliatedClientStatus, { name: 'active' });
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
-      render: (text, record) => <span>{record.firstName} {record.lastName}</span>,
+      width: 150,
+      render: (text, record) => <Username firstName={record.first_name} lastName={record.last_name} />,
     }, {
       title: formatMessage({ id: 'global.form.phone' }),
       dataIndex: 'phone',
       key: 'phone',
+      width: 100,
     }, {
       title: formatMessage({ id: 'global.form.address' }),
-      render: (text, record) => (
-        <span>{record.address} {record.city} {record.state} {record.state} {record.country} {record.zipCode}</span>
-      ),
+      render: (text, record) => <Address country={record.country} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
       key: 'address',
+      width: 200,
     }, {
       title: formatMessage({ id: 'global.form.email' }),
       dataIndex: 'email',
       key: 'email',
-    }, {
-      title: formatMessage({ id: 'global.form.group' }),
-      dataIndex: 'group',
-      key: 'group',
+      width: 150,
     }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
+      width: 330,
       render: (text, record) => {
-        console.log('record:', record.status);
-        const idBtnClasses = classNames({
-          btn: true,
-          'btn-danger': Number(record.status) === 3,
-          'btn-success': Number(record.status) === 2,
-        });
+        const idBtnType = () => {
+          if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {
+            return 'primary';
+          }
+          if (Number(record.status) === (_.isEmpty(approveObj) ? 0 : approveObj.id)) {
+            return 'danger';
+          } return 'default';
+        };
 
         const sendGoodsBtn = () => {
-          if (record.document && record.document.length > 1) {
+          if ((!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code))) {
             return (
               <span>
                 <Divider type="vertical" />
                 <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Leads.order' })}</Link>
               </span>
             );
-          } return '';
+          } return (<span><Divider type="vertical" /><Tooltip title={formatMessage({ id: 'page.Leads.complementAddressTip' })}><Icon type="warning" className="text-danger" /></Tooltip></span>);
+        };
+        const historyOrderEl = () => {
+          if ((!_.isEmpty(record.invoices)) && (!_.isEmpty(record.profits))) {
+            return (
+              <span>
+                <Divider type="vertical" />
+                <Button
+                  size="small"
+                  onClick={() => {
+               this.handleHistoryOrder(record);
+             }}
+                >{formatMessage({ id: 'page.Accounts.historyOrder' })}
+                </Button>
+              </span>
+            );
+          }
+          return '';
         };
         return (
           <span>
-            <Tooltip title={formatMessage({ id: 'page.Accounts.userDetail' })}>
-              <Icon
-                type="user"
-                onClick={() => {
-              this.handleUserDetail(record);
-            }}
-              />
+            <Tooltip title={formatMessage({ id: 'page.Leads.userDetail' })}>
+              <Icon type="user" onClick={() => { this.handleUserDetail(record); }} />
             </Tooltip>
             <Divider type="vertical" />
-            <Tooltip title={formatMessage({ id: 'page.Accounts.editUser' })}>
-              <Icon
-                type="edit"
-                onClick={() => {
-              this.handleeditObj(record);
-            }}
-              />
+            <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
+              <Icon type="edit" onClick={() => { this.handleEditAccounts(record); }} />
             </Tooltip>
             <Divider type="vertical" />
             <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
-              <Button onClick={() => { this.handleEditID(record); }} size="small" className={idBtnClasses}><Icon type="picture" />ID</Button>
+              <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
             </Tooltip>
-            <Divider type="vertical" />
-            <Button
-              size="small"
-              onClick={() => {
-            this.handleHistoryOrder(record.id);
-          }}
-            >{formatMessage({ id: 'page.Accounts.historyOrder' })}
-            </Button>
-
+            { historyOrderEl() }
             { sendGoodsBtn() }
-
           </span>
         );
       },
     }];
+    const {
+      accountDataTablePagination, fetchAccounts, updateAccounts,
+    } = this.props;
+    const pagination = {
+      defaultCurrent: accountDataTablePagination.currentPage,
+      current: accountDataTablePagination.currentPage,
+      defaultPageSize: accountDataTablePagination.perPage,
+      pageSize: accountDataTablePagination.perPage,
+      total: accountDataTablePagination.total,
+      onChange(page, pageSize) {
+        console.log(page, pageSize, '- --- pagintation change');
+        fetchAccounts(pageSize, page);
+      },
+    };
+    console.log(pagination.current, pagination.total, pagination.pageSize, '- --- table render');
     return (
       <div>
-        <Table columns={columns} dataSource={accountsData} />
-        <IdDialog {...this.state.editID} onOk={(idFront, idBack) => { this.handleIDSave(idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editObj.rejectReseason || 0} />
-        <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editObj} onClose={() => { this.closeUserDialog(); }} userType="Accounts" operatorType={this.state.operatorType} update={updateAccounts} />
-        <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }} />
+        <Table columns={columns} dataSource={this.props.accountsData} pagination={pagination} />
+        <IdDialog {...this.state.editID} onOk={(idNumber, idFront, idBack) => { this.handleIDSave(idNumber, idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editAccounts.reject_reason_id || 0} />
+        <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editAccounts} onClose={() => { this.closeUserDialog(); }} userType="Accounts" operatorType={this.state.operatorType} update={updateAccounts} />
+        <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }} historyOrder={this.state.historyOrder} />
       </div>
     );
   }
 }
-
+accountsTable.defaultProps = {
+  affiliatedClientStatus: [],
+};
 accountsTable.propTypes = {
   intl: intlShape.isRequired,
   setOrderUser: PropTypes.func.isRequired,
   accountsData: PropTypes.array.isRequired,
-  accountsDataTablePagination: PropTypes.object.isRequired,
+  accountDataTablePagination: PropTypes.object.isRequired,
   fetchAccounts: PropTypes.func.isRequired,
   updateAccounts: PropTypes.func.isRequired,
+  affiliatedClientStatus: PropTypes.array,
+
 };
 
 const AccountsTable = injectIntl(accountsTable);

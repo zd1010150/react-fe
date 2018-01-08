@@ -17,10 +17,12 @@ export default {
       pay: '支付',
       next: '下一步',
       previous: '上一步',
+      detail: '查看详情',
     },
     input: {
       searchStore: '在此搜索全站商品...',
       searchUser: '输入用户名搜索...',
+      inputIdNumber: '请输入合法的身份证号',
     },
     table: {
       action: '操作',
@@ -47,10 +49,12 @@ export default {
       pay: 'Pay',
       next: 'Next',
       previous: 'Previous',
+      detail: 'Detail',
     },
     input: {
       searchStore: 'Search entire store here...',
       searchUser: 'Search user name here...',
+      inputIdNumber: 'Please input correct id number',
     },
     table: {
       action: 'Action',

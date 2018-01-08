@@ -72,6 +72,7 @@ class leadsTable extends React.Component {
       userId: `${record.id}`,
       idFront,
       idBack,
+      country: record.country,
       rejectReseason,
       idNumber,
     });
@@ -182,7 +183,6 @@ class leadsTable extends React.Component {
       pageSize: leadsDataTablePagination.perPage,
       total: leadsDataTablePagination.total,
       onChange(page, pageSize) {
-        console.log(page, pageSize, '- --- pagintation change');
         fetchLeads(pageSize, page);
       },
     };

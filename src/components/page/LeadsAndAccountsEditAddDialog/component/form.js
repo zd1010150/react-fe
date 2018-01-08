@@ -27,12 +27,12 @@ class userForm extends React.Component {
     }
     return props.editObject.country === CHINA_CODE;
   }
-  handleCountryChange(countryId) {
-    const countryCode = this.props.countries.filter(c => c.id === countryId)[0].code;
+  handleCountryChange(countryCode) {
     const checkIdNumber = countryCode === CHINA_CODE;
     this.setState({
       checkIdNumber,
     }, () => {
+      this.props.form.resetFields(['idNumber']);
       if (checkIdNumber) {
         this.props.form.validateFields(['idNumber'], { force: true });
       }
@@ -71,10 +71,10 @@ class userForm extends React.Component {
       key="interests"
     >{interests.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
     </Select>);
-
-    const countriesEl = getFieldDecorator('country', { initialValue: Number(editObject.country) || (countries[0] && countries[0].id) })(<Select disabled={disabled} onChange={(countryId) => { this.handleCountryChange(countryId); }}>
+    console.log("country is:",editObject, editObject.country || (countries[0] && countries[0].code));
+    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].code) })(<Select disabled={disabled} onChange={(countryCode) => { this.handleCountryChange(countryCode); }}>
       {
-          countries.map(item => <Option value={item.id} key={item.code}>{item.name}</Option>)
+          countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
     </Select>);
 

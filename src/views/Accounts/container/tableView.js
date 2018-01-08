@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setOrderUser } from 'store/global/action';
 import Table from '../component/table';
-import { fetchAccount, updateAccount } from '../flow/action';
+import { fetchAccounts, updateAccounts } from '../flow/action';
 
 class tableView extends React.Component {
   componentDidMount() {
-    this.props.fetchAccount();
+    this.props.fetchAccounts();
   }
   render() {
-    const { accountData, setOrderUser, accountDataTablePagination, updateAccount, fetchAccount, } = this.props;
+    const { accountsData, setOrderUser, accountDataTablePagination, updateAccounts, fetchAccounts, } = this.props;
     return (
-      <Table setOrderUser={setOrderUser} accountData={accountData} accountDataTablePagination={accountDataTablePagination} fetchAccounts={fetchAccount} updateAccount={updateAccount} />
+      <Table setOrderUser={setOrderUser} accountsData={accountsData} accountDataTablePagination={accountDataTablePagination} fetchAccounts={fetchAccounts} updateAccounts={updateAccounts} />
     );
   }
 }
@@ -21,20 +21,20 @@ tableView.defaultProps = {
   accountData: [],
 };
 tableView.propTypes = {
-  accountData: PropTypes.array,
+  accountsData: PropTypes.array,
   setOrderUser: PropTypes.func.isRequired,
-  fetchAccount: PropTypes.func.isRequired,
-  updateAccount: PropTypes.func.isRequired,
+  fetchAccounts: PropTypes.func.isRequired,
+  updateAccounts: PropTypes.func.isRequired,
   accountDataTablePagination: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({ accounts }) => ({
-  accountData: accounts.accountsData,
+  accountsData: accounts.accountsData,
   accountDataTablePagination: accounts.accountsDataTablePagination,
 });
 const mapDispatchToProp = {
   setOrderUser,
-  fetchAccount,
-  updateAccount,
+  fetchAccounts,
+  updateAccounts,
 };
 
 const TableView = connect(mapStateToProps, mapDispatchToProp)(tableView);

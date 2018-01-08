@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Button, Icon, Radio } from 'antd';
 import { Currency } from 'components/ui/index';
@@ -17,7 +18,9 @@ class chooseLogisticView extends React.Component {
     logisticType: this.props.freightSetting[0].id || 0,
   }
   componentDidMount() {
-    this.getTotalFee(this.props.freightSetting[0].id, this.props.deliveryOrderIds);
+    if (this.state.logisticType > 0) {
+      this.getTotalFee(this.state.logisticType, this.props.deliveryOrderIds);
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.freightSetting && nextProps.freightSetting.length > 0 && nextProps.deliveryOrderIds !== this.props.deliveryOrderIds) {
@@ -65,6 +68,7 @@ class chooseLogisticView extends React.Component {
         <div className="block-footer">
           <Button
             className={cx('order-step-previous-btn')}
+            disabled
             onClick={() => {
             goPreviousStep('chooseLogistic');
           }}
@@ -86,9 +90,14 @@ class chooseLogisticView extends React.Component {
     );
   }
 }
+chooseLogisticView.defaultProps = {
+  freightSetting: [{
+    id: 0,
+  }],
+};
 chooseLogisticView.propTypes = {
   intl: intlShape.isRequired,
-  freightSetting: PropTypes.array.isRequired,
+  freightSetting: PropTypes.array,
   deliveryOrderIds: PropTypes.array,
   goNextStep: PropTypes.func.isRequired,
   goPreviousStep: PropTypes.func.isRequired,

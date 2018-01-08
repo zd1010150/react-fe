@@ -1,7 +1,7 @@
 export default {
   zh: {
     clientLists: '客户列表',
-    leads: '所有客户',
+    leads: '潜在客户',
     accounts: '交易客户',
     marketingMaterial: '营销',
     order: '订单',

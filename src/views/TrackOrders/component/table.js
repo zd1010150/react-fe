@@ -2,20 +2,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Table, Badge, Button } from 'antd';
+import { Table, Badge, Button, Divider } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Address, OrderStatus } from 'components/ui/index';
-
+import { UNPAIED_ORDER_STATUS } from 'config/app.config.js';
 
 class orderTable extends React.Component {
   viewDetail(trackOrder) {
     this.props.setTrackOrderDetailInfo(trackOrder);
     this.props.history.replace('/trackOrders?view=detail');
   }
+  handlePaymentOrder(develiverOrderId) {
+    this.props.history.push(`/clientLists/order?deliveryOrderId=${develiverOrderId}`);
+  }
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      orders, queryByPaging, trackOrderDataTablePagination, deliveryOrderStatus,
+      orders, queryByPaging, trackOrderDataTablePagination,
     } = this.props;
     const columns = [{
       title: formatMessage({ id: 'global.form.orderNumber' }),
@@ -34,7 +37,7 @@ class orderTable extends React.Component {
           return <a href="javascript:void(0)" className="head-example" onClick={() => { this.viewDetail(record); }}>{trackingNumbers[0].tracking_number}</a>;
         }
         return (
-          <Badge count={trackingNumbers.length} offset={[0,10]}>
+          <Badge count={trackingNumbers.length} offset={[0, 10]}>
             <a href="javascript:void(0)" className="head-example" onClick={() => { this.viewDetail(record); }}>{trackingNumbers[0].tracking_number}</a>
           </Badge>
         );
@@ -50,7 +53,7 @@ class orderTable extends React.Component {
     },
     {
       title: formatMessage({ id: 'global.form.allAddress' }),
-      render: (text, record) => <Address country={Number(record.receiver.country)} state={record.receiver.state} city={record.receiver.city} street={record.receiver.street} zipCode={record.receiver.zip_code} />,
+      render: (text, record) => <Address country={record.receiver.country} state={record.receiver.state} city={record.receiver.city} street={record.receiver.street} zipCode={record.receiver.zip_code} />,
       key: 'address',
       width: 250,
     }, {
@@ -61,11 +64,25 @@ class orderTable extends React.Component {
     {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
-      render: (text, record) => (
-        <span>
-          <Button onClick={() => { this.viewDetail(record); }} size="small">查看详情</Button>
-        </span>
-      ),
+      render: (text, record) => {
+        const paymentEl = ((status) => {
+          if (Number(status) === UNPAIED_ORDER_STATUS) {
+            return (
+              <span>
+                <Button onClick={() => { this.handlePaymentOrder(record.id); }} size="small" >{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
+                <Divider type="vertical" />
+              </span>
+            );
+          }
+          return '';
+        })(record.status);
+        return (
+          <span>
+            {paymentEl}
+            <Button onClick={() => { this.viewDetail(record); }} size="small">{ formatMessage({ id: 'global.ui.button.detail' }) }</Button>
+          </span>
+        );
+      },
     }];
     const pagination = {
       defaultCurrent: trackOrderDataTablePagination.currentPage,
@@ -98,6 +115,7 @@ orderTable.propTypes = {
   trackOrderDataTablePagination: PropTypes.object.isRequired,
   deliveryOrderStatus: PropTypes.array,
   history: PropTypes.object.isRequired,
+
 };
 
 const OrderTable = injectIntl(orderTable);

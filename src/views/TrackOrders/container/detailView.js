@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
+import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import { Currency } from 'components/ui/index';
 import { setPageTitle } from 'store/global/action';
@@ -24,7 +25,9 @@ class trackOrderDetailView extends React.Component {
       trackOrder,
       packages,
       orderDetail,
+      intl,
     } = this.props;
+    const { formatMessage } = intl;
     return (
       <section className="section section-page section-track-order">
         <div className="section-header">
@@ -38,7 +41,7 @@ class trackOrderDetailView extends React.Component {
         </div>
         <div className="section-footer">
           <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
-            Total Shipping Cost:
+            { formatMessage({ id: 'global.properNouns.goods.shippingCost' })}:
             <strong><Currency value={trackOrder.shipping_cost} /></strong>
           </p>
         </div>
@@ -52,6 +55,7 @@ trackOrderDetailView.defaultProps = {
   packages: [],
 };
 trackOrderDetailView.propTypes = {
+  intl: intlShape.isRequired,
   trackOrder: PropTypes.object,
   orderDetail: PropTypes.object,
   packages: PropTypes.array,
@@ -65,6 +69,6 @@ const mapDispatchToProp = {
   setPageTitle,
 };
 
-const TrackOrderDetailView = connect(mapStateToProps, mapDispatchToProp)(trackOrderDetailView);
+const TrackOrderDetailView = connect(mapStateToProps, mapDispatchToProp)(injectIntl(trackOrderDetailView));
 export default TrackOrderDetailView;
 

@@ -3,9 +3,9 @@ import { post } from 'store/http/httpAction';
 import { SET_CURRENT_STEP, ADD_SPLIT_ORDER, DELETE_SPLIT_ORDER, SET_DELIVERY_ORDERS, SET_NEXT_STEP, SET_PREVIOUS_STEP, RESET_ORDER } from './actionType';
 
 
-export const setCurrentStep = step => ({
+export const setCurrentStep = stepTitle => ({
   type: SET_CURRENT_STEP,
-  step,
+  stepTitle,
 });
 export const goNextStep = step => ({
   type: SET_NEXT_STEP,
@@ -21,7 +21,7 @@ export const addSplitOrder = () => ({
 export const deleteSplitOrder = () => ({
   type: DELETE_SPLIT_ORDER,
 });
-const setDeliveryOrders = deliveryOrders => ({
+export const setDeliveryOrders = deliveryOrders => ({
   type: SET_DELIVERY_ORDERS,
   deliveryOrders,
 });

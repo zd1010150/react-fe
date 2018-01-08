@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
+
 import { setIdViewData, queryByPaging, queryBySearchKey, setTrackOrderDetailInfo } from '../flow/action';
+
 import Table from '../component/table';
 import SearchForm from '../component/searchForm';
 
@@ -41,7 +43,18 @@ class trackOrderView extends React.Component {
             defaultStatus={defaultStatus}
           />
         </div>
-        <div className="section-content"><Table history={history} setIdViewData={setIdViewData} setTrackOrderDetailInfo={setTrackOrderDetailInfo} deliveryOrderStatus={deliveryOrderStatus} orders={orders} queryByPaging={queryByPaging} trackOrderDataTablePagination={trackOrderDataTablePagination} /></div>
+        <div className="section-content">
+          <Table
+            history={history}
+            setIdViewData={setIdViewData}
+            setTrackOrderDetailInfo={setTrackOrderDetailInfo}
+            deliveryOrderStatus={deliveryOrderStatus}
+            orders={orders}
+            queryByPaging={queryByPaging}
+            trackOrderDataTablePagination={trackOrderDataTablePagination}
+
+          />
+        </div>
         <div className="section-header" />
       </section>
     );
