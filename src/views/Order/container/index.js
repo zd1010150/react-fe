@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { setPageTitle, setOrderUser } from 'store/global/action';
+import { setNeedCreateInvoice } from '../component/chooseLogistic/flow/action';
 import { resetOrder, setCurrentStep, setDeliveryOrders, deleteSplitOrder } from '../component/skeleton/flow/action';
 import queryString from 'query-string';
 import Skeleton from '../component/skeleton/index';
@@ -26,18 +27,21 @@ class orderView extends React.Component {
       setDeliveryOrders,
       setPageTitle,
       deleteSplitOrder,
+      setNeedCreateInvoice,
     } = props;
     const pairs = queryString.parse(location.search);
     const deliveryOrderId = (pairs && pairs.deliveryOrderId) || '';
+    const needCreateBatchCreate = (pairs && pairs.needCreateBatchCreate);
     setPageTitle('global.pageTitle.order');
     if (!_.isEmpty(deliveryOrderId)) {
-      resetOrder();
+      deleteSplitOrder();
       setCurrentStep('chooseLogistic');
       setDeliveryOrders([Number(deliveryOrderId)]);
     } else {
       setCurrentStep('chooseUser');
       deleteSplitOrder();
     }
+    setNeedCreateInvoice(_.isEmpty(needCreateBatchCreate) || (needCreateBatchCreate === 'true'));
   }
   render() {
     return (
@@ -60,6 +64,7 @@ const mapDispatchToProp = {
   setCurrentStep,
   setDeliveryOrders,
   deleteSplitOrder,
+  setNeedCreateInvoice,
 };
 
 const OrderView = connect(mapStateToProps, mapDispatchToProp)(orderView);

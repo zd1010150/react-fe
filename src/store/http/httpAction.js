@@ -1,4 +1,6 @@
 import http from 'utils/http';
+import { UNAUTHENTICATION } from 'config/app.config.js';
+import { getAbsolutePath } from 'config/magento.config';
 import _ from 'lodash';
 import {
   HTTP_ACTION_DONE,
@@ -14,6 +16,9 @@ const dispatch = (request, dispatcher = () => {}) => {
     payload: {},
   });
   return request.then((data) => {
+    if (data.status_code === UNAUTHENTICATION.CODE) { // 如果是401为授权，就跳转到登录界面
+      window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage);
+    }
     if (data.errors || data.status_code || data.message) {
       let { errors } = data;
       errors = errors || data.status_code;

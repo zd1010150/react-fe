@@ -1,6 +1,10 @@
 import { post } from 'store/http/httpAction';
-import { SET_LOGISITIC_COST } from './actionType';
+import { SET_LOGISITIC_COST, SET_NEED_CREATE_INVOICE_BATCH } from './actionType';
 
+export const setNeedCreateInvoice = (isNeed) => ({
+  type: SET_NEED_CREATE_INVOICE_BATCH,
+  isNeed,
+});
 export const setFreightFee = (logisticType, fee) => ({
   type: SET_LOGISITIC_COST,
   logisticType,

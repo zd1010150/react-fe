@@ -12,8 +12,23 @@ class orderTable extends React.Component {
     this.props.setTrackOrderDetailInfo(trackOrder);
     this.props.history.replace('/trackOrders?view=detail');
   }
-  handlePaymentOrder(develiverOrderId) {
-    this.props.history.push(`/clientLists/order?deliveryOrderId=${develiverOrderId}`);
+  handlePaymentOrder(develiverOrder) {
+    if (!_.isEmpty(develiverOrder.invoices)) {
+      const {
+        setInvoiceInfo,
+        setDeliveryOrders,
+        getTotalLogisticFee,
+      } = this.props;
+      const invoices = [develiverOrder.invoices];
+      const deliveryOrders = [develiverOrder.id];
+      const logisticType = develiverOrder.shipping_type;
+
+      setInvoiceInfo(invoices);
+      setDeliveryOrders(deliveryOrders);
+      getTotalLogisticFee(logisticType, deliveryOrders);
+    }
+
+    this.props.history.push(`/clientLists/order?needCreateBatchCreate=${_.isEmpty(develiverOrder.invoices)}&deliveryOrderId=${develiverOrder.id}`);
   }
   render() {
     const { formatMessage } = this.props.intl;
@@ -69,7 +84,7 @@ class orderTable extends React.Component {
           if (Number(status) === UNPAIED_ORDER_STATUS) {
             return (
               <span>
-                <Button onClick={() => { this.handlePaymentOrder(record.id); }} size="small" >{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
+                <Button onClick={() => { this.handlePaymentOrder(record); }} size="small" >{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
                 <Divider type="vertical" />
               </span>
             );
@@ -115,7 +130,9 @@ orderTable.propTypes = {
   trackOrderDataTablePagination: PropTypes.object.isRequired,
   deliveryOrderStatus: PropTypes.array,
   history: PropTypes.object.isRequired,
-
+  getTotalLogisticFee: PropTypes.func.isRequired,
+  setDeliveryOrders: PropTypes.func.isRequired,
+  setInvoiceInfo: PropTypes.func.isRequired,
 };
 
 const OrderTable = injectIntl(orderTable);

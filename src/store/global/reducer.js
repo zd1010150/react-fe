@@ -1,9 +1,12 @@
 /* eslint-disable max-len */
 import { combineReducers } from 'redux';
+import { navLanguage } from 'utils/navigationUtil';
+import { getStore } from 'utils/localStorage';
+
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_ORDER } from './actionType';
 
 // 页面默认语言为 en，此处只是mock
-const language = (state = 'en', action) => {
+const language = (state = getStore('language') || navLanguage, action) => {
   let globalLanguage;
   switch (action.type) {
     case TOGGLE_LANGUAGE:

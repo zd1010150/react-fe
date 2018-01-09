@@ -79,7 +79,9 @@ class chooseLogisticView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             onClick={() => {
-              confirmGetInvoice();
+              if(this.props.needCreateInvoice){
+                confirmGetInvoice();
+              }
               goNextStep('chooseLogistic');
           }}
           >
@@ -94,6 +96,7 @@ chooseLogisticView.defaultProps = {
   freightSetting: [{
     id: 0,
   }],
+  deliveryOrderIds: [],
 };
 chooseLogisticView.propTypes = {
   intl: intlShape.isRequired,
@@ -103,11 +106,13 @@ chooseLogisticView.propTypes = {
   goPreviousStep: PropTypes.func.isRequired,
   getTotalLogisticFee: PropTypes.func.isRequired,
   confirmGetInvoice: PropTypes.func.isRequired,
+  needCreateInvoice: PropTypes.bool.isRequired,
 };
 const mapStateToProps = ({ global, order }) => ({
   freightSetting: global.settings.freightSetting,
   deliveryOrderIds: order.skeleton.deliveryOrders,
-  totalFee: order.chooseLogistic.fee,
+  totalFee: order.chooseLogistic.logistic.fee,
+  needCreateInvoice: order.chooseLogistic.needCreateInvoice,
 });
 const mapDispathToProps = {
   goNextStep,

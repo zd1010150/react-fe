@@ -1,29 +1,27 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, Dropdown, Icon } from 'antd';
-import { intlShape, injectIntl } from 'react-intl';
+import { Icon, Badge } from 'antd';
+import { LOCAL_STORAGE_CART_KEY } from 'config/app.config';
+import { getStoreByKeys } from 'utils/localStorage';
+import { getAbsolutePath } from 'config/magento.config';
 
-
-const languageView = ({ intl, onChange, language }) => {
-  const { formatMessage } = intl;
-  return (
-    <div data-role="language">
-      <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link" href="#">
-          {formatMessage({ id: `global.language.${language}` })} <Icon type="down" />
+const languageView = ({ language }) => {
+  const count = getStoreByKeys(LOCAL_STORAGE_CART_KEY);
+  return(
+    <div data-role="mini-cart">
+      <Badge count={count} offset={[10,20]}>
+        <a href={getAbsolutePath('/checkout/cart/', language)} className="head-example" >
+          <Icon type="shopping-cart" style={{fontSize: 20, color: '#757575', }}/>
         </a>
-      </Dropdown>
+      </Badge>
     </div>
   );
-};
+}
 
 // checkout/
 languageView.propTypes = {
   language: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
 };
 
-const Language = injectIntl(languageView);
-export default Language;
+export default languageView;

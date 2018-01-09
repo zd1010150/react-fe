@@ -5,6 +5,8 @@ import classNames from 'classnames/bind';
 
 import Logo from '../component/logo';
 import Search from '../component/search';
+import MiniCart from '../component/miniCart';
+
 import styles from '../HeaderContent.less';
 
 const cx = classNames.bind(styles);
@@ -12,7 +14,9 @@ const cx = classNames.bind(styles);
 const headerContent = ({ language }) => (
   <div className={cx('header-content-wrapper')}>
     <Logo language={language} />
+    <MiniCart language={language} />
     <Search language={language} />
+
   </div>
 );
 

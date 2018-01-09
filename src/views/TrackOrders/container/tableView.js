@@ -5,6 +5,10 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
 
+import { getTotalLogisticFee } from 'views/Order/component/chooseLogistic/flow/action';
+import { setDeliveryOrders } from 'views/Order/component/skeleton/flow/action';
+import { setInvoiceInfo } from 'views/Order/component/confirmInvoice/flow/action';
+
 import { setIdViewData, queryByPaging, queryBySearchKey, setTrackOrderDetailInfo } from '../flow/action';
 
 import Table from '../component/table';
@@ -31,6 +35,9 @@ class trackOrderView extends React.Component {
       defaultStatus,
       setTrackOrderDetailInfo,
       history,
+      setInvoiceInfo,
+      setDeliveryOrders,
+      getTotalLogisticFee,
     } = this.props;
     return (
       <section className="section section-page">
@@ -52,7 +59,9 @@ class trackOrderView extends React.Component {
             orders={orders}
             queryByPaging={queryByPaging}
             trackOrderDataTablePagination={trackOrderDataTablePagination}
-
+            setInvoiceInfo={setInvoiceInfo}
+            setDeliveryOrders={setDeliveryOrders}
+            getTotalLogisticFee={getTotalLogisticFee}
           />
         </div>
         <div className="section-header" />
@@ -83,6 +92,9 @@ const mapDispatchToProp = {
   setIdViewData,
   queryBySearchKey,
   setTrackOrderDetailInfo,
+  getTotalLogisticFee,
+  setDeliveryOrders,
+  setInvoiceInfo,
 };
 
 const TrackOrderView = withRouter(connect(mapStateToProps, mapDispatchToProp)(trackOrderView));

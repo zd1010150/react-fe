@@ -55,9 +55,6 @@ class confirmInvoiceView extends React.Component {
     });
     return (
       <div className={classNames('block', 'invoice-block', 'section-confirm-invoice')}>
-        <div className="block-title">
-          <strong> {formatMessage({ id: 'page.Order.confirmOrder' })} </strong>
-        </div>
         <div className="block-content">
           <form name="payFreightForm" action={`${baseUrl}/affiliate/delivery-orders/pay`} method="post">
             <input type="hidden" name="freight_id" value={freightId} />
@@ -72,6 +69,7 @@ class confirmInvoiceView extends React.Component {
         </div>
         <div className={classNames('block-footer', 'invoice-block-footer')}>
           <Button
+            disabled={true}
             className={cx('order-step-previous-btn')}
             onClick={() => {
               goPreviousStep('confirmOrder');
@@ -109,10 +107,9 @@ confirmInvoiceView.propTypes = {
   receiver: PropTypes.object,
 };
 const mapStateToProps = ({ order }) => ({
-  freightId: order.chooseLogistic.logisticType,
+  freightId: order.chooseLogistic.logistic.logisticType,
   deliveryOrderIds: order.skeleton.deliveryOrders,
   invoices: order.confirmInvoice.invoices,
-  address: order.confirmInvoice.address,
   receiver: getReceiver(order.confirmInvoice.invoices),
 });
 const mapDispathToProps = {
