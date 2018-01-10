@@ -186,7 +186,6 @@ class leadsTable extends React.Component {
         fetchLeads(pageSize, page);
       },
     };
-    console.log(pagination.current, pagination.total, pagination.pageSize, '- --- table render');
     return (
       <div>
         <Table columns={columns} dataSource={this.props.leadsData} pagination={pagination} />

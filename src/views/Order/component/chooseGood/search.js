@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { Input } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
@@ -15,7 +16,11 @@ const search = ({ queryGoods, intl }) => {
       <div className="block-content">
         <Search
           placeholder={formatMessage({ id: 'page.Order.searchPlaceholder' })}
-          onSearch={value => queryGoods(value)}
+          onSearch={(value) => {
+            if (!_.isEmpty(_.trim(value))) {
+              queryGoods(value);
+            }
+          }}
           enterButton
         />
       </div>

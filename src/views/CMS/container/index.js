@@ -42,7 +42,7 @@ class cmsView extends React.Component {
           {images.map(item =>
             (
               <Col span={24}>
-                <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')}/>
+                <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')} />
               </Col>
             ))}
         </Row>

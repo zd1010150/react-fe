@@ -25,7 +25,6 @@ headerContent.propTypes = {
 };
 const mapStateToProps = ({ global }) => ({
   language: global.language,
-  account: global.account,
 });
 
 

@@ -207,7 +207,6 @@ class accountsTable extends React.Component {
         fetchAccounts(pageSize, page);
       },
     };
-    console.log(pagination.current, pagination.total, pagination.pageSize, '- --- table render');
     return (
       <div>
         <Table columns={columns} dataSource={this.props.accountsData} pagination={pagination} />

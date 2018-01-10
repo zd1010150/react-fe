@@ -23,7 +23,7 @@ class topPanel extends React.Component {
       <div className={cx('panel', 'header')}>
         <Language language={language} onChange={(language) => this.changeLanguage(language) } />
         <TopStaticNav />
-        <Operations account={account} language={language} />
+        <Operations account={account} language={language}  />
         <Welcome account={account} />
       </div>
     );
@@ -34,7 +34,7 @@ topPanel.propTypes = {
   language: PropTypes.string.isRequired,
   toggleLanguage: PropTypes.func.isRequired,
   fetchGlobalSetting: PropTypes.func.isRequired,
-  account: PropTypes.objectOf(PropTypes.string).isRequired,
+  account: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({ global }) => ({
   language: global.language,

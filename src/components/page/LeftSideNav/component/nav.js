@@ -14,6 +14,7 @@ const { SubMenu } = Menu;
 const AFFLIATE_MENU_INDEX = 4;
 
 class Nav extends React.Component {
+
   render() {
     const { intl, location } = this.props;
     const { formatMessage } = intl;
@@ -93,6 +94,7 @@ class Nav extends React.Component {
           defaultSelectedKeys={[location.pathname]}
           defaultOpenKeys={[getParentUrl(location.pathname)]}
           selectedKeys={[location.pathname]}
+          openKeys={[getParentUrl(location.pathname)]}
         >
           { menu }
         </Menu>
