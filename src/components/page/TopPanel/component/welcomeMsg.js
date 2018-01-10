@@ -2,12 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
+import { Username } from 'components/ui/index';
 
 const welcomeMsgView = ({ intl, account }) => {
   const { formatMessage } = intl;
   return (
     <div data-role="welcomeMsg">
-      <span> { formatMessage({ id: 'global.magento.welcomeMsg' }, { name: account.username })}</span>
+      <span> { formatMessage({ id: 'global.magento.welcomeMsg' })} <Username firstName={account.first_name} lastName={account.last_name} /> !</span>
     </div>
   );
 };
@@ -15,7 +16,7 @@ const welcomeMsgView = ({ intl, account }) => {
 
 welcomeMsgView.propTypes = {
   intl: intlShape.isRequired,
-  account: PropTypes.objectOf(PropTypes.string).isRequired,
+  account: PropTypes.object.isRequired,
 };
 
 const Welcome = injectIntl(welcomeMsgView);

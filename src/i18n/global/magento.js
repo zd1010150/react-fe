@@ -4,7 +4,7 @@ export default {
       home: '主页',
       contactUs: '联系我们',
     },
-    welcomeMsg: '{name},欢迎你！',
+    welcomeMsg: '欢迎你',
     topOperations: {
       signOut: '退出',
       myAccount: '我的账户',
@@ -41,7 +41,7 @@ export default {
       home: 'Home',
       contactUs: 'Contact Us',
     },
-    welcomeMsg: 'Welcome,{name}! ',
+    welcomeMsg: 'Welcome ',
     topOperations: {
       signOut: 'Sign Out',
       myAccount: 'My Account',
