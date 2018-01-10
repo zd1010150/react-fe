@@ -14,9 +14,25 @@ const { SubMenu } = Menu;
 const AFFLIATE_MENU_INDEX = 4;
 
 class Nav extends React.Component {
+  state = {
+    defaultSelectedKeys: [this.props.location.pathname],
+    defaultOpenKeys: [getParentUrl(this.props.location.pathname)],
+    selectedKeys: [this.props.location.pathname],
+    openKeys: [getParentUrl(this.props.location.pathname)],
+  }
+  componentWillReceiveProps(nextProps){
+    debugger;
+    if (nextProps.location !== this.props.location) {
+      this.setState({
+        selectedKeys: [nextProps.location.pathname],
+        openKeys: [getParentUrl(nextProps.location.pathname)],
+      });
+    }
+  }
   render() {
     const { intl, location } = this.props;
     const { formatMessage } = intl;
+    console.log('left nav:========>', JSON.stringify(location), getParentUrl(location.pathname));
     // magento static nav
     const magentoNavObj = [
       { id: 'global.magento.leftNav.accountDashboard', url: '/customer/account/index/' },
@@ -33,28 +49,28 @@ class Nav extends React.Component {
     const affiliateNavObj = [
       {
         id: 'page.LeftSideNav.clientLists',
-        url: '/clientLists',
+        url: '/clientLists/',
         children: [{
           id: 'page.LeftSideNav.leads',
-          url: '/clientLists/leads',
+          url: '/clientLists/leads/',
         }, {
           id: 'page.LeftSideNav.accounts',
-          url: '/clientLists/accounts',
+          url: '/clientLists/accounts/',
         }, {
           id: 'page.LeftSideNav.marketingMaterial',
-          url: '/clientLists/marketingMaterial',
+          url: '/clientLists/marketingMaterial/',
         }, {
           id: 'page.LeftSideNav.order',
-          url: '/clientLists/order',
+          url: '/clientLists/order/',
         }],
       },
       {
         id: 'page.LeftSideNav.priceSetting',
-        url: '/priceSetting',
+        url: '/priceSetting/',
       },
       {
         id: 'page.LeftSideNav.trackOrders',
-        url: '/trackOrders',
+        url: '/trackOrders/',
       },
     ];
     const getChildrenTree = (item) => {
@@ -90,9 +106,10 @@ class Nav extends React.Component {
           mode="inline"
           inlineIndent={30}
           className={cx('left-side-nav')}
-          defaultSelectedKeys={[location.pathname]}
-          defaultOpenKeys={[getParentUrl(location.pathname)]}
-          selectedKeys={[location.pathname]}
+          defaultSelectedKeys={this.state.defaultSelectedKeys}
+          defaultOpenKeys={this.state.defaultOpenKeys}
+          selectedKeys={this.state.selectedKeys}
+          openKeys={this.state.openKeys}
         >
           { menu }
         </Menu>
