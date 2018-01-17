@@ -53,14 +53,14 @@ const dispatch = (request, dispatcher = () => {}) => {
   });
 };
 
-export const post = (url, data = {}, realHeaders = {}, dispatcher) =>
-  (dispatch(http('post', url, data, realHeaders), dispatcher));
+export const post = (url, data = {}, realHeaders = {}, apiDomain = '', dispatcher) =>
+  (dispatch(http('post', url, data, realHeaders, apiDomain), dispatcher));
 
-export const get = (url, data, dispatcher) =>
-  (dispatch(http('get', url, data), dispatcher));
+export const get = (url, data, realHeaders = {}, apiDomain = '', dispatcher) =>
+  (dispatch(http('get', url, data, realHeaders, apiDomain), dispatcher));
 
-export const httpDelete = (url, data, dispatcher) =>
-  (dispatch(http('delete', url, data), dispatcher));
+export const httpDelete = (url, data, realHeaders = {}, apiDomain = '', dispatcher) =>
+  (dispatch(http('delete', url, data, realHeaders, apiDomain), dispatcher));
 
-export const put = (url, data, dispatcher) =>
-  (dispatch(http('put', url, data), dispatcher));
+export const put = (url, data, realHeaders = {}, apiDomain = '', dispatcher) =>
+  (dispatch(http('put', url, data, realHeaders, apiDomain), dispatcher));
