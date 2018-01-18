@@ -24,24 +24,29 @@ class cmsView extends React.Component {
     this.props.getMaterial(this.state.id);
   }
   render() {
-    const { images, video, text } = this.props;
+    const { images, videos, text } = this.props;
     return (
       <div className={cx('cms-content-wrapper')}>
         <Row>
-          <Col span={12}>
+          <Col span={24}>
             <p>{text}</p>
           </Col>
-          <Col span={12}>
-            <video>
-              <source src={video} />
-            </video>
+        </Row>
+        <Row>
+          <Col span={8}>
+            {
+              videos.map((video, index) =>
+                (<video width="100%" controls key={index}>
+                  <source src={video} />
+                </video>))
+            }
           </Col>
 
         </Row>
         <Row>
           {images.map(item =>
             (
-              <Col span={24}>
+              <Col span={8}>
                 <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')} />
               </Col>
             ))}
@@ -52,13 +57,13 @@ class cmsView extends React.Component {
 }
 cmsView.defaultProps = {
   images: [],
-  video: '',
+  videos: [],
   text: '',
 };
 cmsView.propTypes = {
   getMaterial: PropTypes.func.isRequired,
   images: PropTypes.array,
-  video: PropTypes.string,
+  videos: PropTypes.array,
   text: PropTypes.string,
 };
 const mapStateToProp = ({ cms }) => ({
