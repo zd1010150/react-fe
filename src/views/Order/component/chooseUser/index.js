@@ -36,6 +36,7 @@ class chooseUser extends React.Component {
       searchByKeys,
       hasSeletedUser,
       goNextStep,
+      setUsersData,
       intl,
     } = this.props;
     const { formatMessage } = intl;
@@ -50,6 +51,7 @@ class chooseUser extends React.Component {
             selectedUser={user}
             setSearchAreaVisible={setSearchAreaVisible}
             searchAreaVisible={searchAreaVisible}
+            setUsersData={setUsersData}
           /> : ''}
         </div>
         <div className="block-footer">

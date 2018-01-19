@@ -4,6 +4,8 @@ import { Icon } from 'antd';
 import classNames from 'classnames/bind';
 import styles from '../Footer.less';
 
+import payment from 'assets/images/payment.png';
+
 const cx = classNames.bind(styles);
 const Footer = () => {
   const footerImformation = [
@@ -79,7 +81,7 @@ const Footer = () => {
             <p>
               <Icon type="mail" /> <a href="mailto:info@breakable.com">info@breakable.com</a>
             </p>
-            <p><img src = "./payment.png" alt = ""/></p>
+            <p><img src={payment} alt = ""/></p>
           </div>
         </div>
 

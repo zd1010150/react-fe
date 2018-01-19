@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Badge } from 'antd';
-import { LOCAL_STORAGE_CART_KEY } from 'config/app.config';
+import { LOCAL_STORAGE_CART_KEY } from 'config/magento.config';
 import { getStoreByKeys } from 'utils/localStorage';
 import { getAbsolutePath } from 'config/magento.config';
 

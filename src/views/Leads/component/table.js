@@ -101,8 +101,6 @@ class leadsTable extends React.Component {
   render() {
     const { affiliatedClientStatus } = this.props;
     const { formatMessage } = this.props.intl;
-    const rejectObj = _.find(affiliatedClientStatus, { name: 'reject' });
-    const approveObj = _.find(affiliatedClientStatus, { name: 'active' });
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
@@ -133,10 +131,10 @@ class leadsTable extends React.Component {
       width: 280,
       render: (text, record) => {
         const idBtnType = () => {
-          if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {
+          if (Number(record.status) === 2) {
             return 'primary';
           }
-          if (Number(record.status) === (_.isEmpty(approveObj) ? 0 : approveObj.id)) {
+          if (Number(record.status) === 3) {
             return 'danger';
           } return 'default';
         };
@@ -188,7 +186,17 @@ class leadsTable extends React.Component {
     };
     return (
       <div>
-        <Table columns={columns} dataSource={this.props.leadsData} pagination={pagination} />
+        <Table
+          columns={columns}
+          dataSource={this.props.leadsData}
+          pagination={pagination}
+          rowClassName={(record) => {
+          const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
+          if (!enable) {
+            return 'error-row';
+          }
+        }}
+        />
         <IdDialog {...this.state.editID} onOk={(idNumber, idFront, idBack) => { this.handleIDSave(idNumber, idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editLead.reject_reason_id || 0} />
         <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editLead} onClose={() => { this.closeUserDialog(); }} userType="Leads" operatorType={this.state.operatorType} update={updateLeads} />
         <DeleteDialog userId={this.state.deleteUserId} visible={this.state.deleteDialogVisible} onClose={() => { this.closeDeleteDialog(); }} onDelete={deleteLeads} />

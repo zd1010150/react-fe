@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
+import { withRouter } from 'react-router';
 import { Currency } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
 import { goPreviousStep } from '../skeleton/flow/action';
@@ -13,6 +14,8 @@ import Address from './address';
 import Invoice from './invoice';
 import { resetOrder } from '../skeleton/flow/action';
 import { getReceiver } from './flow/reselect';
+import { getQuoteId } from './flow/action';
+
 
 const cx = classNames.bind(styles);
 
@@ -29,9 +32,15 @@ class confirmInvoiceView extends React.Component {
       invoices,
       receiver,
       resetOrder,
+      getQuoteId,
+      magentoShippingCost,
+      location,
       intl,
     } = this.props;
     const { formatMessage } = intl;
+
+
+    const successUrl = location;
     const invoicesEl = invoices.map((item) => {
       const deliveryOrder = item.delivery_order;
       const totalQuantity = deliveryOrder.items.reduce((sum, i) => {
@@ -59,6 +68,9 @@ class confirmInvoiceView extends React.Component {
           <form name="payFreightForm" action={`${baseUrl}/affiliate/delivery-orders/pay`} method="post">
             <input type="hidden" name="freight_id" value={freightId} />
             <input type="hidden" name="delivery_orders_ids" value={deliveryOrderIds} />
+            <input type="hidden" name="shipping_cost" value={magentoShippingCost} />
+            <input type="hidden" name="success_url" value={"eee"} />
+            <input type="hidden" name="error_url" value={"3333"} />
           </form>
           <Address {...receiver} />
           {invoicesEl}
@@ -82,7 +94,7 @@ class confirmInvoiceView extends React.Component {
             type="primary"
             onClick={() => {
               resetOrder();
-              this.confirmPayFreight();
+              getQuoteId(totalCost, this.confirmPayFreight());
             }}
           >
             { formatMessage({ id: 'global.ui.button.pay' }) } <Icon type="pay-circle-o" />
@@ -101,21 +113,25 @@ confirmInvoiceView.defaultProps = {
 confirmInvoiceView.propTypes = {
   intl: intlShape.isRequired,
   goPreviousStep: PropTypes.func.isRequired,
+  getQuoteId: PropTypes.func.isRequired,
   deliveryOrderIds: PropTypes.array,
   freightId: PropTypes.number,
   invoices: PropTypes.array,
   receiver: PropTypes.object,
+  location: PropTypes.object,
 };
 const mapStateToProps = ({ order }) => ({
   freightId: order.chooseLogistic.logistic.logisticType,
   deliveryOrderIds: order.skeleton.deliveryOrders,
   invoices: order.confirmInvoice.invoices,
   receiver: getReceiver(order.confirmInvoice.invoices),
+  magentoShippingCost: order.confirmInvoice.magentoShippingCost,
 });
 const mapDispathToProps = {
   goPreviousStep,
   resetOrder,
+  getQuoteId,
 };
 
-const ConfirmInvoiceView = connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView));
+const ConfirmInvoiceView = withRouter(connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView)));
 export default ConfirmInvoiceView;

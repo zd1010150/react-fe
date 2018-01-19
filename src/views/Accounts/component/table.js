@@ -209,7 +209,17 @@ class accountsTable extends React.Component {
     };
     return (
       <div>
-        <Table columns={columns} dataSource={this.props.accountsData} pagination={pagination} />
+        <Table
+          columns={columns}
+          dataSource={this.props.accountsData}
+          pagination={pagination}
+          rowClassName={(record) => {
+            const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
+            if (!enable) {
+              return 'error-row';
+            }
+          }}
+        />
         <IdDialog {...this.state.editID} onOk={(idNumber, idFront, idBack) => { this.handleIDSave(idNumber, idFront, idBack); }} onCancel={() => { this.handleIDClose(); }} rejectReseason={this.state.editAccounts.reject_reason_id || 0} />
         <LeadsAndAccountsEditAddDialog visible={this.state.userDialogVisible} editObject={this.state.editAccounts} onClose={() => { this.closeUserDialog(); }} userType="Accounts" operatorType={this.state.operatorType} update={updateAccounts} />
         <HistoryOrderDialog visible={this.state.historyOrderDialogVisble} onClose={() => { this.closeHistoryOrder(); }} historyOrder={this.state.historyOrder} />

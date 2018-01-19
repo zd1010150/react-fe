@@ -6,9 +6,9 @@ import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
 import _ from 'lodash';
-import { Row, Col } from 'antd';
 import styles from '../Notification.less';
 import SuccessPayView from '../component/successPay';
+import ErrorPayView from '../component/errorPay';
 
 const cx = classNames.bind(styles);
 class notificationView extends React.Component {
@@ -18,6 +18,8 @@ class notificationView extends React.Component {
       switch (pairs.view) {
         case 'successPay':
           return <SuccessPayView />;
+        case 'errorPay':
+          return <ErrorPayView />
         default:
           return '';
       }
