@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
+import { withRouter } from 'react-router';
 import { Currency } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
 import { goPreviousStep } from '../skeleton/flow/action';
@@ -14,6 +15,7 @@ import Invoice from './invoice';
 import { resetOrder } from '../skeleton/flow/action';
 import { getReceiver } from './flow/reselect';
 import { getQuoteId } from './flow/action';
+
 
 const cx = classNames.bind(styles);
 
@@ -32,9 +34,13 @@ class confirmInvoiceView extends React.Component {
       resetOrder,
       getQuoteId,
       magentoShippingCost,
+      location,
       intl,
     } = this.props;
     const { formatMessage } = intl;
+    debugger;
+
+    const successUrl = location;
     const invoicesEl = invoices.map((item) => {
       const deliveryOrder = item.delivery_order;
       const totalQuantity = deliveryOrder.items.reduce((sum, i) => {
@@ -112,6 +118,7 @@ confirmInvoiceView.propTypes = {
   freightId: PropTypes.number,
   invoices: PropTypes.array,
   receiver: PropTypes.object,
+  location: PropTypes.object,
 };
 const mapStateToProps = ({ order }) => ({
   freightId: order.chooseLogistic.logistic.logisticType,
@@ -126,5 +133,5 @@ const mapDispathToProps = {
   getQuoteId,
 };
 
-const ConfirmInvoiceView = connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView));
+const ConfirmInvoiceView = withRouter(connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView)));
 export default ConfirmInvoiceView;

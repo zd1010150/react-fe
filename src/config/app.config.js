@@ -12,7 +12,7 @@ export const CHINESE_CODE = 'zh';
 export const UNAUTHENTICATION = { // Unauthentication rewrite url
   CODE: 401,
   REWRIRE_URL: '/customer/account/login/',
-  REDIRECT_KEY: 'login_redirect',
+  REDIRECT_KEY: 'success_url',
 };
 
 export const UNPAIED_ORDER_STATUS = 1; // 未支付的发货单的状态是1

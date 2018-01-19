@@ -3,7 +3,11 @@ import Cookie from 'js-cookie';
 import _ from 'lodash';
 
 const LOCAL_STORAGE_CART_KEY = 'mage-cache-storage.cart.summary_count'; // magento 存储的购物车信息的key
-const COOKIE_STORE_VIEW_KEY = 'store';
+const COOKIE_STORE_VIEW_KEY = 'store_locale';
+const MAGENTO_LANGUAGES = {
+  zh: 'zh_Hans_CN',
+  en: 'en_AU',
+};
 
 const MagentoDomain = process.env.__MAGENTO_DOMAIN__;
 const MagentoProductImgPrefix = `${MagentoDomain}/pub/media/catalog/product`;
@@ -22,6 +26,10 @@ const getAbsolutePath = (url, language, params = {}) => {
   return `${tempet}${_.isEmpty(dataStr) ? '' : `&${dataStr}`}`;
 };
 const MagentoStoreView = Cookie.get(COOKIE_STORE_VIEW_KEY) || '';
-const MagentoLanguage = MagentoStoreView.indexOf('chinese') > -1 ? 'zh' : 'en';
-console.log(MagentoLanguage, '----language');
-export { MagentoDomain, getAbsolutePath, MagentoProductImgPrefix, LOCAL_STORAGE_CART_KEY, MagentoStoreView, MagentoLanguage };
+const MagentoLanguage = MagentoStoreView.indexOf('en') > -1 ? 'en' : 'zh';
+const setMangentoLanguageCookie = (language) => {
+  Cookie.remove(COOKIE_STORE_VIEW_KEY);
+  Cookie.set(COOKIE_STORE_VIEW_KEY, MAGENTO_LANGUAGES[language], { expires: 0.0416667, path: '/' });
+};
+const removeMangentoLanguageCookie = () => Cookie.remove(COOKIE_STORE_VIEW_KEY);
+export { MagentoDomain, getAbsolutePath, MagentoProductImgPrefix, LOCAL_STORAGE_CART_KEY, MagentoStoreView, MagentoLanguage, setMangentoLanguageCookie, removeMangentoLanguageCookie };

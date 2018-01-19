@@ -61,7 +61,6 @@ const table = ({ intl, users, setSeletedUser }) => {
       rowKey="id"
       pagination={false}
       rowClassName={(record) => {
-        debugger;
       const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
       if (!enable) {
         return 'error-row';

@@ -2,7 +2,8 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { removeMangentoLanguageCookie } from 'config/magento.config';
 import { Provider } from 'react-redux';
 import { syncStateAndLocalStorage } from 'utils/localStorage';
 import configureStore from './store/configureStore';
@@ -30,14 +31,15 @@ ErrorNotification(store);
 
 window.addEventListener('beforeunload', () => {
   syncStateAndLocalStorage(store.getState().global);
+ // removeMangentoLanguageCookie();
 });
 
 const AppView = () => (
   <Provider store={store}>
     <I18n>
-      <HashRouter>
+      <BrowserRouter basename="/admin" >
         <App />
-      </HashRouter>
+      </BrowserRouter>
     </I18n>
   </Provider>
 );

@@ -1,5 +1,4 @@
 import { get, post, put, httpDelete } from 'store/http/httpAction';
-import { searchByKeys } from 'views/Order/component/chooseUser/flow/action';
 import { SET_LEADS_DATA, SET_ID_VIEW, SET_PAGENATIONS } from './actionType';
 
 export const setIdViewData = data => ({
@@ -26,7 +25,6 @@ export const fetchLeads = (perPage = 3, currentPage = 1) => dispatch => get('/af
     dispatch(setLeadsData(data.data));
     const { pagination } = data.meta;
     dispatch(setPaginations(pagination.per_page, pagination.current_page, pagination.total));
-    dispatch(searchByKeys());
   }
 });
 export const addLeads = form => dispatch => post('/affiliate/affiliated-clients', { ...form }, dispatch).then((data) => {
