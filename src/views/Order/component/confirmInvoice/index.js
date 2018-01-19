@@ -38,7 +38,7 @@ class confirmInvoiceView extends React.Component {
       intl,
     } = this.props;
     const { formatMessage } = intl;
-    debugger;
+
 
     const successUrl = location;
     const invoicesEl = invoices.map((item) => {
