@@ -16,19 +16,18 @@ const setPaginations = (perPage, currentPage, total) => ({
   currentPage,
   total,
 });
-export const fetchLeads = (perPage = 3, currentPage = 1) => {
-  return dispatch => get('/affiliate/affiliated-clients', {
-    type_id: 1,
-    per_page: perPage,
-    page: currentPage,
-  }, dispatch).then((data) => {
+export const fetchLeads = (perPage = 3, currentPage = 1) => dispatch => get('/affiliate/affiliated-clients', {
+  type_id: 1,
+  per_page: perPage,
+  page: currentPage,
+}, dispatch).then((data) => {
+  if (data && data.meta && data.data) {
     dispatch(setLeadsData(data.data));
     const { pagination } = data.meta;
     dispatch(setPaginations(pagination.per_page, pagination.current_page, pagination.total));
-  });
-};
+  }
+});
 export const addLeads = form => dispatch => post('/affiliate/affiliated-clients', { ...form }, dispatch).then((data) => {
-  console.log(data);
   dispatch(fetchLeads());
 });
 export const updateLeads = form => dispatch => put(`/affiliate/affiliated-clients/${form.id}`, { ...form }, dispatch).then((data) => {

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING } from './actionType';
 import { setMMCategory } from 'views/MarketingMaterials/flow/action';
 import { UNAUTHENTICATION } from 'config/app.config.js';
-import { getAbsolutePath } from 'config/magento.config';
+import { getAbsolutePath, MagentoDomain } from 'config/magento.config';
 
 export const toggleLanguage = language => ({
   type: TOGGLE_LANGUAGE,
@@ -50,3 +50,5 @@ export const fetchAccountInfo = () => dispatch => post('/affiliate/me').then((da
     dispatch(setAccountInfo(data.user));
   }
 });
+
+

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, Carousel } from 'antd';
 import { cmsUrl } from 'config/env.config';
 import classNames from 'classnames/bind';
 import { QRcode } from 'components/ui/index';
@@ -9,7 +9,7 @@ import styles from '../MarketingMaterials.less';
 const cx = classNames.bind(styles);
 const { Grid } = Card;
 const plan = ({
-  pictures, video, text, title, id,
+  pictures, videos, text, title, id,
 }) => {
   const cardBodyStyle = {
     padding: '5px',
@@ -41,16 +41,22 @@ const plan = ({
     boxShadow: 'none',
   };
   return (
-    <Card title={title} bodyStyle={cardBodyStyle} style={{ marginBottom: '10px' }}>
+    <Card title={title} bodyStyle={cardBodyStyle} style={{ marginBottom: '10px' }} className={cx('plan-card')}>
       <Grid style={outerGridStyle}>
         <Card bodyStyle={cardBodyStyle} bordered={false}>
           {pictures.map((item, index) => <Grid style={picGridStyle} key={index}><img src={item.path} alt="marketing pic" className={cx('plan-img')} /></Grid>)}
         </Card>
       </Grid>
       <Grid style={videGridStyle}>
-        <video width="100%">
-          <source src={video} />
-        </video>
+        <Carousel autoplay>
+          {
+            videos.map((video, index) =>
+              (<video width="100%" key={index}>
+                <source src={video} />
+               </video>))
+          }
+        </Carousel>
+
       </Grid>
       <Grid style={videGridStyle}>{text}</Grid>
       <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}`} width="160px" height="160px" /> </Grid>
@@ -60,14 +66,14 @@ const plan = ({
 plan.defaultProps = {
   title: '',
   pictures: [],
-  video: '',
+  videos: [],
   text: '',
   id: 0,
 };
 plan.propTypes = {
   title: PropTypes.string,
   pictures: PropTypes.array,
-  video: PropTypes.string,
+  videos: PropTypes.array,
   text: PropTypes.string,
   id: PropTypes.number,
 };

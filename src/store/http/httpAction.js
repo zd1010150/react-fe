@@ -17,7 +17,7 @@ const dispatch = (request, dispatcher = () => {}) => {
   });
   return request.then((data) => {
     if (data.status_code === UNAUTHENTICATION.CODE) { // 如果是401为授权，就跳转到登录界面
-      window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage);
+      window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage, { [UNAUTHENTICATION.REDIRECT_KEY]: window.location.href });
     }
     if (data.errors || data.status_code || data.message) {
       let { errors } = data;
@@ -53,14 +53,14 @@ const dispatch = (request, dispatcher = () => {}) => {
   });
 };
 
-export const post = (url, data = {}, realHeaders = {}, dispatcher) =>
-  (dispatch(http('post', url, data, realHeaders), dispatcher));
+export const post = (url, data = {}, dispatcher, apiDomain = '', realHeaders = {}) =>
+  (dispatch(http('post', url, data, realHeaders, apiDomain), dispatcher));
 
-export const get = (url, data, dispatcher) =>
-  (dispatch(http('get', url, data), dispatcher));
+export const get = (url, data, dispatcher, apiDomain = '', realHeaders = {}) =>
+  (dispatch(http('get', url, data, realHeaders, apiDomain), dispatcher));
 
-export const httpDelete = (url, data, dispatcher) =>
-  (dispatch(http('delete', url, data), dispatcher));
+export const httpDelete = (url, data, dispatcher, apiDomain = '', realHeaders = {}) =>
+  (dispatch(http('delete', url, data, realHeaders, apiDomain), dispatcher));
 
-export const put = (url, data, dispatcher) =>
-  (dispatch(http('put', url, data), dispatcher));
+export const put = (url, data, dispatcher, apiDomain = '', realHeaders = {}) =>
+  (dispatch(http('put', url, data, realHeaders, apiDomain), dispatcher));

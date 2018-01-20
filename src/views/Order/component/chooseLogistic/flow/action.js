@@ -18,6 +18,7 @@ export const getTotalLogisticFee = (logisticType, deliveryOrderIds) => (dispatch
         freight_setting_id: logisticType,
         delivery_orders_ids: deliveryOrderIds,
       },
+      dispatch,
     ).then((data) => {
       dispatch(setFreightFee(logisticType, data));
     });

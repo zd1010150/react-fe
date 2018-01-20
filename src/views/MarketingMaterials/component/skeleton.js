@@ -41,7 +41,7 @@ class skeleton extends React.Component {
               key={plan.id}
               title={plan.title}
               pictures={plan.images}
-              video={plan.video_urls && plan.video_urls[0]}
+              videos={plan.video_urls}
               text={plan.description}
               id={plan.id}
             />))

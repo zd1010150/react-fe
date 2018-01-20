@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { intlShape, injectIntl } from 'react-intl';
-import { Table, Button } from 'antd';
+import { Table, Button, Icon } from 'antd';
 import { Address, Username } from 'components/ui/index';
 
 const table = ({ intl, users, setSeletedUser }) => {
@@ -34,22 +34,39 @@ const table = ({ intl, users, setSeletedUser }) => {
     key: 'action',
     render: (text, record) => {
       const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
+      if (enable) {
+        return (
+          <span>
+            <Button
+              size="small"
+              onClick={() => {
+              setSeletedUser(record);
+            }}
+            >{formatMessage({ id: 'global.ui.button.select' })}
+            </Button>
+          </span>
+        );
+      }
       return (
-        <span>
-          <Button
-            size="small"
-            disabled={!enable}
-            onClick={() => {
-          setSeletedUser(record);
-        }}
-          >{formatMessage({ id: 'global.ui.button.select' })}
-          </Button>
-        </span>
-      );
+        <span className="text-danger">
+          <Icon type="warning" className="text-danger" />
+          {formatMessage({ id: 'page.Leads.complementAddressTip' })}
+        </span>);
     },
   }];
   return (
-    <Table columns={columns} dataSource={users} rowKey="id" pagination={false} />
+    <Table
+      columns={columns}
+      dataSource={users}
+      rowKey="id"
+      pagination={false}
+      rowClassName={(record) => {
+      const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
+      if (!enable) {
+        return 'error-row';
+      }else return 'correct-row';
+    }}
+    />
   );
 };
 table.defaultProps = {

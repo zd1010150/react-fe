@@ -6,6 +6,8 @@ import { RESET_ORDER } from '../../skeleton/flow/actionType';
 
 const users = (state = [], action) => {
   switch (action.type) {
+    case SET_SEARCH_AREA_VISIBLE:
+      return [];
     case RESET_ORDER:
       return [];
     case SET_USER_TABLE_DATA:
