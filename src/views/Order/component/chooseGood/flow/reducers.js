@@ -38,7 +38,7 @@ const mixAvailableQuantity = (state, goods, cart) => {
     selectingQuantity: 1,
     key: item.product.id,
     totalPrice: 0, // 总售价
-    price: item.product.recommended_price, // 售价
+    price: item.product.saling_price, // 售价初始值
     totalCost: 0, // 总成本价
   }));
   return newGoods;
