@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign,no-underscore-dangle */
 
+import _ from 'lodash';
 import fetch from 'isomorphic-fetch';
 import { baseUrl } from '../config/env.config';
 import { MAX_FETCH_TIMEOUT } from '../config/app.config';
 
 export default async (type = 'GET', url = '', data = {}, headers = {}, apiDomain = '') => {
-  debugger;
   type = type.toUpperCase();
   url = (apiDomain || baseUrl) + url;
   const langauge = window.__store__ && window.__store__.getState() && window.__store__.getState().global.language;
@@ -33,9 +33,11 @@ export default async (type = 'GET', url = '', data = {}, headers = {}, apiDomain
     }
   }
   if (type === 'POST' || type === 'PUT') {
-    Object.defineProperty(requestConfig, 'body', {
-      value: JSON.stringify(data),
-    });
+    if (!_.isEmpty(data)) {
+      Object.defineProperty(requestConfig, 'body', {
+        value: JSON.stringify(data),
+      });
+    }
   }
 
   function _fetch(fetchPromise, timeout) {
@@ -67,7 +69,7 @@ export default async (type = 'GET', url = '', data = {}, headers = {}, apiDomain
     }
     throw new TypeError('Oops,we haven\'t get JSON! ');
   } catch (error) {
-    console.log("error===",error);
+    console.log('error===', error);
     return error;
   }
 };
