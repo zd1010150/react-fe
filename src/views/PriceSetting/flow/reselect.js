@@ -17,7 +17,7 @@ const roleValueSelector = createSelector(
   [roleGroupsSelector],
   roleGroups => roleGroups.reduce((keyMap, item) => ({
     ...keyMap,
-    [item.name]: 8,
+    [item.name]: 5,
   }), {}),
 );
 
