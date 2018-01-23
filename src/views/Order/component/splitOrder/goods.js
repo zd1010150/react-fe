@@ -26,7 +26,7 @@ const goods = ({
     render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
     width: 100,
   }, {
-    title: formatMessage({ id: 'global.properNouns.goods.currentQuantity' }),
+    title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
     width: 100,

@@ -26,14 +26,9 @@ const goods = ({
     width: 100,
     render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
   }, {
-    title: formatMessage({ id: 'global.properNouns.goods.currentQuantity' }),
+    title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
-    width: 100,
-  }, {
-    title: formatMessage({ id: 'global.properNouns.goods.totalValue' }),
-    key: 'totalValue',
-    render: (text, record) => <Currency value={record.totalValue} />,
     width: 100,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),

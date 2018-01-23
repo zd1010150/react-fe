@@ -12,7 +12,7 @@ export const setPriceData = priceTable => ({
 });
 
 export const fetchPriceTable = () => (dispatch) => {
-  get('/affiliate/sub-category-sub-groups').then((data) => {
+  get('/affiliate/sub-category-sub-groups', {}, dispatch).then((data) => {
     const backData = (data.data || []).map(item => ({
       groupId: item.sub_group_id,
       categoryId: item.sub_category_id,
@@ -48,7 +48,7 @@ export const saveRow = () => (dispatch, getState) => {
     sub_category_id: item.categoryId,
     percentage: item.value,
   }));
-  post('/affiliate/sub-category-sub-groups/batchSave', { data: formData }).then(() => {
+  post('/affiliate/sub-category-sub-groups/batchSave', { data: formData }, dispatch).then(() => {
     dispatch(fetchPriceTable());
   });
 };
