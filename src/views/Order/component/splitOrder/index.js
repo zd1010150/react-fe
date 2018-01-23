@@ -46,8 +46,8 @@ class splitOrderView extends React.Component {
         quantity: item.quantity,
       })));
     });
-    this.props.goNextStep('splitOrder');
-    this.props.createDeliveryOrder(postData);
+    //this.props.goNextStep('splitOrder');
+    this.props.createDeliveryOrder(postData, 'splitOrder');
   }
   confirmHasRemainGoods() {
     this.setState({

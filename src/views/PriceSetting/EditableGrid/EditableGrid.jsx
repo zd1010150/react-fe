@@ -21,7 +21,6 @@ const defaultProps = {
 class EditableGrid extends Component {
   buildColumns() {
     const { roleGroups } = this.props;
-    debugger
     let columns = roleGroups.map(column => ({
       ...column,
       key: column.id,

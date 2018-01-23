@@ -23,7 +23,8 @@ export const confirmGetInvoice = () => (dispatch, getState) => {
     }
   });
 };
-export const getQuoteId = (amount, callback) => dispatch => post('', { amount }, dispatch, MagentoDomain).then((data) => {
+export const getQuoteId = (amount, callback) => dispatch => post(`/rest/V1/shipping-carts/mine/${amount}`, { }, dispatch, MagentoDomain).then((data) => {
+  debugger;
   if (data) {
     dispatch(setMagentoShippingCost()); // 可能会有问题,react不能及时渲染
     callback();

@@ -11,7 +11,7 @@ import Cart from './cart';
 import Search from './search';
 import Goods from './goods';
 import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, setItemPrice } from './flow/action.js';
-import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goNextStep, goPreviousStep } from '../skeleton/flow/action';
+import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
 
 const { Sider, Content, Footer } = Layout;
@@ -37,7 +37,7 @@ class chooseGoodView extends React.Component {
         product_id: item.id,
         quantity: item.quantity,
       }));
-      createDeliveryOrder([postData]);
+      createDeliveryOrder([postData], 'chooseGoods');
       deleteSplitOrder();
     }
   }
@@ -60,7 +60,6 @@ class chooseGoodView extends React.Component {
       goodsTablePagination,
       steps,
       setItemPrice,
-      goNextStep,
       goPreviousStep,
       intl,
     } = this.props;
@@ -120,7 +119,6 @@ class chooseGoodView extends React.Component {
             disabled={!(cart && cart.length > 0)}
             onClick={() => {
                 this.submitOrder();
-                goNextStep('chooseGoods');
               }}
           >
             { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
@@ -163,7 +161,6 @@ const mapDispathToProps = {
   createDeliveryOrder,
   addSplitOrder,
   deleteSplitOrder,
-  goNextStep,
   goPreviousStep,
   initGoods,
 };

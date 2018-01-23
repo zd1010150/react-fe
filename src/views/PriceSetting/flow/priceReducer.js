@@ -10,7 +10,6 @@ const initialState = {
 };
 
 const changeCell = (state, payload) => {
-  debugger;
   const { value, categoryId, groupId } = payload;
   const displayPriceTable = _.reject(state.displayPriceTable, { categoryId, groupId });
   return {
