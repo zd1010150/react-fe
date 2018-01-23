@@ -5,6 +5,7 @@ import { baseUrl } from '../config/env.config';
 import { MAX_FETCH_TIMEOUT } from '../config/app.config';
 
 export default async (type = 'GET', url = '', data = {}, headers = {}, apiDomain = '') => {
+  debugger;
   type = type.toUpperCase();
   url = (apiDomain || baseUrl) + url;
   const langauge = window.__store__ && window.__store__.getState() && window.__store__.getState().global.language;

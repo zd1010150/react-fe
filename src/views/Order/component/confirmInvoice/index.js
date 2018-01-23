@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { getLocationOfAbsoluteUrl } from 'utils/url';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
@@ -69,8 +69,8 @@ class confirmInvoiceView extends React.Component {
             <input type="hidden" name="freight_id" value={freightId} />
             <input type="hidden" name="delivery_orders_ids" value={deliveryOrderIds} />
             <input type="hidden" name="shipping_cost" value={magentoShippingCost} />
-            <input type="hidden" name="success_url" value={"eee"} />
-            <input type="hidden" name="error_url" value={"3333"} />
+            <input type="hidden" name="success_url" value={getLocationOfAbsoluteUrl('/resultNotification?view=successPay')} />
+            <input type="hidden" name="error_url" value={getLocationOfAbsoluteUrl('/resultNotification?view=errorPay')} />
           </form>
           <Address {...receiver} />
           {invoicesEl}
