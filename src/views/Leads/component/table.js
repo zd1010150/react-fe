@@ -9,7 +9,7 @@ import _ from 'lodash';
 import { IdDialog, LeadsAndAccountsEditAddDialog } from 'components/page';
 import DeleteDialog from './deleteDialog';
 import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
-import { Address, Username } from 'components/ui/index';
+import { Address, Username, Group } from 'components/ui/index';
 
 class leadsTable extends React.Component {
   state = {
@@ -112,7 +112,7 @@ class leadsTable extends React.Component {
       key: 'phone',
       width: 100,
     }, {
-      title: formatMessage({ id: 'global.form.address' }),
+      title: formatMessage({ id: 'global.form.allAddress' }),
       render: (text, record) => <Address country={record.country} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
       key: 'address',
       width: 200,
@@ -123,8 +123,8 @@ class leadsTable extends React.Component {
       width: 150,
     }, {
       title: formatMessage({ id: 'global.form.group' }),
-      dataIndex: 'group',
       key: 'group',
+      render: (text, record) => <Group groupId={record.sub_group_id} />,
     }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
