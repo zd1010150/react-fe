@@ -11,7 +11,7 @@ class tableView extends React.Component {
     this.props.fetchAccounts();
   }
   render() {
-    const { accountsData, setOrderUser, accountDataTablePagination, updateAccounts, fetchAccounts, } = this.props;
+    const { accountsData, setOrderUser, accountDataTablePagination, updateAccounts, fetchAccounts } = this.props;
     return (
       <Table setOrderUser={setOrderUser} accountsData={accountsData} accountDataTablePagination={accountDataTablePagination} fetchAccounts={fetchAccounts} updateAccounts={updateAccounts} />
     );
@@ -29,7 +29,7 @@ tableView.propTypes = {
 };
 const mapStateToProps = ({ accounts }) => ({
   accountsData: accounts.accountsData,
-  accountDataTablePagination: accounts.accountsDataTablePagination,
+  accountDataTablePagination: accounts.accountsDataTablePagination
 });
 const mapDispatchToProp = {
   setOrderUser,
