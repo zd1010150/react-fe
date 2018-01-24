@@ -195,14 +195,14 @@ const getTotal = (state) => {
     orderDuty = 0;
     order = newOrders[id];
     const newGoods = order.goods.map((item) => {
-      singlePrice = item.quantity * item.price;
-      singleCost = item.quantity * item.unitPrice;
-      singleDuty = item.quantity * item.recommendedPrice;
+      singlePrice = item.quantity * _.round(item.price, 2);
+      singleCost = item.quantity * _.round(item.unitPrice, 2);
+      singleDuty = item.quantity * _.round(item.recommendedPrice, 2);
       orderCost += singleCost;
       orderPrice += singlePrice;
       orderDuty += singleDuty;
       orderQuantity += item.quantity;
-      return Object.assign({}, item, { totalDuty: _.floor(singleDuty), totalPrice: _.floor(singlePrice, 3), totalCost: _.floor(singleCost, 3)});
+      return Object.assign({}, item, { totalDuty: singleDuty, totalPrice: singlePrice, totalCost: singleCost });
     });
     if (orderDuty > max) {
       order.error = 'ERROR_MAXIMUM_VALUE';
@@ -211,10 +211,10 @@ const getTotal = (state) => {
       order.error = '';
     }
     order.goods = newGoods;
-    order.totalPrice = _.floor(orderPrice, 3);
-    order.totalCost = _.floor(orderCost, 3);
+    order.totalPrice = orderPrice;
+    order.totalCost = orderCost;
     order.totalQuantity = orderQuantity;
-    order.totalDuty = _.floor(orderDuty, 3);
+    order.totalDuty = orderDuty;
     newOrders[id] = order;
   });
 

@@ -146,24 +146,24 @@ const getTotalInfo = (cart) => {
   let singleTotalDuty = 0;
   const newCart = cart.map((item) => {
     totalItemQuantity += item.quantity;
-    totalPrice += item.quantity * item.price;
-    totalCost += item.quantity * item.unitPrice;
-    totalDuty += item.quantity * item.recommendedPrice;
-    singleTotalCost = item.quantity * item.unitPrice;
-    singleTotalPrice = item.quantity * item.price;
-    singleTotalDuty = item.quantity * item.recommendedPrice;
+    totalPrice += item.quantity * _.round(item.price, 2);
+    totalCost += item.quantity * _.round(item.unitPrice, 2);
+    totalDuty += item.quantity * _.round(item.recommendedPrice, 2);
+    singleTotalCost = item.quantity * _.round(item.unitPrice, 2);
+    singleTotalPrice = item.quantity * _.round(item.price, 2);
+    singleTotalDuty = item.quantity * _.round(item.recommendedPrice, 2);
     return Object.assign({}, item, {
-      totalPrice: _.floor(singleTotalPrice, 3),
-      totalCost: _.floor(singleTotalCost, 3),
-      totalDuty: _.floor(singleTotalDuty, 3),
+      totalPrice: singleTotalPrice,
+      totalCost: singleTotalCost,
+      totalDuty: singleTotalDuty,
     });
   });
   return {
     goods: newCart,
-    totalPrice: _.floor(totalPrice, 3),
+    totalPrice,
     totalItemQuantity,
-    totalCost: _.floor(totalCost, 3),
-    totalDuty: _.floor(totalDuty, 3),
+    totalCost,
+    totalDuty,
   };
 };
 

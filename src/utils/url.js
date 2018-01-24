@@ -9,7 +9,7 @@ export const getParentUrl = (url) => {
   return '';
 };
 export const getLocationOfAbsoluteUrl = (url) => {
-  const { host } = window.location;
-  return host + URL_PREFIX + url;
+  const { protocol, host } = window.location;
+  return `${protocol}//${host}${URL_PREFIX}${url}`;
 };
 
