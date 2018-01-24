@@ -27,9 +27,6 @@ class splitOrderView extends React.Component {
     };
     this.setMaxDuty(props);
   }
-  componentWillReceiveProps(nextProps) {
-   // this.setMaxDuty(nextProps);
-  }
   setMaxDuty(props) {
     const { dutySetting } = props;
     const max = _.isEmpty(dutySetting) ? 300 : dutySetting[0].threshold;
@@ -41,12 +38,11 @@ class splitOrderView extends React.Component {
       const order = this.props.orders[orderid];
       if (order.goods && order.goods.length < 1) return;
       postData.push(order.goods.map(item => ({
-        price: item.price,
+        price: item.price * item.quantity,
         product_id: item.id,
         quantity: item.quantity,
       })));
     });
-    //this.props.goNextStep('splitOrder');
     this.props.createDeliveryOrder(postData, 'splitOrder');
   }
   confirmHasRemainGoods() {

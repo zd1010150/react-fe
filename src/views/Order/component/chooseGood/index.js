@@ -34,7 +34,7 @@ class chooseGoodView extends React.Component {
       goNextStep('chooseGoods');
     } else {
       const postData = cart.map(item => ({
-        price: item.price,
+        price: item.price * item.quantity,
         product_id: item.id,
         quantity: item.quantity,
       }));
