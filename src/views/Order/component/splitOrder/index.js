@@ -28,7 +28,7 @@ class splitOrderView extends React.Component {
     this.setMaxDuty(props);
   }
   componentWillReceiveProps(nextProps) {
-    this.setMaxDuty(nextProps);
+   // this.setMaxDuty(nextProps);
   }
   setMaxDuty(props) {
     const { dutySetting } = props;
@@ -194,7 +194,7 @@ class splitOrderView extends React.Component {
           </Button>
         </div>
         <Modal
-          title="Modal"
+          title={formatMessage({ id: 'global.ui.dialog.info' })}
           visible={this.state.goPreviousStepConfirmDialogVisible}
           onOk={() => this.confirmGoPrevious()}
           onCancel={() => this.cancelPreviousDialog()}
@@ -204,7 +204,7 @@ class splitOrderView extends React.Component {
           <p>{ formatMessage({ id: 'page.Order.leaveSplitOrder' }) }</p>
         </Modal>
         <Modal
-          title="Modal"
+          title={formatMessage({ id: 'global.ui.dialog.info' })}
           visible={this.state.hasRemainGoodsConfirmDialogVisible}
           onOk={() => this.confirmHasRemainGoods()}
           onCancel={() => this.cancelHasRemainGoods()}

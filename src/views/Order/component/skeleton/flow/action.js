@@ -26,7 +26,7 @@ export const setDeliveryOrders = deliveryOrders => ({
   deliveryOrders,
 });
 export const resetOrder = () => ({
-  type: RESET_ORDER
+  type: RESET_ORDER,
 });
 export const createDeliveryOrder = (orders, currentStep) => (dispatch, getState) => {
   const { orderUser } = getState().global;

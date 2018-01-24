@@ -113,15 +113,15 @@ class cart extends React.Component {
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
-              <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
+              <div className="col-sm-8"><Currency value={product.unitPrice} /> x {product.quantity} = <Currency value={product.totalCost} /></div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.total' })}：</span></div>
-              <div className="col-sm-8">{product.price} x {product.quantity} = {product.totalPrice}</div>
+              <div className="col-sm-8"><Currency value={product.price} /> x {product.quantity} = <Currency value={product.totalPrice} /></div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.duty' })}：</span></div>
-              <div className="col-sm-8">{product.recommendedPrice} x {product.quantity} = {product.totalDuty}</div>
+              <div className="col-sm-8"><Currency value={product.recommendedPrice} /> x {product.quantity} = <Currency value={product.totalDuty} /></div>
             </div>
           </li>
         ))

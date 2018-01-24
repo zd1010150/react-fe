@@ -11,7 +11,7 @@ import Cart from './cart';
 import Search from './search';
 import Goods from './goods';
 import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, setItemPrice } from './flow/action.js';
-import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep } from '../skeleton/flow/action';
+import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep, goNextStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
 
 const { Sider, Content, Footer } = Layout;
@@ -24,13 +24,14 @@ class chooseGoodView extends React.Component {
   }
   submitOrder() {
     const {
-      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods, dutySetting, selectedUser
+      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods, dutySetting, selectedUser, goNextStep
     } = this.props;
     const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting[0].threshold);
     const { country } = selectedUser;
     if (totalDuty >= max && country === CHINA_CODE) { // 如果超过300,并且是发往中国 就分担。此处是mock，需要更改为global setting中传入的值
       addSplitOrder();
       initGoods(cart);
+      goNextStep('chooseGoods');
     } else {
       const postData = cart.map(item => ({
         price: item.price,
@@ -162,6 +163,7 @@ const mapDispathToProps = {
   addSplitOrder,
   deleteSplitOrder,
   goPreviousStep,
+  goNextStep,
   initGoods,
 };
 

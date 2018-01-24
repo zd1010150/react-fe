@@ -30,6 +30,9 @@ export default {
     select: {
       all: '全部',
     },
+    dialog: {
+      info: '提示',
+    },
   },
   en: {
     button: {
@@ -61,6 +64,9 @@ export default {
     },
     select: {
       all: 'All',
+    },
+    dialog: {
+      info: '提示',
     },
   },
 };
