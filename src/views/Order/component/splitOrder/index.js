@@ -38,7 +38,7 @@ class splitOrderView extends React.Component {
       const order = this.props.orders[orderid];
       if (order.goods && order.goods.length < 1) return;
       postData.push(order.goods.map(item => ({
-        price: item.price * item.quantity,
+        amount: item.price * item.quantity,
         product_id: item.id,
         quantity: item.quantity,
       })));
