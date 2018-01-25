@@ -2,7 +2,9 @@
 
 import { post } from 'store/http/httpAction';
 import { MagentoDomain } from 'config/magento.config';
+
 import { SET_INVOICE_INFO, SET_MAGENTO_SHIPPING_COST, SET_QUOTE_ID } from './actionType';
+
 
 export const setMagentoQuoteId = quoteId => ({
   type: SET_QUOTE_ID,

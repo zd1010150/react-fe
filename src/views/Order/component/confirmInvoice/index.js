@@ -12,7 +12,6 @@ import styles from '../../Order.less';
 import { baseUrl } from 'config/env.config';
 import Address from './address';
 import Invoice from './invoice';
-import { resetOrder } from '../skeleton/flow/action';
 import { getReceiver } from './flow/reselect';
 import { getQuoteId } from './flow/action';
 
@@ -33,7 +32,6 @@ class confirmInvoiceView extends React.Component {
       freightId,
       invoices,
       receiver,
-      resetOrder,
       getQuoteId,
       magentoShippingCost,
       location,
@@ -100,7 +98,6 @@ class confirmInvoiceView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             onClick={() => {
-              // resetOrder();
               getQuoteId(totalAUDShippingCost, this.confirmPayFreight);
             }}
           >
@@ -137,7 +134,6 @@ const mapStateToProps = ({ order }) => ({
 });
 const mapDispathToProps = {
   goPreviousStep,
-  resetOrder,
   getQuoteId,
 };
 
