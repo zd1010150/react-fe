@@ -8,8 +8,8 @@ import classNames from 'classnames/bind';
 import styles from '../../Order.less';
 import Orders from './orders';
 import Goods from './goods';
-import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, resetOrder, setMax } from './flow/action';
-import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder } from '../skeleton/flow/action';
+import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, resetOrder, setMax, setOrderExpand } from './flow/action';
+import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder} from '../skeleton/flow/action';
 import { SAVED } from './flow/orderStatus';
 import { CURRENCY_SYMBOL } from 'config/app.config';
 
@@ -101,7 +101,7 @@ class splitOrderView extends React.Component {
   }
   render() {
     const {
-      ordersBorderCollapse,
+      expandOrder,
       orders,
       goods,
       currentOrder,
@@ -117,6 +117,7 @@ class splitOrderView extends React.Component {
       intl,
       baseCurency,
       max,
+      setOrderExpand,
     } = this.props;
     const { formatMessage } = intl;
     return (
@@ -152,12 +153,12 @@ class splitOrderView extends React.Component {
           <Sider
             trigger={null}
             collapsible
-            collapsed={ordersBorderCollapse}
             collapsedWidth={0}
             className={classNames(cx('sidebar-cart'), 'sidebar-cart')}
-            width={300}
+            width={380}
           >
             <Orders
+              expandOrder={expandOrder}
               ordersData={orders}
               deleteOrderGoods={deleteOrderGoods}
               setOrderGoodsQuantity={setOrderGoodsQuantity}
@@ -166,6 +167,7 @@ class splitOrderView extends React.Component {
               currentOrder={currentOrder}
               symbol={_.isEmpty(baseCurency) ? '' : CURRENCY_SYMBOL[baseCurency[0].name]}
               max={max}
+              setOrderExpand={setOrderExpand}
             />
           </Sider>
         </Layout>
@@ -237,6 +239,7 @@ const mapStateToProps = ({ order, global }) => {
     selectedUser: global.orderUser,
     baseCurency: global.settings.baseCurrency,
     max: splitOrder.orders.max,
+    expandOrder: splitOrder.expandOrder,
   };
 };
 const mapDispathToProps = {
@@ -253,6 +256,7 @@ const mapDispathToProps = {
   resetOrder,
   setMax,
   createDeliveryOrder,
+  setOrderExpand,
 };
 
 const SplitOrderView = connect(mapStateToProps, mapDispathToProps)(injectIntl(splitOrderView));

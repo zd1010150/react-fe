@@ -4,39 +4,13 @@ import { InputNumber, Currency } from 'components/ui/index';
 import { Icon, Button, Input, Divider, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
+import { positiveFloat } from 'utils/regex';
 import styles from '../../Order.less';
 
 const cx = classNames.bind(styles);
 
 class cart extends React.Component {
-  state = {
-    priceEditInputStatus: this.initPriceInputStatus(this.props.cartData),
-  }
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      priceEditInputStatus: this.initPriceInputStatus(nextProps.cartData),
-    });
-  }
-  initPriceInputStatus(cartData) {
-    return cartData.map(item => ({
-      disabled: true,
-      price: item.recommendedPrice,
-    }));
-  }
-  togglePrice(index, disabled, price) {
-    const newPriceEditInputStatus = this.state.priceEditInputStatus.slice();
-    newPriceEditInputStatus[index] = Object.assign(
-      {},
-      newPriceEditInputStatus[index],
-      {
-        disabled,
-        price: price || newPriceEditInputStatus[index].price,
-      },
-    );
-    this.setState({
-      priceEditInputStatus: newPriceEditInputStatus,
-    });
-  }
+
   render() {
     const {
       cartData,
@@ -47,7 +21,10 @@ class cart extends React.Component {
       totalPrice,
       totalCost,
       totalDuty,
-      setItemPrice,
+      setNextBtnDisable,
+      setEditingPrice,
+      setEditingPriceStatus,
+
     } = this.props;
     const { formatMessage } = intl;
     const cartDataEl = (
@@ -72,28 +49,42 @@ class cart extends React.Component {
                     <Tooltip title={product.sku}>{product.sku}</Tooltip>
                   </small>
                 </div>
-                <Button className={classNames('icon-btn', 'ordinary', cx('delete-product-btn'))} onClick={() => deleteGoods(product)} ><Icon type="delete" /></Button>
+                <Button className={classNames('icon-btn', 'ordinary', cx('delete-product-btn'))} onClick={() => deleteGoods(cartData, product)} ><Icon type="delete" /></Button>
               </div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className={classNames('col-sm-4')}><span className={cx('product-label', cx('product-price'))}>{ formatMessage({ id: 'global.properNouns.goods.price' })}:</span></div>
               <div className={classNames('product-title', 'col-sm-8', cx('product-prices'))}>
                 <Input
-                  className={classNames(cx('product-price-input'), 'input-number')}
-                  defaultValue={product.price}
-                  disabled={this.state.priceEditInputStatus[index].disabled}
-                  onInput={e => this.togglePrice(index, false, e.target.value)}
+                  className={classNames(cx('product-price-input'), 'input-number', '')}
+                  value={product.editingPrice}
+                  disabled={!product.isEditingPrice}
+                  onInput={
+                    (e) => {
+                      setEditingPrice(product.id, e.target.value);
+                     }
+                  }
                 />
-                {this.state.priceEditInputStatus[index].disabled ?
+                { (!product.isEditingPrice) ?
                   (
-                    <Button className={classNames('icon-btn', 'ordinary', cx('edit-price-btn'))} onClick={() => this.togglePrice(index, false)}><Icon type="edit" /></Button>)
+                    <Button
+                      className={classNames('icon-btn', 'ordinary', cx('edit-price-btn'))}
+                      onClick={() => {
+                              setEditingPriceStatus(product.id, true);
+                              setNextBtnDisable(true);
+                            }}
+                    >
+                      <Icon type="edit" />
+                    </Button>)
                   :
                   (
                     <Button
                       className={classNames('icon-btn', cx('save-price-btn'))}
                       onClick={() => {
-                        setItemPrice(product.id, this.state.priceEditInputStatus[index].price);
-                      }}
+                        setEditingPriceStatus(product.id, false);
+                        setNextBtnDisable(false);
+                        }
+                      }
                     >
                       <Icon type="save" />
                     </Button>
@@ -112,17 +103,18 @@ class cart extends React.Component {
               </div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
-              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
-              <div className="col-sm-8"><Currency value={product.unitPrice} /> x {product.quantity} = <Currency value={product.totalCost} /></div>
+              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.subTotal' })}：</span></div>
+              <div className="col-sm-8"><Currency value={product.price} /> x {product.quantity} = <Currency value={product.totalPrice} /></div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
-              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.total' })}：</span></div>
-              <div className="col-sm-8"><Currency value={product.price} /> x {product.quantity} = <Currency value={product.totalPrice} /></div>
+              <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
+              <div className="col-sm-8"><Currency value={product.unitPrice} /> x {product.quantity} = <Currency value={product.totalCost} /></div>
             </div>
             <div className={classNames('row', cx('product-row'))}>
               <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.duty' })}：</span></div>
               <div className="col-sm-8"><Currency value={product.recommendedPrice} /> x {product.quantity} = <Currency value={product.totalDuty} /></div>
             </div>
+
           </li>
         ))
       }
@@ -144,11 +136,11 @@ class cart extends React.Component {
         <div className={classNames('block-footer', cx('choose-goods-cart-footer'))}>
           <span>{ formatMessage({ id: 'global.properNouns.total' })} {totalItemQuantity} { formatMessage({ id: 'global.properNouns.item' })}</span>
           <Divider type="vertical" />
-          <span>{ formatMessage({ id: 'global.properNouns.goods.totalCost' })}:<Currency value={totalCost} />  </span>
+          <span>{ formatMessage({ id: 'global.properNouns.goods.totalPrice' })}: <Currency value={totalPrice} /></span>
           <br />
-          <span>{ formatMessage({ id: 'global.properNouns.goods.totalPrice' })}:<Currency value={totalPrice} /></span>
-          <Divider type="vertical" />
-          <span>{ formatMessage({ id: 'global.properNouns.goods.totalDuty' })}:<Currency value={totalDuty} /></span>
+          <span>{ formatMessage({ id: 'global.properNouns.goods.totalCost' })}: <Currency value={totalCost} />  </span>
+          <br />
+          <span>{ formatMessage({ id: 'global.properNouns.goods.totalDuty' })}: <Currency value={totalDuty} /></span>
         </div>
       </div>);
   }
@@ -161,12 +153,14 @@ cart.propTypes = {
   intl: intlShape.isRequired,
   cartData: PropTypes.array,
   deleteGoods: PropTypes.func.isRequired,
+  setNextBtnDisable: PropTypes.func.isRequired,
   editingCartGoods: PropTypes.func.isRequired,
-  setItemPrice: PropTypes.func.isRequired,
   totalItemQuantity: PropTypes.number.isRequired,
   totalPrice: PropTypes.number.isRequired,
   totalCost: PropTypes.number.isRequired,
   totalDuty: PropTypes.number.isRequired,
+  setEditingPriceStatus: PropTypes.func.isRequired,
+  setEditingPrice: PropTypes.func.isRequired,
 };
 const CartView = injectIntl(cart);
 export default CartView;

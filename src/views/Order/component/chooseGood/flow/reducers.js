@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { combineReducers } from 'redux';
+import { positiveFloat } from 'utils/regex';
 import {
   SET_CART_COLLAPSE,
   SET_GOODS,
@@ -9,7 +10,9 @@ import {
   EDITING_CART_GOODS,
   SET_PAGENATIONS,
   SET_SEARCH_KEY,
-  SET_CART_GOODS_PRICE,
+  CG_SET_NEXT_BUTTON_DISABLE,
+  CG_SET_EDITING_PRICE,
+  CG_SET_EDITING_PRICE_STATUS,
 } from './actionType';
 import { RESET_ORDER } from '../../skeleton/flow/actionType';
 import { getUnitPrice } from 'utils/mathUtil';
@@ -38,8 +41,10 @@ const mixAvailableQuantity = (state, goods, cart) => {
     selectingQuantity: 1,
     key: item.product.id,
     totalPrice: 0, // 总售价
-    price: item.product.saling_price, // 售价初始值
+    price: _.round(item.product.saling_price, 2), // 售价初始值
     totalCost: 0, // 总成本价
+    isEditingPrice: false,
+    editingPrice: _.round(item.product.saling_price, 2),
   }));
   return newGoods;
 };
@@ -130,9 +135,24 @@ const goods = (state = [], action) => {
       return state;
   }
 };
-const editItemPrice = (cart, goodsId, price) => cart.map((item) => {
+
+const editingPriceSatatus = (cart, goodsId, isEditingPrice) => cart.map((item) => {
   if (item.id === goodsId) {
-    return Object.assign({}, item, { price });
+    let newPrice = item.price;
+    if (item.isEditingPrice && (!isEditingPrice)) { // 说明是保存
+      if (positiveFloat.test(item.editingPrice)) { // 符合规则
+        newPrice = item.editingPrice;
+      }
+    }
+    return Object.assign({}, item, { isEditingPrice, price: newPrice, editingPrice: newPrice });
+  }
+  return item;
+});
+const setEditingPrice = (cart, goodsId, price) => cart.map((item) => {
+  if (item.id === goodsId) {
+    if (positiveFloat.test(price) || _.isEmpty(price)) { // 符合规则
+      return Object.assign({}, item, { editingPrice: price });
+    }
   }
   return item;
 });
@@ -185,8 +205,11 @@ const cart = (state = {
     case EDITING_CART_GOODS:
       newGoods = editingCartGoods(state.goods, action.goods, action.quantity);
       break;
-    case SET_CART_GOODS_PRICE:
-      newGoods = editItemPrice(state.goods, action.goodsId, action.price);
+    case CG_SET_EDITING_PRICE:
+      newGoods = setEditingPrice(state.goods, action.goodsId, action.price);
+      break;
+    case CG_SET_EDITING_PRICE_STATUS:
+      newGoods = editingPriceSatatus(state.goods, action.goodsId, action.isEditing);
       break;
     default:
       return state;
@@ -230,11 +253,24 @@ const searchKey = (state = '', action) => {
       return state;
   }
 };
+const uiState = (state = { nextBtnDisabled: true }, action) => {
+  switch (action.type) {
+    case CG_SET_NEXT_BUTTON_DISABLE:
+      return Object.assign({}, state, { nextBtnDisabled: action.disabled });
+    case ADD_GOODS_TO_CART:
+      return Object.assign({}, state, { nextBtnDisabled: false });
+    case DELETE_GOODS_FROM_CART:
+      return Object.assign({}, state, { nextBtnDisabled: action.cart.length - 1 < 1 });
+    default:
+      return state;
+  }
+};
 const chooseGood = combineReducers({
   goods,
   cart,
   cartCollapse,
   goodsTablePagination,
   searchKey,
+  uiState,
 });
 export default chooseGood;

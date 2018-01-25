@@ -103,7 +103,8 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "react-app",
+      "stage-2"
     ]
   },
   "eslintConfig": {
@@ -111,6 +112,7 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.2",
+    "babel-preset-stage-2": "^6.24.1",
     "eslint-config-airbnb": "^16.1.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",

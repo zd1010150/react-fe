@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import _ from 'lodash';
 import { InputNumber, Currency } from 'components/ui/index';
 import { Icon, Collapse, Button, Divider, Tooltip } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
@@ -12,7 +12,7 @@ const { Panel } = Collapse;
 const cx = classNames.bind(styles);
 
 const orders = ({
-  ordersData, currentOrder, intl, deleteOrderGoods, setOrderGoodsQuantity, deleteOrder, setOrderStatus, symbol, max,
+  ordersData, currentOrder, intl, deleteOrderGoods, setOrderGoodsQuantity, deleteOrder, setOrderStatus, symbol, max, expandOrder, setOrderExpand,
 }) => {
   const { formatMessage } = intl;
   const getOperationBtnByStatus = (order) => {
@@ -28,14 +28,21 @@ const orders = ({
     }
   };
   const orderDataEl = (
-    <Collapse defaultActiveKey={['1']}>
-
+    <Collapse
+      activeKey={`${expandOrder}`}
+      onChange={
+        (index) => {
+          console.log(index);
+          _.isEmpty(index) ? '' : setOrderExpand(index[1]);
+        }
+      }
+    >
       {
       Object.keys(ordersData).map((key, index) => {
         const order = ordersData[key];
         const disabled = order.status === SAVED;
         return (
-          <Panel header={formatMessage({ id: 'global.properNouns.deliveryOrder' }) +"-"+ (index+1)} key={order.id}>
+          <Panel header={`${formatMessage({ id: 'global.properNouns.deliveryOrder' })}-${index + 1}`} key={order.id} className={classNames({ 'editing-order-panel': order.status === EDITING })}>
             <div className={classNames('block', cx('split-order-sub-order-block'))}>
               <div className={classNames('block-title', cx('split-order-sub-order-title'))}>
                 { getOperationBtnByStatus(order) }
@@ -79,12 +86,12 @@ const orders = ({
                         </div>
                       </div>
                       <div className={classNames('row', cx('product-row'))}>
-                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
-                        <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
+                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.subTotal' })}：</span></div>
+                        <div className="col-sm-8">{product.price} x {product.quantity} = {product.totalPrice}</div>
                       </div>
                       <div className={classNames('row', cx('product-row'))}>
-                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.total' })}：</span></div>
-                        <div className="col-sm-8">{product.price} x {product.quantity} = {product.totalPrice}</div>
+                        <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.cost' })}：</span></div>
+                        <div className="col-sm-8">{product.unitPrice} x {product.quantity} = {product.totalCost}</div>
                       </div>
                       <div className={classNames('row', cx('product-row'))}>
                         <div className="col-sm-4"><span className={cx('product-label')}>{formatMessage({ id: 'global.properNouns.goods.duty' })}：</span></div>
@@ -98,11 +105,11 @@ const orders = ({
                   <div className={classNames('block-footer', cx('split-order-sub-order-footer'))}>
                     <span>{formatMessage({ id: 'global.properNouns.total' })}{order.totalQuantity}{formatMessage({ id: 'global.properNouns.item' })}</span>
                     <Divider type="vertical" />
-                    <span>{formatMessage({ id: 'global.properNouns.goods.totalCost' })}:<Currency value={order.totalCost} /> </span>
+                    <span>{formatMessage({ id: 'global.properNouns.goods.totalPrice' })}: <Currency value={order.totalPrice} /></span>
                     <br />
-                    <span>{formatMessage({ id: 'global.properNouns.goods.totalPrice' })}:<Currency value={order.totalPrice} /></span>
+                    <span>{formatMessage({ id: 'global.properNouns.goods.totalCost' })}: <Currency value={order.totalCost} /> </span>
                     <br />
-                    <span>{formatMessage({ id: 'global.properNouns.goods.totalDuty' })}:<Currency value={order.totalDuty} /></span>
+                    <span>{formatMessage({ id: 'global.properNouns.goods.totalDuty' })}: <Currency value={order.totalDuty} /></span>
                   </div>
                 ) : ''}
 
@@ -150,6 +157,8 @@ orders.propTypes = {
   currentOrder: PropTypes.object.isRequired,
   symbol: PropTypes.string,
   max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  expandOrder: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  setOrderExpand: PropTypes.func.isRequired,
 };
 const OrdersView = injectIntl(orders);
 export default OrdersView;
