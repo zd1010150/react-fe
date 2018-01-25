@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {
-  SO_SET_ORDERS_BOARD_COLLAPSE,
+  SO_SET_ORDER_EXPAND,
   SO_ADD_GOODS_TO_ORDER,
   SO_SET_ORDER_STATUS,
   SO_CREATE_ORDER,
@@ -159,22 +159,22 @@ const setOrderGoodsQuantity = (state, goods, quantity) => {
   });
   return updatOrderGoods(state, newOrderGoods);
 };
-const setOrderCollapse = (state, orderId, collapsed) => {
-  const { orders, currentOrder } = state;
-  let newCurrenOrder = Object.assign({}, currentOrder);
-  const newOrders = orders.map((item) => {
-    if (item.id === orderId) {
-      return Object.assign({}, item, { collapsed });
-    } return item;
-  });
-  if (currentOrder.id === orderId) {
-    newCurrenOrder = Object.assign({}, currentOrder, { collapsed });
-  }
-  return Object.assign({}, state, {
-    orders: newOrders,
-    currentOrder: newCurrenOrder,
-  });
-};
+// const setOrderCollapse = (state, orderId, collapsed) => {
+//   const { orders, currentOrder } = state;
+//   let newCurrenOrder = Object.assign({}, currentOrder);
+//   const newOrders = orders.map((item) => {
+//     if (item.id === orderId) {
+//       return Object.assign({}, item, { collapsed });
+//     } return item;
+//   });
+//   if (currentOrder.id === orderId) {
+//     newCurrenOrder = Object.assign({}, currentOrder, { collapsed });
+//   }
+//   return Object.assign({}, state, {
+//     orders: newOrders,
+//     currentOrder: newCurrenOrder,
+//   });
+// };
 
 const getTotal = (state) => {
   const { orders, max } = state;
@@ -254,18 +254,17 @@ export const orders = (state = {
     case SO_SET_ORDER_GOODS_QUANTITY:
       newState = setOrderGoodsQuantity(state, action.goods, action.quantity);
       break;
-    case SO_SET_ORDERS_BOARD_COLLAPSE:
-      return setOrderCollapse(state, action.orderId, action.collapsed);
-
     default:
       return state;
   }
   return getTotal(newState);
 };
-export const ordersBorderCollapse = (state = true, action) => {
+export const expandOrder = (state = 1, action) => {
   switch (action.type) {
-    case SO_SET_ORDERS_BOARD_COLLAPSE:
-      return action.collapsed;
+    case SO_CREATE_ORDER:
+      return ORDER_SEED;
+    case SO_SET_ORDER_EXPAND:
+      return action.orderId;
     default:
       return state;
   }

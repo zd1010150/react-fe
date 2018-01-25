@@ -1,5 +1,18 @@
+import _ from 'lodash';
 import { get, post, put, httpDelete } from 'store/http/httpAction';
-import { SET_CART_COLLAPSE, SELECTING_GOODS_QUANTITY, ADD_GOODS_TO_CART, DELETE_GOODS_FROM_CART, EDITING_CART_GOODS, SET_GOODS, SET_SEARCH_KEY, SET_PAGENATIONS, SET_CART_GOODS_PRICE, } from './actionType';
+import {
+  SET_CART_COLLAPSE,
+  SELECTING_GOODS_QUANTITY,
+  ADD_GOODS_TO_CART,
+  DELETE_GOODS_FROM_CART,
+  EDITING_CART_GOODS,
+  SET_GOODS,
+  SET_SEARCH_KEY,
+  SET_PAGENATIONS,
+  CG_SET_NEXT_BUTTON_DISABLE,
+  CG_SET_EDITING_PRICE,
+  CG_SET_EDITING_PRICE_STATUS,
+} from './actionType';
 
 const setSearchKey = searchKey => ({
   type: SET_SEARCH_KEY,
@@ -20,6 +33,21 @@ export const setGoods = (goods, cart) => ({
   goods,
   cart,
 });
+export const setNextBtnDisable = disabled => ({
+  type: CG_SET_NEXT_BUTTON_DISABLE,
+  disabled,
+});
+export const setEditingPriceStatus = (goodsId, isEditing) => ({
+  type: CG_SET_EDITING_PRICE_STATUS,
+  goodsId,
+  isEditing,
+
+});
+export const setEditingPrice = (goodsId, price) => ({
+  type: CG_SET_EDITING_PRICE,
+  goodsId,
+  price,
+});
 export const selectingGoods = (goods, quantity) => ({
   type: SELECTING_GOODS_QUANTITY,
   goods,
@@ -30,9 +58,10 @@ export const addGoodsToCart = goods => ({
   goods,
 });
 
-export const deleteGoodsFromCart = goods => ({
+export const deleteGoodsFromCart = (cart, goods) => ({
   type: DELETE_GOODS_FROM_CART,
   goods,
+  cart,
 });
 
 export const editingCartGoods = (goods, quantity) => ({
@@ -47,9 +76,11 @@ const fetchData = (per_page, page, search, affiliated_client_id, dispatch, goods
   search,
   affiliated_client_id,
 }, dispatch).then((data) => {
-  dispatch(setGoods(data.data, goods));
-  const { pagination } = data.meta;
-  dispatch(setPaginations(pagination.per_page, pagination.current_page, pagination.total));
+  if (data && (!_.isEmpty(data.data)) && (!_.isEmpty(data.meta))) {
+    dispatch(setGoods(data.data, goods));
+    const { pagination } = data.meta;
+    dispatch(setPaginations(pagination.per_page, pagination.current_page, pagination.total));
+  }
 });
 
 
@@ -75,4 +106,4 @@ export const setItemPrice = (goodsId, price) => ({
   type: SET_CART_GOODS_PRICE,
   goodsId,
   price,
-})
+});

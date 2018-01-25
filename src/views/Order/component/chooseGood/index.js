@@ -10,7 +10,7 @@ import styles from '../../Order.less';
 import Cart from './cart';
 import Search from './search';
 import Goods from './goods';
-import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, setItemPrice } from './flow/action.js';
+import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods,  setNextBtnDisable, setEditingPriceStatus, setEditingPrice } from './flow/action.js';
 import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep, goNextStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
 
@@ -60,8 +60,11 @@ class chooseGoodView extends React.Component {
       totalDuty,
       goodsTablePagination,
       steps,
-      setItemPrice,
       goPreviousStep,
+      nextBtnDisabled,
+      setNextBtnDisable,
+      setEditingPriceStatus,
+      setEditingPrice,
       intl,
     } = this.props;
     const { formatMessage } = intl;
@@ -89,7 +92,7 @@ class chooseGoodView extends React.Component {
             collapsed={cartCollapse}
             collapsedWidth={0}
             className={cx('sidebar-cart')}
-            width={300}
+            width={380}
           >
             <Cart
               cartData={cart}
@@ -99,7 +102,9 @@ class chooseGoodView extends React.Component {
               totalPrice={totalPrice}
               totalCost={totalCost}
               totalDuty={totalDuty}
-              setItemPrice={setItemPrice}
+              setNextBtnDisable={setNextBtnDisable}
+              setEditingPriceStatus={setEditingPriceStatus}
+              setEditingPrice={setEditingPrice}
             />
           </Sider>
         </Layout>
@@ -117,7 +122,7 @@ class chooseGoodView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             style={{ marginLeft: 8 }}
-            disabled={!(cart && cart.length > 0)}
+            disabled={nextBtnDisabled}
             onClick={() => {
                 this.submitOrder();
               }}
@@ -149,6 +154,7 @@ const mapStateToProps = ({ order, global }) => ({
   steps: order.skeleton.steps,
   dutySetting: global.dutySetting,
   selectedUser: global.orderUser,
+  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled,
 });
 const mapDispathToProps = {
   setCarCollapse,
@@ -158,13 +164,15 @@ const mapDispathToProps = {
   deleteGoodsFromCart,
   editingCartGoods,
   queryBySearchKey,
-  setItemPrice,
   createDeliveryOrder,
   addSplitOrder,
   deleteSplitOrder,
   goPreviousStep,
   goNextStep,
   initGoods,
+  setNextBtnDisable,
+  setEditingPrice,
+  setEditingPriceStatus,
 };
 
 const ChooseGoodView = connect(mapStateToProps, mapDispathToProps)(injectIntl(chooseGoodView));

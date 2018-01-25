@@ -1,6 +1,5 @@
 import {
-  SO_SET_ORDERS_BOARD_COLLAPSE,
-  SO_SET_ORDER_COLLAPSE,
+  SO_SET_ORDER_EXPAND,
   SO_SELECTING_GOODS_QUANTITY,
   SO_ADD_GOODS_TO_ORDER,
   SO_SET_ORDER_STATUS,
@@ -20,14 +19,10 @@ export const initGoods = (goods) => ({
   type: SO_INIT_GOODS,
   goods,
 });
-export const setOrderBoardStatus = collapsed => ({
-  type: SO_SET_ORDERS_BOARD_COLLAPSE,
-  collapsed,
-});
-export const setOrderCollapse = (orderId, collapsed) => ({
-  type: SO_SET_ORDER_COLLAPSE,
+
+export const setOrderExpand = (orderId) => ({
+  type: SO_SET_ORDER_EXPAND,
   orderId,
-  collapsed,
 });
 export const selectingGoods = (goods, quantity) => ({
   type: SO_SELECTING_GOODS_QUANTITY,
