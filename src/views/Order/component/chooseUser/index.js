@@ -5,6 +5,7 @@ import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
+import { setOrderUser } from 'store/global/action';
 import { setSearchAreaVisible, searchByKeys } from './flow/action';
 import Search from './search';
 import SelectedUser from './selectedUser';
@@ -61,7 +62,6 @@ class chooseUser extends React.Component {
             style={{ marginLeft: 8 }}
             disabled={!hasSeletedUser}
             onClick={() => {
-              console.log('it is trigger');
               goNextStep('chooseUser');
             }}
           >
@@ -72,9 +72,10 @@ class chooseUser extends React.Component {
     );
   }
 }
+
 chooseUser.propTypes = {
   intl: intlShape.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   setOrderUser: PropTypes.func.isRequired,
   users: PropTypes.array.isRequired,
   searchAreaVisible: PropTypes.bool.isRequired,
@@ -83,13 +84,16 @@ chooseUser.propTypes = {
   hasSeletedUser: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({ order }) => ({
+const mapStateToProps = ({ order, global}) => ({
   ...order.chooseUser,
+  user: global.orderUser,
 });
+
 const mapDispatchToProps = {
   setSearchAreaVisible,
   searchByKeys,
   goNextStep,
+  setOrderUser,
 };
 const ChooseUser = connect(mapStateToProps, mapDispatchToProps)(injectIntl(chooseUser));
 export default ChooseUser;

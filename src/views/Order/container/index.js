@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { setPageTitle, setOrderUser } from 'store/global/action';
+import { setPageTitle, resetUser } from 'store/global/action';
 import { setNeedCreateInvoice } from '../component/chooseLogistic/flow/action';
 import { resetOrder, setCurrentStep, setDeliveryOrders, deleteSplitOrder } from '../component/skeleton/flow/action';
 import queryString from 'query-string';
@@ -14,22 +14,28 @@ import Skeleton from '../component/skeleton/index';
 class orderView extends React.Component {
   constructor(props) {
     super(props);
+    debugger;
     this.init(props);
   }
   componentWillReceiveProps(nextProps) {
+    console.log("will recive triggere");
+    debugger;
     this.init(nextProps);
   }
   init(props) {
     const {
       location,
       resetOrder,
+      resetUser,
       setCurrentStep,
       setDeliveryOrders,
       setPageTitle,
       deleteSplitOrder,
       setNeedCreateInvoice,
+      user,
     } = props;
     const pairs = queryString.parse(location.search);
+    const userId = (pairs && pairs.userId) || '';
     const deliveryOrderId = (pairs && pairs.deliveryOrderId) || '';
     const needCreateBatchCreate = (pairs && pairs.needCreateBatchCreate);
     setPageTitle('global.pageTitle.order');
@@ -40,13 +46,18 @@ class orderView extends React.Component {
     } else {
       setCurrentStep('chooseUser');
       deleteSplitOrder();
+      resetOrder();
+      console.log("====useriD, user", userId, user);
+      if ((_.isEmpty(userId)) || _.isEmpty(user)) {
+        resetUser();
+      }
     }
     setNeedCreateInvoice(_.isEmpty(needCreateBatchCreate) || (needCreateBatchCreate === 'true'));
   }
   render() {
     return (
       <section className="section section-page">
-        <div className="section-content"><Skeleton user={this.props.user || {}} setOrderUser={this.props.setOrderUser} /></div>
+        <div className="section-content"><Skeleton /></div>
       </section>
     );
   }
@@ -59,12 +70,12 @@ const mapStateToProps = ({ global }) => ({
 });
 const mapDispatchToProp = {
   setPageTitle,
-  setOrderUser,
   resetOrder,
   setCurrentStep,
   setDeliveryOrders,
   deleteSplitOrder,
   setNeedCreateInvoice,
+  resetUser,
 };
 
 const OrderView = connect(mapStateToProps, mapDispatchToProp)(orderView);
