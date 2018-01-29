@@ -207,7 +207,6 @@ class accountsTable extends React.Component {
       pageSize: accountDataTablePagination.perPage,
       total: accountDataTablePagination.total,
       onChange(page, pageSize) {
-        console.log(page, pageSize, '- --- pagintation change');
         fetchAccounts(pageSize, page);
       },
     };

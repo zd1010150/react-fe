@@ -24,9 +24,7 @@ class userDialog extends React.Component {
   handleValidate = () => {
     const self = this;
     this.form.instance.validateFieldsAndScroll((err, values) => {
-      console.log('Received err of form: ', err);
       if (!err) {
-        console.log('Received values of form: ', values);
         self.setState({
           visible: false,
         });

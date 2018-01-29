@@ -32,7 +32,6 @@ const orders = ({
       activeKey={`${expandOrder}`}
       onChange={
         (index) => {
-          console.log(index);
           _.isEmpty(index) ? '' : setOrderExpand(index[1]);
         }
       }
