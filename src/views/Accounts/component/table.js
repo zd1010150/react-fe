@@ -127,7 +127,7 @@ class accountsTable extends React.Component {
       title: formatMessage({ id: 'global.form.allAddress' }),
       render: (text, record) => <Address country={record.country} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
       key: 'address',
-      width: 200,
+      width: 150,
     }, {
       title: formatMessage({ id: 'global.form.email' }),
       dataIndex: 'email',
@@ -140,7 +140,7 @@ class accountsTable extends React.Component {
     }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
-      width: 330,
+      width: 350,
       render: (text, record) => {
         const idBtnType = () => {
           if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {

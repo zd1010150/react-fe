@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import getMaterial from '../flow/action';
-import { Row, Col } from 'antd';
+import { toggleVideo, getMaterial} from '../flow/action';
+import { Row, Col, Icon } from 'antd';
 import styles from '../CMS.less';
 
 const cx = classNames.bind(styles);
@@ -23,8 +24,34 @@ class cmsView extends React.Component {
   componentDidMount() {
     this.props.getMaterial(this.state.id);
   }
+  toggleVideo(videoId){
+    this.props.toggleVideo(videoId);
+  }
   render() {
     const { images, videos, text } = this.props;
+    const videosEl = _.map(videos, (video, index) => {
+      const { cover_image_url, video_url } = video;
+      if (!video.isPlaying) {
+        return (
+          <div key={index} className={cx('slide-wrapper')}>
+            <div
+              className={cx('video-wrapper')}
+              style={{ backgroundImage: `url(${cover_image_url})` }}
+              onClick={() => this.toggleVideo(index)}
+            >
+              <Icon type="play-circle" className={cx('video-play-btn')} />
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div key={index} className={cx('slide-wrapper')}>
+          <video className={cx('video-wrapper')} controls autoPlay>
+            <source src={video_url} />
+          </video>
+        </div>
+      );
+    });
     return (
       <div className={cx('cms-content-wrapper')}>
         <Row>
@@ -33,21 +60,18 @@ class cmsView extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col span={8}>
-            {
-              videos.map((video, index) =>
-                (<video width="100%" controls key={index}>
-                  <source src={video} />
-                </video>))
-            }
+          <Col span={24}>
+            { videosEl }
           </Col>
 
         </Row>
         <Row>
-          {images.map(item =>
+          {images.map((item, index) =>
             (
-              <Col span={8}>
-                <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')} />
+              <Col span={8} key={index}>
+                <div className={cx('image-wrapper')}>
+                  <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')} />
+                </div>
               </Col>
             ))}
         </Row>
@@ -57,13 +81,14 @@ class cmsView extends React.Component {
 }
 cmsView.defaultProps = {
   images: [],
-  videos: [],
+  videos: {},
   text: '',
 };
 cmsView.propTypes = {
   getMaterial: PropTypes.func.isRequired,
+  toggleVideo: PropTypes.func.isRequired,
   images: PropTypes.array,
-  videos: PropTypes.array,
+  videos: PropTypes.object,
   text: PropTypes.string,
 };
 const mapStateToProp = ({ cms }) => ({
@@ -71,6 +96,7 @@ const mapStateToProp = ({ cms }) => ({
 });
 const mapDispatchToProp = {
   getMaterial,
+  toggleVideo,
 };
 
 const CmsView = withRouter(connect(mapStateToProp, mapDispatchToProp)(cmsView));

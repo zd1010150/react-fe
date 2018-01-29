@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Table, Badge, Button, Divider } from 'antd';
+import { Table, Badge, Button, Divider, Popconfirm } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Address, OrderStatus } from 'components/ui/index';
 import { UNPAIED_ORDER_STATUS } from 'config/app.config.js';
@@ -30,16 +30,20 @@ class orderTable extends React.Component {
 
     this.props.history.push(`/clientLists/order?needCreateBatchCreate=${_.isEmpty(develiverOrder.invoices)}&deliveryOrderId=${develiverOrder.id}`);
   }
+
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      orders, queryByPaging, trackOrderDataTablePagination,
+      orders,
+      queryByPaging,
+      trackOrderDataTablePagination,
+      deleteDeliveryOrder,
     } = this.props;
     const columns = [{
       title: formatMessage({ id: 'global.form.orderNumber' }),
       key: 'orderNumber',
       dataIndex: 'order_number',
-      width: 200,
+      width: 100,
     }, {
       title: formatMessage({ id: 'global.form.trackingNumber' }),
       key: 'trackingNumber',
@@ -60,7 +64,7 @@ class orderTable extends React.Component {
     }, {
       title: formatMessage({ id: 'global.form.receiver' }),
       key: 'receiver',
-      width: 150,
+      width: 100,
       render: (text, record) => {
         const { receiver } = record;
         return `${receiver.first_name} ${receiver.last_name}`;
@@ -70,7 +74,7 @@ class orderTable extends React.Component {
       title: formatMessage({ id: 'global.form.allAddress' }),
       render: (text, record) => <Address country={record.receiver.country} state={record.receiver.state} city={record.receiver.city} street={record.receiver.street} zipCode={record.receiver.zip_code} />,
       key: 'address',
-      width: 250,
+      width: 200,
     }, {
       title: formatMessage({ id: 'global.form.status' }),
       key: 'status',
@@ -79,12 +83,17 @@ class orderTable extends React.Component {
     {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
+      width: 300,
       render: (text, record) => {
         const paymentEl = ((status) => {
           if (Number(status) === UNPAIED_ORDER_STATUS) {
             return (
               <span>
-                <Button onClick={() => { this.handlePaymentOrder(record); }} size="small" >{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
+                <Button onClick={() => { this.handlePaymentOrder(record); }} size="small" type="primary">{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
+                <Divider type="vertical" />
+                <Popconfirm title={formatMessage({ id: 'page.TrackOrders.deleteDeliverOrder' })} onConfirm={()=> deleteDeliveryOrder(record.id)} okText={formatMessage({ id: 'global.ui.button.ok' })} cancelText={formatMessage({ id: 'global.ui.button.cancel' })}>
+                  <Button  size="small">{ formatMessage({ id: 'global.ui.button.delete' }) }</Button>
+                </Popconfirm>
                 <Divider type="vertical" />
               </span>
             );
@@ -133,6 +142,7 @@ orderTable.propTypes = {
   getTotalLogisticFee: PropTypes.func.isRequired,
   setDeliveryOrders: PropTypes.func.isRequired,
   setInvoiceInfo: PropTypes.func.isRequired,
+  deleteDeliveryOrder: PropTypes.func.isRequired,
 };
 
 const OrderTable = injectIntl(orderTable);

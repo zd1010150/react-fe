@@ -9,7 +9,7 @@ import { getTotalLogisticFee } from 'views/Order/component/chooseLogistic/flow/a
 import { setDeliveryOrders } from 'views/Order/component/skeleton/flow/action';
 import { setInvoiceInfo } from 'views/Order/component/confirmInvoice/flow/action';
 
-import { setIdViewData, queryByPaging, queryBySearchKey, setTrackOrderDetailInfo } from '../flow/action';
+import { setIdViewData, queryByPaging, queryBySearchKey, setTrackOrderDetailInfo, deleteDeliveryOrder } from '../flow/action';
 
 import Table from '../component/table';
 import SearchForm from '../component/searchForm';
@@ -38,6 +38,7 @@ class trackOrderView extends React.Component {
       setInvoiceInfo,
       setDeliveryOrders,
       getTotalLogisticFee,
+      deleteDeliveryOrder,
     } = this.props;
     return (
       <section className="section section-page">
@@ -62,6 +63,7 @@ class trackOrderView extends React.Component {
             setInvoiceInfo={setInvoiceInfo}
             setDeliveryOrders={setDeliveryOrders}
             getTotalLogisticFee={getTotalLogisticFee}
+            deleteDeliveryOrder={deleteDeliveryOrder}
           />
         </div>
         <div className="section-header" />
@@ -74,6 +76,7 @@ trackOrderView.defaultProps = {
 };
 trackOrderView.propTypes = {
   queryBySearchKey: PropTypes.func.isRequired,
+  deleteDeliveryOrder: PropTypes.func.isRequired,
   setIdViewData: PropTypes.func.isRequired,
   setPageTitle: PropTypes.func.isRequired,
   setTrackOrderDetailInfo: PropTypes.func.isRequired,
@@ -95,6 +98,7 @@ const mapDispatchToProp = {
   getTotalLogisticFee,
   setDeliveryOrders,
   setInvoiceInfo,
+  deleteDeliveryOrder,
 };
 
 const TrackOrderView = withRouter(connect(mapStateToProps, mapDispatchToProp)(trackOrderView));

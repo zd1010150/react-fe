@@ -120,9 +120,9 @@ invoice.propTypes = {
   trackingNumber: PropTypes.string.isRequired,
   freightSetting: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   items: PropTypes.array,
-  totalPrice: PropTypes.number,
-  totalQuantity: PropTypes.number,
-  shippingCost: PropTypes.number,
+  totalPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  totalQuantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  shippingCost: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   orderTime: PropTypes.string,
 };
 const Invoice = injectIntl(invoice);
