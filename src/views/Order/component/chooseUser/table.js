@@ -40,7 +40,6 @@ const table = ({ intl, users, setSeletedUser }) => {
             <Button
               size="small"
               onClick={() => {
-                debugger;
               setSeletedUser(record);
             }}
             >{formatMessage({ id: 'global.ui.button.select' })}
