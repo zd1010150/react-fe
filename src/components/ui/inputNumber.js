@@ -77,8 +77,7 @@ class InputNumber extends React.Component {
           size="small"
           defaultValue={this.props.defaultValue}
           value={this.state.inputValue}
-          onInput={(event) => { console.log('this is input', event.target.value) }}
-          onChange={(event) => { console.log('this is change', event.target.value); this.handleChange(event); }}
+          onChange={(event) => { this.handleChange(event); }}
         />
         <Button disabled={disabled} onClick={() => { this.plus(); }} className={classNames(cx('input-number-btn'), cx('input-number-btn-plus'))}><Icon type="plus" /></Button>
       </div>

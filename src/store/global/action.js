@@ -29,7 +29,6 @@ export const resetUser = () => ({
   type: RESET_USER,
 });
 export const logout = () => dispatch => post('/affiliate/logout').then((data) => {
-  console.log(data);
   window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage);
   // if (!_.isEmpty(data.user)) {
   //   dispatch(setAccountInfo(data.user));

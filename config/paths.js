@@ -37,7 +37,7 @@ function getServedPath(appPackageJson) {
     envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
   return ensureSlash(servedUrl, true);
 }
-console.log("---public Url", getPublicUrl(resolveApp('package.json')));
+
 // config after eject: we're in ./config/
 module.exports = {
   dotenv: resolveApp('.env'),

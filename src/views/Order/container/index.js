@@ -14,12 +14,9 @@ import Skeleton from '../component/skeleton/index';
 class orderView extends React.Component {
   constructor(props) {
     super(props);
-    debugger;
     this.init(props);
   }
   componentWillReceiveProps(nextProps) {
-    console.log("will recive triggere");
-    debugger;
     this.init(nextProps);
   }
   init(props) {
@@ -47,7 +44,6 @@ class orderView extends React.Component {
       setCurrentStep('chooseUser');
       deleteSplitOrder();
       resetOrder();
-      console.log("====useriD, user", userId, user);
       if ((_.isEmpty(userId)) || _.isEmpty(user)) {
         resetUser();
       }

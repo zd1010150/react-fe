@@ -6,11 +6,9 @@ import { intlShape, injectIntl } from 'react-intl';
 const deleteDialog = ({ intl, onClose, visible, userId, onDelete }) => {
   const { formatMessage } = intl;
   const handleCancel = () => {
-    console.log('cancel delte user');
     onClose();
   };
   const handleOK = () => {
-    console.log(' delete user', userId);
     onDelete(userId);
     onClose();
   };
