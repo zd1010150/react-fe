@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Icon, Layout, Button } from 'antd';
+import { Icon, Layout, Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import { CHINA_CODE, MAX_PAYABLE_PRICE } from 'config/app.config';
@@ -19,19 +19,22 @@ const { Sider, Content, Footer } = Layout;
 const cx = classNames.bind(styles);
 
 class chooseGoodView extends React.Component {
+  state={
+    showDutyTermsDialog: false,
+  }
   componentDidMount() {
     this.props.queryGoodsByPaging();
   }
   submitOrder() {
     const {
-      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods, dutySetting, selectedUser, goNextStep
+      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, dutySetting, selectedUser,
     } = this.props;
     const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting[0].threshold);
     const { country } = selectedUser;
     if (totalDuty >= max && country === CHINA_CODE) { // 如果超过300,并且是发往中国 就分担。此处是mock，需要更改为global setting中传入的值
-      addSplitOrder();
-      initGoods(cart);
-      goNextStep('chooseGoods');
+      this.setState({
+        showDutyTermsDialog: true,
+      });
     } else {
       const postData = cart.map(item => ({
         amount: item.price * item.quantity,
@@ -41,6 +44,22 @@ class chooseGoodView extends React.Component {
       createDeliveryOrder([postData], 'chooseGoods');
       deleteSplitOrder();
     }
+  }
+  confirmSplitOrder(){
+    const {
+      cart, addSplitOrder, initGoods, goNextStep
+    } = this.props;
+    this.setState({
+      showDutyTermsDialog: false,
+    });
+    addSplitOrder();
+    initGoods(cart);
+    goNextStep('chooseGoods');
+  }
+  cancelSplitOrder(){
+    this.setState({
+      showDutyTermsDialog: false
+    });
   }
   render() {
     const {
@@ -65,6 +84,7 @@ class chooseGoodView extends React.Component {
       setNextBtnDisable,
       setEditingPriceStatus,
       setEditingPrice,
+      dutySetting,
       intl,
     } = this.props;
     const { formatMessage } = intl;
@@ -130,7 +150,16 @@ class chooseGoodView extends React.Component {
             { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
           </Button>
         </div>
-
+        <Modal
+          title={formatMessage({ id: 'global.ui.dialog.info' })}
+          visible={this.state.showDutyTermsDialog}
+          onOk={() => this.confirmSplitOrder()}
+          onCancel={() => this.cancelSplitOrder()}
+          okText={formatMessage({ id: 'global.ui.button.ok' })}
+          cancelText={formatMessage({ id: 'global.ui.button.cancel' })}
+        >
+          <p>{ dutySetting && dutySetting[0] && dutySetting[0].terms }</p>
+        </Modal>
       </div>
     );
   }
@@ -152,9 +181,9 @@ const mapStateToProps = ({ order, global }) => ({
   goodsTablePagination: order.chooseGood.goodsTablePagination,
   searchKey: order.chooseGood.searchKey,
   steps: order.skeleton.steps,
-  dutySetting: global.dutySetting,
+  dutySetting: global.settings.dutySetting,
   selectedUser: global.orderUser,
-  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled,
+  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled
 });
 const mapDispathToProps = {
   setCarCollapse,

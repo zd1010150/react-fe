@@ -15,7 +15,7 @@ export const UNAUTHENTICATION = { // Unauthentication rewrite url
   REDIRECT_KEY: 'success_url',
 };
 
-export const UNPAIED_ORDER_STATUS = 1; // 未支付的发货单的状态是1
+export const UNPAIED_ORDER_STATUS = 0; // 未支付的发货单的状态是1
 export const CURRENCY_SYMBOL = {
   [CHINA_RMB_CODE]: '￥',
   [AUS_DOLLER_CODE]: '$',

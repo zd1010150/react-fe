@@ -63,9 +63,9 @@ class userForm extends React.Component {
     })(<Select disabled={disabled} style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || 1 })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
+    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || group[0].id })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
 
-    const interestsSelector = getFieldDecorator('interests', { initialValue: editObject.interests || 1 })(<Select
+    const interestsSelector = getFieldDecorator('interests', { initialValue: editObject.interests || interests[0].id })(<Select
       disabled={disabled}
       style={{ width: '100%' }}
       key="interests"

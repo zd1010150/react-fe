@@ -1,6 +1,7 @@
 import React from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Card, Carousel } from 'antd';
+import { Card, Carousel, Icon } from 'antd';
 import { cmsUrl } from 'config/env.config';
 import classNames from 'classnames/bind';
 import { QRcode } from 'components/ui/index';
@@ -40,6 +41,16 @@ const plan = ({
     border: 'none',
     boxShadow: 'none',
   };
+  const videosEl = _.map(videos, (video, index) => {
+    const { cover_image_url, video_url } = video;
+    return (
+      <div key={index}>
+        <a className={cx('video-wrapper')}   style={{ backgroundImage: `url(${cover_image_url})` }} href={video_url} target="_blank">
+          <Icon type="play-circle" className={cx('video-play-btn')} />
+        </a>
+      </div>
+    );
+  });
   return (
     <Card title={title} bodyStyle={cardBodyStyle} style={{ marginBottom: '10px' }} className={cx('plan-card')}>
       <Grid style={outerGridStyle}>
@@ -47,16 +58,10 @@ const plan = ({
           {pictures.map((item, index) => <Grid style={picGridStyle} key={index}><img src={item.path} alt="marketing pic" className={cx('plan-img')} /></Grid>)}
         </Card>
       </Grid>
-      <Grid style={videGridStyle}>
+      <Grid style={videGridStyle} >
         <Carousel autoplay>
-          {
-            videos.map((video, index) =>
-              (<video width="100%" key={index}>
-                <source src={video} />
-               </video>))
-          }
+          {videosEl}
         </Carousel>
-
       </Grid>
       <Grid style={videGridStyle}>{text}</Grid>
       <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}`} width="160px" height="160px" /> </Grid>
@@ -66,14 +71,14 @@ const plan = ({
 plan.defaultProps = {
   title: '',
   pictures: [],
-  videos: [],
+  videos: {},
   text: '',
   id: 0,
 };
 plan.propTypes = {
   title: PropTypes.string,
   pictures: PropTypes.array,
-  videos: PropTypes.array,
+  videos: PropTypes.object,
   text: PropTypes.string,
   id: PropTypes.number,
 };

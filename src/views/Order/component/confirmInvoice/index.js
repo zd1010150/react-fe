@@ -86,7 +86,6 @@ class confirmInvoiceView extends React.Component {
         </div>
         <div className={classNames('block-footer', 'invoice-block-footer')}>
           <Button
-            disabled
             className={cx('order-step-previous-btn')}
             onClick={() => {
               goPreviousStep('confirmOrder');
