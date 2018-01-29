@@ -27,8 +27,6 @@ const searchAreaVisible = (state = true, action) => {
 };
 const hasSeletedUser = (state = false, action) => {
   switch (action.type) {
-    case RESET_ORDER:
-      return false;
     case SET_ORDER_USER:
       return !_.isEmpty(action.user);
     default:

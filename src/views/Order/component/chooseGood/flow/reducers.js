@@ -194,7 +194,7 @@ const cart = (state = {
   switch (action.type) {
     case RESET_ORDER:
       return {
-        goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0,
+        goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0, totalDuty: 0,
       };
     case ADD_GOODS_TO_CART:
       newGoods = addGoodsToCart(state.goods, action.goods, action.goods.selectingQuantity);

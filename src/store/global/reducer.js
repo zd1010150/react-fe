@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import { navLanguage } from 'utils/navigationUtil';
 import { MagentoLanguage, setMangentoLanguageCookie } from 'config/magento.config';
-import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_ORDER } from './actionType';
+import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_USER } from './actionType';
 
 // 页面默认语言为 en，此处只是mock
 
@@ -50,7 +50,7 @@ const orderUser = (state = null, action) => {
   switch (action.type) {
     case SET_ORDER_USER:
       return action.user;
-    case RESET_ORDER:
+    case RESET_USER:
       return null;
     default:
       return state;
