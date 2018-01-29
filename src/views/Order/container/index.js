@@ -16,9 +16,9 @@ class orderView extends React.Component {
     super(props);
     this.init(props);
   }
-  componentWillReceiveProps(nextProps) {
-    this.init(nextProps);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.init(nextProps);
+  // }
   init(props) {
     const {
       location,

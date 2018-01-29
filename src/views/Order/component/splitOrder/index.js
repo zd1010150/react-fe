@@ -29,7 +29,7 @@ class splitOrderView extends React.Component {
   }
   setMaxDuty(props) {
     const { dutySetting } = props;
-    const max = _.isEmpty(dutySetting) ? 300 : dutySetting[0].threshold;
+    const max = _.isEmpty(dutySetting) ? 300 : dutySetting.threshold;
     props.setMax(max); // mock
   }
   creatDeliveryOrder() {
@@ -235,7 +235,7 @@ const mapStateToProps = ({ order, global }) => {
     currentOrder: splitOrder.orders.currentOrder,
     goods: splitOrder.goods,
     goodsEnable: splitOrder.orders.goodsEnable,
-    dutySetting: global.dutySetting,
+    dutySetting: global.settings.dutySetting,
     selectedUser: global.orderUser,
     baseCurency: global.settings.baseCurrency,
     max: splitOrder.orders.max,

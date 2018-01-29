@@ -49,7 +49,7 @@ const pageTitle = (state = 'global.pageTitle.leads', action) => {
 const orderUser = (state = null, action) => {
   switch (action.type) {
     case SET_ORDER_USER:
-      return action.user;
+     return action.user;
     case RESET_USER:
       return null;
     default:

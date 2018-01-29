@@ -29,7 +29,7 @@ class chooseGoodView extends React.Component {
     const {
       totalDuty, cart, createDeliveryOrder, deleteSplitOrder, dutySetting, selectedUser,
     } = this.props;
-    const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting[0].threshold);
+    const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting.threshold);
     const { country } = selectedUser;
     if (totalDuty >= max && country === CHINA_CODE) { // 如果超过300,并且是发往中国 就分担。此处是mock，需要更改为global setting中传入的值
       this.setState({
@@ -158,7 +158,7 @@ class chooseGoodView extends React.Component {
           okText={formatMessage({ id: 'global.ui.button.ok' })}
           cancelText={formatMessage({ id: 'global.ui.button.cancel' })}
         >
-          <p>{ dutySetting && dutySetting[0] && dutySetting[0].terms }</p>
+          <p>{ dutySetting && dutySetting.terms }</p>
         </Modal>
       </div>
     );

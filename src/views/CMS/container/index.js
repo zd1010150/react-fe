@@ -41,6 +41,7 @@ class cmsView extends React.Component {
             >
               <Icon type="play-circle" className={cx('video-play-btn')} />
             </div>
+            <a className={cx('video-download-btn')} href={video_url} download><Icon type="download" /></a>
           </div>
         );
       }
@@ -49,6 +50,7 @@ class cmsView extends React.Component {
           <video className={cx('video-wrapper')} controls autoPlay>
             <source src={video_url} />
           </video>
+          <a className={cx('video-download-btn')} href={video_url} download><Icon type="download" /></a>
         </div>
       );
     });
@@ -56,7 +58,7 @@ class cmsView extends React.Component {
       <div className={cx('cms-content-wrapper')}>
         <Row>
           <Col span={24}>
-            <p>{text}</p>
+            <p className={cx('content')}>{text}</p>
           </Col>
         </Row>
         <Row>
