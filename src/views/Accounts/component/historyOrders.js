@@ -49,9 +49,9 @@ class historyOrderDialog extends React.Component {
               <dt className={cx('dt-info-title')}>{ formatMessage({ id: 'page.Accounts.mostBoughtItem' }) }:</dt>
               <dd className={cx('dt-info-value')}>{ historyOrder.profits.most_bought_product.name}</dd>
               <dt className={cx('dt-info-title')}>{ formatMessage({ id: 'page.Accounts.totalSpending' }) }:</dt>
-              <dd className={cx('dt-info-value')}><Currency value={historyOrder.total_spending} /></dd>
+              <dd className={cx('dt-info-value')}><Currency value={historyOrder.profits.total_spending} /></dd>
               <dt className={cx('dt-info-title')}>{ formatMessage({ id: 'page.Accounts.totalProfit' }) }:</dt>
-              <dd className={cx('dt-info-value')}><Currency value={historyOrder.total_profits} /></dd>
+              <dd className={cx('dt-info-value')}><Currency value={historyOrder.profits.total_profits} /></dd>
             </dl>
           </div>
         </div>
