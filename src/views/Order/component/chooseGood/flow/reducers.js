@@ -23,7 +23,7 @@ const getSeletedQuantity = (itemId, cart) => {
   return items && items.length > 0 ? items[0].quantity : 0;
 };
 
-const mixAvailableQuantity = (state, goods, cart) => {
+const initGoods = (state, goods, cart) => {
   if (goods && goods.length < 1) return [];
   const newGoods = goods.map(item => ({
     id: item.product.id,
@@ -35,7 +35,7 @@ const mixAvailableQuantity = (state, goods, cart) => {
     category: item.product.magento_category_id,
     lastUpdated: item.product.updated_at,
     totalValue: item.total_value, // mock
-    unitPrice: getUnitPrice(item.total_value, item.current_quantity), // mock,理论应该按照总价/数量
+    unitPrice: item.unit_cost, // mock,理论应该按照总价/数量
     recommendedPrice: item.product.recommended_price,
     availableQuantity: item.current_quantity - getSeletedQuantity(item.product.id, cart),
     selectingQuantity: 1,
@@ -122,7 +122,7 @@ const goods = (state = [], action) => {
     case RESET_ORDER:
       return [];
     case SET_GOODS:
-      return mixAvailableQuantity(state, action.goods, action.cart);
+      return initGoods(state, action.goods, action.cart);
     case ADD_GOODS_TO_CART:
       return setAvailableQuantity(state, action.goods, true);
     case DELETE_GOODS_FROM_CART:
