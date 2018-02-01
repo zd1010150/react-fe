@@ -13,7 +13,7 @@ export const setPriceData = priceTable => ({
 
 export const fetchPriceTable = () => (dispatch) => {
   get('/affiliate/sub-category-sub-groups', {}, dispatch).then((data) => {
-    const backData = (data.data || []).map(item => ({
+    const backData = (data|| []).map(item => ({
       groupId: item.sub_group_id,
       categoryId: item.sub_category_id,
       value: item.percentage,
