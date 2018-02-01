@@ -1,9 +1,10 @@
 
 /* eslint-disable no-underscore-dangle */
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { removeMangentoLanguageCookie } from 'config/magento.config';
+import { URL_PREFIX } from 'config/app.config';
 import { Provider } from 'react-redux';
 import { syncStateAndLocalStorage } from 'utils/localStorage';
 import configureStore from './store/configureStore';
@@ -37,7 +38,7 @@ window.addEventListener('beforeunload', () => {
 const AppView = () => (
   <Provider store={store}>
     <I18n>
-      <BrowserRouter basename="/admin" >
+      <BrowserRouter basename={URL_PREFIX} >
         <App />
       </BrowserRouter>
     </I18n>

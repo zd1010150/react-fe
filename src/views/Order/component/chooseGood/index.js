@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { Icon, Layout, Button } from 'antd';
+import { Icon, Layout, Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import { CHINA_CODE, MAX_PAYABLE_PRICE } from 'config/app.config';
@@ -10,8 +10,8 @@ import styles from '../../Order.less';
 import Cart from './cart';
 import Search from './search';
 import Goods from './goods';
-import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods, setItemPrice } from './flow/action.js';
-import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goNextStep, goPreviousStep } from '../skeleton/flow/action';
+import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods,  setNextBtnDisable, setEditingPriceStatus, setEditingPrice } from './flow/action.js';
+import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep, goNextStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
 
 const { Sider, Content, Footer } = Layout;
@@ -19,27 +19,47 @@ const { Sider, Content, Footer } = Layout;
 const cx = classNames.bind(styles);
 
 class chooseGoodView extends React.Component {
+  state={
+    showDutyTermsDialog: false,
+  }
   componentDidMount() {
     this.props.queryGoodsByPaging();
   }
   submitOrder() {
     const {
-      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, addSplitOrder, initGoods, dutySetting, selectedUser
+      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, dutySetting, selectedUser,
     } = this.props;
-    const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting[0].threshold);
+    const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : Number(dutySetting.threshold);
     const { country } = selectedUser;
     if (totalDuty >= max && country === CHINA_CODE) { // 如果超过300,并且是发往中国 就分担。此处是mock，需要更改为global setting中传入的值
-      addSplitOrder();
-      initGoods(cart);
+      this.setState({
+        showDutyTermsDialog: true,
+      });
     } else {
       const postData = cart.map(item => ({
-        price: item.price,
+        amount: item.price * item.quantity,
         product_id: item.id,
         quantity: item.quantity,
       }));
-      createDeliveryOrder([postData]);
+      createDeliveryOrder([postData], 'chooseGoods');
       deleteSplitOrder();
     }
+  }
+  confirmSplitOrder(){
+    const {
+      cart, addSplitOrder, initGoods, goNextStep
+    } = this.props;
+    this.setState({
+      showDutyTermsDialog: false,
+    });
+    addSplitOrder();
+    initGoods(cart);
+    goNextStep('chooseGoods');
+  }
+  cancelSplitOrder(){
+    this.setState({
+      showDutyTermsDialog: false
+    });
   }
   render() {
     const {
@@ -59,9 +79,12 @@ class chooseGoodView extends React.Component {
       totalDuty,
       goodsTablePagination,
       steps,
-      setItemPrice,
-      goNextStep,
       goPreviousStep,
+      nextBtnDisabled,
+      setNextBtnDisable,
+      setEditingPriceStatus,
+      setEditingPrice,
+      dutySetting,
       intl,
     } = this.props;
     const { formatMessage } = intl;
@@ -89,7 +112,7 @@ class chooseGoodView extends React.Component {
             collapsed={cartCollapse}
             collapsedWidth={0}
             className={cx('sidebar-cart')}
-            width={300}
+            width={380}
           >
             <Cart
               cartData={cart}
@@ -99,7 +122,9 @@ class chooseGoodView extends React.Component {
               totalPrice={totalPrice}
               totalCost={totalCost}
               totalDuty={totalDuty}
-              setItemPrice={setItemPrice}
+              setNextBtnDisable={setNextBtnDisable}
+              setEditingPriceStatus={setEditingPriceStatus}
+              setEditingPrice={setEditingPrice}
             />
           </Sider>
         </Layout>
@@ -117,16 +142,24 @@ class chooseGoodView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             style={{ marginLeft: 8 }}
-            disabled={!(cart && cart.length > 0)}
+            disabled={nextBtnDisabled}
             onClick={() => {
                 this.submitOrder();
-                goNextStep('chooseGoods');
               }}
           >
             { formatMessage({ id: 'global.ui.button.next' }) } <Icon type="arrow-right" />
           </Button>
         </div>
-
+        <Modal
+          title={formatMessage({ id: 'global.ui.dialog.info' })}
+          visible={this.state.showDutyTermsDialog}
+          onOk={() => this.confirmSplitOrder()}
+          onCancel={() => this.cancelSplitOrder()}
+          okText={formatMessage({ id: 'global.ui.button.ok' })}
+          cancelText={formatMessage({ id: 'global.ui.button.cancel' })}
+        >
+          <p>{ dutySetting && dutySetting.terms }</p>
+        </Modal>
       </div>
     );
   }
@@ -148,8 +181,9 @@ const mapStateToProps = ({ order, global }) => ({
   goodsTablePagination: order.chooseGood.goodsTablePagination,
   searchKey: order.chooseGood.searchKey,
   steps: order.skeleton.steps,
-  dutySetting: global.dutySetting,
+  dutySetting: global.settings.dutySetting,
   selectedUser: global.orderUser,
+  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled
 });
 const mapDispathToProps = {
   setCarCollapse,
@@ -159,13 +193,15 @@ const mapDispathToProps = {
   deleteGoodsFromCart,
   editingCartGoods,
   queryBySearchKey,
-  setItemPrice,
   createDeliveryOrder,
   addSplitOrder,
   deleteSplitOrder,
-  goNextStep,
   goPreviousStep,
+  goNextStep,
   initGoods,
+  setNextBtnDisable,
+  setEditingPrice,
+  setEditingPriceStatus,
 };
 
 const ChooseGoodView = connect(mapStateToProps, mapDispathToProps)(injectIntl(chooseGoodView));

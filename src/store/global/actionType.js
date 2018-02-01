@@ -4,4 +4,4 @@ export const SET_ACCOUNTINFO = 'SET_ACCOUNTINFO';
 export const SET_PAGETITLE = 'SET_PAGETITLE';
 export const SET_ORDER_USER = 'SET_ORDER_USER';
 export const SET_GLOBAL_SETTING = 'SET_GLOBAL_SETTING';
-export const RESET_ORDER = 'RESET_ORDER';
+export const RESET_USER = 'RESET_USER';

@@ -8,8 +8,8 @@ import classNames from 'classnames/bind';
 import styles from '../../Order.less';
 import Orders from './orders';
 import Goods from './goods';
-import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, resetOrder, setMax } from './flow/action';
-import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder } from '../skeleton/flow/action';
+import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrder, deleteOrderGoods, setOrderGoodsQuantity, resetOrder, setMax, setOrderExpand } from './flow/action';
+import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder} from '../skeleton/flow/action';
 import { SAVED } from './flow/orderStatus';
 import { CURRENCY_SYMBOL } from 'config/app.config';
 
@@ -27,12 +27,9 @@ class splitOrderView extends React.Component {
     };
     this.setMaxDuty(props);
   }
-  componentWillReceiveProps(nextProps) {
-    this.setMaxDuty(nextProps);
-  }
   setMaxDuty(props) {
     const { dutySetting } = props;
-    const max = _.isEmpty(dutySetting) ? 300 : dutySetting[0].threshold;
+    const max = _.isEmpty(dutySetting) ? 300 : dutySetting.threshold;
     props.setMax(max); // mock
   }
   creatDeliveryOrder() {
@@ -41,13 +38,12 @@ class splitOrderView extends React.Component {
       const order = this.props.orders[orderid];
       if (order.goods && order.goods.length < 1) return;
       postData.push(order.goods.map(item => ({
-        price: item.price,
+        amount: item.price * item.quantity,
         product_id: item.id,
         quantity: item.quantity,
       })));
     });
-    this.props.goNextStep('splitOrder');
-    this.props.createDeliveryOrder(postData);
+    this.props.createDeliveryOrder(postData, 'splitOrder');
   }
   confirmHasRemainGoods() {
     this.setState({
@@ -105,7 +101,7 @@ class splitOrderView extends React.Component {
   }
   render() {
     const {
-      ordersBorderCollapse,
+      expandOrder,
       orders,
       goods,
       currentOrder,
@@ -121,6 +117,7 @@ class splitOrderView extends React.Component {
       intl,
       baseCurency,
       max,
+      setOrderExpand,
     } = this.props;
     const { formatMessage } = intl;
     return (
@@ -156,12 +153,12 @@ class splitOrderView extends React.Component {
           <Sider
             trigger={null}
             collapsible
-            collapsed={ordersBorderCollapse}
             collapsedWidth={0}
             className={classNames(cx('sidebar-cart'), 'sidebar-cart')}
-            width={300}
+            width={380}
           >
             <Orders
+              expandOrder={expandOrder}
               ordersData={orders}
               deleteOrderGoods={deleteOrderGoods}
               setOrderGoodsQuantity={setOrderGoodsQuantity}
@@ -170,6 +167,7 @@ class splitOrderView extends React.Component {
               currentOrder={currentOrder}
               symbol={_.isEmpty(baseCurency) ? '' : CURRENCY_SYMBOL[baseCurency[0].name]}
               max={max}
+              setOrderExpand={setOrderExpand}
             />
           </Sider>
         </Layout>
@@ -194,7 +192,7 @@ class splitOrderView extends React.Component {
           </Button>
         </div>
         <Modal
-          title="Modal"
+          title={formatMessage({ id: 'global.ui.dialog.info' })}
           visible={this.state.goPreviousStepConfirmDialogVisible}
           onOk={() => this.confirmGoPrevious()}
           onCancel={() => this.cancelPreviousDialog()}
@@ -204,7 +202,7 @@ class splitOrderView extends React.Component {
           <p>{ formatMessage({ id: 'page.Order.leaveSplitOrder' }) }</p>
         </Modal>
         <Modal
-          title="Modal"
+          title={formatMessage({ id: 'global.ui.dialog.info' })}
           visible={this.state.hasRemainGoodsConfirmDialogVisible}
           onOk={() => this.confirmHasRemainGoods()}
           onCancel={() => this.cancelHasRemainGoods()}
@@ -237,10 +235,11 @@ const mapStateToProps = ({ order, global }) => {
     currentOrder: splitOrder.orders.currentOrder,
     goods: splitOrder.goods,
     goodsEnable: splitOrder.orders.goodsEnable,
-    dutySetting: global.dutySetting,
+    dutySetting: global.settings.dutySetting,
     selectedUser: global.orderUser,
     baseCurency: global.settings.baseCurrency,
     max: splitOrder.orders.max,
+    expandOrder: splitOrder.expandOrder,
   };
 };
 const mapDispathToProps = {
@@ -257,6 +256,7 @@ const mapDispathToProps = {
   resetOrder,
   setMax,
   createDeliveryOrder,
+  setOrderExpand,
 };
 
 const SplitOrderView = connect(mapStateToProps, mapDispathToProps)(injectIntl(splitOrderView));

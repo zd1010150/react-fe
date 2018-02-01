@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { getLocationOfAbsoluteUrl } from 'utils/url';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
@@ -12,7 +12,6 @@ import styles from '../../Order.less';
 import { baseUrl } from 'config/env.config';
 import Address from './address';
 import Invoice from './invoice';
-import { resetOrder } from '../skeleton/flow/action';
 import { getReceiver } from './flow/reselect';
 import { getQuoteId } from './flow/action';
 
@@ -24,14 +23,15 @@ class confirmInvoiceView extends React.Component {
     document.forms.payFreightForm.submit();
   }
   render() {
-    let totalCost = 0;
+    let totalShippingCost = 0;
+    let totalAUDShippingCost = 0;
     const {
       goPreviousStep,
       deliveryOrderIds,
+      magentoQuoteId,
       freightId,
       invoices,
       receiver,
-      resetOrder,
       getQuoteId,
       magentoShippingCost,
       location,
@@ -47,7 +47,8 @@ class confirmInvoiceView extends React.Component {
         sum += i.quantity;
         return sum;
       }, 0);
-      totalCost += item.shipping_cost;
+      totalShippingCost += Number(item.shipping_cost);
+      totalAUDShippingCost += Number(item.aud_shipping_cost);
       return (
         <Invoice
           key={deliveryOrder.order_number}
@@ -57,31 +58,34 @@ class confirmInvoiceView extends React.Component {
           items={deliveryOrder.items}
           totalPrice={item.amount}
           totalQuantity={totalQuantity}
-          orderTime={item.created_at}
+          orderTime={deliveryOrder.created_at}
           shippingCost={item.shipping_cost}
         />
       );
     });
+
     return (
       <div className={classNames('block', 'invoice-block', 'section-confirm-invoice')}>
         <div className="block-content">
           <form name="payFreightForm" action={`${baseUrl}/affiliate/delivery-orders/pay`} method="post">
+            <input type="hidden" name="quote_id" value={magentoQuoteId} />
             <input type="hidden" name="freight_id" value={freightId} />
-            <input type="hidden" name="delivery_orders_ids" value={deliveryOrderIds} />
+            {
+              deliveryOrderIds.map((id, index) => <input type="hidden" key={id} name={`delivery_orders_ids[${index}]`} value={id} />)
+            }
             <input type="hidden" name="shipping_cost" value={magentoShippingCost} />
-            <input type="hidden" name="success_url" value={"eee"} />
-            <input type="hidden" name="error_url" value={"3333"} />
+            <input type="hidden" name="success_url" value={getLocationOfAbsoluteUrl('/resultNotification?view=successPay')} />
+            <input type="hidden" name="error_url" value={getLocationOfAbsoluteUrl('/resultNotification?view=errorPay')} />
           </form>
           <Address {...receiver} />
           {invoicesEl}
           <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
             {formatMessage({ id: 'global.properNouns.goods.shippingCost' })}:
-            <strong><Currency value={totalCost} /></strong>
+            <strong><Currency value={totalShippingCost} /></strong>
           </p>
         </div>
         <div className={classNames('block-footer', 'invoice-block-footer')}>
           <Button
-            disabled={true}
             className={cx('order-step-previous-btn')}
             onClick={() => {
               goPreviousStep('confirmOrder');
@@ -93,8 +97,7 @@ class confirmInvoiceView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             onClick={() => {
-              resetOrder();
-              getQuoteId(totalCost, this.confirmPayFreight());
+              getQuoteId(totalAUDShippingCost, this.confirmPayFreight);
             }}
           >
             { formatMessage({ id: 'global.ui.button.pay' }) } <Icon type="pay-circle-o" />
@@ -121,6 +124,7 @@ confirmInvoiceView.propTypes = {
   location: PropTypes.object,
 };
 const mapStateToProps = ({ order }) => ({
+  magentoQuoteId: order.confirmInvoice.magentoQuoteId,
   freightId: order.chooseLogistic.logistic.logisticType,
   deliveryOrderIds: order.skeleton.deliveryOrders,
   invoices: order.confirmInvoice.invoices,
@@ -129,7 +133,6 @@ const mapStateToProps = ({ order }) => ({
 });
 const mapDispathToProps = {
   goPreviousStep,
-  resetOrder,
   getQuoteId,
 };
 

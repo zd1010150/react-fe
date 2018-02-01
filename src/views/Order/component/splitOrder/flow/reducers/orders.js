@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import {
-  SO_SET_ORDERS_BOARD_COLLAPSE,
+  SO_SET_ORDER_EXPAND,
   SO_ADD_GOODS_TO_ORDER,
   SO_SET_ORDER_STATUS,
   SO_CREATE_ORDER,
@@ -159,22 +159,22 @@ const setOrderGoodsQuantity = (state, goods, quantity) => {
   });
   return updatOrderGoods(state, newOrderGoods);
 };
-const setOrderCollapse = (state, orderId, collapsed) => {
-  const { orders, currentOrder } = state;
-  let newCurrenOrder = Object.assign({}, currentOrder);
-  const newOrders = orders.map((item) => {
-    if (item.id === orderId) {
-      return Object.assign({}, item, { collapsed });
-    } return item;
-  });
-  if (currentOrder.id === orderId) {
-    newCurrenOrder = Object.assign({}, currentOrder, { collapsed });
-  }
-  return Object.assign({}, state, {
-    orders: newOrders,
-    currentOrder: newCurrenOrder,
-  });
-};
+// const setOrderCollapse = (state, orderId, collapsed) => {
+//   const { orders, currentOrder } = state;
+//   let newCurrenOrder = Object.assign({}, currentOrder);
+//   const newOrders = orders.map((item) => {
+//     if (item.id === orderId) {
+//       return Object.assign({}, item, { collapsed });
+//     } return item;
+//   });
+//   if (currentOrder.id === orderId) {
+//     newCurrenOrder = Object.assign({}, currentOrder, { collapsed });
+//   }
+//   return Object.assign({}, state, {
+//     orders: newOrders,
+//     currentOrder: newCurrenOrder,
+//   });
+// };
 
 const getTotal = (state) => {
   const { orders, max } = state;
@@ -195,14 +195,14 @@ const getTotal = (state) => {
     orderDuty = 0;
     order = newOrders[id];
     const newGoods = order.goods.map((item) => {
-      singlePrice = item.quantity * item.price;
-      singleCost = item.quantity * item.unitPrice;
-      singleDuty = item.quantity * item.recommendedPrice;
+      singlePrice = item.quantity * _.round(item.price, 2);
+      singleCost = item.quantity * _.round(item.unitPrice, 2);
+      singleDuty = item.quantity * _.round(item.recommendedPrice, 2);
       orderCost += singleCost;
       orderPrice += singlePrice;
       orderDuty += singleDuty;
       orderQuantity += item.quantity;
-      return Object.assign({}, item, { totalDuty: _.floor(singleDuty), totalPrice: _.floor(singlePrice, 3), totalCost: _.floor(singleCost, 3)});
+      return Object.assign({}, item, { totalDuty: singleDuty, totalPrice: singlePrice, totalCost: singleCost });
     });
     if (orderDuty > max) {
       order.error = 'ERROR_MAXIMUM_VALUE';
@@ -211,10 +211,10 @@ const getTotal = (state) => {
       order.error = '';
     }
     order.goods = newGoods;
-    order.totalPrice = _.floor(orderPrice, 3);
-    order.totalCost = _.floor(orderCost, 3);
+    order.totalPrice = orderPrice;
+    order.totalCost = orderCost;
     order.totalQuantity = orderQuantity;
-    order.totalDuty = _.floor(orderDuty, 3);
+    order.totalDuty = orderDuty;
     newOrders[id] = order;
   });
 
@@ -254,18 +254,17 @@ export const orders = (state = {
     case SO_SET_ORDER_GOODS_QUANTITY:
       newState = setOrderGoodsQuantity(state, action.goods, action.quantity);
       break;
-    case SO_SET_ORDERS_BOARD_COLLAPSE:
-      return setOrderCollapse(state, action.orderId, action.collapsed);
-
     default:
       return state;
   }
   return getTotal(newState);
 };
-export const ordersBorderCollapse = (state = true, action) => {
+export const expandOrder = (state = 1, action) => {
   switch (action.type) {
-    case SO_SET_ORDERS_BOARD_COLLAPSE:
-      return action.collapsed;
+    case SO_CREATE_ORDER:
+      return ORDER_SEED;
+    case SO_SET_ORDER_EXPAND:
+      return action.orderId;
     default:
       return state;
   }

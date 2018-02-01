@@ -1,8 +1,56 @@
 .cms-content-wrapper{
-  padding: 0px 20px;
+  padding: 0px 50px;
+}
+.content{
+  font-size: 24px;
+}
+.image-wrapper{
+  height: 400px;
+  width: 100%;
+  padding: 10px 5px;
+  overflow: hidden;
 }
 .cms-image{
   width: 100%;
-  display: inline-block;
-  padding: 10px 0px;
+  height:auto;
+}
+.slide-wrapper{
+  padding:10px 0px;
+  position:relative;
+}
+.slide-wrapper:after{
+
+}
+.video-wrapper {
+  width: 1120px;
+  display: table;
+  vertical-align: middle;
+  text-align: center;
+  height:400px;
+}
+.video-play-btn{
+  color: @primary-color;
+  display: table-cell;
+  height: 140px;
+  vertical-align: middle;
+  font-size: 24px;
+}
+.video-download-btn{
+  width: 60px;
+  position: absolute;
+  color:@primary-color;
+  right: 0px;
+  bottom: 10px;
+  font-size: 48px;
+  font-weight: 600;
+  padding: 0px 10px;
+}
+.video-download-btn:hover{
+  color: @primary-color;
+}
+.video-download-btn:link{
+  color:@primary-color;
+}
+.video-download-btn:visited{
+  color: @primary-color;
 }

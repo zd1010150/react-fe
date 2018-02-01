@@ -85,7 +85,6 @@ class Nav extends React.Component {
     // insert affliateNav
     const menu = magentoNav();
     menu.splice(AFFLIATE_MENU_INDEX, 0, ...affliateNav());
-    console.log('----->', getParentUrl(location.pathname))
     return (
       <div>
         <Menu

@@ -26,9 +26,9 @@ export const setDeliveryOrders = deliveryOrders => ({
   deliveryOrders,
 });
 export const resetOrder = () => ({
-  type: RESET_ORDER
+  type: RESET_ORDER,
 });
-export const createDeliveryOrder = orders => (dispatch, getState) => {
+export const createDeliveryOrder = (orders, currentStep) => (dispatch, getState) => {
   const { orderUser } = getState().global;
   const postData = {
     affiliated_clients_id: orderUser.id,
@@ -37,6 +37,7 @@ export const createDeliveryOrder = orders => (dispatch, getState) => {
   post('/affiliate/delivery-orders/batch-create', postData, dispatch).then((data) => {
     if (data) {
       dispatch(setDeliveryOrders(data));
+      dispatch(goNextStep(currentStep));
     }
   });
 };

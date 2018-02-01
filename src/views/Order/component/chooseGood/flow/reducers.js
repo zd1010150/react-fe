@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { combineReducers } from 'redux';
+import { positiveFloat } from 'utils/regex';
 import {
   SET_CART_COLLAPSE,
   SET_GOODS,
@@ -9,7 +10,9 @@ import {
   EDITING_CART_GOODS,
   SET_PAGENATIONS,
   SET_SEARCH_KEY,
-  SET_CART_GOODS_PRICE,
+  CG_SET_NEXT_BUTTON_DISABLE,
+  CG_SET_EDITING_PRICE,
+  CG_SET_EDITING_PRICE_STATUS,
 } from './actionType';
 import { RESET_ORDER } from '../../skeleton/flow/actionType';
 import { getUnitPrice } from 'utils/mathUtil';
@@ -20,7 +23,7 @@ const getSeletedQuantity = (itemId, cart) => {
   return items && items.length > 0 ? items[0].quantity : 0;
 };
 
-const mixAvailableQuantity = (state, goods, cart) => {
+const initGoods = (state, goods, cart) => {
   if (goods && goods.length < 1) return [];
   const newGoods = goods.map(item => ({
     id: item.product.id,
@@ -32,14 +35,16 @@ const mixAvailableQuantity = (state, goods, cart) => {
     category: item.product.magento_category_id,
     lastUpdated: item.product.updated_at,
     totalValue: item.total_value, // mock
-    unitPrice: getUnitPrice(item.total_value, item.current_quantity), // mock,理论应该按照总价/数量
+    unitPrice: item.unit_cost, // mock,理论应该按照总价/数量
     recommendedPrice: item.product.recommended_price,
     availableQuantity: item.current_quantity - getSeletedQuantity(item.product.id, cart),
     selectingQuantity: 1,
     key: item.product.id,
     totalPrice: 0, // 总售价
-    price: item.product.recommended_price, // 售价
+    price: _.round(item.product.saling_price, 2), // 售价初始值
     totalCost: 0, // 总成本价
+    isEditingPrice: false,
+    editingPrice: _.round(item.product.saling_price, 2),
   }));
   return newGoods;
 };
@@ -117,7 +122,7 @@ const goods = (state = [], action) => {
     case RESET_ORDER:
       return [];
     case SET_GOODS:
-      return mixAvailableQuantity(state, action.goods, action.cart);
+      return initGoods(state, action.goods, action.cart);
     case ADD_GOODS_TO_CART:
       return setAvailableQuantity(state, action.goods, true);
     case DELETE_GOODS_FROM_CART:
@@ -130,9 +135,24 @@ const goods = (state = [], action) => {
       return state;
   }
 };
-const editItemPrice = (cart, goodsId, price) => cart.map((item) => {
+
+const editingPriceSatatus = (cart, goodsId, isEditingPrice) => cart.map((item) => {
   if (item.id === goodsId) {
-    return Object.assign({}, item, { price });
+    let newPrice = item.price;
+    if (item.isEditingPrice && (!isEditingPrice)) { // 说明是保存
+      if (positiveFloat.test(item.editingPrice)) { // 符合规则
+        newPrice = item.editingPrice;
+      }
+    }
+    return Object.assign({}, item, { isEditingPrice, price: newPrice, editingPrice: newPrice });
+  }
+  return item;
+});
+const setEditingPrice = (cart, goodsId, price) => cart.map((item) => {
+  if (item.id === goodsId) {
+    if (positiveFloat.test(price) || _.isEmpty(price)) { // 符合规则
+      return Object.assign({}, item, { editingPrice: price });
+    }
   }
   return item;
 });
@@ -146,24 +166,24 @@ const getTotalInfo = (cart) => {
   let singleTotalDuty = 0;
   const newCart = cart.map((item) => {
     totalItemQuantity += item.quantity;
-    totalPrice += item.quantity * item.price;
-    totalCost += item.quantity * item.unitPrice;
-    totalDuty += item.quantity * item.recommendedPrice;
-    singleTotalCost = item.quantity * item.unitPrice;
-    singleTotalPrice = item.quantity * item.price;
-    singleTotalDuty = item.quantity * item.recommendedPrice;
+    totalPrice += item.quantity * _.round(item.price, 2);
+    totalCost += item.quantity * _.round(item.unitPrice, 2);
+    totalDuty += item.quantity * _.round(item.recommendedPrice, 2);
+    singleTotalCost = item.quantity * _.round(item.unitPrice, 2);
+    singleTotalPrice = item.quantity * _.round(item.price, 2);
+    singleTotalDuty = item.quantity * _.round(item.recommendedPrice, 2);
     return Object.assign({}, item, {
-      totalPrice: _.floor(singleTotalPrice, 3),
-      totalCost: _.floor(singleTotalCost, 3),
-      totalDuty: _.floor(singleTotalDuty, 3),
+      totalPrice: singleTotalPrice,
+      totalCost: singleTotalCost,
+      totalDuty: singleTotalDuty,
     });
   });
   return {
     goods: newCart,
-    totalPrice: _.floor(totalPrice, 3),
+    totalPrice,
     totalItemQuantity,
-    totalCost: _.floor(totalCost, 3),
-    totalDuty: _.floor(totalDuty, 3),
+    totalCost,
+    totalDuty,
   };
 };
 
@@ -174,7 +194,7 @@ const cart = (state = {
   switch (action.type) {
     case RESET_ORDER:
       return {
-        goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0,
+        goods: [], totalPrice: 0, totalItemQuantity: 0, totalCost: 0, totalDuty: 0,
       };
     case ADD_GOODS_TO_CART:
       newGoods = addGoodsToCart(state.goods, action.goods, action.goods.selectingQuantity);
@@ -185,8 +205,11 @@ const cart = (state = {
     case EDITING_CART_GOODS:
       newGoods = editingCartGoods(state.goods, action.goods, action.quantity);
       break;
-    case SET_CART_GOODS_PRICE:
-      newGoods = editItemPrice(state.goods, action.goodsId, action.price);
+    case CG_SET_EDITING_PRICE:
+      newGoods = setEditingPrice(state.goods, action.goodsId, action.price);
+      break;
+    case CG_SET_EDITING_PRICE_STATUS:
+      newGoods = editingPriceSatatus(state.goods, action.goodsId, action.isEditing);
       break;
     default:
       return state;
@@ -230,11 +253,24 @@ const searchKey = (state = '', action) => {
       return state;
   }
 };
+const uiState = (state = { nextBtnDisabled: true }, action) => {
+  switch (action.type) {
+    case CG_SET_NEXT_BUTTON_DISABLE:
+      return Object.assign({}, state, { nextBtnDisabled: action.disabled });
+    case ADD_GOODS_TO_CART:
+      return Object.assign({}, state, { nextBtnDisabled: false });
+    case DELETE_GOODS_FROM_CART:
+      return Object.assign({}, state, { nextBtnDisabled: action.cart.length - 1 < 1 });
+    default:
+      return state;
+  }
+};
 const chooseGood = combineReducers({
   goods,
   cart,
   cartCollapse,
   goodsTablePagination,
   searchKey,
+  uiState,
 });
 export default chooseGood;

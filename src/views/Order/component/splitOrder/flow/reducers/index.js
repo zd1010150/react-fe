@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import goods from './goods';
-import { orders, ordersBorderCollapse } from './orders';
+import { orders, expandOrder } from './orders';
 
 const splitOrder = combineReducers({
   goods,
   orders,
-  ordersBorderCollapse,
+  expandOrder,
 });
 export default splitOrder;

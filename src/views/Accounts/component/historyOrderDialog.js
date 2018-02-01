@@ -26,7 +26,7 @@ const historyOrderDialog = ({
         </Button>,
       ]}
     >
-      <HistoryOrders historyOrder={historyOrder}/>
+      <HistoryOrders historyOrder={historyOrder} />
     </Modal>
   );
 };

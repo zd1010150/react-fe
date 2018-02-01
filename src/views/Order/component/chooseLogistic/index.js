@@ -79,9 +79,7 @@ class chooseLogisticView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             onClick={() => {
-              if(this.props.needCreateInvoice){
-                confirmGetInvoice();
-              }
+              confirmGetInvoice();
               goNextStep('chooseLogistic');
           }}
           >

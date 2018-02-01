@@ -2,9 +2,14 @@
 
 import { post } from 'store/http/httpAction';
 import { MagentoDomain } from 'config/magento.config';
-import { SET_INVOICE_INFO, SET_MAGENTO_SHIPPING_COST } from './actionType';
+
+import { SET_INVOICE_INFO, SET_MAGENTO_SHIPPING_COST, SET_QUOTE_ID } from './actionType';
 
 
+export const setMagentoQuoteId = quoteId => ({
+  type: SET_QUOTE_ID,
+  quoteId,
+});
 export const setMagentoShippingCost = amount => ({
   type: SET_MAGENTO_SHIPPING_COST,
   amount,
@@ -23,9 +28,11 @@ export const confirmGetInvoice = () => (dispatch, getState) => {
     }
   });
 };
-export const getQuoteId = (amount, callback) => dispatch => post('', { amount }, dispatch, MagentoDomain).then((data) => {
+export const getQuoteId = (amount, callback) => dispatch => post(`/rest/V1/shipping-carts/mine/${amount}`, { }, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data) => {
   if (data) {
-    dispatch(setMagentoShippingCost()); // 可能会有问题,react不能及时渲染
+    const { quote_id, base_grand_total } = JSON.parse(data);
+    dispatch(setMagentoShippingCost(base_grand_total)); // 可能会有问题,react不能及时渲染
+    dispatch(setMagentoQuoteId(quote_id));
     callback();
   }
 });

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import operateType from 'components/page/LeadsAndAccountsEditAddDialog/flow/operateType';
-import { Address, Username } from 'components/ui/index';
+import { Address, Username, Group } from 'components/ui/index';
 import { Table, Divider, Icon, Tooltip, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { intlShape, injectIntl } from 'react-intl';
@@ -109,7 +109,7 @@ class accountsTable extends React.Component {
     }));
   }
   render() {
-    const { affiliatedClientStatus } = this.props;
+    const { affiliatedClientStatus, groups } = this.props;
     const { formatMessage } = this.props.intl;
     const rejectObj = _.find(affiliatedClientStatus, { name: 'reject' });
     const approveObj = _.find(affiliatedClientStatus, { name: 'active' });
@@ -124,19 +124,23 @@ class accountsTable extends React.Component {
       key: 'phone',
       width: 100,
     }, {
-      title: formatMessage({ id: 'global.form.address' }),
+      title: formatMessage({ id: 'global.form.allAddress' }),
       render: (text, record) => <Address country={record.country} state={record.state} city={record.city} street={record.street} zipCode={record.zip_code} />,
       key: 'address',
-      width: 200,
+      width: 150,
     }, {
       title: formatMessage({ id: 'global.form.email' }),
       dataIndex: 'email',
       key: 'email',
       width: 150,
     }, {
+      title: formatMessage({ id: 'global.form.group' }),
+      key: 'group',
+      render: (text, record) => <Group groupId={record.sub_group_id} />,
+    }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
-      width: 330,
+      width: 350,
       render: (text, record) => {
         const idBtnType = () => {
           if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {
@@ -203,7 +207,6 @@ class accountsTable extends React.Component {
       pageSize: accountDataTablePagination.perPage,
       total: accountDataTablePagination.total,
       onChange(page, pageSize) {
-        console.log(page, pageSize, '- --- pagintation change');
         fetchAccounts(pageSize, page);
       },
     };
@@ -229,6 +232,7 @@ class accountsTable extends React.Component {
 }
 accountsTable.defaultProps = {
   affiliatedClientStatus: [],
+  groups: [],
 };
 accountsTable.propTypes = {
   intl: intlShape.isRequired,
@@ -238,7 +242,7 @@ accountsTable.propTypes = {
   fetchAccounts: PropTypes.func.isRequired,
   updateAccounts: PropTypes.func.isRequired,
   affiliatedClientStatus: PropTypes.array,
-
+  groups: PropTypes.array,
 };
 
 const AccountsTable = injectIntl(accountsTable);

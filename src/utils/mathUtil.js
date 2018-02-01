@@ -9,9 +9,8 @@ export const getUnitPrice = (orginAmount, originQuantity) => {
       return 0;
     }
     quantity = quantity === 0 ? 1 : quantity;
-    return _.floor(amount / quantity, 2);
+    return _.round(amount / quantity, 2);
   } catch (e) {
-    console.log(e);
     return 0;
   }
 };

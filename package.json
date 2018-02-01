@@ -9,6 +9,7 @@
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
     "babel-loader": "7.1.2",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^3.1.0",
     "babel-runtime": "6.26.0",
     "base-64": "^0.1.0",
@@ -103,7 +104,8 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "react-app",
+      "stage-2"
     ]
   },
   "eslintConfig": {
@@ -111,6 +113,7 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.2",
+    "babel-preset-stage-2": "^6.24.1",
     "eslint-config-airbnb": "^16.1.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
