@@ -20,7 +20,7 @@ const logisticsDetail = ({ intl, infos }) => {
                 <div className={cx('description-place')}><small>{info.Place}</small></div>
                 <div className={cx('description-message')}><small>{info.Message}</small></div>
               </div>);
-            return <Step title={info.DateString} description={descriptionEl} key={math.random()}/>;
+            return <Step title={info.DateString} description={descriptionEl} key={Math.random()} />;
           })
         }
     </Steps>
