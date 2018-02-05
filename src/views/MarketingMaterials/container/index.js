@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
 import { getMarketingMaterial, setMMLanguage, setMMCategory } from '../flow/action';
 import Skeleton from '../component/skeleton';
-import getVisibleMarketingMaterials from '../flow/reselect';
+import { getVisibleMarketingMaterials, getLanguageClassification} from '../flow/reselect';
 
 class mmView extends React.Component {
   componentDidMount() {
@@ -33,8 +33,8 @@ mmView.propTypes = {
 };
 const mapStateToProp = state => ({
   loading: state.isLoading,
-  visibleMarketingMaterials: getVisibleMarketingMaterials(state.marketingMaterials),
-  categorys: state.global.settings.classification,
+  visibleMarketingMaterials: getVisibleMarketingMaterials(state),
+  categorys: getLanguageClassification(state),
   language: state.marketingMaterials.marketingLanguage,
   category: state.marketingMaterials.marketingCategory,
 });
