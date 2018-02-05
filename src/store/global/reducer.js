@@ -58,6 +58,7 @@ const orderUser = (state = null, action) => {
 };
 
 
+
 // 将后端传回来的数据进行一层map
 const mapSettingData = (data) => {
   const newData = Object.assign({}, data);
@@ -83,11 +84,11 @@ const mapSettingData = (data) => {
     //baseCurrency: (newData.base_currency && newData.base_currency[0] && newData.base_currency[0].name) || '',
   };
 };
-const settings = (state = { countries:[] }, action) => {
+const settings = (state = { countries:[], classification: [] }, action) => {
   switch (action.type) {
     case SET_GLOBAL_SETTING:
       return mapSettingData(action.settings);
-    default:
+  default:
       return state;
   }
 };
