@@ -18,6 +18,7 @@ export default {
       next: '下一步',
       previous: '上一步',
       detail: '查看详情',
+      goBack: '返回',
     },
     input: {
       searchStore: '在此搜索全站商品...',
@@ -53,6 +54,7 @@ export default {
       next: 'Next',
       previous: 'Previous',
       detail: 'Detail',
+      goBack: 'Go Back',
     },
     input: {
       searchStore: 'Search entire store here...',

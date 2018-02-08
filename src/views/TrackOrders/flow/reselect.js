@@ -56,3 +56,20 @@ export const getpackages = createSelector([
     };
   });
 });
+
+export const getUnpackedOrderTotal = createSelector([
+  getTrackOrderSelector,
+], (trackOrder) => {
+  if (_.isEmpty(trackOrder)) {
+    return {};
+  }
+  const { items } = trackOrder;
+  const { totalPrice, totalQuantity } =  items.reduce(({ totalPrice, totalQuantity }, item) => ({
+    totalPrice: totalPrice += Number(item.amount),
+    totalQuantity: totalQuantity += Number(item.quantity),
+  }), { totalPrice: 0, totalQuantity: 0 });
+  return {
+    totalPrice,
+    totalQuantity,
+  };
+});

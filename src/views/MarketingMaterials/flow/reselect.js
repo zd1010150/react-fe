@@ -1,11 +1,18 @@
 import { createSelector } from 'reselect';
 
 
-const getMarketingLanuageSelector = marketingMaterials => marketingMaterials.marketingLanguage;
-const getMarketingCategorySelector = marketingMaterials => marketingMaterials.marketingCategory;
-const getMarketingMaterialsSelector = marketingMaterials => marketingMaterials.marketingMaterias;
+const getMarketingLanuageSelector = state => state.marketingMaterials.marketingLanguage;
+const getMarketingCategorySelector = state => state.marketingMaterials.marketingCategory;
+const getMarketingMaterialsSelector = state => state.marketingMaterials.marketingMaterias;
 
-const getVisibleMarketingMaterials = createSelector(
+const getClassificaitonSelector = state => state.global.settings.classification;
+
+export const getLanguageClassification = createSelector([getClassificaitonSelector, getMarketingLanuageSelector], (classification, langauge) => {
+  const filedKey = langauge === 'zh' ? 'name' : 'name_en';
+  return classification.map(item => Object.assign({}, item, { name: item[filedKey] }));
+});
+
+export const getVisibleMarketingMaterials = createSelector(
   [
     getMarketingMaterialsSelector,
     getMarketingLanuageSelector,
@@ -14,4 +21,4 @@ const getVisibleMarketingMaterials = createSelector(
   (all, language, category) => all.filter(item =>
     item.classification_id === category && item.language === language),
 );
-export default getVisibleMarketingMaterials;
+
