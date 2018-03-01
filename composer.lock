@@ -1,0 +1,64 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "76588fd1f7e9a66149f40f0ee599efb9",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "tools/deploy",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "git@c7git.acy.svr:tools/deploy.git",
+                "reference": "5c4c19be7c79714aa2d0192df845fc2fe8769932"
+            },
+            "bin": [
+                "bin/deploy_version.sh",
+                "bin/bump_version.sh",
+                "bin/functions.sh"
+            ],
+            "type": "library",
+            "scripts": {
+                "vbump:major": [
+                    "bin/bump_version.sh -t major"
+                ],
+                "vbump:minor": [
+                    "bin/bump_version.sh -t minor"
+                ],
+                "vbump:patch": [
+                    "bin/bump_version.sh -t patch"
+                ],
+                "deploy:staging": [
+                    "bin/deploy_version.sh"
+                ],
+                "deploy:production": [
+                    "bin/deploy_version.sh -e production"
+                ]
+            },
+            "license": [
+                "Proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Fan Deng",
+                    "email": "fan.deng@acyfx.com"
+                }
+            ],
+            "description": "Scripts and tools to help development",
+            "keywords": [
+                "dev tools"
+            ],
+            "time": "2017-03-22T07:59:08+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
