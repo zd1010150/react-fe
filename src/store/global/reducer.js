@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { navLanguage } from 'utils/navigationUtil';
 import { MagentoLanguage, setMangentoLanguageCookie } from 'config/magento.config';
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_USER } from './actionType';
-
+import {  MAX_PAYABLE_PRICE } from 'config/app.config';
 // 页面默认语言为 en，此处只是mock
 
 const language = (state = MagentoLanguage || navLanguage, action) => {
@@ -62,6 +62,7 @@ const orderUser = (state = null, action) => {
 // 将后端传回来的数据进行一层map
 const mapSettingData = (data) => {
   const newData = Object.assign({}, data);
+  const dutySetting = Object.assign({}, newData.duty_setting, { threshold: Number(String(newData.duty_setting.threshold).replace(',', '')) });
   return {
     classification: newData.classification,
     department: newData.department,
@@ -79,7 +80,7 @@ const mapSettingData = (data) => {
     freightSetting: newData.freight_setting,
     countries: newData.country,
     baseCurrency: newData.base_currency,
-    dutySetting: newData.duty_setting,
+    dutySetting,
     rejectReasons: newData.reject_reasons,
     //baseCurrency: (newData.base_currency && newData.base_currency[0] && newData.base_currency[0].name) || '',
   };
