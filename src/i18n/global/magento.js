@@ -10,9 +10,7 @@ export default {
       myAccount: '我的账户',
     },
     headerNav: {
-      milk: '奶粉',
-      cosmetic: '化妆品',
-      vitamins: '维生素',
+      mumBabyAndKid: ''
     },
     leftNav: {
       accountDashboard: '我的主页',
@@ -48,9 +46,13 @@ export default {
       myAccount: 'My Account',
     },
     headerNav: {
-      milk: 'Milk',
-      cosmetic: 'Cosmetic',
-      vitamins: 'Vitamins',
+      mumBabyAndKid: 'Mum, Baby and Kid',
+      infantFormula: 'Infant Formula',
+      healthyGrowth: 'Healthy Growth',
+      pregency: 'Pregnancy  and Breastfeeding Care',
+      mentalPer: 'Mental Performance',
+      
+
     },
     leftNav: {
       accountDashboard: 'Account Dashboard',

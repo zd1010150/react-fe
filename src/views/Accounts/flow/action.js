@@ -28,7 +28,7 @@ export const fetchAccounts = (perPage = 2, currentPage = 1) => dispatch => get('
 
 export const updateAccounts = (form, cb) => dispatch => put(`/affiliate/affiliated-clients/${form.id}`, { ...form }, dispatch).then((data) => {
   if (!_.isEmpty(data)) {
-    cb();
+    if (_.isFunction(cb)) cb();
     dispatch(fetchAccounts());
   }
 });
