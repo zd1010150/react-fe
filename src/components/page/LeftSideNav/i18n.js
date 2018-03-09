@@ -1,15 +1,15 @@
 export default {
   zh: {
-    clientLists: '客户列表',
+    clientLists: '加盟店',
     leads: '潜在客户',
     accounts: '交易客户',
-    marketingMaterial: '营销',
+    marketingMaterial: '营销策略',
     order: '订单',
     priceSetting: '价格设置',
-    trackOrders: '发货单',
+    trackOrders: '订单跟踪',
   },
   en: {
-    clientLists: 'Client Lists',
+    clientLists: 'Affiliate Operation',
     leads: 'Leads',
     accounts: 'Accounts',
     marketingMaterial: 'Marketing Material',

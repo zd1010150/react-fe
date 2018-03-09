@@ -12,9 +12,8 @@ import styles from '../LeftSideNav.less';
 const cx = classNames.bind(styles);
 const { SubMenu } = Menu;
 const AFFLIATE_MENU_INDEX = 4;
-
+const DIVIDER = 'divider';
 class Nav extends React.Component {
-
   render() {
     const { intl, location } = this.props;
     const { formatMessage } = intl;
@@ -23,10 +22,14 @@ class Nav extends React.Component {
       { id: 'global.magento.leftNav.accountDashboard', url: '/customer/account/index/' },
       { id: 'global.magento.leftNav.myOrders', url: '/sales/order/history/' },
       { id: 'global.magento.leftNav.myWishList', url: '/wishlist/' },
-      { id: 'global.magento.leftNav.addressBook', url: '/customer/address/new/' },
+      DIVIDER,
+      DIVIDER,
       { id: 'global.magento.leftNav.accountInformation', url: '/customer/account/edit/' },
+      { id: 'global.magento.leftNav.addressBook', url: '/customer/address/new/' },
+      { id: 'global.magento.leftNav.documents', url: '/customer/document/new/' },
       { id: 'global.magento.leftNav.storedPaymentMethods', url: '/vault/cards/listaction/' },
       { id: 'global.magento.leftNav.billingAgreements', url: '/paypal/billing_agreement/' },
+      DIVIDER,
       { id: 'global.magento.leftNav.myProductsReviews', url: '/review/customer/' },
       { id: 'global.magento.leftNav.newsletterSubscription', url: '/newsletter/manage/' },
     ];
@@ -64,7 +67,7 @@ class Nav extends React.Component {
           <SubMenu
             title={formatMessage({ id: item.id })}
             key={item.url}
-            onTitleClick={ ()=>{} }
+            onTitleClick={() => {}}
           >
             { item.children.map(cItem => getChildrenTree(cItem))}
           </SubMenu>
@@ -75,12 +78,17 @@ class Nav extends React.Component {
           <NavLink to={item.url}>{ formatMessage({ id: item.id }) }</NavLink>
         </Menu.Item>);
     };
-    const magentoNav = () => magentoNavObj.map(item =>
-      (
+
+    const magentoNav = () => magentoNavObj.map((item, index) => {
+      if (item === DIVIDER) {
+        return <Menu.Divider key={index}/>;
+      }
+      return (
         <Menu.Item key={item.id} className={cx('left-nav-item')}>
           <MagentoStaticLink titleId={item.id} href={item.url} />
         </Menu.Item>
-      ));
+      );
+    });
     const affliateNav = () => affiliateNavObj.map(item => getChildrenTree(item));
     // insert affliateNav
     const menu = magentoNav();
@@ -90,7 +98,7 @@ class Nav extends React.Component {
         <Menu
           mode="inline"
           inlineIndent={30}
-          className={cx('left-side-nav')}
+          className={classNames(cx('left-side-nav'), 'left-side-nav')}
           defaultSelectedKeys={[location.pathname]}
           defaultOpenKeys={[getParentUrl(location.pathname)]}
           selectedKeys={[location.pathname]}

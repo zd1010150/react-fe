@@ -104,17 +104,19 @@ class userDialog extends React.Component {
   }
   handleSubmit = (value) => {
     const postform = this.mapPostData(value);
+    const callback = this.props.onClose.bind(this);
     if (this.props.operatorType === operateTypes.ADD) {
-      this.props.add(postform);
+      this.props.add(postform, callback);
     } else if (this.props.operatorType === operateTypes.EDIT) {
-      this.props.update(postform);
+      this.props.update(postform, callback);
     }
-    this.props.onClose();
+
   }
   handleCancel = (e) => {
     this.props.onClose();
   }
   render() {
+    debugger;
     const { formatMessage } = this.props.intl;
     const {
       editObject, visible, language, userType, operatorType, group, interests, countries,

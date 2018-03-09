@@ -21,6 +21,10 @@ class userForm extends React.Component {
   //     checkIdNumber: this.ifCheckIDNumber(nextProps),
   //   });
   // }
+  shouldComponentUpdate(nextProps, nextState){
+    console.log(nextProps, nextState, "====");
+    return true;
+  }
   ifCheckIDNumber(props) {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
@@ -63,20 +67,20 @@ class userForm extends React.Component {
     })(<Select disabled={disabled} style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || ((!_.isEmpty(group[0])) && group[0].id) })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
+    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || ((!_.isEmpty(group[0])) && group[0].id) || '' })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
 
-    const interestsSelector = getFieldDecorator('interests', { initialValue: editObject.interests || ((!_.isEmpty(interests[0])) && interests[0].id) })(<Select
+    const interestsSelector = getFieldDecorator('interests', { initialValue: editObject.interests || ((!_.isEmpty(interests[0])) && interests[0].id) || '' })(<Select
       disabled={disabled}
       style={{ width: '100%' }}
       key="interests"
     >{interests.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
     </Select>);
-    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].code) })(<Select disabled={disabled} onChange={(countryCode) => { this.handleCountryChange(countryCode); }}>
+    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].code) || '' })(<Select disabled={disabled} onChange={(countryCode) => { this.handleCountryChange(countryCode); }}>
       {
           countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
     </Select>);
-
+    debugger;
     return (
       <Form onSubmit={this.props.onSubmit}>
         <FormItem>
