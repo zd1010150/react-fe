@@ -82,7 +82,7 @@ class plan extends React.Component {
             </Carousel>
           </Grid>
           <Grid style={videGridStyle}>{text}</Grid>
-          <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}`} width="160px" height="160px" /> </Grid>
+          <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}&tip=点击获取最新宣传图片`} width="160px" height="160px" /> </Grid>
 
         </Card>
         <Modal
