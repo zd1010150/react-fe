@@ -30,13 +30,13 @@ export const fetchLeads = (perPage = 3, currentPage = 1) => dispatch => get('/af
 });
 export const addLeads = (form, cb) => dispatch => post('/affiliate/affiliated-clients', { ...form }, dispatch).then((data) => {
   if (!_.isEmpty(data)) {
-    cb();
+    if (_.isFunction(cb)) cb();
     dispatch(fetchLeads());
   }
 });
 export const updateLeads = (form, cb) => dispatch => put(`/affiliate/affiliated-clients/${form.id}`, { ...form }, dispatch).then((data) => {
   if (!_.isEmpty(data)) {
-    cb();
+    if (_.isFunction(cb)) cb();
     dispatch(fetchLeads());
   }
 });

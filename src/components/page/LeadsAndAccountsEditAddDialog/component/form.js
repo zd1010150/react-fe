@@ -16,15 +16,6 @@ class userForm extends React.Component {
   state = {
     checkIdNumber: this.ifCheckIDNumber(this.props),
   }
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     checkIdNumber: this.ifCheckIDNumber(nextProps),
-  //   });
-  // }
-  shouldComponentUpdate(nextProps, nextState){
-    console.log(nextProps, nextState, "====");
-    return true;
-  }
   ifCheckIDNumber(props) {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
@@ -80,9 +71,8 @@ class userForm extends React.Component {
           countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
     </Select>);
-    debugger;
     return (
-      <Form onSubmit={this.props.onSubmit}>
+      <Form onSubmit={(e) => { this.props.onSubmit();}}>
         <FormItem>
           {
             getFieldDecorator('id', {

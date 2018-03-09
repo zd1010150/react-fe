@@ -25,9 +25,6 @@ class userDialog extends React.Component {
     const self = this;
     this.form.instance.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        self.setState({
-          visible: false,
-        });
         self.handleSubmit(values);
       }
     });
@@ -116,7 +113,6 @@ class userDialog extends React.Component {
     this.props.onClose();
   }
   render() {
-    debugger;
     const { formatMessage } = this.props.intl;
     const {
       editObject, visible, language, userType, operatorType, group, interests, countries,
