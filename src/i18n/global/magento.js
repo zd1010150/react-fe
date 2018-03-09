@@ -25,6 +25,7 @@ export default {
       billingAgreements: '账单信息',
       myProductsReviews: '我评价的商品',
       newsletterSubscription: '订阅产品信息',
+      documents: '我的文档',
     },
     footerInformation: {
       return: '回馈',
@@ -62,6 +63,7 @@ export default {
       billingAgreements: 'Billing Agreements',
       myProductsReviews: 'My Products Reviews',
       newsletterSubscription: 'Newsletter Subscription',
+      documents: 'Documents',
     },
     footerInformation: {
       return: 'Return',

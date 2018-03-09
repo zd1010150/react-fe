@@ -1,5 +1,6 @@
 import { get, post, put, httpDelete } from 'store/http/httpAction';
 import { SET_LEADS_DATA, SET_ID_VIEW, SET_PAGENATIONS } from './actionType';
+import _ from 'lodash';
 
 export const setIdViewData = data => ({
   type: SET_ID_VIEW,
@@ -27,11 +28,17 @@ export const fetchLeads = (perPage = 3, currentPage = 1) => dispatch => get('/af
     dispatch(setPaginations(pagination.per_page, pagination.current_page, pagination.total));
   }
 });
-export const addLeads = form => dispatch => post('/affiliate/affiliated-clients', { ...form }, dispatch).then((data) => {
-  dispatch(fetchLeads());
+export const addLeads = (form, cb) => dispatch => post('/affiliate/affiliated-clients', { ...form }, dispatch).then((data) => {
+  if (!_.isEmpty(data)) {
+    cb();
+    dispatch(fetchLeads());
+  }
 });
-export const updateLeads = form => dispatch => put(`/affiliate/affiliated-clients/${form.id}`, { ...form }, dispatch).then((data) => {
-  dispatch(fetchLeads());
+export const updateLeads = (form, cb) => dispatch => put(`/affiliate/affiliated-clients/${form.id}`, { ...form }, dispatch).then((data) => {
+  if (!_.isEmpty(data)) {
+    cb();
+    dispatch(fetchLeads());
+  }
 });
 
 export const deleteLeads = id => dispatch => httpDelete(`/affiliate/affiliated-clients/${id}`, {}, dispatch).then((data) => {

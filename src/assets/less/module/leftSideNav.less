@@ -1,8 +1,16 @@
 @import "../theme.less";
 .sidebar-main{
+  padding-right: 25px;
   .ant-menu.ant-menu-inline{
+    & > .ant-menu-item-divider{
+      border-top: 1px solid #d1d1d1;
+      display: block;
+      margin: 10px 1.8rem;
+    }
     .ant-menu-item-selected{
       background-color: transparent;
+      font-weight: 700;
+      font-size: 14px;
       &:after{
         border-right: none;
 

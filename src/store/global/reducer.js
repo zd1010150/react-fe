@@ -67,7 +67,8 @@ const mapSettingData = (data) => {
     classification: newData.classification,
     department: newData.department,
     paymentGateway: newData.payment_gateway,
-    subCategory: newData.sub_category, // pricesetting 的列，add leads 中的interests 的类别
+    subCategory: [],
+    // subCategory: newData.sub_category, // pricesetting 的列，add leads 中的interests 的类别
     subGroup: newData.sub_group, // Array(7){id: 1, name: "no_profits", created_at: null, updated_at: null}{id: 2, name: "svip", created_at: null, updated_at: null}{id: 3, name: "vvip", created_at: null, updated_at: null}{id: 4, name: "vip", created_at: null, updated_at: null}{id: 5, name: "normal", created_at: null, updated_at: null}{id: 6, name: "family", created_at: null, updated_at: null}{id: 7, name: "friends", created_at: null, updated_at: null}
     accountStatus: newData.account_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"}
     accountType: newData.account_type, // {id: 1, name: "散客lead"}{id: 2, name: "散客accounts"} {id: 3, name: "代理"}
