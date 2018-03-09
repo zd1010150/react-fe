@@ -16,10 +16,6 @@ class userForm extends React.Component {
   state = {
     checkIdNumber: this.ifCheckIDNumber(this.props),
   }
-  shouldComponentUpdate(nextProps, nextState){
-    console.log(nextProps, nextState, "====");
-    return true;
-  }
   ifCheckIDNumber(props) {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
