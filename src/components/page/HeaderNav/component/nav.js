@@ -41,6 +41,7 @@ const navView = ({ language }) => {
       url: '/sports/tennis',
     }],
   }];
+
   const goToSubmenu = (href) => {
     window.location.href = getAbsolutePath(href, language);
   };
