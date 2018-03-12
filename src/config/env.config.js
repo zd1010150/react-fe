@@ -9,7 +9,8 @@ import { domainReg } from 'utils/regex';
 
 const baseUrl = process.env.__API_URL__;
 const apiDomain = domainReg.exec(baseUrl)[0];
-const cmsUrl = `${window.location.host}/admin/CMS?id=`;
+const { protocol, host } = window.location;
+const cmsUrl = `${protocol}//${host}/admin/CMS?id=`;
 export {
   baseUrl,
   apiDomain,
