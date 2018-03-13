@@ -30,6 +30,7 @@ export default {
     },
     select: {
       all: '全部',
+      none: '无',
     },
     dialog: {
       info: '提示',
@@ -66,6 +67,7 @@ export default {
     },
     select: {
       all: 'All',
+      none: 'None',
     },
     dialog: {
       info: '提示',

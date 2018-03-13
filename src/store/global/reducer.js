@@ -1,9 +1,10 @@
 /* eslint-disable max-len */
 import { combineReducers } from 'redux';
+import _ from 'lodash';
 import { navLanguage } from 'utils/navigationUtil';
 import { MagentoLanguage, setMangentoLanguageCookie } from 'config/magento.config';
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_USER } from './actionType';
-import {  MAX_PAYABLE_PRICE } from 'config/app.config';
+import { MAX_PAYABLE_PRICE } from 'config/app.config';
 // 页面默认语言为 en，此处只是mock
 
 const language = (state = MagentoLanguage || navLanguage, action) => {
@@ -49,14 +50,13 @@ const pageTitle = (state = 'global.pageTitle.leads', action) => {
 const orderUser = (state = null, action) => {
   switch (action.type) {
     case SET_ORDER_USER:
-     return action.user;
+      return action.user;
     case RESET_USER:
       return null;
     default:
       return state;
   }
 };
-
 
 
 // 将后端传回来的数据进行一层map
@@ -67,6 +67,16 @@ const mapSettingData = (data) => {
     classification: newData.classification,
     department: newData.department,
     paymentGateway: newData.payment_gateway,
+    interests: (() => {
+      const interests = [...newData.sub_category];
+      if (!_.isEmpty(interests)) {
+        interests.unshift({
+          id: '',
+          name: '---none---',
+        });
+      }
+      return interests;
+    })(),
     subCategory: newData.sub_category, // pricesetting 的列，add leads 中的interests 的类别
     subGroup: newData.sub_group, // Array(7){id: 1, name: "no_profits", created_at: null, updated_at: null}{id: 2, name: "svip", created_at: null, updated_at: null}{id: 3, name: "vvip", created_at: null, updated_at: null}{id: 4, name: "vip", created_at: null, updated_at: null}{id: 5, name: "normal", created_at: null, updated_at: null}{id: 6, name: "family", created_at: null, updated_at: null}{id: 7, name: "friends", created_at: null, updated_at: null}
     accountStatus: newData.account_status, // {id: 1, name: "正在处理"}{id: 2, name: "已激活"}{id: 3, name: "已拒绝"}
@@ -82,14 +92,14 @@ const mapSettingData = (data) => {
     baseCurrency: newData.base_currency,
     dutySetting,
     rejectReasons: newData.reject_reasons,
-    //baseCurrency: (newData.base_currency && newData.base_currency[0] && newData.base_currency[0].name) || '',
+    // baseCurrency: (newData.base_currency && newData.base_currency[0] && newData.base_currency[0].name) || '',
   };
 };
-const settings = (state = { countries:[], classification: [] }, action) => {
+const settings = (state = { countries: [], classification: [] }, action) => {
   switch (action.type) {
     case SET_GLOBAL_SETTING:
       return mapSettingData(action.settings);
-  default:
+    default:
       return state;
   }
 };
