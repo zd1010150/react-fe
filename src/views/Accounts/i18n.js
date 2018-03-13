@@ -40,7 +40,7 @@ export default {
     downloadInvoice: 'Download Invoice',
     general: 'General',
     mostBoughtItem: 'Most Bought Item',
-    totalSpending: 'Total Spending',
+    totalSpending: 'Cost of goods and services',
     totalProfit: 'Total Profit',
   },
 };

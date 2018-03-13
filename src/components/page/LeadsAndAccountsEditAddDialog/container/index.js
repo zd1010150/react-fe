@@ -7,7 +7,7 @@ import Dialog from '../component/dialog';
 
 const mapStateToProps = ({ global }) => ({
   language: global.language,
-  interests: global.settings.subCategory,
+  interests: global.settings.interests,
   group: global.settings.subGroup,
   countries: global.settings.countries,
 });
