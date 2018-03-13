@@ -59,20 +59,21 @@ class userForm extends React.Component {
     </Select>);
 
     const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || ((!_.isEmpty(group[0])) && group[0].id) || '' })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
-
     const interestsSelector = getFieldDecorator('interests', { initialValue: editObject.interests || ((!_.isEmpty(interests[0])) && interests[0].id) || '' })(<Select
       disabled={disabled}
       style={{ width: '100%' }}
       key="interests"
     >{interests.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}
     </Select>);
+
+
     const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].code) || '' })(<Select disabled={disabled} onChange={(countryCode) => { this.handleCountryChange(countryCode); }}>
       {
           countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
     </Select>);
     return (
-      <Form onSubmit={(e) => { this.props.onSubmit();}}>
+      <Form onSubmit={(e) => { this.props.onSubmit(); }}>
         <FormItem>
           {
             getFieldDecorator('id', {
