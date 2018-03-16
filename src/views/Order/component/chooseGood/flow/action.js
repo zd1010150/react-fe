@@ -99,7 +99,7 @@ export const queryBySearchKey = searchKey => (dispatch, getState) => {
   const goods = state.order.chooseGood.cart.goods;
   const clientId = state.global.orderUser.id;
   dispatch(setSearchKey(searchKey));
-  return fetchData(perPage, currentPage, searchKey, clientId, dispatch, goods);
+  return fetchData(perPage, 1, searchKey, clientId, dispatch, goods);
 };
 
 export const setItemPrice = (goodsId, price) => ({
