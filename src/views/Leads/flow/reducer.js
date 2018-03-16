@@ -14,7 +14,7 @@ const leadsData = (state = [], action) => {
       return state;
   }
 };
-const leadsDataTablePagination = (state = { perPage: 3, currentPage: 1, total: 0 }, action) => {
+const leadsDataTablePagination = (state = { perPage: 10, currentPage: 1, total: 0 }, action) => {
   switch (action.type) {
     case SET_PAGENATIONS:
       return {
