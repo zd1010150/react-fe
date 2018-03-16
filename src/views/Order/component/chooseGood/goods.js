@@ -18,7 +18,7 @@ const goods = ({
   const columns = [{
     title: formatMessage({ id: 'global.properNouns.goods.name' }),
     key: 'name',
-    width: 300,
+    width: 150,
     render: (text, record) => <p className={cx('goods-product-name')}>{record.name}<br /><small className={cx('goods-product-sku')}>{record.sku}</small></p>,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.picture' }),
@@ -39,10 +39,11 @@ const goods = ({
     title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
     key: 'recommendedPrice',
     render: (text, record) => <Currency value={record.recommendedPrice} />,
-    width: 150,
+    width: 100,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
     key: 'orderQuantity',
+    width: 100,
     render: (text, record) => (<InputNumber
       min={0}
       value={record.selectingQuantity}
