@@ -225,11 +225,11 @@ const cartCollapse = (state = false, action) => {
       return state;
   }
 };
-const goodsTablePagination = (state = { perPage: 2, currentPage: 1, totalPages: 0 }, action) => {
+const goodsTablePagination = (state = { perPage: 10, currentPage: 1, totalPages: 0 }, action) => {
   switch (action.type) {
     case RESET_ORDER:
       return {
-        perPage: 2,
+        perPage: 10,
         currentPage: 1,
         totalPages: 0,
       };
