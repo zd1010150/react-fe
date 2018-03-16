@@ -17,9 +17,7 @@ const search = ({ queryGoods, intl }) => {
         <Search
           placeholder={formatMessage({ id: 'page.Order.searchPlaceholder' })}
           onSearch={(value) => {
-            if (!_.isEmpty(_.trim(value))) {
-              queryGoods(value);
-            }
+            queryGoods(_.trim(value));
           }}
           enterButton
         />
