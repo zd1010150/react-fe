@@ -17,7 +17,7 @@ const setPaginations = (perPage, currentPage, total) => ({
   currentPage,
   total,
 });
-export const fetchLeads = (perPage = 3, currentPage = 1) => dispatch => get('/affiliate/affiliated-clients', {
+export const fetchLeads = (perPage = 10, currentPage = 1) => dispatch => get('/affiliate/affiliated-clients', {
   type_id: 1,
   per_page: perPage,
   page: currentPage,

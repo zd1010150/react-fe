@@ -29,21 +29,21 @@ const goods = ({
     title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
-    width: 100,
+    width: 50,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
     key: 'unitPrice',
     render: (text, record) => <Currency value={record.unitPrice} />,
-    width: 100,
+    width: 50,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
     key: 'recommendedPrice',
     render: (text, record) => <Currency value={record.recommendedPrice} />,
-    width: 100,
+    width: 50,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
     key: 'orderQuantity',
-    width: 100,
+    width: 150,
     render: (text, record) => (<InputNumber
       min={0}
       value={record.selectingQuantity}
@@ -56,6 +56,7 @@ const goods = ({
   {
     title: formatMessage({ id: 'global.ui.table.action' }),
     key: 'action',
+    width: 100,
     render: (text, record) => (
       <span>
         <Button size="small" type="primary" shape="circle" onClick={() => { addGoodsToCart(record); }} icon="shopping-cart" />

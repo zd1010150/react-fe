@@ -18,7 +18,7 @@ const setPaginations = (perPage, currentPage, total) => ({
   currentPage,
   total,
 });
-export const fetchAccounts = (perPage = 2, currentPage = 1) => dispatch => get('/affiliate/affiliated-clients', { type_id: 2, per_page: perPage, page: currentPage }, dispatch).then((data) => {
+export const fetchAccounts = (perPage = 10, currentPage = 1) => dispatch => get('/affiliate/affiliated-clients', { type_id: 2, per_page: perPage, page: currentPage }, dispatch).then((data) => {
   if (data && (!_.isEmpty(data.data)) && (!_.isEmpty(data.meta))) {
     dispatch(setAccountsData(data.data));
     const pagination = data.meta.pagination;
