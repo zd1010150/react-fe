@@ -1,6 +1,9 @@
 import http from 'utils/http';
 import { UNAUTHENTICATION } from 'config/app.config.js';
+import { MagentoDomain } from 'config/magento.config';
 import { getAbsolutePath } from 'config/magento.config';
+import Base64 from 'base-64';
+import Cookie from 'js-cookie';
 import _ from 'lodash';
 import {
   HTTP_ACTION_DONE,
@@ -17,7 +20,15 @@ const dispatch = (request, dispatcher = () => {}) => {
   });
   return request.then((data) => {
     if (data.status_code === UNAUTHENTICATION.CODE) { // 如果是401为授权，就跳转到登录界面
-      window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage, { [UNAUTHENTICATION.REDIRECT_KEY]: window.location.href });
+      const uenc = Base64.encode(`${MagentoDomain}/`).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ',');
+      const html = `<form action=${getAbsolutePath('/customer/account/logout', window.globalLanguage)} name="signOutForm" method="post">
+        <input type="hidden" name="form_key" value=${Cookie.get('form_key')} />
+        <input type="hidden" name="uenc" value=${uenc} />
+      </form>`;
+      const el = document.createElement('DIV');
+      el.innerHTML = html;
+      document.body.appendChild(el);
+      document.forms.signOutForm.submit();
     }
     if (data.errors || data.status_code || data.message) {
       let { errors } = data;

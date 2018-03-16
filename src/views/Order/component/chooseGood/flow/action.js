@@ -84,7 +84,7 @@ const fetchData = (per_page, page, search, affiliated_client_id, dispatch, goods
 });
 
 
-export const queryGoodsByPaging = (perPage = 2, currentPage = 1) => (dispatch, getState) => {
+export const queryGoodsByPaging = (perPage = 10, currentPage = 1) => (dispatch, getState) => {
   const state = getState();
   const search = state.order.chooseGood.searchKey;
   const goods = state.order.chooseGood.cart.goods;
