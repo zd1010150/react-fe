@@ -26,7 +26,7 @@ export default {
       quantity: '数量',
       id: '商品ID',
       name: '商品名',
-      picture: '商品图片',
+      picture: '图片',
       category: '类别',
       currentQuantity: '剩余数量',
       lastUpdated: '上次发货日期',
