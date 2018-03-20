@@ -18,36 +18,37 @@ const goods = ({
   const columns = [{
     title: formatMessage({ id: 'global.properNouns.goods.name' }),
     key: 'name',
-    width: 300,
+    width: 100,
     render: (text, record) => <p className={cx('goods-product-name')}>{record.name}<br /><small className={cx('goods-product-sku')}>{record.sku}</small></p>,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.picture' }),
     key: 'picture',
     render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" />,
-    width: 100,
+    width: 50,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
     dataIndex: 'availableQuantity',
     key: 'availableQuantity',
-    width: 100,
+    width: 60,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
     key: 'unitPrice',
     render: (text, record) => <Currency value={record.unitPrice} />,
-    width: 100,
+    width: 40,
   }, {
     title: formatMessage({ id: 'global.properNouns.goods.price' }),
     key: 'price',
     render: (text, record) => <Currency value={record.price} />,
-    width: 150,
-  },{
-      title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
-      key: 'recommendedPrice',
-      render: (text, record) => <Currency value={record.recommendedPrice} />,
-      width: 150,
-    },{
+    width: 40,
+  }, {
+    title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
+    key: 'recommendedPrice',
+    render: (text, record) => <Currency value={record.recommendedPrice} />,
+    width: 60,
+  }, {
     title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
     key: 'orderQuantity',
+    width: 150,
     render: (text, record) => (<InputNumber
       min={0}
       disabled={!goodsEnable}
@@ -61,9 +62,10 @@ const goods = ({
   {
     title: formatMessage({ id: 'global.ui.table.action' }),
     key: 'action',
+    width: 130,
     render: (text, record) => (
       <span>
-        <Button disabled={!goodsEnable} size="small" type="primary" shape="circle"  onClick={() => { addGoodsToOrder(record, currentOrder); }} icon="shopping-cart" />
+        <Button disabled={!goodsEnable} size="small" type="primary" shape="circle" onClick={() => { addGoodsToOrder(record, currentOrder); }} icon="shopping-cart" />
       </span>
     ),
   }];

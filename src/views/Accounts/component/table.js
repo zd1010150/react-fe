@@ -111,8 +111,6 @@ class accountsTable extends React.Component {
   render() {
     const { affiliatedClientStatus, groups } = this.props;
     const { formatMessage } = this.props.intl;
-    const rejectObj = _.find(affiliatedClientStatus, { name: 'reject' });
-    const approveObj = _.find(affiliatedClientStatus, { name: 'active' });
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
       key: 'name',
@@ -143,10 +141,10 @@ class accountsTable extends React.Component {
       width: 350,
       render: (text, record) => {
         const idBtnType = () => {
-          if (Number(record.status) === (_.isEmpty(rejectObj) ? 0 : rejectObj.id)) {
+          if (Number(record.status) === 2) {
             return 'primary';
           }
-          if (Number(record.status) === (_.isEmpty(approveObj) ? 0 : approveObj.id)) {
+          if (Number(record.status) === 3) {
             return 'danger';
           } return 'default';
         };
