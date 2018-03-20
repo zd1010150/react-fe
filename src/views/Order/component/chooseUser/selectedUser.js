@@ -70,8 +70,9 @@ class selectedUserView extends React.Component {
                 <td className={cx('selected-user-info-table-info')}>
                   <Address street={selectedUser.street} city={selectedUser.city} state={selectedUser.state} country={selectedUser.country} zipCode={selectedUser.zip_code} />
                 </td>
-                <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.ID' }) }:</td>
+                <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.IDDoc' }) }:</td>
                 <td className={cx('selected-user-info-table-info')}>
+                  <span>{selectedUser.id_number}</span>
                   { idBack.length > 0 ? <img src={`${apiDomain}/${idBack}`} alt="id back" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idBack}`); }} /> : '' }
                   { idFront.length > 0 ? <img src={`${apiDomain}/${idFront}`} alt="id front" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idFront}`); }} /> : '' }
                 </td>

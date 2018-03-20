@@ -154,7 +154,7 @@ id.propTypes = {
   idBack: PropTypes.string,
   onOk: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  rejectReseason: PropTypes.number,
+  rejectReseason: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   allRejectReasons: PropTypes.array,
   country: PropTypes.string,
 };
