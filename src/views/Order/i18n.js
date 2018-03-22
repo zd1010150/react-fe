@@ -20,6 +20,8 @@ export default {
     leaveSplitOrder: '离开本页面，你目前创建的订单将全部丢失，确定继续？',
     leaveRestGoods: '你挑选的商品，还有部分未分配到子发货单中，确定继续？',
     cantGoChooselogistics: '你还没有创建任何发货单，不能进行下一步',
+    freightSpecTitle: '运费说明',
+    freightSpec: '每公斤{cost}澳元，最低增量{increment}公斤，最低运费{mini_cost}公斤',
   },
   en: {
     chooseUser: 'Choose User',
@@ -42,5 +44,7 @@ export default {
     leaveSplitOrder: 'Leave this page ,you will lost the created delivery order,Are you sure to continue ?',
     leaveRestGoods: 'Some of your choosed goods are still not be added to your delivery order,Are you sure to continue ?',
     cantGoChooselogistics: 'You haven\'t create any delivery order,can\'t go the next',
+    freightSpecTitle: 'Freight Cost Specification',
+    freightSpec: '\${cost}/kg, minimum increment {increment}kg, minimum fright \${mini_cost}.',
   },
 };

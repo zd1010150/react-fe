@@ -142,7 +142,7 @@ class chooseGoodView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             style={{ marginLeft: 8 }}
-            disabled={nextBtnDisabled}
+            disabled={cart.length < 1}
             onClick={() => {
                 this.submitOrder();
               }}
@@ -183,7 +183,7 @@ const mapStateToProps = ({ order, global }) => ({
   steps: order.skeleton.steps,
   dutySetting: global.settings.dutySetting,
   selectedUser: global.orderUser,
-  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled
+  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled,
 });
 const mapDispathToProps = {
   setCarCollapse,

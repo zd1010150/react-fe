@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { Button, Icon, Radio } from 'antd';
+import { Button, Icon, Radio, Row, Col, Card } from 'antd';
 import { Currency } from 'components/ui/index';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
@@ -40,6 +40,7 @@ class chooseLogisticView extends React.Component {
       freightSetting,
       confirmGetInvoice,
       totalFee,
+      totalWeight,
       deliveryOrderIds,
       intl,
     } = this.props;
@@ -49,21 +50,31 @@ class chooseLogisticView extends React.Component {
         <div className="block-title">
           <strong> { formatMessage({ id: 'global.properNouns.logistics' })} </strong>
         </div>
-        <div className="block-content">
-          <RadioGroup
-            onChange={e => this.getTotalFee(e.target.value, deliveryOrderIds)}
-            value={this.state.logisticType}
-          >
-            {
-              freightSetting.map(f => (
-                <Radio value={f.id} key={f.id}>
-                  <div>{f.name}</div>
-                  <div>{`${f.cost}/kg`}</div>
-                </Radio>
-                ))
-            }
-          </RadioGroup>
-          <p>{ formatMessage({ id: 'global.properNouns.goods.shippingCost' })}：<Currency value={totalFee} /></p>
+        <div className="block-content pb-lg">
+          <Row>
+            <Col span={12}>
+              <RadioGroup
+                onChange={e => this.getTotalFee(e.target.value, deliveryOrderIds)}
+                value={this.state.logisticType}
+              >
+                {
+                  freightSetting.map(f => (
+                    <Radio value={f.id} key={f.id}>
+                      <div>{f.name}</div>
+                      <div>{`${f.cost}/kg`}</div>
+                    </Radio>
+                  ))
+                }
+              </RadioGroup>
+              <h5>{ formatMessage({ id: 'global.properNouns.goods.shippingWeight' }, { weight: totalWeight })} </h5>
+              <h5>{ formatMessage({ id: 'global.properNouns.goods.shippingCost' })}:<Currency value={totalFee} /></h5>
+            </Col>
+            <Col span={12}>
+              <Card title={formatMessage({ id: 'page.Order.freightSpecTitle' })} style={{ width: 400 }}>
+                {formatMessage({ id: 'page.Order.freightSpec' }, freightSetting.filter(f => f.id === this.state.logisticType)[0]) }
+              </Card>
+            </Col>
+          </Row>
         </div>
         <div className="block-footer">
           <Button
@@ -110,6 +121,7 @@ const mapStateToProps = ({ global, order }) => ({
   freightSetting: global.settings.freightSetting,
   deliveryOrderIds: order.skeleton.deliveryOrders,
   totalFee: order.chooseLogistic.logistic.fee,
+  totalWeight: order.chooseLogistic.logistic.weight,
   needCreateInvoice: order.chooseLogistic.needCreateInvoice,
 });
 const mapDispathToProps = {
