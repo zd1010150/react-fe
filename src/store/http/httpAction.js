@@ -19,16 +19,23 @@ const dispatch = (request, dispatcher = () => {}) => {
     payload: {},
   });
   return request.then((data) => {
-    if (data.status_code === UNAUTHENTICATION.CODE) { // 如果是401为授权，就跳转到登录界面
-      const uenc = Base64.encode(`${MagentoDomain}/`).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ',');
-      const html = `<form action=${getAbsolutePath('/customer/account/logout', window.globalLanguage)} name="signOutForm" method="post">
-        <input type="hidden" name="form_key" value=${Cookie.get('form_key')} />
-        <input type="hidden" name="uenc" value=${uenc} />
-      </form>`;
-      const el = document.createElement('DIV');
-      el.innerHTML = html;
-      document.body.appendChild(el);
-      document.forms.signOutForm.submit();
+    // if (data.status_code === UNAUTHENTICATION.CODE) { // 如果是401为授权，就跳转到登录界面
+    //   const uenc = Base64.encode(`${MagentoDomain}/`).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ',');
+    //   const html = `<form action=${getAbsolutePath('/customer/account/logout', window.globalLanguage)} name="signOutForm" method="post">
+    //     <input type="hidden" name="form_key" value=${Cookie.get('form_key')} />
+    //     <input type="hidden" name="uenc" value=${uenc} />
+    //   </form>`;
+    //   const el = document.createElement('DIV');
+    //   el.innerHTML = html;
+    //   document.body.appendChild(el);
+    //   document.forms.signOutForm.submit();
+    // }
+    if (data.status_code === UNAUTHENTICATION.CODE) {
+      http('get', '/rest/V1/affiliate/logout', {}, { 'X-Requested-With': 'XMLHttpRequest' }, MagentoDomain).then((data) => {
+        if (data.success) {
+          window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage, { [UNAUTHENTICATION.REDIRECT_KEY]: window.location.href });
+        }
+      });
     }
     if (data.errors || data.status_code || data.message) {
       let { errors } = data;
