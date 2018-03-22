@@ -10,6 +10,7 @@ import { getTotalLogisticFee } from './flow/action';
 import { goNextStep, goPreviousStep } from '../skeleton/flow/action';
 import styles from '../../Order.less';
 import { confirmGetInvoice } from '../confirmInvoice/flow/action';
+import { CURRENCY_SYMBOL, CHINA_RMB_CODE } from 'config/app.config';
 
 const RadioGroup = Radio.Group;
 const cx = classNames.bind(styles);
@@ -43,6 +44,7 @@ class chooseLogisticView extends React.Component {
       totalWeight,
       deliveryOrderIds,
       intl,
+      baseCurrency,
     } = this.props;
     const { formatMessage } = intl;
     return (
@@ -61,7 +63,7 @@ class chooseLogisticView extends React.Component {
                   freightSetting.map(f => (
                     <Radio value={f.id} key={f.id}>
                       <div>{f.name}</div>
-                      <div>{`${f.cost}/kg`}</div>
+                      <div><Currency value={f.cost} /> /{formatMessage({ id: 'page.Order.kg' })}</div>
                     </Radio>
                   ))
                 }
@@ -71,7 +73,7 @@ class chooseLogisticView extends React.Component {
             </Col>
             <Col span={12}>
               <Card title={formatMessage({ id: 'page.Order.freightSpecTitle' })} style={{ width: 400 }}>
-                {formatMessage({ id: 'page.Order.freightSpec' }, freightSetting.filter(f => f.id === this.state.logisticType)[0]) }
+                {formatMessage({ id: 'page.Order.freightSpec' }, { ...(freightSetting.filter(f => f.id === this.state.logisticType)[0]), currency: CURRENCY_SYMBOL[baseCurrency[0].name] }) }
               </Card>
             </Col>
           </Row>
@@ -123,6 +125,7 @@ const mapStateToProps = ({ global, order }) => ({
   totalFee: order.chooseLogistic.logistic.fee,
   totalWeight: order.chooseLogistic.logistic.weight,
   needCreateInvoice: order.chooseLogistic.needCreateInvoice,
+  baseCurrency: global.settings.baseCurrency,
 });
 const mapDispathToProps = {
   goNextStep,
