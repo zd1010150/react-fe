@@ -69,11 +69,8 @@ const mapSettingData = (data) => {
     paymentGateway: newData.payment_gateway,
     interests: (() => {
       const interests = [...newData.sub_category];
-      if (!_.isEmpty(interests)) {
-        interests.unshift({
-          id: '',
-          name: '---none---',
-        });
+      if (_.isEmpty(interests)) {
+        return [];
       }
       return interests;
     })(),

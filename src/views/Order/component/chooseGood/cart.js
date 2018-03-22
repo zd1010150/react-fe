@@ -10,7 +10,9 @@ import styles from '../../Order.less';
 const cx = classNames.bind(styles);
 
 class cart extends React.Component {
+  componentWillUnmount(){
 
+  }
   render() {
     const {
       cartData,
