@@ -40,7 +40,7 @@ export default {
       subTotal: '小计',
       totalPrice: '总价',
       shippingCost: '运费',
-      shippingWeight: '总重量: {weight}千克',
+      shippingWeight: '总重量: {weight}公斤',
       recommendedPrice: '市场价',
       orderQuantity: '订购数量',
       weight: '重量',
