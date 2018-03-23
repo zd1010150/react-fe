@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { SET_INVOICE_INFO, SET_MAGENTO_SHIPPING_COST, SET_QUOTE_ID } from './actionType';
+import { SET_INVOICE_INFO } from './actionType';
 import { RESET_ORDER } from '../../skeleton/flow/actionType';
 
 const invoices = (state = [], action) => {
@@ -12,20 +12,5 @@ const invoices = (state = [], action) => {
       return state;
   }
 };
-const magentoShippingCost = (state = 0, action) => {
-  switch (action.type) {
-    case SET_MAGENTO_SHIPPING_COST:
-      return action.amount;
-    default:
-      return state;
-  }
-};
-const magentoQuoteId = (state = 0, action) => {
-  switch (action.type) {
-    case SET_QUOTE_ID:
-      return action.quoteId;
-    default:
-      return state;
-  }
-};
-export default combineReducers({ invoices, magentoShippingCost, magentoQuoteId });
+
+export default combineReducers({ invoices });

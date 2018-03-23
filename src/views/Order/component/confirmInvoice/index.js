@@ -13,12 +13,22 @@ import { baseUrl } from 'config/env.config';
 import Address from './address';
 import Invoice from './invoice';
 import { getReceiver } from './flow/reselect';
-import { getQuoteId } from './flow/action';
+import { pay } from './flow/action';
 
 
 const cx = classNames.bind(styles);
 
 class confirmInvoiceView extends React.Component {
+  pay(total){
+    const {freightId, deliveryOrderIds, pay, location } = this.props;
+    let formData = {}
+    pay({
+      freight_id: freightId,
+      deliveryOrderIds: deliveryOrderIds,
+      magentoShippingCost: total,
+      
+    });
+  }
   confirmPayFreight() {
     document.forms.payFreightForm.submit();
   }
@@ -27,13 +37,8 @@ class confirmInvoiceView extends React.Component {
     let totalAUDShippingCost = 0;
     const {
       goPreviousStep,
-      deliveryOrderIds,
-      magentoQuoteId,
-      freightId,
       invoices,
       receiver,
-      getQuoteId,
-      magentoShippingCost,
       location,
       intl,
     } = this.props;
@@ -67,16 +72,6 @@ class confirmInvoiceView extends React.Component {
     return (
       <div className={classNames('block', 'invoice-block', 'section-confirm-invoice')}>
         <div className="block-content">
-          <form name="payFreightForm" action={`${baseUrl}/affiliate/delivery-orders/pay`} method="post">
-            <input type="hidden" name="quote_id" value={magentoQuoteId} />
-            <input type="hidden" name="freight_id" value={freightId} />
-            {
-              deliveryOrderIds.map((id, index) => <input type="hidden" key={id} name={`delivery_orders_ids[${index}]`} value={id} />)
-            }
-            <input type="hidden" name="shipping_cost" value={magentoShippingCost} />
-            <input type="hidden" name="success_url" value={getLocationOfAbsoluteUrl('/resultNotification?view=successPay')} />
-            <input type="hidden" name="error_url" value={getLocationOfAbsoluteUrl('/resultNotification?view=errorPay')} />
-          </form>
           <Address {...receiver} />
           {invoicesEl}
           <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
@@ -97,7 +92,7 @@ class confirmInvoiceView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             onClick={() => {
-              getQuoteId(totalAUDShippingCost, this.confirmPayFreight);
+              this.pay(totalAUDShippingCost);
             }}
           >
             { formatMessage({ id: 'global.ui.button.pay' }) } <Icon type="pay-circle-o" />
@@ -124,16 +119,14 @@ confirmInvoiceView.propTypes = {
   location: PropTypes.object,
 };
 const mapStateToProps = ({ order }) => ({
-  magentoQuoteId: order.confirmInvoice.magentoQuoteId,
   freightId: order.chooseLogistic.logistic.logisticType,
   deliveryOrderIds: order.skeleton.deliveryOrders,
   invoices: order.confirmInvoice.invoices,
   receiver: getReceiver(order.confirmInvoice.invoices),
-  magentoShippingCost: order.confirmInvoice.magentoShippingCost,
 });
 const mapDispathToProps = {
   goPreviousStep,
-  getQuoteId,
+  pay,
 };
 
 const ConfirmInvoiceView = withRouter(connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView)));
