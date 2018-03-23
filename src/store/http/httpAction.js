@@ -21,8 +21,12 @@ const dispatch = (request, dispatcher = () => {}) => {
   return request.then((data) => {
     if (data.status_code === UNAUTHENTICATION.CODE) {
       http('get', '/rest/V1/affiliate/logout', {}, { 'X-Requested-With': 'XMLHttpRequest' }, MagentoDomain).then((data) => {
-        const result = JSON.parse(data);
-        if (result.success) {
+        try {
+          const result = JSON.parse(data);
+          if (result.success) {
+            window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage, { [UNAUTHENTICATION.REDIRECT_KEY]: window.location.href });
+          }
+        } catch (ex) {
           window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage, { [UNAUTHENTICATION.REDIRECT_KEY]: window.location.href });
         }
       });
