@@ -1,7 +1,7 @@
 
 
 import { post } from 'store/http/httpAction';
-import { MagentoDomain } from 'config/magento.config';
+import { MagentoDomain, MagentoCheckoutUrl } from 'config/magento.config';
 import { getLocationOfAbsoluteUrl } from 'utils/url';
 import { SET_INVOICE_INFO } from './actionType';
 
@@ -22,9 +22,7 @@ export const confirmGetInvoice = () => (dispatch, getState) => {
 };
 export const getQuoteId = amount => dispatch => post(`/rest/V1/shipping-carts/mine/${amount}`, { }, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data) => {
   if (data) {
-    const { quote_id, base_grand_total } = JSON.parse(data);
-    dispatch(setMagentoShippingCost(base_grand_total)); // 可能会有问题,react不能及时渲染
-    dispatch(setMagentoQuoteId(quote_id));
+    window.location.href = MagentoCheckoutUrl;
   }
 });
 

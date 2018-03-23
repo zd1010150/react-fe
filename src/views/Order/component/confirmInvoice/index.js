@@ -4,7 +4,6 @@ import { getLocationOfAbsoluteUrl } from 'utils/url';
 import { connect } from 'react-redux';
 import { Button, Icon } from 'antd';
 import classNames from 'classnames/bind';
-import { withRouter } from 'react-router';
 import { Currency } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
 import { goPreviousStep } from '../skeleton/flow/action';
@@ -19,18 +18,16 @@ import { pay } from './flow/action';
 const cx = classNames.bind(styles);
 
 class confirmInvoiceView extends React.Component {
-  pay(total){
-    const {freightId, deliveryOrderIds, pay, location } = this.props;
-    let formData = {}
-    pay({
+  pay(total) {
+    const { freightId, deliveryOrderIds, pay } = this.props;
+    const formData = {
       freight_id: freightId,
-      deliveryOrderIds: deliveryOrderIds,
-      magentoShippingCost: total,
-      
-    });
-  }
-  confirmPayFreight() {
-    document.forms.payFreightForm.submit();
+      shipping_cost: total,
+    };
+    for (let i = 0; i < deliveryOrderIds.length; i++) {
+      formData[`delivery_orders_ids[${i}]`] = deliveryOrderIds[i];
+    }
+    pay(formData);
   }
   render() {
     let totalShippingCost = 0;
@@ -39,13 +36,11 @@ class confirmInvoiceView extends React.Component {
       goPreviousStep,
       invoices,
       receiver,
-      location,
       intl,
     } = this.props;
     const { formatMessage } = intl;
 
 
-    const successUrl = location;
     const invoicesEl = invoices.map((item) => {
       const deliveryOrder = item.delivery_order;
       const totalQuantity = deliveryOrder.items.reduce((sum, i) => {
@@ -116,7 +111,6 @@ confirmInvoiceView.propTypes = {
   freightId: PropTypes.number,
   invoices: PropTypes.array,
   receiver: PropTypes.object,
-  location: PropTypes.object,
 };
 const mapStateToProps = ({ order }) => ({
   freightId: order.chooseLogistic.logistic.logisticType,
@@ -129,5 +123,5 @@ const mapDispathToProps = {
   pay,
 };
 
-const ConfirmInvoiceView = withRouter(connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView)));
+const ConfirmInvoiceView = connect(mapStateToProps, mapDispathToProps)(injectIntl(confirmInvoiceView));
 export default ConfirmInvoiceView;
