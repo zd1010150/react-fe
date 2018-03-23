@@ -9,7 +9,6 @@ const logistic = (state = {}, action) => {
     case RESET_ORDER:
       return {};
     case SET_LOGISITIC_COST:
-      debugger;
       return Object.assign({}, state, { fee: getAllCost(action.fee), logisticType: action.logisticType, weight: getAllWeight(action.fee) });
     default:
       return state;
