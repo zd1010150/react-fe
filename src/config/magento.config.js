@@ -10,6 +10,7 @@ const MAGENTO_LANGUAGES = {
 };
 
 const MagentoDomain = process.env.__MAGENTO_DOMAIN__;
+const MagentoCheckoutUrl = `${MagentoDomain}/checkout/#payment`;
 const MagentoProductImgPrefix = `${MagentoDomain}/pub/media/catalog/product`;
 const getAbsolutePath = (url, language, params = {}) => {
   let dataStr = ''; // 数据拼接字符串
@@ -32,4 +33,4 @@ const setMangentoLanguageCookie = (language) => {
   Cookie.set(COOKIE_STORE_VIEW_KEY, MAGENTO_LANGUAGES[language], { expires: 0.0416667, path: '/' });
 };
 const removeMangentoLanguageCookie = () => Cookie.remove(COOKIE_STORE_VIEW_KEY);
-export { MagentoDomain, getAbsolutePath, MagentoProductImgPrefix, LOCAL_STORAGE_CART_KEY, MagentoStoreView, MagentoLanguage, setMangentoLanguageCookie, removeMangentoLanguageCookie };
+export { MagentoDomain, getAbsolutePath, MagentoProductImgPrefix, LOCAL_STORAGE_CART_KEY, MagentoStoreView, MagentoCheckoutUrl, MagentoLanguage, setMangentoLanguageCookie, removeMangentoLanguageCookie };
