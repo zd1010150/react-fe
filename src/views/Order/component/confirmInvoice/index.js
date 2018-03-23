@@ -23,10 +23,9 @@ class confirmInvoiceView extends React.Component {
     const formData = {
       freight_id: freightId,
       shipping_cost: total,
+      delivery_orders_ids: deliveryOrderIds,
     };
-    for (let i = 0; i < deliveryOrderIds.length; i++) {
-      formData[`delivery_orders_ids[${i}]`] = deliveryOrderIds[i];
-    }
+
     pay(formData);
   }
   render() {
