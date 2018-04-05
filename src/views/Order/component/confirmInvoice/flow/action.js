@@ -1,19 +1,11 @@
 
 
 import { post } from 'store/http/httpAction';
-import { MagentoDomain } from 'config/magento.config';
+import { MagentoDomain, MagentoCheckoutUrl } from 'config/magento.config';
+import { getLocationOfAbsoluteUrl } from 'utils/url';
+import { SET_INVOICE_INFO } from './actionType';
 
-import { SET_INVOICE_INFO, SET_MAGENTO_SHIPPING_COST, SET_QUOTE_ID } from './actionType';
 
-
-export const setMagentoQuoteId = quoteId => ({
-  type: SET_QUOTE_ID,
-  quoteId,
-});
-export const setMagentoShippingCost = amount => ({
-  type: SET_MAGENTO_SHIPPING_COST,
-  amount,
-});
 export const setInvoiceInfo = invoices => ({
   type: SET_INVOICE_INFO,
   invoices,
@@ -28,11 +20,16 @@ export const confirmGetInvoice = () => (dispatch, getState) => {
     }
   });
 };
-export const getQuoteId = (amount, callback) => dispatch => post(`/rest/V1/shipping-carts/mine/${amount}`, { }, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data) => {
+export const getQuoteId = amount => dispatch => post(`/rest/V1/shipping-carts/mine/${amount}`, { }, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data) => {
   if (data) {
-    const { quote_id, base_grand_total } = JSON.parse(data);
-    dispatch(setMagentoShippingCost(base_grand_total)); // 可能会有问题,react不能及时渲染
-    dispatch(setMagentoQuoteId(quote_id));
-    callback();
+    window.location.href = MagentoCheckoutUrl;
+  }
+});
+
+export const pay = data => dispatch => post('/affiliate/delivery-orders/pay', data, dispatch).then((data) => {
+  if (data && data.success) { // 成功
+    window.location.href = getLocationOfAbsoluteUrl('/resultNotification?view=successPay');
+  } else if (data && (!data.success)) { // 不足就需要生成quoteid
+    dispatch(getQuoteId(data.lack_qty));
   }
 });

@@ -38,8 +38,8 @@ class userDialog extends React.Component {
       phone: value.phone,
       email: value.email,
       street: value.address,
-      sub_group_id: value.group,
       sub_category_id: value.interests,
+      sub_group_id: value.group,
       city: value.city,
       state: value.state,
       country: value.country,
@@ -107,7 +107,6 @@ class userDialog extends React.Component {
     } else if (this.props.operatorType === operateTypes.EDIT) {
       this.props.update(postform, callback);
     }
-
   }
   handleCancel = (e) => {
     this.props.onClose();

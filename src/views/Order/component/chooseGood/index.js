@@ -31,7 +31,7 @@ class chooseGoodView extends React.Component {
     } = this.props;
     const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : dutySetting.threshold;
     const { country } = selectedUser;
-    if (totalDuty >= max && country === CHINA_CODE) { // 如果超过300,并且是发往中国 就分担。此处是mock，需要更改为global setting中传入的值
+    if (totalDuty > max && country === CHINA_CODE) { // 如果超过duty setting,并且是发往中国 就分单
       this.setState({
         showDutyTermsDialog: true,
       });
@@ -142,7 +142,7 @@ class chooseGoodView extends React.Component {
             className={cx('order-step-next-btn')}
             type="primary"
             style={{ marginLeft: 8 }}
-            disabled={nextBtnDisabled}
+            disabled={cart.length < 1}
             onClick={() => {
                 this.submitOrder();
               }}
@@ -183,7 +183,7 @@ const mapStateToProps = ({ order, global }) => ({
   steps: order.skeleton.steps,
   dutySetting: global.settings.dutySetting,
   selectedUser: global.orderUser,
-  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled
+  nextBtnDisabled: order.chooseGood.uiState.nextBtnDisabled,
 });
 const mapDispathToProps = {
   setCarCollapse,

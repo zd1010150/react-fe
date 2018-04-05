@@ -2,7 +2,7 @@ export default {
   zh: {
     clientLists: '加盟店',
     leads: '潜在客户',
-    accounts: '交易客户',
+    accounts: '有效账户',
     marketingMaterial: '营销策略',
     order: '订单',
     priceSetting: '价格设置',

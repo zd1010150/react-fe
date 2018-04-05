@@ -56,7 +56,7 @@ class id extends React.Component {
       });
       return;
     }
-    if (this.state.idNumber && (!idNumberReg.test(this.state.idNumber))) {
+    if (this.state.idNumber && this.state.country === CHINA_CODE && (!idNumberReg.test(this.state.idNumber))) {
       this.setState({
         errorMsg: formatMessage({ id: 'global.error.ERROR_INVALID_ID' }),
       });
