@@ -14,8 +14,10 @@ const cx = classNames.bind(styles);
 const headerContent = ({ language }) => (
   <div className={cx('header-content-wrapper')}>
     <Logo language={language} />
-    <MiniCart language={language} />
-    <Search language={language} />
+    <div className={cx('right-wrapper')}>
+      <MiniCart language={language} />
+      <Search language={language} />
+    </div>
 
   </div>
 );

@@ -5,6 +5,8 @@ import classNames from 'classnames/bind';
 import styles from '../Copyright.less';
 import { getAbsolutePath } from 'config/magento.config';
 import logo from 'assets/images/logo.png';
+import chineseLogo from 'assets/images/chinese-affiliate.png';
+
 const cx = classNames.bind(styles);
 const CopyRight = ({language}) => (
   <div className={classNames('row', cx('copyright-container'))}>
@@ -12,7 +14,9 @@ const CopyRight = ({language}) => (
       <small>Copyright © 2017 Breakable.</small>
     </div>
     <div className="col-sm-6 text-right">
-      <a href={getAbsolutePath('/', language)}><img  className={cx('logo')} src={logo} alt=" breakable logo" /></a>
+      <a href={getAbsolutePath('/', language)}>
+       <img className={cx(`${language}-logo`)} src={language === 'zh' ? chineseLogo : logo} alt=" breakable logo" />
+      </a>
     </div>
   </div>
 );
