@@ -46,32 +46,17 @@ class leadsTable extends React.Component {
   }
   // table action 操作
   handleEditID(record) {
-    let idFront = '';
-    let idBack = '';
     const idNumber = record.id_number;
     const rejectReseason = 0;
-
-    if (record.document && record.document.length > 0) {
-      const { name, path } = record.document[0];
-      if (name === 'front_id_doc') {
-        idFront = path || '';
-      } else {
-        idBack = path || '';
-      }
-      if (record.document && record.document.length > 1) {
-        const { name, path } = record.document[1];
-        if (name === 'front_id_doc') {
-          idFront = path || '';
-        } else {
-          idBack = path || '';
-        }
-      }
-    }
+    const mapPath = {};
+    record.document.forEach((r) => {
+      mapPath[r.name] = r.path;
+    });
     const editID = Object.assign({}, this.state.editID, {
       visible: true,
       userId: `${record.id}`,
-      idFront,
-      idBack,
+      idFront: mapPath.front_id_doc || '',
+      idBack: mapPath.back_id_doc || '',
       country: record.country,
       rejectReseason,
       idNumber,
