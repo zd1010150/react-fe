@@ -11,6 +11,7 @@ class PicturesWall extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMaxSizeError: false,
       previewVisible: false,
       previewImage: '',
       fileList: this.initFileList(props.file),
@@ -44,8 +45,10 @@ class PicturesWall extends React.Component {
   handleChange = ({ fileList }) => {
     if (fileList[0] && fileList[0].status === 'uploading') {
       if (fileList[0].size > MAX_UPLOAD_SIZE) {
+        this.setState({ isMaxSizeError: true });
         return;
       }
+      this.setState({ isMaxSizeError: false });
     }
     this.setState({ fileList });
     const files = this.mapFileListToFiles(fileList);
@@ -83,7 +86,10 @@ class PicturesWall extends React.Component {
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
-        <p className="error-msg" style={{ fontSize: '12px' }}> {formatMessage({ id: 'global.ui.upload.maxSize' })} </p>
+        {
+          this.state.isMaxSizeError ? <p className="error-msg" style={{ fontSize: '12px', lineHeight: '14px', marginBottom: '0px' }}> {formatMessage({ id: 'global.ui.upload.errorMax' })} </p> : ''
+        }
+        <p className="error-msg" style={{ fontSize: '12px', lineHeight: '14px', marginBottom: '0px' }}> {formatMessage({ id: 'global.ui.upload.maxSize' })} </p>
       </div>
     );
   }
