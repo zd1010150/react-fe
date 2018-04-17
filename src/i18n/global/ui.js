@@ -35,6 +35,10 @@ export default {
     dialog: {
       info: '提示',
     },
+    upload: {
+      maxSize: '文件最大是2M',
+      errorMax: '你的文件超过了2M,请重新选择',
+    },
   },
   en: {
     button: {
@@ -71,6 +75,10 @@ export default {
     },
     dialog: {
       info: '提示',
+    },
+    upload: {
+      maxSize: 'Maximum file size is 2M',
+      errorMax: 'The file is larger than 2M, please reselect',
     },
   },
 };
