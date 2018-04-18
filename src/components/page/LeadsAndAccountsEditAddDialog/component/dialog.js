@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
+import { SOCIAL_MEDIA } from 'config/app.config';
 // import classNames from 'classnames/bind';
 import operateTypes from '../flow/operateType';
 import UserForm from './form';
@@ -13,17 +14,63 @@ class userDialog extends React.Component {
     this.state = {
       showID: props.operatorType === operateTypes.ADD,
       canEdit: props.operatorType !== operateTypes.VIEW,
+      currentSocialType: '',
+      [SOCIAL_MEDIA.QQ]: '',
+      [SOCIAL_MEDIA.WECHAT]: '',
     };
+  }
+  componentDidMount() {
+    this.initState(this.props);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
       showID: nextProps.operatorType === operateTypes.ADD,
       canEdit: nextProps.operatorType !== operateTypes.VIEW,
+
+    });
+    if (nextProps.editObject !== this.props.editObject) {
+      this.initState(nextProps);
+    }
+  }
+  initState(props) {
+    const { editObject } = props;
+    const { socials } = editObject;
+    const mapSocials = {};
+    if (_.isEmpty(socials)) {
+      this.setState({
+        currentSocialType: SOCIAL_MEDIA.WECHAT,
+        [SOCIAL_MEDIA.QQ]: '',
+        [SOCIAL_MEDIA.WECHAT]: '',
+      });
+      return;
+    }
+    socials.forEach((s) => {
+      mapSocials[s.social_media_type] = s.social_media_number;
+    });
+    this.setState({
+      currentSocialType: _.isEmpty(mapSocials[SOCIAL_MEDIA.QQ]) ? SOCIAL_MEDIA.WECHAT : SOCIAL_MEDIA.QQ,
+      [SOCIAL_MEDIA.QQ]: mapSocials[SOCIAL_MEDIA.QQ] || '',
+      [SOCIAL_MEDIA.WECHAT]: mapSocials[SOCIAL_MEDIA.WECHAT] || '',
+    });
+  }
+  changeSocial = (type, number) => {
+    this.setState({
+      [type]: number,
+    });
+  }
+  socialTypeChange = (type) => {
+    this.setState({
+      currentSocialType: type,
+    });
+  }
+  socialNumberChange = (number) => {
+    this.setState({
+      [this.state.currentSocialType]: number,
     });
   }
   handleValidate = () => {
     const self = this;
-    this.form.instance.validateFieldsAndScroll((err, values) => {
+    this.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         self.handleSubmit(values);
       }
@@ -50,13 +97,20 @@ class userDialog extends React.Component {
         back_id_doc: _.isArray(value.idBack) ? value.idBack[0] : value.idBack,
       },
     };
-    if (_.trim(value.socialMediaNumber).length > 0 && value.socialMediaType.length > 0) {
-      result.social_media = [{
-        social_media_type: value.socialMediaType,
-        social_media_number: value.socialMediaNumber,
-      }];
+    const social_media = [];
+    if (!_.isEmpty(this.state[SOCIAL_MEDIA.QQ])) {
+      social_media.push({
+        social_media_type: SOCIAL_MEDIA.QQ,
+        social_media_number: this.state[SOCIAL_MEDIA.QQ],
+      });
     }
-    return result;
+    if (!_.isEmpty(this.state[SOCIAL_MEDIA.WECHAT])) {
+      social_media.push({
+        social_media_type: SOCIAL_MEDIA.WECHAT,
+        social_media_number: this.state[SOCIAL_MEDIA.WECHAT],
+      });
+    }
+    return Object.assign({}, result, { social_media });
   }
   mapPropsToFields = (props) => {
     if (_.isEmpty(props)) return {};
@@ -76,11 +130,7 @@ class userDialog extends React.Component {
       zipCode: value.zip_code,
       idNumber: value.id_number,
     };
-    if (props.socials && props.socials.length > 0) {
-      const social = props.socials[0];
-      result.socialMediaType = social.social_media_type;
-      result.socialMediaNumber = social.social_media_number;
-    }
+
     const mapPath = {};
     props.document.forEach((r) => {
       mapPath[r.name] = r.path;
@@ -119,7 +169,7 @@ class userDialog extends React.Component {
     })(userType, operatorType);
     return (
       <Modal
-
+        destroyOnClose
         title={formatMessage({ id: dialogTitle })}
         visible={visible}
         onOk={this.handleOk}
@@ -133,7 +183,6 @@ class userDialog extends React.Component {
       >
         <div id="addAndEditDialog">
           <UserForm
-            key={Math.random()}
             showID={this.state.showID}
             canEdit={this.state.canEdit}
             editObject={this.mapPropsToFields(editObject)}
@@ -143,6 +192,11 @@ class userDialog extends React.Component {
             ref={(c) => { this.form = c; }}
             group={group}
             interests={interests}
+            currentSocialType={this.state.currentSocialType}
+            QQ={this.state[SOCIAL_MEDIA.QQ]}
+            weChat={this.state[SOCIAL_MEDIA.WECHAT]}
+            socialNumberChange={this.socialNumberChange}
+            socialTypeChange={this.socialTypeChange}
           />
         </div>
       </Modal>
