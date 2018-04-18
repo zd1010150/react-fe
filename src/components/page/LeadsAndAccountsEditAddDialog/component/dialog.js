@@ -81,23 +81,14 @@ class userDialog extends React.Component {
       result.socialMediaType = social.social_media_type;
       result.socialMediaNumber = social.social_media_number;
     }
-    if (props.document && props.document.length > 0) {
-      const { name, path } = props.document[0];
-      if (name === 'front_id_doc') {
-        result.idFront = path || '';
-      } else {
-        result.idBack = path || '';
-      }
-      if (props.document && props.document.length > 1) {
-        const { name, path } = props.document[0];
-        if (name === 'front_id_doc') {
-          result.idFront = path || '';
-        } else {
-          result.idBack = path || '';
-        }
-      }
-    }
-    return result;
+    const mapPath = {};
+    props.document.forEach((r) => {
+      mapPath[r.name] = r.path;
+    });
+    return Object.assign({}, result, {
+      idFront: mapPath.front_id_doc || '',
+      idBack: mapPath.back_id_doc || '',
+    });
   }
   handleSubmit = (value) => {
     const postform = this.mapPostData(value);
