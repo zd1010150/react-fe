@@ -92,7 +92,6 @@ class userForm extends React.Component {
           countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
     </Select>);
-    console.log(this.state[this.state.mediaType], '|', this.state.mediaType, 'dandan');
     return (
       <Form onSubmit={(e) => { this.props.onSubmit(); }}>
         <FormItem>
