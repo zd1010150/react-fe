@@ -28,12 +28,6 @@ class PicturesWall extends React.Component {
     }
     return fileList;
   }
-  // componentWillReceiveProps(nextProps) {
-  //   console.log("will receiveProps trigger", nextProps);
-  //   this.setState({
-  //     fileList: this.initFileList(nextProps.file),
-  //   });
-  // }
   handleCancel = () => this.setState({ previewVisible: false })
   handlePreview = (file) => {
     this.setState({
