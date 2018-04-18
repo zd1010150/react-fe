@@ -55,21 +55,22 @@ class userForm extends React.Component {
     };
     const socialMediaTypeSelector = getFieldDecorator('socialMediaType', {
       initialValue: editObject.socialMediaType || '',
-    })(<Select disabled={disabled} style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
+    })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
     </Select>);
 
-    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || ((!_.isEmpty(group[0])) && group[0].id) || '' })(<Select disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
+    const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || ((!_.isEmpty(group[0])) && group[0].id) || '' })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
     const initalIntereste = _.isEmpty(editObject.interests) ? [] : (_.isEmpty(editObject.interests[0])?[]:editObject.interests);
     const interestsSelector = getFieldDecorator('interests', { initialValue: initalIntereste })(<Select
       disabled={disabled}
       style={{ width: '100%' }}
       key="interests"
       mode="multiple"
+      getPopupContainer={() => document.getElementById('addAndEditDialog')}
     >{interests.map(item => <Option value={`${item.id}`} key={item.id}>{item.name}</Option>)}
     </Select>);
 
 
-    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].code) || '' })(<Select disabled={disabled} onChange={(countryCode) => { this.handleCountryChange(countryCode); }}>
+    const countriesEl = getFieldDecorator('country', { initialValue: editObject.country || (countries[0] && countries[0].code) || '' })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} onChange={(countryCode) => { this.handleCountryChange(countryCode); }}>
       {
           countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
