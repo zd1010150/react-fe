@@ -70,7 +70,7 @@ class userForm extends React.Component {
     };
     const socialMediaTypeSelector = getFieldDecorator('socialMediaType', {
       initialValue: currentSocialType,
-    })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} style={{ width: 170 }} onChange={val => this.socialTypeChange(val)}>
+    })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')}  style={{ width: 170 }} onChange={val => this.socialTypeChange(val)}>
       <Option value={SOCIAL_MEDIA.WECHAT} key={SOCIAL_MEDIA.WECHAT}>{formatMessage({ id: 'global.form.weChat' })}</Option>
       <Option value={SOCIAL_MEDIA.QQ} key={SOCIAL_MEDIA.QQ}>QQ</Option>
     </Select>);
