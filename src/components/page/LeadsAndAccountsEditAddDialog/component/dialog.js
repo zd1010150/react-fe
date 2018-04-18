@@ -119,6 +119,7 @@ class userDialog extends React.Component {
     })(userType, operatorType);
     return (
       <Modal
+
         title={formatMessage({ id: dialogTitle })}
         visible={visible}
         onOk={this.handleOk}
@@ -130,7 +131,20 @@ class userDialog extends React.Component {
           </Button>,
         ]}
       >
-        <UserForm key={Math.random()} showID={this.state.showID} canEdit={this.state.canEdit} editObject={this.mapPropsToFields(editObject)} countries={countries} language={language} onSubmit={this.handleValidate} ref={(c) => { this.form = c; }} group={group} interests={interests} />
+        <div id="addAndEditDialog">
+          <UserForm
+            key={Math.random()}
+            showID={this.state.showID}
+            canEdit={this.state.canEdit}
+            editObject={this.mapPropsToFields(editObject)}
+            countries={countries}
+            language={language}
+            onSubmit={this.handleValidate}
+            ref={(c) => { this.form = c; }}
+            group={group}
+            interests={interests}
+          />
+        </div>
       </Modal>
     );
   }
