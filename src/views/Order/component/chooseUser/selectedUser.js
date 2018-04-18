@@ -30,24 +30,13 @@ class selectedUserView extends React.Component {
       intl, selectedUser, setSearchAreaVisible, searchAreaVisible,
     } = this.props;
     const { formatMessage } = intl;
-    let idFront = '';
-    let idBack = '';
-    if (selectedUser.document && selectedUser.document.length > 0) {
-      const { name, path } = selectedUser.document[0];
-      if (name === 'front_id_doc') {
-        idFront = path || '';
-      } else {
-        idBack = path || '';
-      }
-      if (selectedUser.document && selectedUser.document.length > 1) {
-        const { name, path } = selectedUser.document[1];
-        if (name === 'front_id_doc') {
-          idFront = path || '';
-        } else {
-          idBack = path || '';
-        }
-      }
-    }
+
+    const mapPath = {};
+    selectedUser.document.forEach((r) => {
+      mapPath[r.name] = r.path;
+    });
+    const idFront = mapPath.front_id_doc || '';
+    const idBack = mapPath.back_id_doc || '';
     return (
       <div className={classNames('block', cx('choose-user-search'))}>
         <div className={classNames(cx('tab-block-title'), 'block-title')}>
@@ -73,8 +62,9 @@ class selectedUserView extends React.Component {
                 <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.IDDoc' }) }:</td>
                 <td className={cx('selected-user-info-table-info')}>
                   <span>{selectedUser.id_number}</span>
-                  { idBack.length > 0 ? <img src={`${apiDomain}/${idBack}`} alt="id back" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idBack}`); }} /> : '' }
                   { idFront.length > 0 ? <img src={`${apiDomain}/${idFront}`} alt="id front" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idFront}`); }} /> : '' }
+                  { idBack.length > 0 ? <img src={`${apiDomain}/${idBack}`} alt="id back" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idBack}`); }} /> : '' }
+
                 </td>
               </tr>
 
