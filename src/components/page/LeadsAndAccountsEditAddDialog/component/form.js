@@ -5,7 +5,7 @@ import { Form, Input, Select } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
 import _ from 'lodash';
-import { CHINA_CODE } from 'config/app.config';
+import { CHINA_CODE, SOCIAL_MEDIA } from 'config/app.config';
 import { Upload } from 'components/ui/index';
 import { getExistRule, validator } from 'utils/validateMessagesUtil';
 import styles from '../dialog.less';
@@ -15,6 +15,14 @@ const cx = classNames.bind(styles);
 class userForm extends React.Component {
   state = {
     checkIdNumber: this.ifCheckIDNumber(this.props),
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.editObject !== this.editObject) {
+      // this.setState({
+      //   [SOCIAL_MEDIA.QQ]: nextProps.editObject.QQ,
+      //   [SOCIAL_MEDIA.WECHAT]: nextProps.editObject.WECHAT,
+      // });
+    }
   }
   ifCheckIDNumber(props) {
     if (_.isEmpty(props && props.editObject)) {
@@ -33,8 +41,15 @@ class userForm extends React.Component {
       }
     });
   }
+  socialTypeChange(mediaType) {
+    this.props.socialTypeChange(mediaType);
+  }
+  socialNumberChange(e) {
+    const mediaNumber = e.target.value;
+    this.props.socialNumberChange(mediaNumber);
+  }
   render() {
-    const { language } = this.props;
+    const { language, currentSocialType } = this.props;
     const { Item: FormItem } = Form;
     const { Option } = Select;
     const { formatMessage } = this.props.intl;
@@ -54,12 +69,14 @@ class userForm extends React.Component {
       },
     };
     const socialMediaTypeSelector = getFieldDecorator('socialMediaType', {
-      initialValue: editObject.socialMediaType || '',
-    })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} style={{ width: 170 }}><Option value="weChat" key="weChat">{formatMessage({ id: 'global.form.weChat' })}</Option><Option value="QQ" key="qq">QQ</Option>
+      initialValue: currentSocialType,
+    })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} style={{ width: 170 }} onChange={val => this.socialTypeChange(val)}>
+      <Option value={SOCIAL_MEDIA.WECHAT} key={SOCIAL_MEDIA.WECHAT}>{formatMessage({ id: 'global.form.weChat' })}</Option>
+      <Option value={SOCIAL_MEDIA.QQ} key={SOCIAL_MEDIA.QQ}>QQ</Option>
     </Select>);
 
     const groupSelector = getFieldDecorator('group', { initialValue: editObject.group || ((!_.isEmpty(group[0])) && group[0].id) || '' })(<Select getPopupContainer={() => document.getElementById('addAndEditDialog')} disabled={disabled} key="group">{group.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)}</Select>);
-    const initalIntereste = _.isEmpty(editObject.interests) ? [] : (_.isEmpty(editObject.interests[0])?[]:editObject.interests);
+    const initalIntereste = _.isEmpty(editObject.interests) ? [] : (_.isEmpty(editObject.interests[0]) ? [] : editObject.interests);
     const interestsSelector = getFieldDecorator('interests', { initialValue: initalIntereste })(<Select
       disabled={disabled}
       style={{ width: '100%' }}
@@ -75,6 +92,7 @@ class userForm extends React.Component {
           countries.map(item => <Option value={item.code} key={item.code}>{item.name}</Option>)
         }
     </Select>);
+    console.log(this.state[this.state.mediaType], '|', this.state.mediaType, 'dandan');
     return (
       <Form onSubmit={(e) => { this.props.onSubmit(); }}>
         <FormItem>
@@ -222,12 +240,14 @@ class userForm extends React.Component {
           {...formItemLayout}
           label={formatMessage({ id: 'global.form.socialMedia' })}
         >
-          {getFieldDecorator('socialMediaNumber', {
-            initialValue: editObject.socialMediaNumber || '',
-            rules: [{
-              validator: validator.between(3, 80, language),
-            }],
-          })(<Input addonBefore={socialMediaTypeSelector} style={{ width: '100%' }} disabled={disabled} />)}
+          <Input
+            addonBefore={socialMediaTypeSelector}
+            style={{ width: '100%' }}
+            value={this.props[this.props.currentSocialType]}
+            disabled={disabled}
+            onChange={e => this.socialNumberChange(e)}
+            onBlur={e => this.socialNumberChange(e)}
+          />
         </FormItem>
 
 
@@ -266,6 +286,8 @@ userForm.defaultProps = {
 userForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  socialNumberChange: PropTypes.func.isRequired,
+  socialTypeChange: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   editObject: PropTypes.object,
   canEdit: PropTypes.bool,
@@ -273,15 +295,9 @@ userForm.propTypes = {
   group: PropTypes.array,
   countries: PropTypes.array,
   showID: PropTypes.bool,
+  QQ: PropTypes.string.isRequired,
+  weChat: PropTypes.string.isRequired,
+  currentSocialType: PropTypes.string.isRequired,
 };
 
-
-class WrapperForm extends React.Component {
-  render() {
-    // const lang = this.props.language || 'zh';
-    const AddForm = Form.create()(injectIntl(userForm));
-    return <AddForm {...this.props} ref={(instance) => { this.instance = instance; }} />;
-  }
-}
-
-export default WrapperForm;
+export default Form.create()(injectIntl(userForm));
