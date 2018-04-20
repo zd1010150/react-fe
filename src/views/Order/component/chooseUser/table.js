@@ -5,7 +5,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import { Table, Button, Icon } from 'antd';
 import { Address, Username } from 'components/ui/index';
 
-const table = ({ intl, users, setSeletedUser }) => {
+const table = ({ intl, users, setSeletedUser, queryByPaging, chooseUserTablePagination }) => {
   const { formatMessage } = intl;
   const columns = [{
     title: formatMessage({ id: 'global.form.name' }),
@@ -54,12 +54,22 @@ const table = ({ intl, users, setSeletedUser }) => {
         </span>);
     },
   }];
+  const pagination = {
+    defaultCurrent: chooseUserTablePagination.currentPage,
+    current: chooseUserTablePagination.currentPage,
+    defaultPageSize: chooseUserTablePagination.perPage,
+    pageSize: chooseUserTablePagination.perPage,
+    total: chooseUserTablePagination.total,
+    onChange(page, pageSize) {
+      queryByPaging(pageSize, page);
+    },
+  };
   return (
     <Table
       columns={columns}
       dataSource={users}
       rowKey="id"
-      pagination={false}
+      pagination={pagination}
       rowClassName={(record) => {
       const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
       if (!enable) {
@@ -76,6 +86,8 @@ table.propTypes = {
   intl: intlShape.isRequired,
   users: PropTypes.array,
   setSeletedUser: PropTypes.func.isRequired,
+  chooseUserTablePagination: PropTypes.object.isRequired,
+  queryByPaging: PropTypes.func.isRequired,
 };
 
 const TableView = injectIntl(table);

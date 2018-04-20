@@ -29,3 +29,5 @@ export const SOCIAL_MEDIA = {
   QQ: 'QQ',
   WECHAT: 'weChat',
 };
+export const NO_SHIPPING_CODE = 'noShipping';
+export const SUCCESS_HTTP_CODE = [200, 201];
