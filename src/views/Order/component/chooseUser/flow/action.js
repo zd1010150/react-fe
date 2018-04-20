@@ -24,7 +24,7 @@ export const setSearchAreaVisible = visible => ({
 export const fetchData = (keys, perPage = 5, currentPage = 1, dispatch) => get('/affiliate/affiliated-clients', {
   search: keys, per_page: perPage, page: currentPage, orderBy: 'last_name', sortedBy: 'asc',
 }, dispatch).then((data) => {
-  if (data && (!_.isEmpty(data.data)) && (!_.isEmpty(data.meta))) {
+  if (data && (!_.isEmpty(data.meta))) {
     dispatch(setUsersData(data.data));
     const { pagination } = data.meta;
     dispatch(setPaginations(pagination.per_page, pagination.current_page, pagination.total));
