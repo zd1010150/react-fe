@@ -22,7 +22,7 @@ export const setSearchAreaVisible = visible => ({
   visible,
 });
 export const fetchData = (keys, perPage = 5, currentPage = 1, dispatch) => get('/affiliate/affiliated-clients', {
-  search: keys, per_page: perPage, page: currentPage, orderBy: 'last_name', sortedBy: 'desc',
+  search: keys, per_page: perPage, page: currentPage, orderBy: 'last_name', sortedBy: 'asc',
 }, dispatch).then((data) => {
   if (data && (!_.isEmpty(data.data)) && (!_.isEmpty(data.meta))) {
     dispatch(setUsersData(data.data));
