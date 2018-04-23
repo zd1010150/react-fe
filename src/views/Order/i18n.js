@@ -23,6 +23,7 @@ export default {
     cantGoChooselogistics: '你还没有创建任何发货单，不能进行下一步',
     freightSpecTitle: '运费说明',
     freightSpec: '每公斤{currency}{cost}，最低增量{increment} 公斤，最低运费{currency}{mini_cost}',
+    reOrderTip: '返回上一步会删除当前所有选择的商品，重新下单，你确定继续？',
   },
   en: {
     chooseUser: 'Choose User',
@@ -48,5 +49,6 @@ export default {
     cantGoChooselogistics: 'You haven\'t create any delivery order,can\'t go the next',
     freightSpecTitle: 'Freight Cost Specification',
     freightSpec: '{currency}{cost}/kg, minimum increment {increment}kg, minimum fright cost {currency}{mini_cost}.',
+    reOrderTip: 'Go back will delete the current order,are you sure continue ?',
   },
 };

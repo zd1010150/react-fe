@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { Button, Icon, Radio, Row, Col, Card } from 'antd';
+import { Button, Icon, Radio, Row, Col, Card, Modal } from 'antd';
 import { Currency } from 'components/ui/index';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
-import { getTotalLogisticFee } from './flow/action';
+import { getTotalLogisticFee, batchDelete } from './flow/action';
 import { goNextStep, goPreviousStep } from '../skeleton/flow/action';
 import styles from '../../Order.less';
 import { confirmGetInvoice } from '../confirmInvoice/flow/action';
@@ -34,12 +34,38 @@ class chooseLogisticView extends React.Component {
     });
     this.props.getTotalLogisticFee(logisticId, orderids);
   }
+  reOrder() {
+    const {
+      goPreviousStep, batchDelete, deliveryOrderIds,
+    } = this.props;
+    // const { formatMessage } = intl;
+    // // if (!needCreateInvoice) {
+    //   Modal.confirm({
+    //     title: formatMessage({ id: 'page.Order.reOrderTip' }),
+    //     okText: formatMessage({ id: 'global.ui.button.ok' }),
+    //     okType: 'danger',
+    //     cancelText: formatMessage({ id: 'global.ui.button.cancel' }),
+    //     onOk() {
+    //       batchDelete(deliveryOrderIds[0]);
+    //       goPreviousStep('chooseGoods');
+    //     },
+    //     onCancel() {
+    //       console.log('Cancel');
+    //     },
+    //   });
+    // } else {
+    // const ids = {};
+    // deliveryOrderIds.forEach((id, index) => ids[`ids[${index}]`] = id);
+    batchDelete(deliveryOrderIds);
+    goPreviousStep('chooseLogistic');
+    // }
+  }
   render() {
     const {
       goNextStep,
-      goPreviousStep,
       freightSetting,
       confirmGetInvoice,
+      needCreateInvoice,
       totalFee,
       totalWeight,
       deliveryOrderIds,
@@ -81,9 +107,9 @@ class chooseLogisticView extends React.Component {
         <div className="block-footer">
           <Button
             className={cx('order-step-previous-btn')}
-            disabled
+            disabled={!needCreateInvoice}
             onClick={() => {
-            goPreviousStep('chooseLogistic');
+            this.reOrder();
           }}
           >
             <Icon type="arrow-left" /> { formatMessage({ id: 'global.ui.button.previous' }) }
@@ -113,6 +139,7 @@ chooseLogisticView.propTypes = {
   intl: intlShape.isRequired,
   freightSetting: PropTypes.array,
   deliveryOrderIds: PropTypes.array,
+  batchDelete: PropTypes.func.isRequired,
   goNextStep: PropTypes.func.isRequired,
   goPreviousStep: PropTypes.func.isRequired,
   getTotalLogisticFee: PropTypes.func.isRequired,
@@ -132,6 +159,7 @@ const mapDispathToProps = {
   goPreviousStep,
   getTotalLogisticFee,
   confirmGetInvoice,
+  batchDelete,
 };
 
 const ChooseLogisticView = connect(mapStateToProps, mapDispathToProps)(injectIntl(chooseLogisticView));

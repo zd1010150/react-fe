@@ -99,7 +99,7 @@ class cart extends React.Component {
               <div className="col-sm-8"><InputNumber
                 min={1}
                 value={product.quantity}
-                max={product.currentQuantity}
+                max={Number(product.currentQuantity)}
                 onChange={(value) => { editingCartGoods(product, value); }}
               />
               </div>
