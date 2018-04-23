@@ -12,6 +12,7 @@ import { selectingGoods, addGoodsToOrder, setOrderStatus, createOrder, deleteOrd
 import { goNextStep, goPreviousStep, deleteSplitOrder, createDeliveryOrder} from '../skeleton/flow/action';
 import { SAVED } from './flow/orderStatus';
 import { CURRENCY_SYMBOL } from 'config/app.config';
+import { setNeedCreateInvoice } from 'views/Order/component/chooseLogistic/flow/action';
 
 const { Sider, Content } = Layout;
 
@@ -44,6 +45,7 @@ class splitOrderView extends React.Component {
       })));
     });
     this.props.createDeliveryOrder(postData, 'splitOrder');
+    this.props.setNeedCreateInvoice(true);
   }
   confirmHasRemainGoods() {
     this.setState({
@@ -257,6 +259,7 @@ const mapDispathToProps = {
   setMax,
   createDeliveryOrder,
   setOrderExpand,
+  setNeedCreateInvoice,
 };
 
 const SplitOrderView = connect(mapStateToProps, mapDispathToProps)(injectIntl(splitOrderView));

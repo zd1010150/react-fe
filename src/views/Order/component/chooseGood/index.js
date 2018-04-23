@@ -13,6 +13,7 @@ import Goods from './goods';
 import { setCarCollapse, queryGoodsByPaging, queryBySearchKey, selectingGoods, addGoodsToCart, deleteGoodsFromCart, editingCartGoods,  setNextBtnDisable, setEditingPriceStatus, setEditingPrice } from './flow/action.js';
 import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep, goNextStep } from '../skeleton/flow/action';
 import { initGoods } from '../splitOrder/flow/action';
+import { setNeedCreateInvoice } from 'views/Order/component/chooseLogistic/flow/action';
 
 const { Sider, Content, Footer } = Layout;
 
@@ -27,7 +28,7 @@ class chooseGoodView extends React.Component {
   }
   submitOrder() {
     const {
-      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, dutySetting, selectedUser,
+      totalDuty, cart, createDeliveryOrder, deleteSplitOrder, dutySetting, selectedUser, setNeedCreateInvoice,
     } = this.props;
     const max = _.isEmpty(dutySetting) ? MAX_PAYABLE_PRICE : dutySetting.threshold;
     const { country } = selectedUser;
@@ -43,6 +44,7 @@ class chooseGoodView extends React.Component {
       }));
       createDeliveryOrder([postData], 'chooseGoods');
       deleteSplitOrder();
+      setNeedCreateInvoice(true);
     }
   }
   confirmSplitOrder(){
@@ -202,6 +204,7 @@ const mapDispathToProps = {
   setNextBtnDisable,
   setEditingPrice,
   setEditingPriceStatus,
+  setNeedCreateInvoice,
 };
 
 const ChooseGoodView = connect(mapStateToProps, mapDispathToProps)(injectIntl(chooseGoodView));
