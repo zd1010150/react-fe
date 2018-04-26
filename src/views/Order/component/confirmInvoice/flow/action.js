@@ -1,6 +1,7 @@
 
 
 import { post } from 'store/http/httpAction';
+import { NO_SHIPPING_CODE } from 'config/app.config';
 import { MagentoDomain, MagentoCheckoutUrl } from 'config/magento.config';
 import { getLocationOfAbsoluteUrl } from 'utils/url';
 import { SET_INVOICE_INFO } from './actionType';
@@ -28,7 +29,7 @@ export const getQuoteId = amount => dispatch => post(`/rest/V1/shipping-carts/mi
 
 export const pay = data => dispatch => post('/affiliate/delivery-orders/pay', data, dispatch).then((data) => {
   if (data && data.success) { // 成功
-    window.location.href = getLocationOfAbsoluteUrl('/resultNotification?view=successPay');
+    window.location.href = getLocationOfAbsoluteUrl(`/resultNotification?view=successPay&message=${data.method === NO_SHIPPING_CODE ? data.message : '' }`);
   } else if (data && (!data.success)) { // 不足就需要生成quoteid
     dispatch(getQuoteId(data.lack_qty));
   }

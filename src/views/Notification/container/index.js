@@ -17,7 +17,7 @@ class notificationView extends React.Component {
     if (!_.isEmpty(pairs.view)) {
       switch (pairs.view) {
         case 'successPay':
-          return <SuccessPayView />;
+          return <SuccessPayView message={pairs.message} />;
         case 'errorPay':
           return <ErrorPayView />
         default:

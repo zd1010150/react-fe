@@ -1,5 +1,5 @@
 import http from 'utils/http';
-import { UNAUTHENTICATION } from 'config/app.config.js';
+import { UNAUTHENTICATION, SUCCESS_HTTP_CODE } from 'config/app.config.js';
 import { MagentoDomain } from 'config/magento.config';
 import { getAbsolutePath } from 'config/magento.config';
 import Base64 from 'base-64';
@@ -18,8 +18,8 @@ const dispatch = (request, dispatcher = () => {}) => {
     type: HTTP_ACTION_DOING,
     payload: {},
   });
-  return request.then((data) => {
-    if (data.status_code === UNAUTHENTICATION.CODE) {
+  return request.then(({ data, statusCode }) => {
+    if (statusCode === UNAUTHENTICATION.CODE) {
       http('get', '/rest/V1/affiliate/logout', {}, { 'X-Requested-With': 'XMLHttpRequest' }, MagentoDomain).then((data) => {
         try {
           const result = JSON.parse(data);
@@ -30,6 +30,16 @@ const dispatch = (request, dispatcher = () => {}) => {
           window.location.href = getAbsolutePath(UNAUTHENTICATION.REWRIRE_URL, window.globalLanguage, { [UNAUTHENTICATION.REDIRECT_KEY]: window.location.href });
         }
       });
+    }
+    if (SUCCESS_HTTP_CODE.indexOf(statusCode) > -1) {
+      dispatcher({
+        type: HTTP_ACTION_DONE,
+        payload: {
+          data,
+        },
+      });
+
+      return data;
     }
     if (data.errors || data.status_code || data.message) {
       let { errors } = data;
@@ -44,15 +54,6 @@ const dispatch = (request, dispatcher = () => {}) => {
       } else {
         dispatcher(addError(data.message));
       }
-    } else {
-      dispatcher({
-        type: HTTP_ACTION_DONE,
-        payload: {
-          data,
-        },
-      });
-
-      return data;
     }
   }).catch((err) => {
     dispatcher({

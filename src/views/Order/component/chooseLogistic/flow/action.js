@@ -1,7 +1,7 @@
-import { post } from 'store/http/httpAction';
+import { post, httpDelete } from 'store/http/httpAction';
 import { SET_LOGISITIC_COST, SET_NEED_CREATE_INVOICE_BATCH } from './actionType';
 
-export const setNeedCreateInvoice = (isNeed) => ({
+export const setNeedCreateInvoice = isNeed => ({
   type: SET_NEED_CREATE_INVOICE_BATCH,
   isNeed,
 });
@@ -25,3 +25,4 @@ export const getTotalLogisticFee = (logisticType, deliveryOrderIds) => (dispatch
   }
 };
 
+export const batchDelete = ids => dispatch => post('/affiliate/delivery-orders/batch-delete', { ids }, dispatch);

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Divider } from 'antd';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import { setOrderUser } from 'store/global/action';
-import { setSearchAreaVisible, searchByKeys } from './flow/action';
+import { setSearchAreaVisible, searchByKeys, queryByPaging } from './flow/action';
 import Search from './search';
 import SelectedUser from './selectedUser';
 import Table from './table';
@@ -27,6 +27,9 @@ class chooseUser extends React.Component {
       this.props.setSearchAreaVisible(true);
     }
   }
+  componentDidMount() {
+    this.props.searchByKeys('');
+  }
   render() {
     const {
       user,
@@ -36,8 +39,10 @@ class chooseUser extends React.Component {
       setSearchAreaVisible,
       searchByKeys,
       hasSeletedUser,
+      chooseUserTablePagination,
       goNextStep,
       setUsersData,
+      queryByPaging,
       intl,
     } = this.props;
     const { formatMessage } = intl;
@@ -45,15 +50,17 @@ class chooseUser extends React.Component {
       <div className="block">
 
         <div className={classNames('block-content', cx('tab-block-title'))}>
-          {searchAreaVisible ?
-            <Search selectedUser={user} searchByKeys={searchByKeys} setSearchAreaVisible={setSearchAreaVisible} /> : ''}
-          {searchAreaVisible && users.length > 0 ? <Table users={users} setSeletedUser={setOrderUser} /> : ''}
           {!_.isEmpty(user) ? <SelectedUser
             selectedUser={user}
             setSearchAreaVisible={setSearchAreaVisible}
             searchAreaVisible={searchAreaVisible}
             setUsersData={setUsersData}
           /> : ''}
+          {searchAreaVisible ?
+            <Search selectedUser={user} searchByKeys={searchByKeys} setSearchAreaVisible={setSearchAreaVisible} /> : ''}
+
+          {searchAreaVisible && users.length > 0 ? <Table users={users} setSeletedUser={setOrderUser} chooseUserTablePagination={chooseUserTablePagination} queryByPaging={queryByPaging} /> : ''}
+
         </div>
         <div className="block-footer">
           <Button
@@ -94,6 +101,7 @@ const mapDispatchToProps = {
   searchByKeys,
   goNextStep,
   setOrderUser,
+  queryByPaging,
 };
 const ChooseUser = connect(mapStateToProps, mapDispatchToProps)(injectIntl(chooseUser));
 export default ChooseUser;

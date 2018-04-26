@@ -65,7 +65,8 @@ export default async (type = 'GET', url = '', data = {}, headers = {}, apiDomain
     // response = await fetch(url, requestConfig)
     contentType = response.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
-      return await response.json();
+      const responseData = await response.json();
+      return Promise.resolve({ data: responseData, statusCode: response.status });
     }
     throw new TypeError('Oops,we haven\'t get JSON! ');
   } catch (error) {
