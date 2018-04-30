@@ -8,6 +8,7 @@ import { QRcode } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
 import { downloadFiles } from 'utils/download';
 import styles from '../MarketingMaterials.less';
+import multiDownload from 'multi-download';
 
 const cx = classNames.bind(styles);
 const { Grid } = Card;
@@ -88,7 +89,7 @@ class plan extends React.Component {
           <Grid style={qrGridStyle}>
             <QRcode url={`${cmsUrl}${id}&tip=点击获取最新宣传图片`} width="160px" height="160px" />
             <Button onClick={() => {
-              downloadFiles(pictures.map(p => p.path));
+              multiDownload(pictures.map(p => p.path));
 
               }}>{ formatMessage({ id: 'global.ui.button.download' })}
             </Button>
