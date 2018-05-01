@@ -5,18 +5,35 @@ import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
 import { getMarketingMaterial, setMMLanguage, setMMCategory } from '../flow/action';
 import Skeleton from '../component/skeleton';
-import { getVisibleMarketingMaterials, getLanguageClassification} from '../flow/reselect';
+import { getClassificationPagination, getLanguageClassification } from '../flow/reselect';
 
 class mmView extends React.Component {
   componentDidMount() {
     this.props.setPageTitle('global.pageTitle.marketingMaterial');
-    this.props.getMarketingMaterial();
   }
   render() {
-    const {isLoading, visibleMarketingMaterials, category, categorys, language, setMMLanguage, setMMCategory} = this.props;
+    const {
+      visibleMarketingMaterials,
+      category,
+      categorys,
+      language,
+      setMMLanguage,
+      setMMCategory,
+      getMarketingMaterial,
+      allPaginations,
+    } = this.props;
     return (
       <section className="section section-page">
-        <Skeleton categorys={categorys} plans={visibleMarketingMaterials} setMMLanguage={setMMLanguage} setMMCategory={setMMCategory} language={language} category={category} />
+        <Skeleton
+          categorys={categorys}
+          plans={visibleMarketingMaterials}
+          setMMLanguage={setMMLanguage}
+          setMMCategory={setMMCategory}
+          language={language}
+          category={category}
+          getMarketingMaterial={getMarketingMaterial}
+          allPaginations={allPaginations}
+        />
       </section>);
   }
 }
@@ -30,13 +47,14 @@ mmView.propTypes = {
   setPageTitle: PropTypes.func.isRequired,
   visibleMarketingMaterials: PropTypes.array,
   getMarketingMaterial: PropTypes.func.isRequired,
+  allPaginations: PropTypes.array.isRequired,
 };
 const mapStateToProp = state => ({
-  loading: state.isLoading,
-  visibleMarketingMaterials: getVisibleMarketingMaterials(state),
+  visibleMarketingMaterials: state.marketingMaterials.marketingMaterias,
   categorys: getLanguageClassification(state),
   language: state.marketingMaterials.marketingLanguage,
   category: state.marketingMaterials.marketingCategory,
+  allPaginations: state.marketingMaterials.marketingPagination,
 });
 const mapDispatchToProp = {
   setPageTitle,

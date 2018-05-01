@@ -1,11 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Radio } from 'antd';
+import { Tabs, Radio, Pagination } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
+import classNames from 'classnames/bind';
 import Plan from './plan';
+import { paginationPayload } from '../flow/reducer';
+import styles from '../MarketingMaterials.less';
+
+
+const cx = classNames.bind(styles);
 
 const { TabPane } = Tabs;
 class skeleton extends React.Component {
+  componentDidMount() {
+    this.fetchMarketMaterial(this.props);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { language, category } = nextProps;
+    if (language !== this.props.language || category !== this.props.category) {
+      this.fetchMarketMaterial(nextProps);
+    }
+  }
+  getClassificationPagination = (props) => {
+    const { allPaginations, category, language } = props;
+    const pagination = allPaginations.filter(p => (p.language === language) && (p.classificationId === category));
+    return pagination.length < 1 ? paginationPayload : { ...pagination[0].pagination };
+  }
   handleLanguageChange = (e) => {
     const language = e.target.value;
     this.props.setMMLanguage(language);
@@ -13,12 +33,27 @@ class skeleton extends React.Component {
   handleCategoryChange = (categoryId) => {
     this.props.setMMCategory(categoryId);
   }
-
+  fetchMarketMaterial(props) {
+    const { language, category, getMarketingMaterial } = props;
+    const pagination = this.getClassificationPagination(props);
+    getMarketingMaterial(language, category, pagination.perPage, pagination.currentPage);
+  }
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      plans, category, categorys, language,
+      plans, category, categorys, language, getMarketingMaterial,
     } = this.props;
+    const pagination = this.getClassificationPagination(this.props);
+    const paginationConfig = {
+      defaultCurrent: pagination.currentPage,
+      current: pagination.currentPage,
+      defaultPageSize: pagination.perPage,
+      pageSize: pagination.perPage,
+      total: pagination.total,
+      onChange(page, pageSize) {
+        getMarketingMaterial(language, category, pageSize, page);
+      },
+    };
     return (
       <div>
         <Radio.Group onChange={(e) => { this.handleLanguageChange(e); }} value={language} style={{ marginBottom: 8 }}>
@@ -46,6 +81,8 @@ class skeleton extends React.Component {
               id={plan.id}
             />))
         }
+
+        <Pagination className={cx('pagination')} {...paginationConfig} />
       </div>
     );
   }
@@ -63,6 +100,9 @@ skeleton.propTypes = {
   plans: PropTypes.array,
   setMMCategory: PropTypes.func.isRequired,
   setMMLanguage: PropTypes.func.isRequired,
+  getMarketingMaterial: PropTypes.func.isRequired,
+  allPaginations: PropTypes.array.isRequired,
+
 };
 const Skeleton = injectIntl(skeleton);
 export default Skeleton;
