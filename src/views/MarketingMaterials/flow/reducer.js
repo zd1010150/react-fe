@@ -27,7 +27,6 @@ const initPagination = (settings) => {
   return paginationInitState;
 };
 const setMMPagination = (state, classificationId, language, pagination) => {
-  debugger;
   const newState = [...state];
   return newState.map((p) => {
     if ((p.language === language) && (p.classificationId === classificationId)) {
