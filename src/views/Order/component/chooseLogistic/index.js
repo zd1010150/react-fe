@@ -76,7 +76,6 @@ class chooseLogisticView extends React.Component {
     } = this.props;
     const { formatMessage } = intl;
     const defaultFreight = freightSetting.filter(f => f.id === this.state.logisticType);
-    debugger;
     return (
       <div className={classNames('block', cx('choose-logistic-block'))}>
         <div className="block-title">
