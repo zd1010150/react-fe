@@ -18,7 +18,7 @@ const idViews = (state = {}, action) => {
       return state;
   }
 };
-const trackOrderDataTablePagination = (state = { perPage: 10, currentPage: 1, totalPages: 0 }, action) => {
+const trackOrderDataTablePagination = (state = { perPage: 10, currentPage: 1, total: 0 }, action) => {
   switch (action.type) {
     case SET_TRACK_ORDER_PAGINATION:
       return {
