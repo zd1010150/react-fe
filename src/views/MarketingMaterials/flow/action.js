@@ -21,13 +21,17 @@ export const receiveMarketingmaterials = marketingMaterias => ({
   marketingMaterias,
 });
 export const getMarketingMaterial = (language, category, per_page, page) => (dispatch, getState) => {
-  debugger;
   const allCategoryids = getState().global.settings.classification.map(c => c.id);
   if (allCategoryids.indexOf(category) < 0) {
     return;
   }
   const search = `language:${language};classification_id:${category}`;
-  get('/affiliate/marketing-materials', { per_page, page, search }, dispatch).then((data) => {
+  get('/affiliate/marketing-materials', {
+    per_page,
+    page,
+    search,
+    searchJoin: 'and',
+  }, dispatch).then((data) => {
     dispatch(receiveMarketingmaterials((data && data.data) || []));
     const { pagination } = data.meta;
     dispatch(setPagination(category, language, {
