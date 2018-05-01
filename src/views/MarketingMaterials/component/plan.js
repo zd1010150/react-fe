@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Card, Carousel, Icon, Modal, Button } from 'antd';
-import { cmsUrl } from 'config/env.config';
+import { cmsUrl, baseUrl } from 'config/env.config';
 import classNames from 'classnames/bind';
 import { QRcode } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
@@ -26,6 +26,9 @@ class plan extends React.Component {
     this.setState({
       isDisplayPreview: false,
     });
+  }
+  downloadZip(id) {
+
   }
   render() {
     const {
@@ -87,11 +90,7 @@ class plan extends React.Component {
           <Grid style={videGridStyle}>{text}</Grid>
           <Grid style={qrGridStyle}>
             <QRcode url={`${cmsUrl}${id}&tip=点击获取最新宣传图片`} width="160px" height="160px" />
-            <Button onClick={() => {
-              downloadFiles(pictures.map(p => p.path));
-
-              }}>{ formatMessage({ id: 'global.ui.button.download' })}
-            </Button>
+            <a href={`${baseUrl}/affiliate/marketing-materials/download-zip/${id}`} target="_blank"> <Icon type="download" /> { formatMessage({ id: 'global.ui.button.download' }) } </a>
           </Grid>
 
         </Card>

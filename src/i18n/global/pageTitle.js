@@ -1,11 +1,11 @@
 export default {
   zh: {
     leads: '潜在客户',
-    accounts: '客户',
-    marketingMaterial: '营销',
+    accounts: '有效账户',
+    marketingMaterial: '营销策略',
     order: '订单',
-    priceSetting: '价格设置',
-    trackOrders: '发货单',
+    priceSetting: '价格设定',
+    trackOrders: '追踪订单',
     trackOrderDetail: '发货单详情',
   },
   en: {
