@@ -6,7 +6,6 @@ import { cmsUrl, baseUrl } from 'config/env.config';
 import classNames from 'classnames/bind';
 import { QRcode } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
-import { downloadFiles } from 'utils/download';
 import styles from '../MarketingMaterials.less';
 
 const cx = classNames.bind(styles);
@@ -26,9 +25,6 @@ class plan extends React.Component {
     this.setState({
       isDisplayPreview: false,
     });
-  }
-  downloadZip(id) {
-
   }
   render() {
     const {
