@@ -86,7 +86,6 @@ class plan extends React.Component {
           <Grid style={videGridStyle}>{text}</Grid>
           <Grid style={qrGridStyle}>
             <QRcode url={`${cmsUrl}${id}&tip=点击获取最新宣传图片`} width="160px" height="160px" />
-            <a href={`${baseUrl}/affiliate/marketing-materials/download-zip/${id}`} target="_blank"> <Icon type="download" /> { formatMessage({ id: 'global.ui.button.download' }) } </a>
           </Grid>
 
         </Card>
