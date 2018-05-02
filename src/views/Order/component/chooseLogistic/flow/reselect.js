@@ -11,7 +11,6 @@ export const getAvailableFreightSettings = createSelector(
     getOrderUser,
   ],
   (allFreightSettings, orderUser) => {
-    debugger;
     if (_.isEmpty(allFreightSettings) || _.isEmpty(orderUser && orderUser.country)) {
       return [];
     }
