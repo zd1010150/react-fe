@@ -28,7 +28,6 @@ class Nav extends React.Component {
       { id: 'global.magento.leftNav.addressBook', url: '/customer/address/new/' },
       { id: 'global.magento.leftNav.documents', url: '/customer/document/new/' },
       { id: 'global.magento.leftNav.storedPaymentMethods', url: '/vault/cards/listaction/' },
-      { id: 'global.magento.leftNav.billingAgreements', url: '/paypal/billing_agreement/' },
       DIVIDER,
       { id: 'global.magento.leftNav.myProductsReviews', url: '/review/customer/' },
       { id: 'global.magento.leftNav.newsletterSubscription', url: '/newsletter/manage/' },

@@ -19,6 +19,7 @@ export default {
       previous: '上一步',
       detail: '查看详情',
       goBack: '返回',
+      download: '下载所有图片',
     },
     input: {
       searchStore: '在此搜索全站商品...',
@@ -60,6 +61,7 @@ export default {
       previous: 'Previous',
       detail: 'Detail',
       goBack: 'Go Back',
+      download: 'Download All Pictures',
     },
     input: {
       searchStore: 'Search entire store here...',

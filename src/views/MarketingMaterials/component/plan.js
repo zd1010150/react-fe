@@ -1,10 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Card, Carousel, Icon, Modal } from 'antd';
-import { cmsUrl } from 'config/env.config';
+import { Card, Carousel, Icon, Modal, Button } from 'antd';
+import { cmsUrl, baseUrl } from 'config/env.config';
 import classNames from 'classnames/bind';
 import { QRcode } from 'components/ui/index';
+import { intlShape, injectIntl } from 'react-intl';
 import styles from '../MarketingMaterials.less';
 
 const cx = classNames.bind(styles);
@@ -27,8 +28,9 @@ class plan extends React.Component {
   }
   render() {
     const {
-      pictures, videos, text, title, id,
+      pictures, videos, text, title, id, intl,
     } = this.props;
+    const { formatMessage } = intl;
     const cardBodyStyle = {
       padding: '5px',
     };
@@ -82,14 +84,16 @@ class plan extends React.Component {
             </Carousel>
           </Grid>
           <Grid style={videGridStyle}>{text}</Grid>
-          <Grid style={qrGridStyle}><QRcode url={`${cmsUrl}${id}&tip=点击获取最新宣传图片`} width="160px" height="160px" /> </Grid>
+          <Grid style={qrGridStyle}>
+            <QRcode url={`${cmsUrl}${id}&tip=点击获取最新宣传图片`} width="160px" height="160px" />
+          </Grid>
 
         </Card>
         <Modal
           title=""
           visible={this.state.isDisplayPreview}
           footer={null}
-          onCancel={ () => this.closePreview() }
+          onCancel={() => this.closePreview()}
         >
           <img style={{ maxWidth: '100%' }} src={this.state.previewSrc} />
         </Modal>
@@ -107,6 +111,7 @@ plan.defaultProps = {
   id: 0,
 };
 plan.propTypes = {
+  intl: intlShape.isRequired,
   title: PropTypes.string,
   pictures: PropTypes.array,
   videos: PropTypes.object,
@@ -114,4 +119,4 @@ plan.propTypes = {
   id: PropTypes.number,
 };
 
-export default plan;
+export default injectIntl(plan);

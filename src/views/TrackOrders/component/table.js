@@ -6,6 +6,7 @@ import { Table, Badge, Button, Divider, Popconfirm } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Address, OrderStatus } from 'components/ui/index';
 import { UNPAIED_ORDER_STATUS } from 'config/app.config.js';
+import {setOrderUser} from "../../../store/global/action";
 
 class orderTable extends React.Component {
   viewDetail(trackOrder) {
@@ -27,7 +28,7 @@ class orderTable extends React.Component {
       setDeliveryOrders(deliveryOrders);
       getTotalLogisticFee(logisticType, deliveryOrders);
     }
-
+    this.props.setOrderUser(develiverOrder.receiver);
     this.props.history.push(`/clientLists/order?needCreateBatchCreate=false&deliveryOrderId=${develiverOrder.id}`);
   }
 
@@ -143,6 +144,7 @@ orderTable.propTypes = {
   setDeliveryOrders: PropTypes.func.isRequired,
   setInvoiceInfo: PropTypes.func.isRequired,
   deleteDeliveryOrder: PropTypes.func.isRequired,
+  setOrderUser: PropTypes.func.isRequired,
 };
 
 const OrderTable = injectIntl(orderTable);

@@ -10,13 +10,14 @@ import { getTotalLogisticFee, batchDelete } from './flow/action';
 import { goNextStep, goPreviousStep } from '../skeleton/flow/action';
 import styles from '../../Order.less';
 import { confirmGetInvoice } from '../confirmInvoice/flow/action';
+import { getAvailableFreightSettings } from './flow/reselect';
 import { CURRENCY_SYMBOL, CHINA_RMB_CODE } from 'config/app.config';
 
 const RadioGroup = Radio.Group;
 const cx = classNames.bind(styles);
 class chooseLogisticView extends React.Component {
   state = {
-    logisticType: this.props.freightSetting[0].id || 0,
+    logisticType: this.props.freightSetting.length > 0 ? this.props.freightSetting[0].id : 0,
   }
   componentDidMount() {
     if (this.state.logisticType > 0) {
@@ -71,8 +72,10 @@ class chooseLogisticView extends React.Component {
       deliveryOrderIds,
       intl,
       baseCurrency,
+      orderUser,
     } = this.props;
     const { formatMessage } = intl;
+    const defaultFreight = freightSetting.filter(f => f.id === this.state.logisticType);
     return (
       <div className={classNames('block', cx('choose-logistic-block'))}>
         <div className="block-title">
@@ -86,12 +89,11 @@ class chooseLogisticView extends React.Component {
                 value={this.state.logisticType}
               >
                 {
-                  freightSetting.map(f => (
-                    <Radio value={f.id} key={f.id}>
-                      <div>{f.name}</div>
-                      <div><Currency value={f.cost} /> /{formatMessage({ id: 'page.Order.kg' })}</div>
-                    </Radio>
-                  ))
+                  freightSetting.map((f) => (<Radio value={f.id} key={f.id}>
+                          <div>{f.name}</div>
+                          <div><Currency value={f.cost} /> /{formatMessage({ id: 'page.Order.kg' })}</div>
+                        </Radio>
+                        ))
                 }
               </RadioGroup>
               <h5>{ formatMessage({ id: 'global.properNouns.goods.shippingWeight' }, { weight: totalWeight })} </h5>
@@ -99,7 +101,7 @@ class chooseLogisticView extends React.Component {
             </Col>
             <Col span={12}>
               <Card title={formatMessage({ id: 'page.Order.freightSpecTitle' })} style={{ width: 400 }}>
-                {formatMessage({ id: 'page.Order.freightSpec' }, { ...(freightSetting.filter(f => f.id === this.state.logisticType)[0]), currency: CURRENCY_SYMBOL[baseCurrency[0].name] }) }
+                {formatMessage({ id: 'page.Order.freightSpec' }, { ...(defaultFreight.length > 0 ? defaultFreight[0] : {}), currency: CURRENCY_SYMBOL[baseCurrency[0].name] }) }
               </Card>
             </Col>
           </Row>
@@ -147,12 +149,13 @@ chooseLogisticView.propTypes = {
   needCreateInvoice: PropTypes.bool.isRequired,
 };
 const mapStateToProps = ({ global, order }) => ({
-  freightSetting: global.settings.freightSetting,
+  freightSetting: getAvailableFreightSettings( { global }),
   deliveryOrderIds: order.skeleton.deliveryOrders,
   totalFee: order.chooseLogistic.logistic.fee,
   totalWeight: order.chooseLogistic.logistic.weight,
   needCreateInvoice: order.chooseLogistic.needCreateInvoice,
   baseCurrency: global.settings.baseCurrency,
+  orderUser: global.orderUser,
 });
 const mapDispathToProps = {
   goNextStep,

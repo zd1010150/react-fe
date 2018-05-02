@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { setPageTitle } from 'store/global/action';
+import { setPageTitle, setOrderUser } from 'store/global/action';
 
 import { getTotalLogisticFee } from 'views/Order/component/chooseLogistic/flow/action';
 import { setDeliveryOrders } from 'views/Order/component/skeleton/flow/action';
@@ -39,6 +39,7 @@ class trackOrderView extends React.Component {
       setDeliveryOrders,
       getTotalLogisticFee,
       deleteDeliveryOrder,
+      setOrderUser,
     } = this.props;
     return (
       <section className="section section-page">
@@ -64,6 +65,7 @@ class trackOrderView extends React.Component {
             setDeliveryOrders={setDeliveryOrders}
             getTotalLogisticFee={getTotalLogisticFee}
             deleteDeliveryOrder={deleteDeliveryOrder}
+            setOrderUser={setOrderUser}
           />
         </div>
         <div className="section-header" />
@@ -99,6 +101,7 @@ const mapDispatchToProp = {
   setDeliveryOrders,
   setInvoiceInfo,
   deleteDeliveryOrder,
+  setOrderUser,
 };
 
 const TrackOrderView = withRouter(connect(mapStateToProps, mapDispatchToProp)(trackOrderView));
