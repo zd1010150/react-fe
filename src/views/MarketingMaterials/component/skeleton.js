@@ -58,7 +58,7 @@ class skeleton extends React.Component {
       <div>
         <Radio.Group onChange={(e) => { this.handleLanguageChange(e); }} value={language} style={{ marginBottom: 8 }}>
           <Radio.Button value="zh">{ formatMessage({ id: 'global.language.zh' }) }</Radio.Button>
-          <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button>
+          {/* <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button> */}
         </Radio.Group>
         <Tabs
           activeKey={`${category}`}
