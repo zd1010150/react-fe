@@ -7,8 +7,8 @@ import classNames from 'classnames/bind';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import { toggleVideo, getMaterial} from '../flow/action';
-import { Row, Col, Icon } from 'antd';
+import { toggleVideo, getMaterial } from '../flow/action';
+import { Row, Col, Icon, Carousel, Modal } from 'antd';
 import styles from '../CMS.less';
 
 const cx = classNames.bind(styles);
@@ -17,15 +17,23 @@ class cmsView extends React.Component {
     super(props);
     const { location } = props;
     const pairs = queryString.parse(location.search);
+
     this.state = {
       id: pairs.id || 0,
+      isCarouselVisible: false,
     };
   }
   componentDidMount() {
     this.props.getMaterial(this.state.id);
   }
-  toggleVideo(videoId){
+  toggleVideo(videoId) {
     this.props.toggleVideo(videoId);
+  }
+  display(index) {
+    this.setState({
+      isCarouselVisible: true,
+    });
+    this.carousel.goTo(index);
   }
   render() {
     const { images, videos, text } = this.props;
@@ -72,11 +80,29 @@ class cmsView extends React.Component {
             (
               <Col span={8} key={index}>
                 <div className={cx('image-wrapper')}>
-                  <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')} />
+                  <img src={item.path} alt="marketing material image" key={item.path} className={cx('cms-image')} onClick={() => { this.display(index); }} />
                 </div>
               </Col>
             ))}
         </Row>
+        <div className={cx(this.state.isCarouselVisible ? 'model-visible' : 'model-invisible')} >
+          <div className={ cx(this.state.isCarouselVisible ? 'carousel-visible' : 'carousel-invisible')}>
+            <div className={cx('body-wrapper')}>
+              <Icon type="close" className={cx('close-btn')} onClick={() => this.setState({ isCarouselVisible: false })} />
+              <div className={cx('carousel')}>
+                <Carousel ref={(carousel) => { this.carousel = carousel; }}  >
+                  {images.map(item =>
+                    (
+                      <div className={cx('image-wrapper')} key={item.path}>
+                        <img className={cx('carousel-image')} src={item.path} alt="marketing material image" key={item.path} />
+                      </div>
+                    ))}
+                </Carousel>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     );
   }
