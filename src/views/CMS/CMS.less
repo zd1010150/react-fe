@@ -77,22 +77,73 @@
   display: none;
 }
 .body-wrapper{
-  margin: 10vh 30px 10vh;
-  height: 80vh
+
 }
 
 .close-btn{
   position:absolute;
-  right:30px;
-  top: 8vh;
-  z-index: 999999;
+  right:0px;
+  top: 0px;
+  z-index:1000;
   display: block;
   color: #fff;
-  width: 24px;
-  height:24px;
-  font-size: 24px;
+  width: 70px;
+  height:70px;
+  font-size: 60px;
   font-weight: 700;
+  cursor: pointer;
+}
+.prev-btn{
+  position:fixed;
+  left:0px;
+  top:50%;
+  z-index:1000;
+  transform: translateY(-50%);
+  width: 70px;
+  line-height: 70px;
+  height:70px;
+  font-size:60px;
+  font-weight: 700;
+  color: #ccc;
+  cursor: pointer;
+  &:hover{
+    color: #fff;
+  }
+}
+.next-btn{
+  position:fixed;
+  right:0px;
+  top:50%;
+  transform: translateY(-50%);
+  width: 70px;
+  line-height: 70px;
+  height:70px;
+  font-size: 60px;
+  font-weight: 700;
+  color: #ccc;
+  z-index:1000;
+  cursor: pointer;
+  &:hover{
+    color: #fff;
+  }
 }
 .carousel-image{
+}
+.carousel{
+  position:fixed;
+  top:50%;
+  left: 50%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 0px;
+  z-index:999;
+  transform: translateY(-50%) translateX(-50%);
+  overflow: hidden;
+}
+.carousel-image-wrapper{
+
+}
+.carousel-image{
+  max-width: 100%;
   margin: 0 auto;
 }

@@ -85,20 +85,20 @@ class cmsView extends React.Component {
               </Col>
             ))}
         </Row>
-        <div className={cx(this.state.isCarouselVisible ? 'model-visible' : 'model-invisible')} >
-          <div className={ cx(this.state.isCarouselVisible ? 'carousel-visible' : 'carousel-invisible')}>
-            <div className={cx('body-wrapper')}>
+        <div className={classNames(cx(this.state.isCarouselVisible ? 'model-visible' : 'model-invisible'), 'pic-modal')} >
+          <div className={cx(this.state.isCarouselVisible ? 'carousel-visible' : 'carousel-invisible')}>
+            <Icon type="step-backward" className={cx('prev-btn')} onClick={() => this.carousel.prev()} />
+            <Icon type="step-forward" className={cx('next-btn')} onClick={() => this.carousel.next()} />
+            <div className={cx('carousel')}>
               <Icon type="close" className={cx('close-btn')} onClick={() => this.setState({ isCarouselVisible: false })} />
-              <div className={cx('carousel')}>
-                <Carousel ref={(carousel) => { this.carousel = carousel; }}  >
-                  {images.map(item =>
+              <Carousel ref={(carousel) => { this.carousel = carousel; }} >
+                {images.map(item =>
                     (
-                      <div className={cx('image-wrapper')} key={item.path}>
+                      <div className={cx('carousel-image-wrapper')} key={item.path}>
                         <img className={cx('carousel-image')} src={item.path} alt="marketing material image" key={item.path} />
                       </div>
                     ))}
-                </Carousel>
-              </div>
+              </Carousel>
             </div>
           </div>
 
