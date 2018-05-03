@@ -40,7 +40,7 @@ const operatorView = ({
   return (
     <div data-role="operations">
       <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link" href="#">
+        <a className="ant-dropdown-link" href="javascript:void(0)">
           <Username firstName={account.first_name} lastName={account.last_name} /> <Icon type="down" />
         </a>
       </Dropdown>

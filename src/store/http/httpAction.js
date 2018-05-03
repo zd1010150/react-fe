@@ -41,7 +41,7 @@ const dispatch = (request, dispatcher = () => {}) => {
 
       return data;
     }
-    if (data.errors || data.status_code || data.message) {
+    if (data && (data.errors || data.status_code || data.message)) {
       let { errors } = data;
       errors = errors || data.status_code;
       if (!_.isEmpty(data.errors)) {
