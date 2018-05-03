@@ -103,6 +103,7 @@
     ]
   },
   "babel": {
+    "plugins": ["syntax-dynamic-import"],
     "presets": [
       "react-app",
       "stage-2"
@@ -113,8 +114,10 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.7.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-preset-stage-2": "^6.24.1",
     "eslint-config-airbnb": "^16.1.0",
+    "intl": "^1.2.5",
     "less": "^2.7.3",
     "less-loader": "^4.1.0",
     "less-vars-to-js": "^1.2.1"

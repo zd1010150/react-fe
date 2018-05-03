@@ -1,5 +1,4 @@
-
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-underscore-dangle,no-spaced-func */
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -18,8 +17,9 @@ const store = configureStore();
 
 // 在非生成环境，都打印redux中的state,以便于跟踪调试，在非生产环境中都写入固定cookie用于调试
 
+
 if (process.env.NODE_ENV !== 'production') {
-   document.cookie = `token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmJyZWFrYWJsZXRlc3QuY29tL3YxL2lubmVyL2xvZ2luIiwiaWF0IjoxNTE0OTc4Njk3LCJleHAiOjE1MjIxNzg2OTcsIm5iZiI6MTUxNDk3ODY5NywianRpIjoiMTMxYkhZZTJ0RFlISWxnSyIsInN1YiI6MSwicHJ2IjoiZTM5MTM1NWU0ZmRlMWNmMjFlZDcxYjgzNWUyZjMwNWNjNjdkN2NjNiJ9.iGmli5nQrRerIR7N0lkHuPqLvgFxHhjPs7rc21Z-Knw; domain= .breakabletest.com; path=/ ;expires=${new Date('2018-12-18T02:45:19.308Z')}`;
+  document.cookie = `token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXBpLmJyZWFrYWJsZXRlc3QuY29tL3YxL2lubmVyL2xvZ2luIiwiaWF0IjoxNTE0OTc4Njk3LCJleHAiOjE1MjIxNzg2OTcsIm5iZiI6MTUxNDk3ODY5NywianRpIjoiMTMxYkhZZTJ0RFlISWxnSyIsInN1YiI6MSwicHJ2IjoiZTM5MTM1NWU0ZmRlMWNmMjFlZDcxYjgzNWUyZjMwNWNjNjdkN2NjNiJ9.iGmli5nQrRerIR7N0lkHuPqLvgFxHhjPs7rc21Z-Knw; domain= .breakabletest.com; path=/ ;expires=${new Date('2018-12-18T02:45:19.308Z')}`;
   store.subscribe(() => {
     console.log('redux store ===', store.getState());
   });
@@ -32,7 +32,7 @@ ErrorNotification(store);
 
 window.addEventListener('beforeunload', () => {
   syncStateAndLocalStorage(store.getState().global);
- // removeMangentoLanguageCookie();
+  // removeMangentoLanguageCookie();
 });
 
 const AppView = () => (
@@ -44,4 +44,12 @@ const AppView = () => (
     </I18n>
   </Provider>
 );
-ReactDOM.render(<AppView />, document.getElementById('root'));
+
+if (!window.Intl) {
+
+  import('intl').then(() => {
+    import('intl/locale-data/jsonp/en.js');
+    import('intl/locale-data/jsonp/zh.js');
+    ReactDOM.render(<AppView />, document.getElementById('root'));
+  });
+}
