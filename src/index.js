@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { URL_PREFIX } from 'config/app.config';
 import { Provider } from 'react-redux';
+import 'intl';
+import 'intl/locale-data/jsonp/en.js';
+import 'intl/locale-data/jsonp/zh.js';
 import { syncStateAndLocalStorage } from 'utils/localStorage';
 import configureStore from './store/configureStore';
 import { fetchGlobalSetting, fetchAccountInfo } from './store/global/action';
@@ -45,11 +48,5 @@ const AppView = () => (
   </Provider>
 );
 
-if (!window.Intl) {
+ReactDOM.render(<AppView />, document.getElementById('root'));
 
-  import('intl').then(() => {
-    import('intl/locale-data/jsonp/en.js');
-    import('intl/locale-data/jsonp/zh.js');
-    ReactDOM.render(<AppView />, document.getElementById('root'));
-  });
-}
