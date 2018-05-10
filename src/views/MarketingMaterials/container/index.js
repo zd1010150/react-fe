@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setPageTitle } from 'store/global/action';
-import { TabMenu } from 'components/ui/index';
 import { getMarketingMaterial, setMMLanguage, setMMCategory } from '../flow/action';
 import Skeleton from '../component/skeleton';
 import { getClassificationPagination, getLanguageClassification } from '../flow/reselect';
@@ -25,7 +24,6 @@ class mmView extends React.Component {
     } = this.props;
     return (
       <section className="section section-page">
-        <TabMenu />
         <Skeleton
           categorys={categorys}
           plans={visibleMarketingMaterials}

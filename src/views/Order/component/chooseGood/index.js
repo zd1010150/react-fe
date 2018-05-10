@@ -15,7 +15,7 @@ import { createDeliveryOrder, addSplitOrder, deleteSplitOrder, goPreviousStep, g
 import { initGoods } from '../splitOrder/flow/action';
 import { setNeedCreateInvoice } from 'views/Order/component/chooseLogistic/flow/action';
 
-const { Sider, Content, Footer } = Layout;
+const { Sider, Content } = Layout;
 
 const cx = classNames.bind(styles);
 

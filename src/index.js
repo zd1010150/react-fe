@@ -11,6 +11,7 @@ import 'intl/locale-data/jsonp/zh.js';
 import { syncStateAndLocalStorage } from 'utils/localStorage';
 import configureStore from './store/configureStore';
 import { fetchGlobalSetting, fetchAccountInfo } from './store/global/action';
+import 'antd/dist/antd.less'; // should before the customized style
 import './assets/less/index.less';
 import I18n from './i18n/index';
 import { ErrorNotification } from './components/page/index';

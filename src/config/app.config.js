@@ -31,3 +31,7 @@ export const SOCIAL_MEDIA = {
 };
 export const NO_SHIPPING_CODE = 'noShipping';
 export const SUCCESS_HTTP_CODE = [200, 201];
+export const CARRIERS_CODE = {
+  EWE: 'ewe',
+  AUPOST: 'aupost',
+}

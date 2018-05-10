@@ -44,6 +44,7 @@ export const getpackages = createSelector([
       totalPrice: totalPrice += Number(item.amount),
       totalQuantity: totalQuantity += Number(item.quantity),
     }), { totalPrice: 0, totalQuantity: 0 });
+    debugger;
     return {
       trackingNumber: track.tracking_number,
       items: track.items,
@@ -53,6 +54,7 @@ export const getpackages = createSelector([
       updateTime: track.updated_at,
       totalPrice,
       totalQuantity,
+      carrierCode: track.carrier_code,
     };
   });
 });
