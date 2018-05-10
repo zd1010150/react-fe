@@ -39,28 +39,33 @@ class TabMenu extends React.Component {
       this.props.onSelected(menuId || parentMenuId);
     }
   }
-  buildSubMenu = (parentMenuId, subCategories) => (
-    <ul className={cx('sub-menus')}>
-      {
-        subCategories.map(s =>
-          (
-            <li key={s.id} className={classNames(cx('sub-menu'))}>
-              <a
-                className={classNames(cx('sub-menu-title'), cx(s.id === this.state.selectedMenuId ? 'selected-menu' : ''))}
-                href="javascript:void(0)"
-                onClick={() => this.clickMenu(parentMenuId, s.id, _.isEmpty(s.subCategories))}
-              >
-                {s.menuTitle}
-              </a>
-            </li>
-          ))
-      }
-    </ul>
-  )
+  buildSubMenu = (parentMenuId, subCategories) => {
+    const { left, top, right } = this.$wrapper.getBoundingClientRect();
+    const width = right - left;
+    const y = top + 41;
+    return (
+      <ul className={cx('sub-menus')} style={{ width, left, top: y }}>
+        {
+          subCategories.map(s =>
+            (
+              <li key={s.id} className={classNames(cx('sub-menu'))}>
+                <a
+                  className={classNames(cx('sub-menu-title'), cx(s.id === this.state.selectedMenuId ? 'selected-menu' : ''))}
+                  href="javascript:void(0)"
+                  onClick={() => this.clickMenu(parentMenuId, s.id, _.isEmpty(s.subCategories))}
+                >
+                  {s.menuTitle}
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+    );
+  }
   render() {
     const { menus } = this.props;
     return (
-      <div onMouseLeave={() => { this.toggleMenu(true); }} className="card-container">
+      <div onMouseLeave={() => { this.toggleMenu(true); }} className="card-container" ref={r => this.$wrapper = r}>
         <Tabs
           activeKey={`${this.state.parentMenuId}`}
           type="card"

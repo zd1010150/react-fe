@@ -58,11 +58,17 @@ class skeleton extends React.Component {
     };
     return (
       <div className={cx('wrapper')}>
-        <Radio.Group className={cx('language-radios')} onChange={(e) => { this.handleLanguageChange(e); }} value={language} style={{ marginBottom: 8 }}>
-          <Radio.Button value="zh">{ formatMessage({ id: 'global.language.zh' }) }</Radio.Button>
-          <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button>
-        </Radio.Group>
-        <TabMenu menus={categorys} onSelected={categoryId => this.handleCategoryChange(categoryId)} />
+        <div className={cx('header-wrapper')}>
+          <Radio.Group className={cx('language-radios')} onChange={(e) => { this.handleLanguageChange(e); }} value={language} style={{ marginBottom: 8 }}>
+            <Radio.Button value="zh">{ formatMessage({ id: 'global.language.zh' }) }</Radio.Button>
+            <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button>
+          </Radio.Group>
+          <div className={cx('menu-wrapper')}>
+            <TabMenu menus={categorys} onSelected={categoryId => this.handleCategoryChange(categoryId)} />
+          </div>
+        </div>
+
+
         <div className={cx('plan-wrapper')}>
           {
             plans.map(plan =>
