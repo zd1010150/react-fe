@@ -13,14 +13,20 @@ class TabMenu extends React.Component {
   state = {
     isCollaspsed: true,
     selectedMenuId: undefined,
-    parentMenuId: undefined,
+    parentMenuId: this.props.defaultSelectedMenuId,
   }
 
   componentDidMount() {
 
   }
-  componentWillUnmount() {
-
+  componentWillReceiveProps(nextProps) {
+    console.log("dadan", nextProps.defaultSelectedMenuId);
+    if (nextProps.defaultSelectedMenuId !== this.props.defaultSelectedMenuId) {
+      debugger;
+      this.setState({
+        parentMenuId: nextProps.defaultSelectedMenuId,
+      });
+    }
   }
   toggleMenu(isCollaspsed) {
     this.setState({ isCollaspsed });
@@ -103,6 +109,7 @@ TabMenu.defaultProps = {
 TabMenu.propTypes = {
   menus: PropTypes.array.isRequired,
   onSelected: PropTypes.func,
+  defaultSelectedMenuId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 export default TabMenu;
 

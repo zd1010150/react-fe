@@ -64,7 +64,7 @@ class skeleton extends React.Component {
             <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button>
           </Radio.Group>
           <div className={cx('menu-wrapper')}>
-            <TabMenu menus={categorys} onSelected={categoryId => this.handleCategoryChange(categoryId)} />
+            <TabMenu menus={categorys} onSelected={categoryId => this.handleCategoryChange(categoryId)} defaultSelectedMenuId={categorys && categorys[0] && categorys[0].id} />
           </div>
         </div>
 

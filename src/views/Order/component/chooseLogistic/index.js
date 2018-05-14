@@ -120,7 +120,7 @@ class chooseLogisticView extends React.Component {
                     </div>
                     <div className={classNames('row', cx('product-row'))}>
                       <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.shippingWeight' })}:</span></div>
-                      <div className="col-sm-8">{ totalWeight }</div>
+                      <div className="col-sm-8">{ totalWeight } {formatMessage({ id: 'page.Order.kg' })}</div>
                     </div>
                     <div className={classNames('row', cx('product-row'))}>
                       <div className="col-sm-4"><span className={cx('product-label')}>{ formatMessage({ id: 'global.properNouns.goods.shippingCost' })}：</span></div>
@@ -130,7 +130,7 @@ class chooseLogisticView extends React.Component {
                       <div className={classNames('col-sm-4')}>
                         <span className={cx('product-label', cx('product-price'))}>
                           { formatMessage({ id: 'page.Order.invoiceShippingCost' })}
-                          <Tooltip title="prompt text">
+                          <Tooltip title={formatMessage({ id: 'page.Order.modifyFreightTip' })} placement="bottom">
                             <Icon type="question-circle-o" className="pl-sm" />
                           </Tooltip>
                               :
