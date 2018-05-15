@@ -16,13 +16,8 @@ class TabMenu extends React.Component {
     parentMenuId: this.props.defaultSelectedMenuId,
   }
 
-  componentDidMount() {
-
-  }
   componentWillReceiveProps(nextProps) {
-    console.log("dadan", nextProps.defaultSelectedMenuId);
     if (nextProps.defaultSelectedMenuId !== this.props.defaultSelectedMenuId) {
-      debugger;
       this.setState({
         parentMenuId: nextProps.defaultSelectedMenuId,
       });
