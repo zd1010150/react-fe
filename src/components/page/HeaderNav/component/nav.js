@@ -156,7 +156,7 @@ const navView = ({ language, intl }) => {
         <SubMenu
           title={formatMessage({id: `global.magento.headerNav.${item.titleId}` })}
           key={item.url}
-          onClick={({ key }) => { goToSubmenu(key); }}
+          onTitleClick={({ key }) => { goToSubmenu(key); }}
         >
           { item.children.map(cItem => getChildrenTree(cItem))}
         </SubMenu>
