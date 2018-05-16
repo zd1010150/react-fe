@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { intlShape, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Table } from 'antd';
@@ -15,13 +16,15 @@ const propTypes = {
   changeCell: PropTypes.func.isRequired,
   saveRow: PropTypes.func.isRequired,
   cancelRow: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
 };
 const defaultProps = {
 };
 class EditableGrid extends Component {
   buildColumns() {
-    const { roleGroups } = this.props;
-    let columns = roleGroups.map(column => ({
+    const { roleGroups, intl } = this.props;
+    const { formatMessage } = intl;
+    const columns = roleGroups.map(column => ({
       ...column,
       key: column.id,
       title: column.name,
@@ -47,10 +50,10 @@ class EditableGrid extends Component {
             {
               record.id === editingRowId ?
                 <span>
-                  <a onClick={() => saveRow(record.id)}>Save </a>
-                  <a onClick={() => cancelRow(record.id)}>Cancel</a>
+                  <a onClick={() => saveRow(record.id)}>{ formatMessage({ id: 'global.ui.button.save' }) } </a>
+                  <a onClick={() => cancelRow(record.id)}>{ formatMessage({ id: 'global.ui.button.cancel' }) }</a>
                 </span>
-                : <a onClick={() => toEdit(record.id)}>Edit</a>
+                : <a onClick={() => toEdit(record.id)}>{ formatMessage({ id: 'global.ui.button.edit' }) }</a>
             }
           </div>
         );
@@ -81,4 +84,4 @@ class EditableGrid extends Component {
 EditableGrid.propTypes = propTypes;
 EditableGrid.defaultProps = defaultProps;
 
-export default EditableGrid;
+export default injectIntl(EditableGrid);

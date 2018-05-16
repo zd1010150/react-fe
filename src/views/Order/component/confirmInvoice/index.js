@@ -105,7 +105,6 @@ confirmInvoiceView.defaultProps = {
 confirmInvoiceView.propTypes = {
   intl: intlShape.isRequired,
   goPreviousStep: PropTypes.func.isRequired,
-  getQuoteId: PropTypes.func.isRequired,
   deliveryOrderIds: PropTypes.array,
   freightId: PropTypes.number,
   invoices: PropTypes.array,

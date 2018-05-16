@@ -1,0 +1,29 @@
+@import "~assets/less/theme.less";
+
+@primary-1px-border: 1px solid @primary-color;
+.sub-menus{
+  position:fixed;
+  z-index:999;
+  margin: 0px;
+  padding: 20px 20px;
+  border-left: @primary-1px-border;
+  border-bottom: @primary-1px-border;
+  border-right: @primary-1px-border;
+  overflow: hidden;
+  list-style-type: none;
+  background-color: #fff;
+}
+.sub-menu{
+  float: left;
+  padding: 5px 20px;
+}
+.sub-menu-title{
+  color: @card-head-color;
+  &:hover{
+    color: @primary-color;
+    text-decoration: underline;
+  }
+}
+.selected-menu{
+  color: @primary-color;
+}

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Radio, Pagination } from 'antd';
+import { Radio, Pagination } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import classNames from 'classnames/bind';
+import { TabMenu } from 'components/ui/index';
 import Plan from './plan';
 import { paginationPayload } from '../flow/reducer';
 import styles from '../MarketingMaterials.less';
@@ -10,13 +11,14 @@ import styles from '../MarketingMaterials.less';
 
 const cx = classNames.bind(styles);
 
-const { TabPane } = Tabs;
+
 class skeleton extends React.Component {
   componentDidMount() {
     this.fetchMarketMaterial(this.props);
   }
   componentWillReceiveProps(nextProps) {
     const { language, category } = nextProps;
+
     if (language !== this.props.language || category !== this.props.category) {
       this.fetchMarketMaterial(nextProps);
     }
@@ -55,33 +57,31 @@ class skeleton extends React.Component {
       },
     };
     return (
-      <div>
-        <Radio.Group onChange={(e) => { this.handleLanguageChange(e); }} value={language} style={{ marginBottom: 8 }}>
-          <Radio.Button value="zh">{ formatMessage({ id: 'global.language.zh' }) }</Radio.Button>
-          {/* <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button> */}
-        </Radio.Group>
-        <Tabs
-          activeKey={`${category}`}
-          onChange={
-            (categoryId) => {
-              this.handleCategoryChange(Number(categoryId));
-            }
-            }
-        >
-          {categorys.map(item => (<TabPane tab={item.name} key={`${item.id}`} />))}
-        </Tabs>
-        {
-          plans.map(plan =>
-            (<Plan
-              key={plan.id}
-              title={plan.title}
-              pictures={plan.images}
-              videos={plan.videos}
-              text={plan.description}
-              id={plan.id}
-            />))
-        }
+      <div className={cx('wrapper')}>
+        <div className={cx('header-wrapper')}>
+          <Radio.Group className={cx('language-radios')} onChange={(e) => { this.handleLanguageChange(e); }} value={language} style={{ marginBottom: 8 }}>
+            <Radio.Button value="zh">{ formatMessage({ id: 'global.language.zh' }) }</Radio.Button>
+            <Radio.Button value="en">{ formatMessage({ id: 'global.language.en' }) }</Radio.Button>
+          </Radio.Group>
+          <div className={cx('menu-wrapper')}>
+            <TabMenu menus={categorys} onSelected={categoryId => this.handleCategoryChange(categoryId)} defaultSelectedMenuId={categorys && categorys[0] && categorys[0].id} />
+          </div>
+        </div>
 
+
+        <div className={cx('plan-wrapper')}>
+          {
+            plans.map(plan =>
+              (<Plan
+                key={plan.id}
+                title={plan.title}
+                pictures={plan.images}
+                videos={plan.videos}
+                text={plan.description}
+                id={plan.id}
+              />))
+          }
+        </div>
         <Pagination className={cx('pagination')} {...paginationConfig} />
       </div>
     );

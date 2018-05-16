@@ -10,7 +10,7 @@ import OrderStatus from './orderStatus';
 import Logistics from './logistics';
 import Product from './product';
 import Group from './group';
-
+import TabMenu from './tabMenu/index.jsx';
 
 export {
   MagentoStaticLink,
@@ -24,4 +24,5 @@ export {
   Logistics,
   Product,
   Group,
+  TabMenu,
 };

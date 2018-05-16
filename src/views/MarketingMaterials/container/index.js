@@ -2,10 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames/bind';
 import { setPageTitle } from 'store/global/action';
 import { getMarketingMaterial, setMMLanguage, setMMCategory } from '../flow/action';
 import Skeleton from '../component/skeleton';
 import { getClassificationPagination, getLanguageClassification } from '../flow/reselect';
+import styles from '../MarketingMaterials.less';
+
+
+const cx = classNames.bind(styles);
 
 class mmView extends React.Component {
   componentDidMount() {
@@ -23,7 +28,7 @@ class mmView extends React.Component {
       allPaginations,
     } = this.props;
     return (
-      <section className="section section-page">
+      <section className={classNames('section section-page', cx('mm-page'))}>
         <Skeleton
           categorys={categorys}
           plans={visibleMarketingMaterials}

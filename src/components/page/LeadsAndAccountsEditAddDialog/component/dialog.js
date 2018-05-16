@@ -169,6 +169,7 @@ class userDialog extends React.Component {
     })(userType, operatorType);
     return (
       <Modal
+        maskClosable={false}
         destroyOnClose
         title={formatMessage({ id: dialogTitle })}
         visible={visible}

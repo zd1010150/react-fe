@@ -6,7 +6,7 @@ import { Table, Badge, Button, Divider, Popconfirm } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { Address, OrderStatus } from 'components/ui/index';
 import { UNPAIED_ORDER_STATUS } from 'config/app.config.js';
-import {setOrderUser} from "../../../store/global/action";
+import { setOrderUser } from '../../../store/global/action';
 
 class orderTable extends React.Component {
   viewDetail(trackOrder) {
@@ -92,13 +92,24 @@ class orderTable extends React.Component {
               <span>
                 <Button onClick={() => { this.handlePaymentOrder(record); }} size="small" type="primary">{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
                 <Divider type="vertical" />
-                <Popconfirm title={formatMessage({ id: 'page.TrackOrders.deleteDeliverOrder' })} onConfirm={()=> deleteDeliveryOrder(record.id)} okText={formatMessage({ id: 'global.ui.button.ok' })} cancelText={formatMessage({ id: 'global.ui.button.cancel' })}>
-                  <Button  size="small">{ formatMessage({ id: 'global.ui.button.delete' }) }</Button>
+                <Popconfirm title={formatMessage({ id: 'page.TrackOrders.deleteDeliverOrder' })} onConfirm={() => deleteDeliveryOrder(record.id)} okText={formatMessage({ id: 'global.ui.button.ok' })} cancelText={formatMessage({ id: 'global.ui.button.cancel' })}>
+                  <Button size="small">{ formatMessage({ id: 'global.ui.button.delete' }) }</Button>
                 </Popconfirm>
                 <Divider type="vertical" />
               </span>
             );
           }
+          if (record && record.invoices && record.invoices.pdf_url) {
+            return (<span>
+              <a className="ant-btn ant-btn-sm" download href={record.invoices.pdf_url} target="_blank">{
+                  formatMessage({ id: 'global.ui.button.view' }, {
+                    file: formatMessage({ id: 'global.properNouns.invoice' }),
+                  })
+                }
+              </a><Divider type="vertical" />
+            </span>);
+          }
+
           return '';
         })(record.status);
         return (
