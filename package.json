@@ -103,7 +103,9 @@
     ]
   },
   "babel": {
-    "plugins": ["syntax-dynamic-import"],
+    "plugins": [
+      "syntax-dynamic-import"
+    ],
     "presets": [
       "react-app",
       "stage-2"
