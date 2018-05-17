@@ -12,18 +12,22 @@ export const paginationPayload = {
 const initPagination = (settings) => {
   const classification = _.isEmpty(settings.classification) ? [] : settings.classification;
   const paginationInitState = [];
-  classification.forEach((c) => {
+  const getPagination = (category) => {
+    if (!_.isEmpty(category.sub_classification)) {
+      category.sub_classification.forEach(subCategory => getPagination(subCategory));
+    }
     paginationInitState.push({
       language: 'zh',
-      classificationId: c.id,
+      classificationId: category.id,
       pagination: { ...paginationPayload },
     });
     paginationInitState.push({
       language: 'en',
-      classificationId: c.id,
+      classificationId: category.id,
       pagination: { ...paginationPayload },
     });
-  });
+  };
+  classification.forEach(item => getPagination(item));
   return paginationInitState;
 };
 const setMMPagination = (state, classificationId, language, pagination) => {

@@ -14,8 +14,9 @@ export const setInvoiceInfo = invoices => ({
 export const confirmGetInvoice = () => (dispatch, getState) => {
   const state = getState();
   const freight = state.order.chooseLogistic.logistic.logisticType;
+  const actualshippingcost = state.order.chooseLogistic.logistic.invoiceFee;
   const deliveryIds = state.order.skeleton.deliveryOrders;
-  return post('/affiliate/invoices/batch-create', { freight_setting_id: freight, delivery_orders_ids: deliveryIds }, dispatch).then((data) => {
+  return post('/affiliate/invoices/batch-create', { freight_setting_id: freight, delivery_orders_ids: deliveryIds, actual_shipping_cost: actualshippingcost }, dispatch).then((data) => {
     if (data) {
       dispatch(setInvoiceInfo(data));
     }

@@ -21,6 +21,8 @@ class cmsView extends React.Component {
     this.state = {
       id: pairs.id || 0,
       isCarouselVisible: false,
+      leftBtnIsHover: false,
+      rightBtnIsHover: false,
     };
   }
   componentDidMount() {
@@ -34,6 +36,12 @@ class cmsView extends React.Component {
       isCarouselVisible: true,
     });
     this.carousel.goTo(index);
+  }
+  onTouchStart() {
+
+  }
+  onTouchEnd() {
+
   }
   render() {
     const { images, videos, text } = this.props;
@@ -87,8 +95,40 @@ class cmsView extends React.Component {
         </Row>
         <div className={classNames(cx(this.state.isCarouselVisible ? 'model-visible' : 'model-invisible'), 'pic-modal')} >
           <div className={cx(this.state.isCarouselVisible ? 'carousel-visible' : 'carousel-invisible')}>
-            <Icon type="step-backward" className={cx('prev-btn')} onClick={() => this.carousel.prev()} />
-            <Icon type="step-forward" className={cx('next-btn')} onClick={() => this.carousel.next()} />
+            <Icon
+              type="left"
+              className={classNames(cx('prev-btn'), cx(this.state.leftBtnIsHover ? 'hover' : ''))}
+              onMouseEnter={() => this.setState({
+                leftBtnIsHover: true,
+              })}
+              onMouseLeave={() => this.setState({
+                leftBtnIsHover: false,
+              })}
+              onTouchStart={() => this.setState({
+                    leftBtnIsHover: true,
+                  })}
+              onTouchEnd={() => this.setState({
+                    leftBtnIsHover: false,
+                  })}
+              onClick={() => this.carousel.prev()}
+            />
+            <Icon
+              type="right"
+              className={classNames(cx('next-btn'), cx(this.state.rightBtnIsHover ? 'hover' : ''))}
+              onMouseEnter={() => this.setState({
+                rightBtnIsHover: true,
+              })}
+              onMouseLeave={() => this.setState({
+                rightBtnIsHover: false,
+              })}
+              onTouchStart={() => this.setState({
+                    rightBtnIsHover: true,
+                  })}
+              onTouchEnd={() => this.setState({
+                    rightBtnIsHover: false,
+                  })}
+              onClick={() => this.carousel.next()}
+            />
             <div className={cx('carousel')}>
               <Icon type="close" className={cx('close-btn')} onClick={() => this.setState({ isCarouselVisible: false })} />
               <Carousel ref={(carousel) => { this.carousel = carousel; }} >

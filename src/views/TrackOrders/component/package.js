@@ -4,14 +4,16 @@ import { Table, Popover, Button } from 'antd';
 import { getUnitPrice } from 'utils/mathUtil';
 import classNames from 'classnames/bind';
 import { intlShape, injectIntl } from 'react-intl';
+import { CARRIERS_CODE } from 'config/app.config';
 import styles from '../TrackOrders.less';
 import { Currency, OrderStatus, Logistics, Product } from 'components/ui/index';
 import LogisticsDetail from './logisticsDetail';
 
+
 const cx = classNames.bind(styles);
 
 const detailOrder = ({
-  intl, trackingNumber, items, detailInfo, status, logistic, updateTime, totalPrice, totalQuantity,
+  intl, trackingNumber, items, detailInfo, status, logistic, updateTime, totalPrice, totalQuantity, carrierCode,
 }) => {
   const { formatMessage } = intl;
   const columns = [
@@ -58,14 +60,19 @@ const detailOrder = ({
           { formatMessage({ id: 'global.properNouns.logistics' }) }:
         </div>
         <div className="trade-info-dd">
-          <Logistics freight={logistic} />
+          <Logistics freight={logistic} />&nbsp;
           {
-            detailInfo && detailInfo.length > 0 ?
+            carrierCode === CARRIERS_CODE.EWE && detailInfo && detailInfo.length > 0 ?
             (
               <Popover content={<LogisticsDetail infos={detailInfo} />} title={formatMessage({ id: 'global.properNouns.logisticsDetail' })} >
-                <Button className={classNames('icon-btn')} type="primary"> {formatMessage({ id: 'global.properNouns.logisticsDetail' })} >> </Button>
+                <Button className={classNames('icon-btn')} type="primary"> {formatMessage({ id: 'global.properNouns.logisticsDetail' })} &gt;&gt; </Button>
               </Popover>
             ) : ''
+          }
+          {
+            carrierCode === CARRIERS_CODE.AUPOST ?
+              <a href={`https://auspost.com.au/mypost/track/#/search?id=${trackingNumber}`} target="_blank">{formatMessage({ id: 'global.properNouns.logisticsDetail' })}  &gt;&gt; </a>
+              : ''
           }
 
         </div>
@@ -132,6 +139,7 @@ detailOrder.propTypes = {
   updateTime: PropTypes.string,
   totalPrice: PropTypes.number,
   totalQuantity: PropTypes.number,
+  carrierCode: PropTypes.string,
 };
 const DetailOrder = injectIntl(detailOrder);
 export default DetailOrder;

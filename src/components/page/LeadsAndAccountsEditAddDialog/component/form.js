@@ -194,7 +194,7 @@ class userForm extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label={formatMessage({ id: 'global.form.country' })}
+          label={formatMessage({ id: 'global.form.countryArea' })}
         >
           { countriesEl}
         </FormItem>

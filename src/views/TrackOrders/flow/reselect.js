@@ -53,6 +53,7 @@ export const getpackages = createSelector([
       updateTime: track.updated_at,
       totalPrice,
       totalQuantity,
+      carrierCode: track.carrier_code,
     };
   });
 });

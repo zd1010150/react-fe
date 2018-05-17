@@ -1,5 +1,14 @@
-import { post, httpDelete } from 'store/http/httpAction';
-import { SET_LOGISITIC_COST, SET_NEED_CREATE_INVOICE_BATCH } from './actionType';
+import { post } from 'store/http/httpAction';
+import {
+  SET_LOGISITIC_COST,
+  SET_NEED_CREATE_INVOICE_BATCH,
+  SET_LOGISTITIC_INVOICE_COST,
+} from './actionType';
+
+export const setInvoiceCost = cost => ({
+  type: SET_LOGISTITIC_INVOICE_COST,
+  cost,
+});
 
 export const setNeedCreateInvoice = isNeed => ({
   type: SET_NEED_CREATE_INVOICE_BATCH,
