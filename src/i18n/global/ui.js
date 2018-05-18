@@ -25,6 +25,11 @@ export default {
       searchStore: '在此搜索全站商品...',
       searchUser: '输入用户名搜索...',
       inputIdNumber: '请输入合法的身份证号',
+      firstNamePlaceHolder: '名字必须和身份证一致',
+      lastNamePlaceHolder: '姓氏必须和身份证一致',
+      statePlaceHolder: '请选择省份',
+      cityPlaceHolder: '请选择市',
+      addressPlaceHolder: '例如区县、街道名称、门牌号码、楼层、和房间号等信息',
     },
     table: {
       action: '操作',
@@ -39,6 +44,10 @@ export default {
     upload: {
       maxSize: '文件最大是2M',
       errorMax: '你的文件超过了2M,请重新选择',
+    },
+    tab: {
+      addressInfo: '地址信息',
+      otherInfo: '其他信息',
     },
   },
   en: {
@@ -67,6 +76,11 @@ export default {
       searchStore: 'Search entire store here...',
       searchUser: 'Search user name here...',
       inputIdNumber: 'Please input correct id number',
+      firstNamePlaceHolder: 'First name',
+      lastNamePlaceHolder: 'Last name',
+      statePlaceHolder: 'Select state/province',
+      cityPlaceHolder: 'Select city',
+      addressPlaceHolder: 'Including urban/suburb,building and room No.',
     },
     table: {
       action: 'Action',
@@ -81,6 +95,10 @@ export default {
     upload: {
       maxSize: 'Maximum file size is 2M',
       errorMax: 'The file is larger than 2M, please reselect',
+    },
+    tab: {
+      addressInfo: 'Address Information',
+      otherInfo: 'Other Information',
     },
   },
 };

@@ -12,6 +12,7 @@ class add extends React.Component {
     this.setState({
       dialogVisible: true,
     });
+    this.props.setEditProvince('', this.props.provinces);
   }
   closeDialog = () => {
     this.setState({
@@ -36,6 +37,8 @@ add.defaultProps = {
 add.propTypes = {
   intl: intlShape.isRequired,
   addLeads: PropTypes.func,
+  setEditProvince: PropTypes.func.isRequired,
+  provinces: PropTypes.array.isRequired,
 };
 
 const Add = injectIntl(add);
