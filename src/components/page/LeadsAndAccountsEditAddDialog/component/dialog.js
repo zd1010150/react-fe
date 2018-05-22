@@ -4,7 +4,6 @@ import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import { SOCIAL_MEDIA } from 'config/app.config';
-// import classNames from 'classnames/bind';
 import operateTypes from '../flow/operateType';
 import UserForm from './form';
 
@@ -36,6 +35,7 @@ class userDialog extends React.Component {
     const { editObject } = props;
     const { socials } = editObject;
     const mapSocials = {};
+
     if (_.isEmpty(socials)) {
       this.setState({
         currentSocialType: SOCIAL_MEDIA.WECHAT,
@@ -149,13 +149,13 @@ class userDialog extends React.Component {
       this.props.update(postform, callback);
     }
   }
-  handleCancel = (e) => {
+  handleCancel = () => {
     this.props.onClose();
   }
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      editObject, visible, language, userType, operatorType, group, interests, countries,
+      editObject, visible, language, userType, operatorType, group, interests, countries, provinces,
     } = this.props;
     const dialogTitle = ((_userType, _operatorType) => {
       const type = `page.${_userType}`;
@@ -169,6 +169,7 @@ class userDialog extends React.Component {
     })(userType, operatorType);
     return (
       <Modal
+        width={700}
         maskClosable={false}
         destroyOnClose
         title={formatMessage({ id: dialogTitle })}
@@ -198,6 +199,7 @@ class userDialog extends React.Component {
             weChat={this.state[SOCIAL_MEDIA.WECHAT]}
             socialNumberChange={this.socialNumberChange}
             socialTypeChange={this.socialTypeChange}
+            provinces={provinces}
           />
         </div>
       </Modal>
@@ -228,6 +230,7 @@ userDialog.propTypes = {
   group: PropTypes.array,
   countries: PropTypes.array,
   userType: PropTypes.string.isRequired, // Leads,Accounts
+  provinces: PropTypes.array.isRequired,
 };
 const UserDialog = injectIntl(userDialog);
 export default UserDialog;

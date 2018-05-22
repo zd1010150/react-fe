@@ -10,6 +10,7 @@ const mapStateToProps = ({ global }) => ({
   interests: global.settings.interests,
   group: global.settings.subGroup,
   countries: global.settings.countries,
+  provinces: global.provinces,
 });
 
 

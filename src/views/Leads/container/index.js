@@ -7,6 +7,7 @@ import Add from '../component/add';
 import Table from './tableView';
 import { addLeads } from '../flow/action';
 
+
 class leadsView extends React.Component {
   componentDidMount() {
     this.props.setPageTitle('global.pageTitle.leads');
