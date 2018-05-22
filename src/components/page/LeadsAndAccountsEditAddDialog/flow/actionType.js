@@ -1,3 +1,0 @@
-export const SET_PROVINCES = 'SET_PROVINCES';
-export const SET_EDIT_PROVINCE = 'SET_EDIT_PROVINCE';
-export const SET_EDIT_CITY = 'SET_EDIT_CITY';

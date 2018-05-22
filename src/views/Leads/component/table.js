@@ -201,7 +201,6 @@ leadsTable.propTypes = {
   updateLeads: PropTypes.func.isRequired,
   deleteLeads: PropTypes.func.isRequired,
   affiliatedClientStatus: PropTypes.array,
-
 };
 
 const LeadsTable = injectIntl(leadsTable);

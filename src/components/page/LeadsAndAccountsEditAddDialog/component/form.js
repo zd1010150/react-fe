@@ -31,9 +31,47 @@ class userForm extends React.Component {
   state = {
     checkIdNumber: this.ifCheckIDNumber(this.props),
     selectedState: '',
-    selecteCity: '',
+    selectedCity: '',
+    cities: [],
   }
-
+  componentDidMount() {
+    this.initStateAndCity(this.props);
+  }
+  componentWillReceiveProps(nextProps) {
+    debugger;
+    if (nextProps.editObject !== this.props.editObject) {
+      debugger;
+      this.initStateAndCity(nextProps);
+    }
+  }
+  initStateAndCity(props) {
+    const { editObject, provinces } = this.props;
+    const selectedState = this.getProvince(editObject.state, provinces);
+    const cities = this.getCities(editObject.state, provinces);
+    this.setState({
+      cities,
+      selectedState,
+      selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
+    });
+  }
+  getCities(selectedProvince, provinces) {
+    if (_.isEmpty(provinces)) {
+      return [];
+    }
+    const province = provinces.filter(p => Number(p.id) === Number(selectedProvince));
+    return _.isEmpty(province) ? (provinces[0].cities || []) : province[0].cities;
+  }
+  getProvince(province, provinces) {
+    if (province === null || province === undefined || `${province}`.length < 1) {
+      if (!_.isEmpty(provinces)) {
+        return provinces[0].id;
+      }
+    }
+    if (`${province}`.length > 0) {
+      return province;
+    }
+    return '';
+  }
   ifCheckIDNumber(props) {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
@@ -48,24 +86,33 @@ class userForm extends React.Component {
       checkIdNumber,
     }, () => {
       this.props.form.resetFields(['idNumber']);
+
       if (checkIdNumber) {
         this.props.form.validateFields(['idNumber'], { force: true });
-        this.props.form.setFieldsValue({ state: this.state.selectedState, city: this.state.selecteCity });
+
+        this.props.form.setFieldsValue({ state: this.state.selectedState, city: this.state.selectedCity });
       } else {
-        this.props.form.resetFields(['state', 'city']);
+        // this.props.form.resetFields(['state', 'city']);
+        this.props.form.setFieldsValue({
+          state: '',
+          city: '',
+        });
       }
     });
   }
 
-  handleProvinceChange(proviceId, provinces) {
-    this.props.setEditProvince(proviceId, provinces);
+  handleProvinceChange(proviceId) {
+    const cities = this.getCities(proviceId, this.props.provinces);
     this.setState({
       selectedState: proviceId,
+      cities,
+      selectedCity: cities[0].id
     });
+    this.props.form.setFieldsValue({ city: cities[0].id });
   }
   handleCityChange(cityId) {
     this.setState({
-      selecteCity: cityId,
+      selectedCity: cityId,
     });
   }
   socialTypeChange(mediaType) {
@@ -79,8 +126,9 @@ class userForm extends React.Component {
 
   renderAddressFields() {
     const {
-      editObject, provinces, cities, intl, language, countries, form, canEdit,
+      editObject, provinces, intl, language, countries, form, canEdit,
     } = this.props;
+    const { cities } = this.state;
     const { formatMessage } = intl;
     const { getFieldDecorator } = form;
     const disabled = !canEdit;
@@ -99,7 +147,7 @@ class userForm extends React.Component {
 
     const getStateEl = () => {
       if (this.state.checkIdNumber) {
-        return getFieldDecorator('state', { initialValue: editObject.state || this.state.selectedState || (provinces[0] && provinces[0].id) || '' })(<Select
+        return getFieldDecorator('state', { initialValue: Number(editObject.state) || this.state.selectedState })(<Select
           getPopupContainer={() => document.getElementById('addAndEditDialog')}
           disabled={disabled}
           onChange={(provinceId) => {
@@ -116,7 +164,7 @@ class userForm extends React.Component {
         rules: [{
           validator: validator.between(1, 150, language),
         }],
-      })(<Input disabled={disabled} placeholder={formatMessage({ id: 'global.ui.input.statePlaceHolder' })} />);
+      })(<Input disabled={disabled} placeholder={formatMessage({ id: 'global.ui.input.stateInputPlaceHolder' })} />);
     };
     const stateEl = (<FormItem
       {...formItemLayout}
@@ -128,7 +176,7 @@ class userForm extends React.Component {
       }</FormItem>);
     const getCityEl = () => {
       if (this.state.checkIdNumber) {
-        return getFieldDecorator('city', { initialValue: editObject.city || this.state.selecteCity || (cities[0] && cities[0].id) || '' })(<Select
+        return getFieldDecorator('city', { initialValue: Number(editObject.city) || Number(this.state.selectedCity) })(<Select
           getPopupContainer={() => document.getElementById('addAndEditDialog')}
           disabled={disabled}
           onChange={(cityId) => {
@@ -143,7 +191,7 @@ class userForm extends React.Component {
         rules: [{
           validator: validator.between(1, 150, language),
         }],
-      })(<Input disabled={disabled} placeholder={formatMessage({ id: 'global.ui.input.cityPlaceHolder' })} />);
+      })(<Input disabled={disabled} placeholder={formatMessage({ id: 'global.ui.input.cityInputPlaceHolder' })} />);
     };
     const cityEl = (<FormItem
       {...formItemLayout}
@@ -432,8 +480,6 @@ userForm.propTypes = {
   weChat: PropTypes.string.isRequired,
   currentSocialType: PropTypes.string.isRequired,
   provinces: PropTypes.array.isRequired,
-  cities: PropTypes.array.isRequired,
-  setEditProvince: PropTypes.func.isRequired,
 };
 
 export default Form.create()(injectIntl(userForm));

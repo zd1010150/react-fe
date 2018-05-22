@@ -4,7 +4,6 @@ import { Button, Modal } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import { SOCIAL_MEDIA } from 'config/app.config';
-// import classNames from 'classnames/bind';
 import operateTypes from '../flow/operateType';
 import UserForm from './form';
 
@@ -21,7 +20,6 @@ class userDialog extends React.Component {
   }
   componentDidMount() {
     this.initState(this.props);
-    this.props.fetchProvince();
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -157,7 +155,7 @@ class userDialog extends React.Component {
   render() {
     const { formatMessage } = this.props.intl;
     const {
-      editObject, visible, language, userType, operatorType, group, interests, countries, provinces, cities, setEditProvince
+      editObject, visible, language, userType, operatorType, group, interests, countries, provinces,
     } = this.props;
     const dialogTitle = ((_userType, _operatorType) => {
       const type = `page.${_userType}`;
@@ -202,8 +200,6 @@ class userDialog extends React.Component {
             socialNumberChange={this.socialNumberChange}
             socialTypeChange={this.socialTypeChange}
             provinces={provinces}
-            cities={cities}
-            setEditProvince={setEditProvince}
           />
         </div>
       </Modal>
@@ -234,10 +230,7 @@ userDialog.propTypes = {
   group: PropTypes.array,
   countries: PropTypes.array,
   userType: PropTypes.string.isRequired, // Leads,Accounts
-  fetchProvince: PropTypes.func.isRequired,
   provinces: PropTypes.array.isRequired,
-  cities: PropTypes.array.isRequired,
-  setEditProvince: PropTypes.func.isRequired,
 };
 const UserDialog = injectIntl(userDialog);
 export default UserDialog;

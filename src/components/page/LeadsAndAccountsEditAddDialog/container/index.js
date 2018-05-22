@@ -3,20 +3,15 @@
 import { connect } from 'react-redux';
 
 import Dialog from '../component/dialog';
-import { fetchProvince, setEditProvince } from '../flow/action';
-import { getCities } from '../flow/reselect';
 
-const mapStateToProps = ({ global, ui }) => ({
+
+const mapStateToProps = ({ global }) => ({
   language: global.language,
   interests: global.settings.interests,
   group: global.settings.subGroup,
   countries: global.settings.countries,
-  provinces: ui.userEdit.provinces,
-  cities: getCities({ ui }),
+  provinces: global.provinces,
 });
-const mapDispatchToProps = {
-  fetchProvince,
-  setEditProvince,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
+
+export default connect(mapStateToProps)(Dialog);

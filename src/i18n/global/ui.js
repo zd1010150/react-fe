@@ -30,6 +30,8 @@ export default {
       statePlaceHolder: '请选择省份',
       cityPlaceHolder: '请选择市',
       addressPlaceHolder: '例如区县、街道名称、门牌号码、楼层、和房间号等信息',
+      stateInputPlaceHolder: '请输入省份',
+      cityInputPlaceHolder: '请输入城市',
     },
     table: {
       action: '操作',
@@ -81,6 +83,8 @@ export default {
       statePlaceHolder: 'Select state/province',
       cityPlaceHolder: 'Select city',
       addressPlaceHolder: 'Including urban/suburb,building and room No.',
+      stateInputPlaceHolder: 'Input state/province',
+      cityInputPlaceHolder: 'Input city',
     },
     table: {
       action: 'Action',
