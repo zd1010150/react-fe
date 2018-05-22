@@ -4,7 +4,6 @@ import loadingReducer from './loading/loadingReducer';
 import errorReducer from './error/reducer';
 import pageReducer from './pageReducer';
 
-
 export const makeRootReducer = (asyncReducers = {}) => (
   combineReducers({
     global: globalsReducer, // 注入全局reducer
@@ -12,7 +11,6 @@ export const makeRootReducer = (asyncReducers = {}) => (
     errors: errorReducer,
     ...asyncReducers, // hook 以后用来注入异步reducer
     ...pageReducer, // 注入页面级reducer
-
   })
 );
 

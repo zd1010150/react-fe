@@ -1,6 +1,6 @@
 {
   "name": "react-fe",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "antd": "^3.4.1",
@@ -103,7 +103,9 @@
     ]
   },
   "babel": {
-    "plugins": ["syntax-dynamic-import"],
+    "plugins": [
+      "syntax-dynamic-import"
+    ],
     "presets": [
       "react-app",
       "stage-2"
