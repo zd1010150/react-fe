@@ -10,7 +10,7 @@ export const setProvinces = data => ({
   provinces: data,
 });
 
-export const fetchProvince = () => dispatch => get('/affiliate/provinces', {}, dispatch).then((data) => {
+export const fetchProvince = () => dispatch => get('/affiliate/provinces?per_page=100', {}, dispatch).then((data) => {
   if (data && (!_.isEmpty(data.data))) {
     dispatch(setProvinces(data.data));
   }

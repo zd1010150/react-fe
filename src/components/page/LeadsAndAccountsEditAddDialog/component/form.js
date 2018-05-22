@@ -38,21 +38,22 @@ class userForm extends React.Component {
     this.initStateAndCity(this.props);
   }
   componentWillReceiveProps(nextProps) {
-    debugger;
     if (nextProps.editObject !== this.props.editObject) {
-      debugger;
       this.initStateAndCity(nextProps);
     }
   }
   initStateAndCity(props) {
     const { editObject, provinces } = this.props;
-    const selectedState = this.getProvince(editObject.state, provinces);
-    const cities = this.getCities(editObject.state, provinces);
-    this.setState({
-      cities,
-      selectedState,
-      selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
-    });
+    if(editObject.country === CHINA_CODE){
+      const selectedState = this.getProvince(editObject.state, provinces);
+      const cities = this.getCities(editObject.state, provinces);
+      this.setState({
+        cities,
+        selectedState,
+        selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
+      });
+    }
+
   }
   getCities(selectedProvince, provinces) {
     if (_.isEmpty(provinces)) {
@@ -89,10 +90,8 @@ class userForm extends React.Component {
 
       if (checkIdNumber) {
         this.props.form.validateFields(['idNumber'], { force: true });
-
         this.props.form.setFieldsValue({ state: this.state.selectedState, city: this.state.selectedCity });
       } else {
-        // this.props.form.resetFields(['state', 'city']);
         this.props.form.setFieldsValue({
           state: '',
           city: '',
