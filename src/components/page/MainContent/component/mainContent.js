@@ -5,13 +5,12 @@ import { Order, MarketingMaterials, Accounts, Leads, PriceSetting, TrackOrders }
 
 const mainContentView = () => (
   <Switch>
-    <Route path="/clientLists/order" component={Order} />
-    <Route path="/clientLists/marketingMaterial" component={MarketingMaterials} />
-    <Route path="/clientLists/accounts" component={Accounts} />
-    <Route path="/clientLists" component={Leads} />
-    <Route path="/clientLists/leads" component={Leads} />
-    <Route path="/priceSetting" component={PriceSetting} />
+    <Route path="/order" component={Order} />
+    <Route path="/accounts" component={Accounts} />
+    <Route path="/leads" component={Leads} />
     <Route path="/trackOrders" component={TrackOrders} />
+    <Route path="/priceSetting" component={PriceSetting} />
+    <Route path="/marketingMaterial" component={MarketingMaterials} />
   </Switch>
 );
 export default mainContentView;

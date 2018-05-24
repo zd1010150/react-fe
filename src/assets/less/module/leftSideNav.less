@@ -6,24 +6,26 @@
     & > .ant-menu-item-divider{
       border-top: 1px solid #d1d1d1;
       display: block;
-      margin: 10px 1.8rem;
+      margin: 10px 1.8rem 10px 60px;
     }
     .ant-menu-item{
       color: #575757;
-      &:hover, &:active{
-        color: #575757;
-        background-color: #e8e8e8;
+      &>a{
+        color: #494949;
       }
-      a{
-        color: #575757;
-        &:hover, &:active{
-          color: #575757;
-        }
+      a:hover, a:active{
+        color: @primary-color;
+        background-color: transparent;
+      }
 
-      }
     }
-     .ant-menu-submenu-title:hover{
-       color: #575757;
+     .ant-menu-submenu-title{
+       font-weight: 600;
+       color: #333;
+       &:hover{
+         color: #575757;
+       }
+
      }
     .ant-menu-item-selected{
       background-color: transparent;
@@ -45,7 +47,7 @@
         left: 20px;
         top:5px;
         bottom:5px;
-        border-left: 3px solid @primary-color;
+        border-left: 4px solid @primary-color;
       }
     }
   }

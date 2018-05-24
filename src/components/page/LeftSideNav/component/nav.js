@@ -11,9 +11,18 @@ import styles from '../LeftSideNav.less';
 
 const cx = classNames.bind(styles);
 const { SubMenu } = Menu;
-const AFFLIATE_MENU_INDEX = 4;
 const DIVIDER = 'divider';
 class Nav extends React.Component {
+  state = {
+    openKeys: ['clientLists'],
+  };
+  onOpenChange = (openKeys) => {
+    if (openKeys.length < 1) return;
+    openKeys.shift();
+    this.setState({
+      openKeys,
+    });
+  }
   render() {
     const { intl, location } = this.props;
     const { formatMessage } = intl;
@@ -22,7 +31,6 @@ class Nav extends React.Component {
       { id: 'global.magento.leftNav.accountDashboard', url: '/customer/account/index/' },
       { id: 'global.magento.leftNav.myOrders', url: '/sales/order/history/' },
       { id: 'global.magento.leftNav.myWishList', url: '/wishlist/' },
-      DIVIDER,
       DIVIDER,
       { id: 'global.magento.leftNav.accountInformation', url: '/customer/account/edit/' },
       { id: 'global.magento.leftNav.addressBook', url: '/customer/address/new/' },
@@ -35,32 +43,31 @@ class Nav extends React.Component {
     // affiliate nav
     const affiliateNavObj = [
       {
-        id: 'page.LeftSideNav.clientLists',
-        url: '/clientLists',
-        children: [{
-          id: 'page.LeftSideNav.leads',
-          url: '/clientLists/leads',
-        }, {
-          id: 'page.LeftSideNav.accounts',
-          url: '/clientLists/accounts',
-        }, {
-          id: 'page.LeftSideNav.marketingMaterial',
-          url: '/clientLists/marketingMaterial',
-        }, {
-          id: 'page.LeftSideNav.order',
-          url: '/clientLists/order',
-        }],
-      },
-      {
-        id: 'page.LeftSideNav.priceSetting',
-        url: '/priceSetting',
-      },
-      {
+        id: 'page.LeftSideNav.leads',
+        url: '/leads',
+      }, {
+        id: 'page.LeftSideNav.accounts',
+        url: '/accounts',
+      }, {
+        id: 'page.LeftSideNav.order',
+        url: '/order',
+      }, {
         id: 'page.LeftSideNav.trackOrders',
         url: '/trackOrders',
       },
+      DIVIDER,
+      {
+        id: 'page.LeftSideNav.priceSetting',
+        url: '/priceSetting',
+      }, {
+        id: 'page.LeftSideNav.marketingMaterial',
+        url: '/marketingMaterial',
+      },
     ];
-    const getChildrenTree = (item) => {
+    const getChildrenTree = (item, index) => {
+      if (item === DIVIDER) {
+        return <Menu.Divider key={index} />;
+      }
       if (item.children && item.children.length > 0) {
         return (
           <SubMenu
@@ -80,7 +87,7 @@ class Nav extends React.Component {
 
     const magentoNav = () => magentoNavObj.map((item, index) => {
       if (item === DIVIDER) {
-        return <Menu.Divider key={index}/>;
+        return <Menu.Divider key={index} />;
       }
       return (
         <Menu.Item key={item.id} className={cx('left-nav-item')}>
@@ -88,21 +95,40 @@ class Nav extends React.Component {
         </Menu.Item>
       );
     });
-    const affliateNav = () => affiliateNavObj.map(item => getChildrenTree(item));
+    const affliateNav = () => affiliateNavObj.map((item, index) => getChildrenTree(item, index));
     // insert affliateNav
-    const menu = magentoNav();
-    menu.splice(AFFLIATE_MENU_INDEX, 0, ...affliateNav());
+    const magentoSubmenu = (
+      <SubMenu
+        title={formatMessage({ id: 'page.LeftSideNav.myAccount' })}
+        key="myAccount"
+        onTitleClick={() => {}}
+      >
+        { magentoNav() }
+      </SubMenu>
+    );
+    const affiliateSubmenu = (
+      <SubMenu
+        title={formatMessage({ id: 'page.LeftSideNav.clientLists' })}
+        key="clientLists"
+        onTitleClick={() => {}}
+      >
+        { affliateNav() }
+      </SubMenu>
+    );
     return (
       <div>
         <Menu
           mode="inline"
           inlineIndent={30}
+          onOpenChange={this.onOpenChange}
+          openKeys={this.state.openKeys}
           className={classNames(cx('left-side-nav'), 'left-side-nav')}
           defaultSelectedKeys={[location.pathname]}
-          defaultOpenKeys={[getParentUrl(location.pathname)]}
+          defaultOpenKeys={["clientLists"]}
           selectedKeys={[location.pathname]}
         >
-          { menu }
+          { magentoSubmenu }
+          { affiliateSubmenu }
         </Menu>
       </div>
     );
