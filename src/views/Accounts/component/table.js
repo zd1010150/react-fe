@@ -140,7 +140,7 @@ class accountsTable extends React.Component {
             return (
               <span>
                 <Divider type="vertical" />
-                <Link to={`/clientLists/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Leads.order' })}</Link>
+                <Link to={`/order?userId=${record.id}`} className="a-btn" onClick={() => { this.props.setOrderUser(record); }}>{formatMessage({ id: 'page.Leads.order' })}</Link>
               </span>
             );
           } return (<span><Divider type="vertical" /><Tooltip title={formatMessage({ id: 'page.Leads.complementAddressTip' })}><Icon type="warning" className="text-danger" /></Tooltip></span>);

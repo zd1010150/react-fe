@@ -29,7 +29,7 @@ class orderTable extends React.Component {
       getTotalLogisticFee(logisticType, deliveryOrders);
     }
     this.props.setOrderUser(develiverOrder.receiver);
-    this.props.history.push(`/clientLists/order?needCreateBatchCreate=false&deliveryOrderId=${develiverOrder.id}`);
+    this.props.history.push(`/order?needCreateBatchCreate=false&deliveryOrderId=${develiverOrder.id}`);
   }
 
   render() {
