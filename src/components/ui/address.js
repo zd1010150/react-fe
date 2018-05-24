@@ -9,9 +9,7 @@ const address = ({
 }) => {
   const countryObj = countries.filter(c => c.code === country);
   const countryName = _.isEmpty(countryObj) ? '' : countryObj[0].name;
-  debugger;
   if (country === CHINA_CODE) {
-
     const filteredProvince = provinces.filter(p => Number(p.id) === Number(state));
     if (_.isEmpty(filteredProvince)) {
       state = '';
