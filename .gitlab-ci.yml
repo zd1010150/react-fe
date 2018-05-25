@@ -81,7 +81,7 @@ deploy_production:
   stage: deploy
   # environment: production
   script:
-    - ssh -T ci_deployer@$PRODUCTION_SERVER "sudo vpnc my_tunnel;export CI_BUILD_REF=\"production\"; cd $PRODUCTION_PROJECT_ROOT; composer ci:deploy;sudo vpnc-disconnect"
+    - ssh -T ci_deployer@$PRODUCTION_SERVER "export CI_BUILD_REF=\"production\"; cd $PRODUCTION_PROJECT_ROOT; composer ci:deploy"
   only:
     - /^production$/
   when: on_success
