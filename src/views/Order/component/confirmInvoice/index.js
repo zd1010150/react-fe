@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getLocationOfAbsoluteUrl } from 'utils/url';
 import { connect } from 'react-redux';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import { Currency } from 'components/ui/index';
 import { intlShape, injectIntl } from 'react-intl';
@@ -29,51 +28,96 @@ class confirmInvoiceView extends React.Component {
     pay(formData);
   }
   render() {
-    let totalShippingCost = 0;
-    let totalAUDShippingCost = 0;
     const {
       goPreviousStep,
       invoices,
       receiver,
       intl,
+      freightId,
     } = this.props;
     const { formatMessage } = intl;
-
-
-    const invoicesEl = invoices.map((item) => {
-      const deliveryOrder = item.delivery_order;
-      const totalQuantity = deliveryOrder.items.reduce((sum, i) => {
-        sum += i.quantity;
-        return sum;
-      }, 0);
-      totalShippingCost += Number(item.shipping_cost);
-      totalAUDShippingCost += Number(item.aud_shipping_cost);
+    let totalShippingCost = 0;
+    let totalAUDShippingCost = 0;
+    const invoicesEl = (() => {
+      let totalQuantity = 0;
+      let totalInvoiceShippingCost = 0;
+      let totalGoodsCost = 0;
+      const goodsEl = invoices.map((item) => {
+        const deliveryOrder = item.delivery_order;
+        deliveryOrder.items.forEach(i => {
+          totalQuantity += Number(i.quantity);
+        });
+        totalInvoiceShippingCost = Number(item.actual_shipping_cost); // 屏蔽了分单功能，并且没有把运费平摊到每个订单里面，所以这个地方的运费就是总运费
+        totalShippingCost += Number(item.shipping_cost);
+        totalAUDShippingCost += Number(item.aud_shipping_cost);
+        totalGoodsCost += Number(item.amount);
+        return (
+          <Invoice
+            key={deliveryOrder.order_number}
+            items={deliveryOrder.items}
+          />
+        );
+      });
       return (
-        <Invoice
-          key={deliveryOrder.order_number}
-          orderNumber={deliveryOrder.order_number}
-          trackingNumber={deliveryOrder.tracking_number}
-          freightSetting={item.freight_setting_id}
-          items={deliveryOrder.items}
-          totalPrice={item.amount}
-          totalQuantity={totalQuantity}
-          orderTime={deliveryOrder.created_at}
-          shippingCost={item.shipping_cost}
-        />
+        <div className="section pl-xxlg pb-xxlg pr-xxlg bg-white">
+          <div className="section-header section-header-md">
+            <div className="section-header-left title">
+              {formatMessage({ id: 'page.Order.myGoods' })}
+            </div>
+            <div className={classNames('section-header-right', cx('invoice-sub-title'))} >
+              {formatMessage({ id: 'page.Order.totalQuantity' })}: {totalQuantity}
+            </div>
+          </div>
+          <div className={classNames('section-content section-content-border', cx('invoice-table'))}>
+            { goodsEl }
+          </div>
+          <div className="section-footer pt-xlg">
+            <ul className={classNames('invoice-ul', cx('invoice-total-ul'))}>
+              <li >
+                <div className="trade-info-dt">
+                  { formatMessage({ id: 'page.Order.goodsCost' })}:
+                </div>
+                <div className="trade-info-dd">
+                  <Currency value={totalGoodsCost} />
+                </div>
+              </li>
+              <li >
+                <div className="trade-info-dt">
+                  { formatMessage({ id: 'page.Order.invoiceShippingCost' })}
+                  <Tooltip title={formatMessage({ id: 'page.Order.invoiceFreightFeeTip' })} placement="bottom">
+                    <Icon type="question-circle-o" className="pl-sm" />
+                  </Tooltip>:
+                </div>
+                <div className="trade-info-dd">
+                  <Currency value={totalInvoiceShippingCost} />
+                </div>
+              </li>
+              <li>
+                <div className="trade-info-dt">
+                  { formatMessage({ id: 'global.properNouns.total' })}:
+                </div>
+                <div className="trade-info-dd">
+                  <Currency value={totalGoodsCost + totalInvoiceShippingCost} />
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       );
-    });
+    })();
 
     return (
       <div className={classNames('block', 'invoice-block', 'section-confirm-invoice')}>
         <div className="block-content">
-          <Address {...receiver} />
+          <Address {...receiver} freightSetting={freightId} />
           {invoicesEl}
-          <p className={classNames('invoice-total-shipping-cost', 'text-primary')}>
-            {formatMessage({ id: 'global.properNouns.goods.shippingCost' })}:
+          <p className={classNames('invoice-total-shipping-cost', 'text-primary', 'pr-xxlg pt-xlg')}>
+            {formatMessage({ id: 'page.Order.shouldPayLogisiticFee' })}
+            :
             <strong><Currency value={totalShippingCost} /></strong>
           </p>
         </div>
-        <div className={classNames('block-footer', 'invoice-block-footer')}>
+        <div className={classNames('block-footer', 'invoice-block-footer pr-xxlg')}>
           <Button
             className={cx('order-step-previous-btn')}
             onClick={() => {
