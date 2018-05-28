@@ -1,13 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { MagentoStaticLink } from 'components/ui/index';
-import { Icon } from 'antd';
+import { Icon, Avatar, Tooltip } from 'antd';
 import classNames from 'classnames/bind';
 import styles from '../Footer.less';
-
-import payment from 'assets/images/payment.png';
+import logo from 'assets/images/logo.png';
+import chineseLogo from 'assets/images/chinese-affiliate.png';
+import wechatQR from 'assets/images/wechat-qr.jpg';
+import weiboQR from 'assets/images/weibo-qr.png';
 
 const cx = classNames.bind(styles);
-const Footer = () => {
+const Footer = ({ language }) => {
   const footerImformation = [
     { id: 'global.magento.footerInformation.return', href: '/return' },
     { id: 'global.magento.footerInformation.delivery', href: '/delivery' },
@@ -20,20 +24,19 @@ const Footer = () => {
   return (
     <div className={classNames('row', cx('footer-container'))}>
       <div className="col-sm-3 col-md-3">
+        <img className={cx(`${language}-logo`)} src={language === 'zh' ? chineseLogo : logo} alt=" breakable logo" />
         <div className="section">
           <div className="section-title">
-            <h2 className={cx('footer-title')}>About Breakable</h2>
+           Follow US
           </div>
           <div className="section-content">
             <p>
-              Founded in Sydney Australia in 2017, Breakable provides an end to end e-commerce
-              and fast goods supply solutions to retailers and consumers Australia
-              wide and globally.
-              Breakable prides itself in delivering the highest standards in the procurement
-              of Australia’s leading Beauty,
-              Healthcare, Skin Care, and Baby Products, ensuring that only the
-              best products are delivered directly to our
-              end-consumers.
+              <Tooltip title={<img src={wechatQR} className={cx('qr-code')} />}>
+                <Avatar style={{ backgroundColor: '#4bc84b', margin: '10px' }} icon="wechat" />
+              </Tooltip>
+              <Tooltip title={<img src={weiboQR} className={cx('qr-code')} />}>
+                <Avatar style={{ backgroundColor: '#e94b5f',margin: '10px' }} icon="weibo" />
+              </Tooltip>
             </p>
           </div>
         </div>
@@ -81,7 +84,7 @@ const Footer = () => {
             <p>
               <Icon type="mail" /> <a href="mailto:info@breakable.com">info@breakable.com</a>
             </p>
-            <p><img src={payment} alt = ""/></p>
+            <p />
           </div>
         </div>
 
@@ -89,4 +92,10 @@ const Footer = () => {
     </div>
   );
 };
-export default Footer;
+Footer.propTypes = {
+  language: PropTypes.string.isRequired,
+};
+const mapStateToProps = ({ global }) => ({
+  language: global.language,
+});
+export default connect(mapStateToProps)(Footer);

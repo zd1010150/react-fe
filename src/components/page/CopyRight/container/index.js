@@ -1,29 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import payment from 'assets/images/payment.png';
 import classNames from 'classnames/bind';
 import styles from '../Copyright.less';
-import { getAbsolutePath } from 'config/magento.config';
-import logo from 'assets/images/logo.png';
-import chineseLogo from 'assets/images/chinese-affiliate.png';
+
 
 const cx = classNames.bind(styles);
-const CopyRight = ({language}) => (
+const CopyRight = () => (
   <div className={classNames('row', cx('copyright-container'))}>
     <div className={classNames('col-sm-6', 'text-left', cx('copyright'))}>
       <small>Copyright © 2017 Breakable.</small>
     </div>
     <div className="col-sm-6 text-right">
-      <a href={getAbsolutePath('/', language)}>
-       <img className={cx(`${language}-logo`)} src={language === 'zh' ? chineseLogo : logo} alt=" breakable logo" />
-      </a>
+      <img src={payment} alt="" />
     </div>
   </div>
 );
-CopyRight.propTypes = {
-  language: PropTypes.string.isRequired,
-}
-const mapStateToProps = ({ global }) => ({
-  language: global.language,
-})
-export default connect(mapStateToProps)(CopyRight);
+
+export default CopyRight;
