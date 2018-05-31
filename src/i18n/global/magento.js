@@ -63,15 +63,20 @@ export default {
       newsletterSubscription: '订阅产品信息',
       documents: '我的文档',
     },
+    footerTitle: {
+      followUs: '关注我们',
+      information: '相关信息',
+      contactUs: '联系我们',
+      companyInfo: '公司简介',
+    },
     footerInformation: {
-      return: '回馈',
+      aboutUs: '关于我们',
+      returns: '退款退货',
       delivery: '派送信息',
+      privacy: '隐私保护',
+      security: '安全条款',
     },
-    footerOurOffers: {
-      newProduct: '新产品',
-      topSeller: '热销产品',
-      special: '特别的产品',
-    },
+
   },
   en: {
     topNav: {
@@ -137,14 +142,18 @@ export default {
       newsletterSubscription: 'Newsletter Subscription',
       documents: 'Documents',
     },
-    footerInformation: {
-      return: 'Return',
-      delivery: 'Delivery',
+    footerTitle: {
+      followUs: 'Follow Us',
+      information: 'Information',
+      contactUs: 'Contact Us',
+      companyInfo: 'Company Video',
     },
-    footerOurOffers: {
-      newProduct: 'New Product',
-      topSeller: 'Top Seller',
-      special: 'Special',
+    footerInformation: {
+      aboutUs: 'About Us',
+      returns: 'Returns',
+      delivery: 'Delivery',
+      privacy: 'Privacy',
+      security: 'Security',
     },
   },
 };
