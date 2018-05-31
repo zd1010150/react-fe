@@ -1,6 +1,6 @@
 export default {
   zh: {
-    leads: '潜在客户',
+    leads: '添加客户信息',
     accounts: '有效账户',
     marketingMaterial: '营销策略',
     order: '订单',
@@ -9,7 +9,7 @@ export default {
     trackOrderDetail: '发货单详情',
   },
   en: {
-    leads: 'Leads',
+    leads: 'Add Clients Info',
     accounts: 'Accounts',
     marketingMaterial: 'Marketing Material',
     order: 'Order',
