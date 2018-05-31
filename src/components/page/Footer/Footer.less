@@ -1,5 +1,8 @@
 @import "~assets/less/theme.less";
-
+.black-link{
+  color: @text-color;
+  line-height: 2em;
+}
 .footer-container{
   max-width: @brk-page-max-width;
   margin: 0 auto;
@@ -10,14 +13,32 @@
   padding:0px;
   margin:0px;
 }
+
 .footer-title{
   font-weight: 300;
+  padding: 10px 0px;
+  margin-bottom: 20px;
+  position: relative;
+  &:after{
+    position: absolute;
+    content: '';
+    left: 0px;
+    bottom:0px;
+    width: 19%;
+    height:2px;
+    background-color: @primary-color;
+  }
+}
+.logo-title{
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 .en-logo{
-  width: 100px;
+  width: 160px;
+  padding-top: 17px;
 }
 .zh-logo{
-  width: 100px;
+  width: 160px;
 }
 .qr-code{
   width: 150px;
