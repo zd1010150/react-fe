@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'antd';
+import { Button, Icon } from 'antd';
 import { intlShape, injectIntl } from 'react-intl';
 import { LeadsAndAccountsEditAddDialog } from 'components/page';
 
@@ -24,7 +24,7 @@ class add extends React.Component {
     const { addLeads } = this.props;
     return (
       <div>
-        <Button type="primary" onClick={this.showModal}>{ formatMessage({ id: 'global.ui.button.addBtn' }, { actionType: formatMessage({ id: 'global.properNouns.leads' }) })}</Button>
+        <Button type="primary" onClick={this.showModal}><Icon type="plus" />{ formatMessage({ id: 'global.ui.button.addBtn' }) }</Button>
         <LeadsAndAccountsEditAddDialog visible={this.state.dialogVisible} onClose={() => { this.closeDialog(); }} add={addLeads} userType="Leads" operatorType={operateType.ADD} />
       </div>
     );
