@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Menu, Dropdown, Icon } from 'antd';
 import Cookie from 'js-cookie';
 import Base64 from 'base-64';
+import { Link } from 'react-router-dom';
 import { MagentoDomain } from 'config/magento.config';
 import { intlShape, injectIntl } from 'react-intl';
 import { MagentoStaticLink, Username } from 'components/ui/index';
@@ -14,12 +15,14 @@ const operatorView = ({
 }) => {
   const { formatMessage } = intl;
   const operations = [
-    { id: 'global.magento.topOperations.myAccount', href: '/customer/account/' },
     { id: 'global.magento.leftNav.myWishList', href: '/wishlist' },
   ];
   const uenc = Base64.encode(MagentoDomain+"/").replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, ',');
   const menu = (
     <Menu>
+      <Menu.Item>
+        <Link to="/leads">{formatMessage({ id: 'page.LeftSideNav.clientLists' })}</Link>
+      </Menu.Item>
       { operations.map((item, index) => (
         <Menu.Item key={index}>
           <MagentoStaticLink titleId={item.id} href={item.href} />
