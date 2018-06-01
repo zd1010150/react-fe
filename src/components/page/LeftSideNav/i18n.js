@@ -1,7 +1,7 @@
 export default {
   zh: {
     clientLists: '管理我的加盟店',
-    leads: '潜在客户',
+    leads: '添加客户信息',
     accounts: '有效账户',
     marketingMaterial: '营销策略',
     order: '给客户下订单',
@@ -11,7 +11,7 @@ export default {
   },
   en: {
     clientLists: 'Affiliate Operation',
-    leads: 'Leads',
+    leads: 'Add Clients Info',
     accounts: 'Accounts',
     marketingMaterial: 'Marketing Material',
     order: 'Send Goods',
