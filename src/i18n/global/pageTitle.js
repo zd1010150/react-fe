@@ -2,6 +2,7 @@ export default {
   zh: {
     leads: '添加客户信息',
     accounts: '有效账户',
+    inventoryAffiliate: '库存',
     marketingMaterial: '营销策略',
     order: '订单',
     priceSetting: '价格设定',
@@ -11,6 +12,7 @@ export default {
   en: {
     leads: 'Add Clients Info',
     accounts: 'Accounts',
+    inventoryAffiliate: 'Inventory Affiliate',
     marketingMaterial: 'Marketing Material',
     order: 'Order',
     priceSetting: 'Price Setting',
