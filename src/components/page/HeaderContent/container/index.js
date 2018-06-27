@@ -27,7 +27,7 @@ headerContent.propTypes = {
 };
 const mapStateToProps = ({ global, ui }) => ({
   language: global.language,
-  count: ui.headerContent.count,
+  count: ui.count,
 });
 
 
