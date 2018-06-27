@@ -11,11 +11,11 @@ import styles from '../HeaderContent.less';
 
 const cx = classNames.bind(styles);
 
-const headerContent = ({ language }) => (
+const headerContent = ({ language, count }) => (
   <div className={cx('header-content-wrapper')}>
     <Logo language={language} />
     <div className={cx('right-wrapper')}>
-      <MiniCart language={language} />
+      <MiniCart language={language} count={count} />
       <Search language={language} />
     </div>
 
@@ -25,8 +25,9 @@ const headerContent = ({ language }) => (
 headerContent.propTypes = {
   language: PropTypes.string.isRequired,
 };
-const mapStateToProps = ({ global }) => ({
+const mapStateToProps = ({ global, ui }) => ({
   language: global.language,
+  count: ui.headerContent.count,
 });
 
 

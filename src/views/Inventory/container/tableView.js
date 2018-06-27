@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Button, Input, Icon, Popover, Tooltip } from 'antd';
+import { Table, Button, Input, Icon, Popover, Tooltip, notification } from 'antd';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { intlShape, injectIntl } from 'react-intl';
@@ -9,6 +9,7 @@ import { CHINESE_CODE } from 'config/app.config';
 import { Currency } from 'components/ui/index';
 import { MagentoProductImgPrefix } from 'config/magento.config';
 import { queryByPaging, queryBySearchKey, setSearchKey, buy } from '../flow/action';
+import { addCartCount } from 'components/page/HeaderContent/flow/action';
 import styles from '../index.less';
 
 const cx = classNames.bind(styles);
@@ -18,7 +19,15 @@ class TableView extends React.Component {
     this.props.queryByPaging();
   }
   buy = (record) => {
-    this.props.buy(record.product.sku, 1);
+    const { buy, addCartCount, intl } = this.props;
+    const { formatMessage } = intl;
+    buy(record.product.sku, 1, (productName) => {
+      addCartCount();
+      notification.open({
+        icon: 'check-circle-o',
+        message: formatMessage({ id: 'page.Inventory.buySuccessTip' }, { name: productName }),
+      });
+    });
   }
   search = (value) => {
     const { queryBySearchKey, setSearchKey } = this.props;
@@ -97,7 +106,7 @@ class TableView extends React.Component {
       render: (text, record) => (<Button onClick={() => { this.buy(record); }} size="small" type="primary">
         <Icon type="shopping-cart" />
         {formatMessage({ id: 'page.Inventory.restock' })}
-        </Button>),
+                                 </Button>),
     }];
     return (
       <section>
@@ -134,6 +143,7 @@ TableView.propTypes = {
   queryBySearchKey: PropTypes.func.isRequired,
   setSearchKey: PropTypes.func.isRequired,
   buy: PropTypes.func.isRequired,
+  addCartCount: PropTypes.func.isRequired,
   inventoryDataTablePagination: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({ inventory }) => ({
@@ -145,6 +155,7 @@ const mapDispatchToProp = {
   queryBySearchKey,
   setSearchKey,
   buy,
+  addCartCount,
 };
 
 export default connect(mapStateToProps, mapDispatchToProp)(injectIntl(TableView));
