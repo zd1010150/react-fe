@@ -43,7 +43,7 @@ const updateSection = (cb, productName) => dispatch =>
     }
   });
 export const buy = (sku, quantity, cb) => dispatch => post('/rest/V1/carts/mine', {}, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((quoteId) => {
-  if (`${quoteId}`.length > 0) {
+  if (quoteId && `${quoteId}`.length > 0) {
     const params = {
       cartItem: {
         sku,
