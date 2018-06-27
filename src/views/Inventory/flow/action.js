@@ -52,7 +52,7 @@ export const buy = (sku, quantity, cb) => dispatch => post('/rest/V1/carts/mine'
       },
     };
     post('/rest/V1/carts/mine/items', params, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data2) => {
-      if (data2 && `${data2.item_id}`.length > 0) {
+      if (data2 && (`${data2.name}`.length > 0)) {
         updateSection(cb, data2.name);
       }
     });
