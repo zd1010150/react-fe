@@ -23,8 +23,7 @@ class TableView extends React.Component {
     const { formatMessage } = intl;
     buy(record.product.sku, 1, (productName) => {
       addCartCount();
-      notification.open({
-        icon: 'check-circle-o',
+      notification.success({
         message: formatMessage({ id: 'page.Inventory.buySuccessTip' }, { name: productName }),
       });
     });
