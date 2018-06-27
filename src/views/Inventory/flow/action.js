@@ -36,7 +36,7 @@ export const queryBySearchKey = searchKey => (dispatch, getState) => {
   dispatch(setSearchKey(searchKey));
   return fetchInventory(perPage, 1, searchKey, dispatch);
 };
-export const buy = (sku, quantity, cb) => dispatch => post('/rest/default/V1/carts/mine', {}, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data) => {
+export const buy = (sku, quantity, cb) => dispatch => post('/rest/V1/carts/mine', {}, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data) => {
   debugger;
   if (data && `${data.quoteId}`.length > 0) {
     const params = {
@@ -46,7 +46,7 @@ export const buy = (sku, quantity, cb) => dispatch => post('/rest/default/V1/car
         quote_id: data.quoteId,
       },
     };
-    post('rest/default/V1/carts/mine/items', params, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data2) => {
+    post('/rest/V1/carts/mine/items', params, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data2) => {
       debugger;
       if (data2 && `${data2.item_id}`.length > 0) {
         if (_.isFunction(cb)) {
