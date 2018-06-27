@@ -103,7 +103,6 @@ class TableView extends React.Component {
       key: 'action',
       width: 100,
       render: (text, record) => (<Button onClick={() => { this.buy(record); }} size="small" type="primary">
-        <Icon type="shopping-cart" />
         {formatMessage({ id: 'page.Inventory.restock' })}
                                  </Button>),
     }];
