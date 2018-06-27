@@ -12,7 +12,7 @@ export default {
   en: {
     leads: 'Add Clients Info',
     accounts: 'Accounts',
-    inventoryAffiliate: 'Inventory Affiliate',
+    inventoryAffiliate: 'Affiliate Inventory',
     marketingMaterial: 'Marketing Material',
     order: 'Order',
     priceSetting: 'Price Setting',
