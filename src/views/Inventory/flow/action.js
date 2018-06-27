@@ -36,6 +36,12 @@ export const queryBySearchKey = searchKey => (dispatch, getState) => {
   dispatch(setSearchKey(searchKey));
   return fetchInventory(perPage, 1, searchKey, dispatch);
 };
+const updateSection = (cb, productName) => dispatch =>
+  post('/customer/section/load', { sections: 'cart,messages', update_section_id: true, _: new Date().value }, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then(() => {
+    if (_.isFunction(cb)) {
+      cb(productName);
+    }
+  });
 export const buy = (sku, quantity, cb) => dispatch => post('/rest/V1/carts/mine', {}, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((quoteId) => {
   if (`${quoteId}`.length > 0) {
     const params = {
@@ -47,9 +53,7 @@ export const buy = (sku, quantity, cb) => dispatch => post('/rest/V1/carts/mine'
     };
     post('/rest/V1/carts/mine/items', params, dispatch, MagentoDomain, { 'X-Requested-With': 'XMLHttpRequest' }).then((data2) => {
       if (data2 && `${data2.item_id}`.length > 0) {
-        if (_.isFunction(cb)) {
-          cb(data2.name);
-        }
+        updateSection(cb, data2.name);
       }
     });
   }

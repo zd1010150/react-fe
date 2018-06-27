@@ -10,6 +10,7 @@ export default {
     currentCost: '商品总值',
     restock: '立即购买',
     searchPlaceHolder: '输入商品名/sku搜索...',
+    buySuccessTip: '成功将{name}添加至购物车',
   },
   en: {
     productName: 'Product Name',
@@ -22,5 +23,6 @@ export default {
     currentCost: 'Current Cost',
     restock: 'Stock Now',
     searchPlaceHolder: 'Input the product name / sku to search...',
+    buySuccessTip: 'Add {name} to cart successful!',
   },
 };
