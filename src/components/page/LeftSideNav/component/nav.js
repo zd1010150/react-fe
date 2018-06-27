@@ -48,6 +48,9 @@ class Nav extends React.Component {
         id: 'page.LeftSideNav.accounts',
         url: '/accounts',
       }, {
+        id: 'page.LeftSideNav.inventory',
+        url: '/inventory',
+      }, {
         id: 'page.LeftSideNav.order',
         url: '/order',
       }, {

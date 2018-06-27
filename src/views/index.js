@@ -6,6 +6,7 @@ import MarketingMaterials from './MarketingMaterials/index';
 import PriceSetting from './PriceSetting/index';
 import TrackOrders from './TrackOrders/index';
 import Error from './Error/index';
+import Inventory from './Inventory/index';
 
 export {
   Order,
@@ -15,4 +16,5 @@ export {
   PriceSetting,
   TrackOrders,
   Error,
+  Inventory,
 };
