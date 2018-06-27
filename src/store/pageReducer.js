@@ -6,6 +6,7 @@ import trackOrders from 'views/TrackOrders/flow/reducer';
 import leads from 'views/Leads/flow/reducer';
 import accounts from 'views/Accounts/flow/reducer';
 import cms from 'views/CMS/flow/reducer';
+import inventory from 'views/Inventory/flow/reducer';
 
 export default {
   order,
@@ -15,4 +16,5 @@ export default {
   leads,
   accounts,
   cms,
+  inventory,
 };
