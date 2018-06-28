@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button, Input, Icon, Popover, Tooltip, notification } from 'antd';
@@ -97,7 +96,7 @@ class TableView extends React.Component {
       title: formatMessage({ id: 'page.Inventory.currentCost' }),
       key: 'currentCost',
       width: 150,
-      render: (text, record) => <Currency value={record.total_value} />,
+      render: (text, record) => <Currency value={record.current_total_value} />,
     }, {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
