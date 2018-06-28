@@ -72,7 +72,7 @@ class TableView extends React.Component {
       title: formatMessage({ id: 'page.Inventory.lastStocking' }),
       key: 'lastStocking',
       width: 150,
-      dataIndex: 'product.last_stocking_date',
+      dataIndex: 'last_stocking_date',
     }, {
       title: formatMessage({ id: 'page.Inventory.currentInventory' }),
       dataIndex: 'current_quantity',
@@ -80,12 +80,12 @@ class TableView extends React.Component {
       width: 150,
     }, {
       title: formatMessage({ id: 'page.Inventory.soldDate' }),
-      dataIndex: 'product.last_sold_date',
+      dataIndex: 'last_sold_date',
       key: 'soldDate',
       width: 150,
     }, {
       title: formatMessage({ id: 'page.Inventory.soldItems' }),
-      dataIndex: 'product.sold_items',
+      dataIndex: 'sold_items',
       key: 'soldItems',
       width: 150,
     }, {
