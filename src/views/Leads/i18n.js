@@ -13,6 +13,7 @@ export default {
     deleteUser: '删除',
     order: '发货',
     complementAddressTip: '完善地址信息，才能进行发货',
+    clientDisabled: '该用户已经被禁用',
   },
   en: {
     uploadIDFront: 'Upload ID Front',
@@ -28,5 +29,6 @@ export default {
     deleteUser: 'Delete',
     order: 'Send Goods',
     complementAddressTip: 'Complete the address info before send goods',
+    clientDisabled: 'Client has been disabled',
   },
 };
