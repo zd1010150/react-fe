@@ -35,15 +35,17 @@ const layout = () => (
         </div>
       </div>
     </main>
-    <footer className="page-footer">
-      <div className="footer content">
-        <Footer />
-      </div>
+    <section className="footer-wrapper">
+      <footer className="page-footer">
+        <div className="footer content">
+          <Footer />
+        </div>
 
-    </footer>
-    <div className="copyright">
-      <CopyRight />
-    </div>
+      </footer>
+      <div className="copyright">
+        <CopyRight />
+      </div>
+    </section>
   </div>
 );
 

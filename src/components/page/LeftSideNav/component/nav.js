@@ -34,7 +34,6 @@ class Nav extends React.Component {
       DIVIDER,
       { id: 'global.magento.leftNav.accountInformation', url: '/customer/account/edit/' },
       { id: 'global.magento.leftNav.addressBook', url: '/customer/address/new/' },
-      { id: 'global.magento.leftNav.documents', url: '/customer/document/new/' },
       { id: 'global.magento.leftNav.storedPaymentMethods', url: '/vault/cards/listaction/' },
       DIVIDER,
       { id: 'global.magento.leftNav.myProductsReviews', url: '/review/customer/' },
@@ -48,6 +47,9 @@ class Nav extends React.Component {
       }, {
         id: 'page.LeftSideNav.accounts',
         url: '/accounts',
+      }, {
+        id: 'page.LeftSideNav.inventory',
+        url: '/inventory',
       }, {
         id: 'page.LeftSideNav.order',
         url: '/order',
