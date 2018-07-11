@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { intlShape, injectIntl } from 'react-intl';
-import { Table, Button, Icon } from 'antd';
+import { Table, Button, Icon, Tooltip} from 'antd';
 import { Address, Username } from 'components/ui/index';
 
 const table = ({ intl, users, setSeletedUser, queryByPaging, chooseUserTablePagination }) => {
@@ -35,9 +35,22 @@ const table = ({ intl, users, setSeletedUser, queryByPaging, chooseUserTablePagi
     render: (text, record) => {
       const enable = (!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code));
       if (enable) {
+        if (!record.enabled) {
+          return (
+            <Tooltip title={formatMessage({ id: 'page.Leads.clientDisabled' })}>
+              <Button
+                type="primary"
+                size="small"
+                disabled
+              >{formatMessage({ id: 'global.ui.button.select' })}
+              </Button>
+            </Tooltip>
+          );
+        }
         return (
           <span>
             <Button
+              type="primary"
               size="small"
               onClick={() => {
               setSeletedUser(record);
