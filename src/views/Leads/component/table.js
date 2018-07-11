@@ -126,6 +126,14 @@ class leadsTable extends React.Component {
 
         const sendGoodsBtn = () => {
           if ((!_.isEmpty(record.street)) && (!_.isEmpty(record.city)) && (!_.isEmpty(record.state)) && (!_.isEmpty(record.country)) && (!_.isEmpty(record.zip_code))) {
+            if (!record.enabled) {
+              return (
+                <Tooltip title={formatMessage({ id: 'page.Leads.clientDisabled' })}>
+                  <Divider type="vertical" />
+                  <a href="javascript:void(0)" className="a-btn disabled">{formatMessage({ id: 'page.Leads.order' })}</a>
+                </Tooltip>
+              );
+            }
             return (
               <span>
                 <Divider type="vertical" />
