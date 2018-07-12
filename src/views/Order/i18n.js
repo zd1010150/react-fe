@@ -32,6 +32,7 @@ export default {
     reOrderTip: '返回上一步会删除当前所有选择的商品，重新下单，你确定继续？',
     modifyFreightTip: '点击编辑，可修改运费价格，该价格会显示在客户发票中',
     invoiceFreightFeeTip: '显示在客户发票中的运费',
+    addCartTip: '加入购物车',
   },
   en: {
     chooseUser: 'Choose User',
@@ -66,5 +67,6 @@ export default {
     reOrderTip: 'Go back will delete the current order,are you sure continue ?',
     modifyFreightTip: 'Click here to edit freight charges. The freight charges will be shown at client\'s invoice.',
     invoiceFreightFeeTip: 'The freight charges will be shown at client\'s invoice.',
+    addCartTip: 'Add Goods to Cart',
   },
 };
