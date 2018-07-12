@@ -36,7 +36,7 @@ class goods extends React.Component {
       title: formatMessage({ id: 'global.properNouns.goods.name' }),
       key: 'name',
       width: 120,
-      render: (text, record) => <p className={cx('goods-product-name')}>{record.name}<br /><small className={cx('goods-product-sku')}>{record.sku}</small></p>,
+      render: (text, record) => <Tooltip title={record.name}><p className={cx('goods-product-name')}>{record.name}<br /><small className={cx('goods-product-sku')}>{record.sku}</small></p></Tooltip>,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.picture' }),
       key: 'picture',
@@ -51,7 +51,7 @@ class goods extends React.Component {
       title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
       key: 'unitPrice',
       render: (text, record) => <Currency value={record.unitPrice} />,
-      width: 80,
+      width: 60,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
       key: 'recommendedPrice',
@@ -73,7 +73,7 @@ class goods extends React.Component {
     {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
-      width: 150,
+      width: 100,
       render: (text, record) => (
         <span>
           <Tooltip title={formatMessage({ id: 'page.Order.addCartTip' })}>
