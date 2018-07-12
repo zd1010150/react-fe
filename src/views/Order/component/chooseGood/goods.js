@@ -1,7 +1,7 @@
 import React from 'react';
 // import 'rc-input-number/assets/index.css';
 import PropTypes from 'prop-types';
-import { Button, Table, Modal } from 'antd';
+import { Button, Table, Modal, Tooltip } from 'antd';
 import { InputNumber, Currency } from 'components/ui/index';
 // import InputNumber from 'rc-input-number';
 import { intlShape, injectIntl } from 'react-intl';
@@ -45,7 +45,7 @@ class goods extends React.Component {
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
       dataIndex: 'availableQuantity',
-      width: 80,
+      width: 60,
       key: 'availableQuantity',
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
@@ -76,7 +76,9 @@ class goods extends React.Component {
       width: 150,
       render: (text, record) => (
         <span>
-          <Button size="small" type="primary" shape="circle" onClick={() => { addGoodsToCart(record); }} icon="shopping-cart" />
+          <Tooltip title={formatMessage({ id: 'page.Order.addCartTip' })}>
+            <Button size="small" type="primary" shape="circle" onClick={() => { addGoodsToCart(record); }} icon="shopping-cart" />
+          </Tooltip>
         </span>
       ),
     }];
