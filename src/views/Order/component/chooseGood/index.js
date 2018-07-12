@@ -93,7 +93,7 @@ class chooseGoodView extends React.Component {
     return (
       <div className={cx('choose-good-block')}>
         <Layout className={cx('choose-good-block-content')}>
-          <Content>
+          <Content width={610} className={cx('choose-goods-table-wrapper')}>
             <Search queryGoods={queryBySearchKey} />
             <Goods
               goodsData={goods}

@@ -35,18 +35,16 @@ class goods extends React.Component {
     const columns = [{
       title: formatMessage({ id: 'global.properNouns.goods.name' }),
       key: 'name',
-      width: 150,
+      width: 120,
       render: (text, record) => <p className={cx('goods-product-name')}>{record.name}<br /><small className={cx('goods-product-sku')}>{record.sku}</small></p>,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.picture' }),
       key: 'picture',
-      width: 50,
       render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" onClick={() => this.displayImg(record.picture)} />,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
       dataIndex: 'availableQuantity',
       key: 'availableQuantity',
-      width: 50,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
       key: 'unitPrice',
@@ -60,7 +58,7 @@ class goods extends React.Component {
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
       key: 'orderQuantity',
-      width: 150,
+      width: 100,
       render: (text, record) => (<InputNumber
         min={0}
         value={record.selectingQuantity}
@@ -73,7 +71,7 @@ class goods extends React.Component {
     {
       title: formatMessage({ id: 'global.ui.table.action' }),
       key: 'action',
-      width: 100,
+      width: 150,
       render: (text, record) => (
         <span>
           <Button size="small" type="primary" shape="circle" onClick={() => { addGoodsToCart(record); }} icon="shopping-cart" />
@@ -93,7 +91,7 @@ class goods extends React.Component {
     return (
       <div className="block">
         <div className="block-content">
-          <Table columns={columns} dataSource={goodsData} pagination={pagination} className="choose-goods-table" rowKey="id" />
+          <Table columns={columns} size="small" dataSource={goodsData} pagination={pagination} className={cx('choose-goods-table')} rowKey="id" />
           <Modal
             title=""
             visible={this.state.isDisplayPreview}
