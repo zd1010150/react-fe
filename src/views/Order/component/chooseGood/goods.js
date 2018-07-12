@@ -40,21 +40,23 @@ class goods extends React.Component {
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.picture' }),
       key: 'picture',
+      width: 50,
       render: (text, record) => <img src={record.picture} alt="goods pic" className="product-thumbnail" onClick={() => this.displayImg(record.picture)} />,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.quantity' }),
       dataIndex: 'availableQuantity',
+      width: 80,
       key: 'availableQuantity',
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.unitPrice' }),
       key: 'unitPrice',
       render: (text, record) => <Currency value={record.unitPrice} />,
-      width: 50,
+      width: 80,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.recommendedPrice' }),
       key: 'recommendedPrice',
       render: (text, record) => <Currency value={record.recommendedPrice} />,
-      width: 50,
+      width: 80,
     }, {
       title: formatMessage({ id: 'global.properNouns.goods.orderQuantity' }),
       key: 'orderQuantity',
