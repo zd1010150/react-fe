@@ -17,8 +17,13 @@ const languageView = ({ intl, onChange, language }) => {
   const menu = (
     <Menu>
       <Menu.Item>
+        
+        <button className={cx('ant-dropdown-link')} onClick={() => onChange(otherLanguage)}>
         <img src={otherLanguage === CHINESE_CODE ? chinese : english} className={cx('language-flag')} alt="language" />
-        <button className={cx('ant-dropdown-link')} onClick={() => onChange(otherLanguage)}>{formatMessage({ id: `global.language.${otherLanguage}` })}</button>
+        &nbsp;&nbsp;
+        
+        {formatMessage({ id: `global.language.${otherLanguage}` })}
+        </button>
       </Menu.Item>
 
 
