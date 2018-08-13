@@ -66,6 +66,7 @@ class PicturesWall extends React.Component {
     return (
       <div style={{ display: 'inline-block' }}>
         <Upload
+          className='upload-wrapper'
           action={`${baseUrl}/affiliate/files`}
           listType="picture-card"
           fileList={fileList}
