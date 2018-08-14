@@ -44,8 +44,8 @@ export default {
       info: '提示',
     },
     upload: {
-      maxSize: '文件最大是2M',
-      errorMax: '你的文件超过了2M,请重新选择',
+      maxSize: '文件最大是5M',
+      errorMax: '你的文件超过了5M,请重新选择',
     },
     tab: {
       addressInfo: '地址信息',
@@ -97,8 +97,8 @@ export default {
       info: '提示',
     },
     upload: {
-      maxSize: 'Maximum file size is 2M',
-      errorMax: 'The file is larger than 2M, please reselect',
+      maxSize: 'Maximum file size is 5M',
+      errorMax: 'The file is larger than 5M, please reselect',
     },
     tab: {
       addressInfo: 'Address Information',
