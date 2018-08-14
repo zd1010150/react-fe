@@ -64,8 +64,9 @@ class PicturesWall extends React.Component {
     );
     const { formatMessage } = this.props.intl;
     return (
-      <div style={{ display: 'inline-block' }}>
+      <div className='upload-wrapper'>
         <Upload
+          className='uploador-wrapper'
           action={`${baseUrl}/affiliate/files`}
           listType="picture-card"
           fileList={fileList}

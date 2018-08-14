@@ -23,7 +23,7 @@ export const CURRENCY_SYMBOL = {
 
 export const URL_PREFIX = '/admin'; // 配置的url前缀，在magento中,本应用的所有的访问路径前缀
 export const SOURCE_URL_DOMAIN= 'https://docs.cloudhubpanel.com/breakable/docs/footer-policy'; // 资源服务器的domain
-export const MAX_UPLOAD_SIZE = 1024 * 1024 * 2; // 上传文件size最大是2M
+export const MAX_UPLOAD_SIZE = 1024 * 1024 * 5; // 上传文件size最大是2M
 
 export const SOCIAL_MEDIA = {
   QQ: 'QQ',
