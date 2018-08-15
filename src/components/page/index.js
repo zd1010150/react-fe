@@ -9,6 +9,7 @@ import Notification from './Notification';
 import IdDialog from './IdDialog';
 import LeadsAndAccountsEditAddDialog from './LeadsAndAccountsEditAddDialog/container/index';
 import ErrorNotification from './ErrorNotification';
+import PageLoading from './pageLoading';
 
 export {
   TopPanel,
@@ -22,5 +23,6 @@ export {
   IdDialog,
   LeadsAndAccountsEditAddDialog,
   ErrorNotification,
+  PageLoading,
 };
 

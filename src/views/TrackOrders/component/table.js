@@ -93,7 +93,7 @@ class orderTable extends React.Component {
                 <Button onClick={() => { this.handlePaymentOrder(record); }} size="small" type="primary">{ formatMessage({ id: 'global.ui.button.pay' }) }</Button>
                 <Divider type="vertical" />
                 <Popconfirm title={formatMessage({ id: 'page.TrackOrders.deleteDeliverOrder' })} onConfirm={() => deleteDeliveryOrder(record.id)} okText={formatMessage({ id: 'global.ui.button.ok' })} cancelText={formatMessage({ id: 'global.ui.button.cancel' })}>
-                  <Button size="small">{ formatMessage({ id: 'global.ui.button.delete' }) }</Button>
+                  <Button size="small">{ formatMessage({ id: 'global.ui.button.cancel' }) }</Button>
                 </Popconfirm>
                 <Divider type="vertical" />
               </span>

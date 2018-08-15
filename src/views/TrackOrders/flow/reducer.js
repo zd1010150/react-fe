@@ -31,7 +31,7 @@ const trackOrderDataTablePagination = (state = { perPage: 10, currentPage: 1, to
   }
 };
 
-const searchKey = (state = { status: -1, name: '' }, action) => {
+const searchKey = (state = { status: '', name: '' }, action) => {
   switch (action.type) {
     case SET_TRACK_ORDER_SEARCH_KEY:
       return Object.assign({}, state, {
