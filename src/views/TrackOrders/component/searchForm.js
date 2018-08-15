@@ -17,7 +17,7 @@ const searchForm = ({
   const { getFieldDecorator } = form;
   const { formatMessage } = intl;
   const statusSelect = getFieldDecorator('status', { initialValue: defaultStatus })(<Select className={cx('status-select')}>
-    <Option value={-1}>{formatMessage({ id: 'global.ui.select.all' }) }</Option>
+    <Option value=''>{formatMessage({ id: 'global.ui.select.all' }) }</Option>
     {deliveryOrderStatus.map(item => <Option value={item.id} key={item}>{item.name}</Option>)}
   </Select>);
   return (
@@ -49,12 +49,12 @@ const searchForm = ({
   );
 };
 searchForm.defaultProps = {
-  defaultStatus: -1,
+  defaultStatus: '',
 };
 searchForm.propTypes = {
   intl: intlShape.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  defaultStatus: PropTypes.number,
+  defaultStatus: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Form.create()(injectIntl(searchForm));

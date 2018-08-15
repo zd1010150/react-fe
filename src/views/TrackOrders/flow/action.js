@@ -1,4 +1,5 @@
-import { get, httpDelete } from 'store/http/httpAction';
+
+import { get, put } from 'store/http/httpAction';
 import { SET_TRACK_ORDER_DATA, SET_ID_VIEW, SET_TRACK_ORDER_PAGINATION, SET_TRACK_ORDER_SEARCH_KEY, SET_TRACK_ORDER_DETAIL_INFO } from './actionType';
 
 export const setIdViewData = data => ({
@@ -25,7 +26,7 @@ const fetchData = (per_page, page, status, name, dispatch) => get('/affiliate/de
   per_page,
   page,
   search: name,
-}, status > -1 ? { status_id: status } : {}), dispatch).then((data) => {
+}, status !== undefined  && `${status}`.length > 0 ? { status_id: status } : {}), dispatch).then((data) => {
   if (data && data.data && data.meta) {
     dispatch(setTrackOrderData(data.data));
     const { pagination } = data.meta;
@@ -50,8 +51,8 @@ export const setTrackOrderDetailInfo = trackOrder => ({
 });
 
 export const deleteDeliveryOrder = orderid => (dispatch, getState) => {
-  httpDelete(`/affiliate/delivery-orders/${orderid}`, {}, dispatch).then((data) => {
-    if (data.deleted) {
+  put(`/affiliate/delivery-orders/canceled/${orderid}`, {}, dispatch).then((data) => {
+    if (data.canceled) {
       const { trackOrders } = getState();
       const { status, name } = trackOrders.searchKey;
       const { perPage } = trackOrders.trackOrderDataTablePagination;
