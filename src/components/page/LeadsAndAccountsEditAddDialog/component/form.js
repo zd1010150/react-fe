@@ -26,9 +26,20 @@ const formItemLayout = {
     sm: { span: 15 },
   },
 };
+const uploadItemLayout= {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 5 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+}
 
 class userForm extends React.Component {
   state = {
+    checkAddress: this.ifCheckAddress(this.props),
     checkIdNumber: this.ifCheckIDNumber(this.props),
     selectedState: '',
     selectedCity: '',
@@ -42,18 +53,19 @@ class userForm extends React.Component {
       this.initStateAndCity(nextProps);
     }
   }
-  initStateAndCity(props) {
+  initStateAndCity() {
     const { editObject, provinces } = this.props;
-    if(editObject.country === CHINA_CODE){
+    if (editObject.country === CHINA_CODE) {
       const selectedState = this.getProvince(editObject.state, provinces);
       const cities = this.getCities(editObject.state, provinces);
+      const checkAddress = !_.isEmpty(selectedState);
       this.setState({
+        checkAddress,
         cities,
         selectedState,
         selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
       });
     }
-
   }
   getCities(selectedProvince, provinces) {
     if (_.isEmpty(provinces)) {
@@ -73,11 +85,17 @@ class userForm extends React.Component {
     }
     return '';
   }
+  ifCheckAddress(props) {
+    if (!_.isEmpty(props && props.editObject)) {
+      return !_.isEmpty(props.editObject.state);
+    }
+    return false;
+  }
   ifCheckIDNumber(props) {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
     }
-    return props.editObject.country === CHINA_CODE;
+    return props.editObject.country === CHINA_CODE || (props.countries[0] && props.countries[0].code === CHINA_CODE)
   }
 
   handleCountryChange(countryCode) {
@@ -97,6 +115,10 @@ class userForm extends React.Component {
           city: '',
         });
       }
+      const checkAddress = !_.isEmpty(this.props.form.getFieldValue('state'));
+      this.setState({
+        checkAddress,
+      });
     });
   }
 
@@ -105,9 +127,16 @@ class userForm extends React.Component {
     this.setState({
       selectedState: proviceId,
       cities,
-      selectedCity: cities[0].id
+      selectedCity: cities[0].id,
+      checkAddress: true,
     });
     this.props.form.setFieldsValue({ city: cities[0].id });
+  }
+  handleProvinceInput=(e) => {
+    const { value } = e.target;
+    this.setState({
+      checkAddress: !_.isEmpty(value),
+    });
   }
   handleCityChange(cityId) {
     this.setState({
@@ -163,7 +192,7 @@ class userForm extends React.Component {
         rules: [{
           validator: validator.between(1, 150, language),
         }],
-      })(<Input disabled={disabled} placeholder={formatMessage({ id: 'global.ui.input.stateInputPlaceHolder' })} />);
+      })(<Input disabled={disabled} onInput={this.handleProvinceInput} placeholder={formatMessage({ id: 'global.ui.input.stateInputPlaceHolder' })} />);
     };
     const stateEl = (<FormItem
       {...formItemLayout}
@@ -175,7 +204,10 @@ class userForm extends React.Component {
       }</FormItem>);
     const getCityEl = () => {
       if (this.state.checkIdNumber) {
-        return getFieldDecorator('city', { initialValue: Number(editObject.city) || Number(this.state.selectedCity) })(<Select
+        return getFieldDecorator('city', {
+          initialValue: Number(editObject.city) || Number(this.state.selectedCity),
+          rules: [this.state.checkAddress ? getExistRule('required', 'city', language, { required: true }) : {}],
+        })(<Select
           getPopupContainer={() => document.getElementById('addAndEditDialog')}
           disabled={disabled}
           onChange={(cityId) => {
@@ -187,9 +219,11 @@ class userForm extends React.Component {
       }
       return getFieldDecorator('city', {
         initialValue: editObject.city || '',
-        rules: [{
-          validator: validator.between(1, 150, language),
-        }],
+        rules: [
+          this.state.checkAddress ? getExistRule('required', 'city', language, { required: true }) : {},
+          {
+            validator: validator.between(1, 150, language),
+          }],
       })(<Input disabled={disabled} placeholder={formatMessage({ id: 'global.ui.input.cityInputPlaceHolder' })} />);
     };
     const cityEl = (<FormItem
@@ -217,6 +251,7 @@ class userForm extends React.Component {
         getFieldDecorator('address', {
           initialValue: editObject.address || '',
           rules: [
+            this.state.checkAddress ? getExistRule('required', 'address', language, { required: true }) : {},
             {
               validator: validator.between(1, 150, language),
             }],
@@ -358,8 +393,11 @@ class userForm extends React.Component {
               {
                 getFieldDecorator('zipCode', {
                   initialValue: editObject.zipCode || '',
-                  rules: [{
-                    validator: validator.zipCode(language),
+                  rules: [
+                    this.state.checkAddress ? getExistRule('required', 'zipCode', language, { required: true }) : {},
+
+                    {
+                   validator: validator.zipCode(language),
                   }],
                 })(<Input disabled={disabled} />)}
             </FormItem>
@@ -379,7 +417,7 @@ class userForm extends React.Component {
             <div className={classNames(cx('id-wrapper'), showID ? 'show' : 'hidden')}>
               <FormItem
                 className={cx('id-front')}
-                {...formItemLayout}
+                {...uploadItemLayout}
                 label={formatMessage({ id: 'global.ui.button.upload' })}
               >
                 {getFieldDecorator('idFront', {

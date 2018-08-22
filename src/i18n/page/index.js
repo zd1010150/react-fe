@@ -6,6 +6,7 @@ import TrackOrders from 'views/TrackOrders/i18n';
 import Notification from 'views/Notification/i18n';
 import Error from 'views/Error/i18n';
 import Inventory from 'views/Inventory/i18n';
+import FreightCost from 'views/FreightCost/i18n';
 
 export default {
   LeftSideNav,
@@ -16,4 +17,5 @@ export default {
   Notification,
   Error,
   Inventory,
+  FreightCost,
 };
