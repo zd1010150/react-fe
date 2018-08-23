@@ -84,7 +84,6 @@ class leadsTable extends React.Component {
     }));
   }
   render() {
-    const { affiliatedClientStatus } = this.props;
     const { formatMessage } = this.props.intl;
     const columns = [{
       title: formatMessage({ id: 'global.form.name' }),
@@ -148,17 +147,40 @@ class leadsTable extends React.Component {
               <Icon type="user" onClick={() => { this.handleUserDetail(record); }} />
             </Tooltip>
             <Divider type="vertical" />
-            <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
-              <Icon type="edit" onClick={() => { this.handleEditLead(record); }} />
-            </Tooltip>
+            {
+              record.is_editable ? (
+                <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
+                  <Icon type="edit" onClick={() => { this.handleEditLead(record); }} />
+                </Tooltip>
+              ) : (
+                <Tooltip title={formatMessage({ id: 'page.Leads.cantEditUser' })}>
+                  <Icon type="edit" disabled />
+                </Tooltip>
+              )
+            }
+            {
+              record.is_deletable ? (
+                <span>
+                  <Divider type="vertical" />
+                  <Tooltip title={formatMessage({ id: 'page.Leads.deleteUser' })}>
+                    <Icon type="user-delete" onClick={() => { this.handleDeleteLead(record.id); }} />
+                  </Tooltip>
+                </span>
+              ) : ''
+            }
             <Divider type="vertical" />
-            <Tooltip title={formatMessage({ id: 'page.Leads.deleteUser' })}>
-              <Icon type="user-delete" onClick={() => { this.handleDeleteLead(record.id); }} />
-            </Tooltip>
-            <Divider type="vertical" />
-            <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
-              <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
-            </Tooltip>
+            {
+              record.is_editable ? (
+                <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
+                  <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
+                </Tooltip>
+              ) : (
+                <Tooltip title={formatMessage({ id: 'page.Leads.cantEditID' })}>
+                  <Button disabled size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
+                </Tooltip>
+              )
+            }
+
             { sendGoodsBtn() }
           </span>
         );

@@ -176,13 +176,29 @@ class accountsTable extends React.Component {
               <Icon type="user" onClick={() => { this.handleUserDetail(record); }} />
             </Tooltip>
             <Divider type="vertical" />
-            <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
-              <Icon type="edit" onClick={() => { this.handleEditAccounts(record); }} />
-            </Tooltip>
+            {
+              record.is_editable ? (
+                <Tooltip title={formatMessage({ id: 'page.Leads.editUser' })}>
+                  <Icon type="edit" onClick={() => { this.handleEditAccounts(record); }} />
+                </Tooltip>
+              ) : (
+                <Tooltip title={formatMessage({ id: 'page.Leads.cantEditUser' })}>
+                  <Icon type="edit" disabled />
+                </Tooltip>
+              )
+            }
             <Divider type="vertical" />
-            <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
-              <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
-            </Tooltip>
+            {
+              record.is_editable ? (
+                <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
+                  <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
+                </Tooltip>
+              ) : (
+                <Tooltip title={formatMessage({ id: 'page.Leads.cantEditID' })}>
+                  <Button disabled size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
+                </Tooltip>
+              )
+            }
             { historyOrderEl() }
             { sendGoodsBtn() }
           </span>
