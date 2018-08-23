@@ -62,7 +62,6 @@ const dispatch = (request, dispatcher = () => {}) => {
       });
     }
   }).catch((err) => {
-    debugger
     dispatcher({
       type: HTTP_ACTION_ERROR,
       payload: {

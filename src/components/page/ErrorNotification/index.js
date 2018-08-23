@@ -9,6 +9,7 @@ const errorNotification = (store) => {
       notification.error({
         message: item.msg,
         key: item.id,
+        duration: null,
       });
       store.dispatch(markReadedError(item.id));
     });
