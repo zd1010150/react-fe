@@ -8,7 +8,7 @@ export default {
     priceSetting: '价格设定',
     trackOrders: '追踪订单',
     trackOrderDetail: '发货单详情',
-    freightCost: '运费价目表',
+    freightCost: '邮寄价目表',
   },
   en: {
     leads: 'Add Clients Info',
