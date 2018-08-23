@@ -1,7 +1,7 @@
 /* eslint-disable react/no-typos */
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { Order, MarketingMaterials, Accounts, Leads, PriceSetting, TrackOrders, Error, Inventory } from 'views/index';
+import { Order, MarketingMaterials, Accounts, Leads, PriceSetting, TrackOrders, FreightCost, Inventory } from 'views/index';
 
 const mainContentView = () => (
   <Switch>
@@ -12,6 +12,7 @@ const mainContentView = () => (
     <Route path="/priceSetting" component={PriceSetting} />
     <Route path="/marketingMaterial" component={MarketingMaterials} />
     <Route path="/inventory" component={Inventory} />
+    <Route path="/freightCost" component={FreightCost} />
     <Route render={() => <Redirect to="/error?action=ERROR_404" />} />
   </Switch>
 );

@@ -7,6 +7,7 @@ import PriceSetting from './PriceSetting/index';
 import TrackOrders from './TrackOrders/index';
 import Error from './Error/index';
 import Inventory from './Inventory/index';
+import FreightCost from './FreightCost/index';
 
 export {
   Order,
@@ -17,4 +18,5 @@ export {
   TrackOrders,
   Error,
   Inventory,
+  FreightCost,
 };
