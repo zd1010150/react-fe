@@ -26,7 +26,7 @@ const formItemLayout = {
     sm: { span: 15 },
   },
 };
-const uploadItemLayout= {
+const uploadItemLayout = {
   labelCol: {
     xs: { span: 24 },
     sm: { span: 5 },
@@ -35,7 +35,7 @@ const uploadItemLayout= {
     xs: { span: 24 },
     sm: { span: 8 },
   },
-}
+};
 
 class userForm extends React.Component {
   state = {
@@ -59,11 +59,13 @@ class userForm extends React.Component {
       const selectedState = this.getProvince(editObject.state, provinces);
       const cities = this.getCities(editObject.state, provinces);
       const checkAddress = !_.isEmpty(selectedState);
+      const selectedCity = editObject.city === null || editObject.city === undefined || `${editObject.city}`.length < 1 ? '' : editObject.city;
       this.setState({
         checkAddress,
         cities,
         selectedState,
-        selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
+        selectedCity,
+        // selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
       });
     }
   }
@@ -74,11 +76,9 @@ class userForm extends React.Component {
     const province = provinces.filter(p => Number(p.id) === Number(selectedProvince));
     return _.isEmpty(province) ? (provinces[0].cities || []) : province[0].cities;
   }
-  getProvince(province, provinces) {
+  getProvince(province) {
     if (province === null || province === undefined || `${province}`.length < 1) {
-      if (!_.isEmpty(provinces)) {
-        return provinces[0].id;
-      }
+      return '';
     }
     if (`${province}`.length > 0) {
       return province;
@@ -95,7 +95,7 @@ class userForm extends React.Component {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
     }
-    return props.editObject.country === CHINA_CODE || ( _.isEmpty(props.editObject.country) && (props.countries[0] && props.countries[0].code === CHINA_CODE));
+    return props.editObject.country === CHINA_CODE || (_.isEmpty(props.editObject.country) && (props.countries[0] && props.countries[0].code === CHINA_CODE));
   }
 
   handleCountryChange(countryCode) {
@@ -175,7 +175,7 @@ class userForm extends React.Component {
 
     const getStateEl = () => {
       if (this.state.checkIdNumber) {
-        return getFieldDecorator('state', { initialValue: Number(editObject.state) || this.state.selectedState })(<Select
+        return getFieldDecorator('state', { initialValue: this.state.selectedState ? Number(this.state.selectedState) : '' })(<Select
           getPopupContainer={() => document.getElementById('addAndEditDialog')}
           disabled={disabled}
           onChange={(provinceId) => {
@@ -205,7 +205,7 @@ class userForm extends React.Component {
     const getCityEl = () => {
       if (this.state.checkIdNumber) {
         return getFieldDecorator('city', {
-          initialValue: Number(editObject.city) || Number(this.state.selectedCity),
+          initialValue: this.state.selectedCity ? Number(this.state.selectedCity) : '',
           rules: [this.state.checkAddress ? getExistRule('required', 'city', language, { required: true }) : {}],
         })(<Select
           getPopupContainer={() => document.getElementById('addAndEditDialog')}

@@ -54,8 +54,15 @@ const dispatch = (request, dispatcher = () => {}) => {
       } else {
         dispatcher(addError(data.message));
       }
+      dispatcher({
+        type: HTTP_ACTION_ERROR,
+        payload: {
+          errors,
+        },
+      });
     }
   }).catch((err) => {
+    debugger
     dispatcher({
       type: HTTP_ACTION_ERROR,
       payload: {
