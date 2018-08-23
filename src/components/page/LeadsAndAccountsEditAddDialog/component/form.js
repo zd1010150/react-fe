@@ -95,7 +95,7 @@ class userForm extends React.Component {
     if (_.isEmpty(props && props.editObject)) {
       return (props.countries && props.countries[0].code) === CHINA_CODE;
     }
-    return props.editObject.country === CHINA_CODE || (props.countries[0] && props.countries[0].code === CHINA_CODE)
+    return props.editObject.country === CHINA_CODE || ( _.isEmpty(props.editObject.country) && (props.countries[0] && props.countries[0].code === CHINA_CODE));
   }
 
   handleCountryChange(countryCode) {
