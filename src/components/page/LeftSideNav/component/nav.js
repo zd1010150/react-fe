@@ -64,6 +64,9 @@ class Nav extends React.Component {
       }, {
         id: 'page.LeftSideNav.marketingMaterial',
         url: '/marketingMaterial',
+      }, {
+        id: 'page.LeftSideNav.freightCost',
+        url: '/freightCost',
       },
     ];
     const getChildrenTree = (item, index) => {

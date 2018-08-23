@@ -9,6 +9,7 @@ export default {
     priceSetting: '价格设定',
     trackOrders: '追踪客户订单',
     myAccount: '个人中心',
+    freightCost: '邮寄价目表',
   },
   en: {
     clientLists: 'Affiliate Operation',
@@ -20,5 +21,6 @@ export default {
     priceSetting: 'Price Setting',
     trackOrders: 'Track Orders',
     myAccount: 'My Account',
+    freightCost: 'Freight Cost',
   },
 };
