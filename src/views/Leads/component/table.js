@@ -52,7 +52,6 @@ class leadsTable extends React.Component {
     record.document.forEach((r) => {
       mapPath[r.name] = r.path;
     });
-    debugger
     const editID = Object.assign({}, this.state.editID, {
       visible: true,
       userId: `${record.id}`,
