@@ -23,7 +23,7 @@ class PicturesWall extends React.Component {
       fileList.push({
         uid: Math.random(),
         status: 'done',
-        url: `${apiDomain}/${this.props.file}`,
+        url: this.props.file.indexOf('http://') > -1 ? this.props.file : `${apiDomain}/${this.props.file}`,
       });
     }
     return fileList;
@@ -36,6 +36,12 @@ class PicturesWall extends React.Component {
     });
   }
   mapFileListToFiles = fileList => fileList.map(item => item.response && item.response.data);
+  handleRemove = () => {
+    const { disabled } = this.props;
+    if (disabled) {
+      return false;
+    }
+  }
   handleChange = ({ fileList }) => {
     if (fileList[0] && fileList[0].status === 'uploading') {
       if (fileList[0].size > MAX_UPLOAD_SIZE) {
@@ -64,12 +70,13 @@ class PicturesWall extends React.Component {
     );
     const { formatMessage } = this.props.intl;
     return (
-      <div className='upload-wrapper'>
+      <div className="upload-wrapper">
         <Upload
-          className='uploador-wrapper'
+          className="uploador-wrapper"
           action={`${baseUrl}/affiliate/files`}
           listType="picture-card"
           fileList={fileList}
+          onRemove={this.handleRemove}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
           disabled={this.props.disabled}

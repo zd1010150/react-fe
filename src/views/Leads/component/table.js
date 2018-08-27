@@ -52,6 +52,7 @@ class leadsTable extends React.Component {
     record.document.forEach((r) => {
       mapPath[r.name] = r.path;
     });
+    debugger
     const editID = Object.assign({}, this.state.editID, {
       visible: true,
       userId: `${record.id}`,
@@ -60,6 +61,7 @@ class leadsTable extends React.Component {
       country: record.country,
       rejectReseason,
       idNumber,
+      isEditable: record.is_editable,
     });
     this.setState(Object.assign({}, this.state, { editID, editLead: record }));
   }
@@ -163,24 +165,15 @@ class leadsTable extends React.Component {
                 <span>
                   <Divider type="vertical" />
                   <Tooltip title={formatMessage({ id: 'page.Leads.deleteUser' })}>
-                    <Icon type="user-delete" onClick={() => { this.handleDeleteLead(record.id); }} />
+                    <Icon type="delete" onClick={() => { this.handleDeleteLead(record.id); }} />
                   </Tooltip>
                 </span>
               ) : ''
             }
             <Divider type="vertical" />
-            {
-              record.is_editable ? (
-                <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
-                  <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
-                </Tooltip>
-              ) : (
-                <Tooltip title={formatMessage({ id: 'page.Leads.cantEditID' })}>
-                  <Button disabled size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
-                </Tooltip>
-              )
-            }
-
+            <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
+              <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
+            </Tooltip>
             { sendGoodsBtn() }
           </span>
         );

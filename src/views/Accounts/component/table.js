@@ -71,6 +71,7 @@ class accountsTable extends React.Component {
       rejectReseason,
       idNumber,
       country: record.country,
+      isEditable: record.is_editable,
     });
     this.setState(Object.assign({}, this.state, { editID, editLead: record }));
   }
@@ -188,17 +189,9 @@ class accountsTable extends React.Component {
               )
             }
             <Divider type="vertical" />
-            {
-              record.is_editable ? (
-                <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
-                  <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
-                </Tooltip>
-              ) : (
-                <Tooltip title={formatMessage({ id: 'page.Leads.cantEditID' })}>
-                  <Button disabled size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
-                </Tooltip>
-              )
-            }
+              <Tooltip title={formatMessage({ id: 'page.Leads.editId' })}>
+                <Button onClick={() => { this.handleEditID(record); }} size="small" type={idBtnType()}><Icon type="picture" />ID</Button>
+              </Tooltip>
             { historyOrderEl() }
             { sendGoodsBtn() }
           </span>
