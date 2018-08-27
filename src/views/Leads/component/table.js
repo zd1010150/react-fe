@@ -52,6 +52,7 @@ class leadsTable extends React.Component {
     record.document.forEach((r) => {
       mapPath[r.name] = r.path;
     });
+    debugger
     const editID = Object.assign({}, this.state.editID, {
       visible: true,
       userId: `${record.id}`,
@@ -164,7 +165,7 @@ class leadsTable extends React.Component {
                 <span>
                   <Divider type="vertical" />
                   <Tooltip title={formatMessage({ id: 'page.Leads.deleteUser' })}>
-                    <Icon type="user-delete" onClick={() => { this.handleDeleteLead(record.id); }} />
+                    <Icon type="delete" onClick={() => { this.handleDeleteLead(record.id); }} />
                   </Tooltip>
                 </span>
               ) : ''
