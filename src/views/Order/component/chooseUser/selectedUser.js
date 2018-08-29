@@ -7,6 +7,7 @@ import { Button, Modal, Icon } from 'antd';
 import classNames from 'classnames/bind';
 import { Address, Username } from 'components/ui/index';
 import styles from '../../Order.less';
+import { urlReg } from 'utils/regex';
 
 const cx = classNames.bind(styles);
 class selectedUserView extends React.Component {
@@ -62,8 +63,18 @@ class selectedUserView extends React.Component {
                 <td className={cx('selected-user-info-table-title')}>{ formatMessage({ id: 'global.form.IDDoc' }) }:</td>
                 <td className={cx('selected-user-info-table-info')}>
                   <span>{selectedUser.id_number}</span>
-                  { idFront.length > 0 ? <img src={`${apiDomain}/${idFront}`} alt="id front" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idFront}`); }} /> : '' }
-                  { idBack.length > 0 ? <img src={`${apiDomain}/${idBack}`} alt="id back" className={cx('id-thumbnail')} onClick={() => { this.openPreviewDialog(`${apiDomain}/${idBack}`); }} /> : '' }
+                  { idFront.length > 0 ? <img
+                    src={urlReg.test(idFront) ? idFront : `${apiDomain}/${idFront}`}
+                    alt="id front"
+                    className={cx('id-thumbnail')}
+                    onClick={() => { this.openPreviewDialog(urlReg.test(idFront) ? idFront : `${apiDomain}/${idFront}`); }}
+                  /> : '' }
+                  { idBack.length > 0 ? <img
+                    src={urlReg.test(idBack) ? idBack : `${apiDomain}/${idBack}`}
+                    alt="id back"
+                    className={cx('id-thumbnail')}
+                    onClick={() => { this.openPreviewDialog(urlReg.test(idBack) ? idBack : `${apiDomain}/${idBack}`); }}
+                  /> : '' }
 
                 </td>
               </tr>
