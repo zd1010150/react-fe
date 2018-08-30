@@ -72,7 +72,7 @@ class id extends React.Component {
   }
   render() {
     const {
-      intl, visible, idFront, idBack, onCancel, rejectReseason, allRejectReasons,
+      intl, visible, idFront, idBack, onCancel, rejectReseason, allRejectReasons, isEditable,
     } = this.props;
     const { formatMessage } = intl;
     const getRejectReason = () => {
@@ -85,6 +85,7 @@ class id extends React.Component {
       <Modal
         title={formatMessage({ id: 'page.Leads.editId' })}
         visible={visible}
+        okButtonProps={{ disabled: !isEditable }}
         onOk={() => this.handleSubmit()}
         onCancel={() => onCancel()}
       >
@@ -104,6 +105,7 @@ class id extends React.Component {
                   placeholder={formatMessage({ id: 'global.ui.input.inputIdNumber' })}
                   value={this.state.idNumber}
                   onChange={e => this.handleIdNumberChange(e.target.value)}
+                  disabled={!isEditable}
                 />
               </div>
             </form>
@@ -113,6 +115,7 @@ class id extends React.Component {
           <div className="col-md-6 col-sm-6" style={{ textAlign: 'center' }}>
             <p className="text-center">{formatMessage({ id: 'global.form.idFront' })}</p>
             <Upload
+              disabled={!isEditable}
               key={this.state.key}
               pictureQuantity={1}
               uploadText={formatMessage({ id: 'page.Leads.uploadIDFront' })}
@@ -123,6 +126,7 @@ class id extends React.Component {
           <div className="col-md-6 col-sm-6" style={{ textAlign: 'center' }}>
             <p className="text-center">{formatMessage({ id: 'global.form.idBack' })}</p>
             <Upload
+              disabled={!isEditable}
               key={this.state.key}
               pictureQuantity={1}
               uploadText={formatMessage({ id: 'page.Leads.uploadIDBack' })}
@@ -138,6 +142,7 @@ class id extends React.Component {
 
 
 id.defaultProps = {
+  isEditable: true,
   visible: false,
   idNumber: '',
   idFront: '',
@@ -148,6 +153,7 @@ id.defaultProps = {
 };
 id.propTypes = {
   intl: intlShape.isRequired,
+  isEditable: PropTypes.bool,
   visible: PropTypes.bool,
   idNumber: PropTypes.string,
   idFront: PropTypes.string,

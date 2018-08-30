@@ -4,6 +4,7 @@ import { Upload, Icon, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import { baseUrl } from 'config/env.config';
 import { apiDomain } from 'config/env.config';
+import { urlReg } from 'utils/regex';
 import { MAX_UPLOAD_SIZE } from 'config/app.config';
 import { intlShape, injectIntl } from 'react-intl';
 
@@ -23,7 +24,7 @@ class PicturesWall extends React.Component {
       fileList.push({
         uid: Math.random(),
         status: 'done',
-        url: `${apiDomain}/${this.props.file}`,
+        url: urlReg.test(this.props.file) ? this.props.file : `${apiDomain}/${this.props.file}`,
       });
     }
     return fileList;
@@ -36,6 +37,12 @@ class PicturesWall extends React.Component {
     });
   }
   mapFileListToFiles = fileList => fileList.map(item => item.response && item.response.data);
+  handleRemove = () => {
+    const { disabled } = this.props;
+    if (disabled) {
+      return false;
+    }
+  }
   handleChange = ({ fileList }) => {
     if (fileList[0] && fileList[0].status === 'uploading') {
       if (fileList[0].size > MAX_UPLOAD_SIZE) {
@@ -64,12 +71,13 @@ class PicturesWall extends React.Component {
     );
     const { formatMessage } = this.props.intl;
     return (
-      <div className='upload-wrapper'>
+      <div className="upload-wrapper">
         <Upload
-          className='uploador-wrapper'
+          className="uploador-wrapper"
           action={`${baseUrl}/affiliate/files`}
           listType="picture-card"
           fileList={fileList}
+          onRemove={this.handleRemove}
           onPreview={this.handlePreview}
           onChange={this.handleChange}
           disabled={this.props.disabled}
