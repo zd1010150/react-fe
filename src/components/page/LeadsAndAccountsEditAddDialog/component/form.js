@@ -5,7 +5,7 @@ import { Form, Input, Select, Tabs } from 'antd';
 import { injectIntl, intlShape } from 'react-intl';
 import classNames from 'classnames/bind';
 import _ from 'lodash';
-import { CHINA_CODE, SOCIAL_MEDIA } from 'config/app.config';
+import { AU_CODE, CHINA_CODE, SOCIAL_MEDIA } from 'config/app.config';
 import { Upload } from 'components/ui/index';
 import { getExistRule, validator } from 'utils/validateMessagesUtil';
 import styles from '../dialog.less';
@@ -39,6 +39,7 @@ const uploadItemLayout = {
 
 class userForm extends React.Component {
   state = {
+    selectedCountry: this.props.editObject.country || (this.props.countries[0] && this.props.countries[0].code) || '',
     checkAddress: this.ifCheckAddress(this.props),
     checkIdNumber: this.ifCheckIDNumber(this.props),
     selectedState: '',
@@ -48,13 +49,8 @@ class userForm extends React.Component {
   componentDidMount() {
     this.initStateAndCity(this.props);
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.editObject !== this.props.editObject) {
-      this.initStateAndCity(nextProps);
-    }
-  }
   initStateAndCity() {
-    const { editObject, provinces } = this.props;
+    const { editObject, provinces, countries } = this.props;
     if (editObject.country === CHINA_CODE) {
       const selectedState = this.getProvince(editObject.state, provinces);
       const cities = this.getCities(editObject.state, provinces);
@@ -66,6 +62,13 @@ class userForm extends React.Component {
         selectedState,
         selectedCity,
         // selectedCity: editObject.city || (_.isEmpty(cities) ? '' : cities[0].id),
+      });
+    } else if (editObject.country === AU_CODE) {
+      const selectedState = this.getProvince(editObject.state, provinces);
+      const checkAddress = !_.isEmpty(selectedState);
+      this.setState({
+        checkAddress,
+        selectedState,
       });
     }
   }
@@ -103,6 +106,7 @@ class userForm extends React.Component {
 
     this.setState({
       checkIdNumber,
+      selectedCountry: countryCode,
     }, () => {
       this.props.form.resetFields(['idNumber']);
 
@@ -123,14 +127,16 @@ class userForm extends React.Component {
   }
 
   handleProvinceChange(proviceId) {
-    const cities = this.getCities(proviceId, this.props.provinces);
-    this.setState({
-      selectedState: proviceId,
-      cities,
-      selectedCity: cities[0].id,
-      checkAddress: true,
-    });
-    this.props.form.setFieldsValue({ city: cities[0].id });
+    if (this.state.selectedCountry === CHINA_CODE) {
+      const cities = this.getCities(proviceId, this.props.provinces);
+      this.setState({
+        selectedState: proviceId,
+        cities,
+        selectedCity: cities[0].id,
+        checkAddress: true,
+      });
+      this.props.form.setFieldsValue({city: cities[0].id});
+    }
   }
   handleProvinceInput=(e) => {
     const { value } = e.target;
@@ -174,7 +180,7 @@ class userForm extends React.Component {
     </Select>);
 
     const getStateEl = () => {
-      if (this.state.checkIdNumber) {
+      if (this.state.selectedCountry === CHINA_CODE || this.state.selectedCountry === AU_CODE ) {
         return getFieldDecorator('state', { initialValue: this.state.selectedState ? Number(this.state.selectedState) : '' })(<Select
           getPopupContainer={() => document.getElementById('addAndEditDialog')}
           disabled={disabled}
@@ -183,7 +189,7 @@ class userForm extends React.Component {
                   }}
         >
           {
-              provinces.map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)
+              provinces.filter(p => p.country_code === this.state.selectedCountry).map(item => <Option value={item.id} key={item.id}>{item.name}</Option>)
             }
         </Select>);
       }

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { toggleLanguage, fetchGlobalSetting } from 'store/global/action';
+import { toggleLanguage, fetchGlobalSetting, fetchProvince } from 'store/global/action';
 import Language from '../component/language';
 import TopStaticNav from '../component/topStaticNav';
 import Operations from '../component/operations';
@@ -13,8 +13,9 @@ const cx = classNames.bind(styles);
 
 class topPanel extends React.Component {
   changeLanguage(language) {
-    const { toggleLanguage, fetchGlobalSetting } = this.props;
+    const { toggleLanguage, fetchGlobalSetting, fetchProvince } = this.props;
     toggleLanguage(language);
+    fetchProvince();
     fetchGlobalSetting();
   }
   render() {
@@ -34,6 +35,7 @@ topPanel.propTypes = {
   language: PropTypes.string.isRequired,
   toggleLanguage: PropTypes.func.isRequired,
   fetchGlobalSetting: PropTypes.func.isRequired,
+  fetchProvince: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
 };
 const mapStateToProps = ({ global }) => ({
@@ -43,6 +45,7 @@ const mapStateToProps = ({ global }) => ({
 const mapDispatchToProp = {
   toggleLanguage,
   fetchGlobalSetting,
+  fetchProvince,
 };
 
 const TopPanel = connect(mapStateToProps, mapDispatchToProp)(topPanel);

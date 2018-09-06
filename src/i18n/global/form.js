@@ -6,7 +6,7 @@ export default {
     email: 'Email',
     address: '地址',
     city: '市',
-    state: '省',
+    state: '州/省',
     country: '国家',
     countryArea: '国家/地区',
     zipCode: '邮政编码',

@@ -4,8 +4,8 @@ import _ from 'lodash';
 import { navLanguage } from 'utils/navigationUtil';
 import { MagentoLanguage, setMangentoLanguageCookie } from 'config/magento.config';
 import { TOGGLE_LANGUAGE, SET_PERMISSION, SET_ACCOUNTINFO, SET_PAGETITLE, SET_ORDER_USER, SET_GLOBAL_SETTING, RESET_USER, SET_PROVINCES } from './actionType';
-import { MAX_PAYABLE_PRICE } from 'config/app.config';
-// 页面默认语言为 en，此处只是mock
+
+
 const provinces = (state = [], action) => {
   switch (action.type) {
     case SET_PROVINCES:

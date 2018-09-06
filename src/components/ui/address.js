@@ -2,32 +2,41 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { CHINESE_CODE, CHINA_CODE } from 'config/app.config';
+import { AU_CODE, CHINESE_CODE, CHINA_CODE } from 'config/app.config';
 
 const address = ({
   language, country, countries, street, city, state, zipCode, provinces,
 }) => {
   const countryObj = countries.filter(c => c.code === country);
   const countryName = _.isEmpty(countryObj) ? '' : countryObj[0].name;
+  let innerState = state;
+  let innerCity = city;
   if (country === CHINA_CODE) {
     const filteredProvince = provinces.filter(p => Number(p.id) === Number(state));
     if (_.isEmpty(filteredProvince)) {
-      state = '';
-      city = '';
+      innerState = '';
+      innerCity = '';
     } else {
-      state = filteredProvince[0].name;
+      innerState = filteredProvince[0].name;
       const filteredCity = filteredProvince[0].cities.filter(c => Number(c.id) === Number(city));
       if (_.isEmpty(filteredCity)) {
-        city = '';
+        innerCity = '';
       } else {
-        city = filteredCity[0].name;
+        innerCity = filteredCity[0].name;
       }
+    }
+  } else if (country === AU_CODE) {
+    const filteredProvince = provinces.filter(p => Number(p.id) === Number(state));
+    if (_.isEmpty(filteredProvince)) {
+      innerState = '';
+    } else {
+      innerState = filteredProvince[0].name;
     }
   }
   if (language === CHINESE_CODE) {
-    return <span>{countryName}{state}{city}{street} {zipCode}</span>;
+    return <span>{countryName}{innerState}{innerCity}{street} {zipCode}</span>;
   }
-  return <span>{street} {city} {state} {countryName} {zipCode}</span>;
+  return <span>{street} {innerCity} {innerState} {countryName} {zipCode}</span>;
 };
 address.defaultProps = {
   country: '',
